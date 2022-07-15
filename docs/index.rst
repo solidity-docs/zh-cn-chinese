@@ -3,9 +3,14 @@ Solidity
 
 Solidity是一门为实现智能合约而创建的高级的，面向对象的编程语言。 智能合约是管理以太坊中账户行为的程序。
 
+<<<<<<< HEAD
 Solidity是一种 `带花括号的语言 <https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Curly-bracket_languages>`_.
 这门语言受到了 C++，Python 和 Javascript 语言的影响，设计的目的是能在以太坊虚拟机（EVM）上运行。
 你可以在:doc:`语言影响 <language-influences>` 这章找到更多的细节。
+=======
+Solidity is a `curly-bracket language <https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Curly-bracket_languages>`_ designed to target the Ethereum Virtual Machine (EVM).
+It is influenced by C++, Python and JavaScript. You can find more details about which languages Solidity has been inspired by in the :doc:`language influences <language-influences>` section.
+>>>>>>> 800088e38b5835ebdc71e9ba5299a70a5accd7c2
 
 Solidity 是静态类型语言，支持继承、库和复杂的用户定义类型等特性。
 
@@ -74,24 +79,25 @@ our `Gitter channel <https://gitter.im/ethereum/solidity/>`_.
 Translations
 ------------
 
-Community volunteers help translate this documentation into several languages.
-They have varying degrees of completeness and up-to-dateness. The English
+Community contributors help translate this documentation into several languages.
+Note that they have varying degrees of completeness and up-to-dateness. The English
 version stands as a reference.
+
+You can switch between languages by clicking on the flyout menu in the bottom-left corner
+and selecting the preferred language.
+
+* `French <https://docs.soliditylang.org/fr/latest/>`_
+* `Indonesian <https://github.com/solidity-docs/id-indonesian>`_
+* `Persian <https://github.com/solidity-docs/fa-persian>`_
+* `Japanese <https://github.com/solidity-docs/ja-japanese>`_
+* `Korean <https://github.com/solidity-docs/ko-korean>`_
+* `Chinese <https://github.com/solidity-docs/zh-cn-chinese/>`_
 
 .. note::
 
    We recently set up a new GitHub organization and translation workflow to help streamline the
    community efforts. Please refer to the `translation guide <https://github.com/solidity-docs/translation-guide>`_
-   for information on how to contribute to the community translations moving forward.
-
-* `French <https://solidity-fr.readthedocs.io>`_ (in progress)
-* `Italian <https://github.com/damianoazzolini/solidity>`_ (in progress)
-* `Japanese <https://solidity-jp.readthedocs.io>`_
-* `Korean <https://solidity-kr.readthedocs.io>`_ (in progress)
-* `Russian <https://github.com/ethereum/wiki/wiki/%5BRussian%5D-%D0%A0%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE-%D0%BF%D0%BE-Solidity>`_ (rather outdated)
-* `Simplified Chinese <https://learnblockchain.cn/docs/solidity/>`_ (in progress)
-* `Spanish <https://solidity-es.readthedocs.io>`_
-* `Turkish <https://github.com/denizozzgur/Solidity_TR/blob/master/README.md>`_ (partial)
+   for information on how to start a new language or contribute to the community translations.
 
 Contents
 ========

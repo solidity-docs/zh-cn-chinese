@@ -109,6 +109,7 @@ of votes.
         function delegate(address to) external {
             // assigns reference
             Voter storage sender = voters[msg.sender];
+            require(sender.weight != 0, "You have no right to vote");
             require(!sender.voted, "You already voted.");
 
             require(to != msg.sender, "Self-delegation is disallowed.");
@@ -128,14 +129,16 @@ of votes.
                 require(to != msg.sender, "Found loop in delegation.");
             }
 
-            // Since `sender` is a reference, this
-            // modifies `voters[msg.sender].voted`
             Voter storage delegate_ = voters[to];
 
-            // Voters cannot delegate to wallets that cannot vote.
+            // Voters cannot delegate to accounts that cannot vote.
             require(delegate_.weight >= 1);
+
+            // Since `sender` is a reference, this
+            // modifies `voters[msg.sender]`.
             sender.voted = true;
             sender.delegate = to;
+
             if (delegate_.voted) {
                 // If the delegate already voted,
                 // directly add to the number of votes

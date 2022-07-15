@@ -448,8 +448,8 @@ Integer literals are formed from a sequence of digits in the range 0-9.
 They are interpreted as decimals. For example, ``69`` means sixty nine.
 Octal literals do not exist in Solidity and leading zeros are invalid.
 
-Decimal fractional literals are formed by a ``.`` with at least one number on
-one side.  Examples include ``1.``, ``.1`` and ``1.3``.
+Decimal fractional literals are formed by a ``.`` with at least one number after the decimal point.
+Examples include ``.1`` and ``1.3`` (but not ``1.``).
 
 Scientific notation in the form of ``2e10`` is also supported, where the
 mantissa can be fractional but the exponent has to be an integer.
@@ -463,13 +463,22 @@ There is no additional semantic meaning added to a number literal containing und
 the underscores are ignored.
 
 Number literal expressions retain arbitrary precision until they are converted to a non-literal type (i.e. by
-using them together with a non-literal expression or by explicit conversion).
+using them together with anything other than a number literal expression (like boolean literals) or by explicit conversion).
 This means that computations do not overflow and divisions do not truncate
 in number literal expressions.
 
 For example, ``(2**800 + 1) - 2**800`` results in the constant ``1`` (of type ``uint8``)
 although intermediate results would not even fit the machine word size. Furthermore, ``.5 * 8`` results
 in the integer ``4`` (although non-integers were used in between).
+
+.. warning::
+    While most operators produce a literal expression when applied to literals, there are certain operators that do not follow this pattern:
+
+    - Ternary operator (``... ? ... : ...``),
+    - Array subscript (``<array>[<index>]``).
+
+    You might expect expressions like ``255 + (true ? 1 : 0)`` or ``255 + [1, 2, 3][0]`` to be equivalent to using the literal 256
+    directly, but in fact they are computed within the type ``uint8`` and can overflow.
 
 Any operator that can be applied to integers can also be applied to number literal expressions as
 long as the operands are integers. If any of the two is fractional, bit operations are disallowed

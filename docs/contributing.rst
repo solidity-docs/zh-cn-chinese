@@ -245,7 +245,7 @@ It offers several options for failing tests:
 - ``skip``: Skips the execution of this particular test.
 - ``quit``: Quits ``isoltest``.
 
-All of these options apply to the current contract, expect ``quit`` which stops the entire testing process.
+All of these options apply to the current contract, except ``quit`` which stops the entire testing process.
 
 Automatically updating the test above changes it to
 
@@ -475,7 +475,7 @@ For example ``pragma solidity >=0.4.0 <0.9.0;``.
 Running Documentation Tests
 ---------------------------
 
-Make sure your contributions pass our documentation tests by running ``./scripts/docs.sh`` that installs dependencies
+Make sure your contributions pass our documentation tests by running ``./docs/docs.sh`` that installs dependencies
 needed for documentation and checks for any problems such as broken links or syntax issues.
 
 Solidity Language Design

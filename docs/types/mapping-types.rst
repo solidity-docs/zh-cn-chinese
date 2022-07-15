@@ -4,12 +4,12 @@
 Mapping Types
 =============
 
-Mapping types use the syntax ``mapping(_KeyType => _ValueType)`` and variables
-of mapping type are declared using the syntax ``mapping(_KeyType => _ValueType) _VariableName``.
-The ``_KeyType`` can be any
+Mapping types use the syntax ``mapping(KeyType => ValueType)`` and variables
+of mapping type are declared using the syntax ``mapping(KeyType => ValueType) VariableName``.
+The ``KeyType`` can be any
 built-in value type, ``bytes``, ``string``, or any contract or enum type. Other user-defined
 or complex types, such as mappings, structs or array types are not allowed.
-``_ValueType`` can be any type, including mappings, arrays and structs.
+``ValueType`` can be any type, including mappings, arrays and structs.
 
 You can think of mappings as `hash tables <https://en.wikipedia.org/wiki/Hash_table>`_, which are virtually initialised
 such that every possible key exists and is mapped to a value whose
@@ -29,10 +29,10 @@ of contract functions that are publicly visible.
 These restrictions are also true for arrays and structs that contain mappings.
 
 You can mark state variables of mapping type as ``public`` and Solidity creates a
-:ref:`getter <visibility-and-getters>` for you. The ``_KeyType`` becomes a parameter for the getter.
-If ``_ValueType`` is a value type or a struct, the getter returns ``_ValueType``.
-If ``_ValueType`` is an array or a mapping, the getter has one parameter for
-each ``_KeyType``, recursively.
+:ref:`getter <visibility-and-getters>` for you. The ``KeyType`` becomes a parameter for the getter.
+If ``ValueType`` is a value type or a struct, the getter returns ``ValueType``.
+If ``ValueType`` is an array or a mapping, the getter has one parameter for
+each ``KeyType``, recursively.
 
 In the example below, the ``MappingExample`` contract defines a public ``balances``
 mapping, with the key type an ``address``, and a value type a ``uint``, mapping
@@ -119,14 +119,14 @@ Iterable Mappings
 You cannot iterate over mappings, i.e. you cannot enumerate their keys.
 It is possible, though, to implement a data structure on
 top of them and iterate over that. For example, the code below implements an
-``IterableMapping`` library that the ``User`` contract then adds data too, and
+``IterableMapping`` library that the ``User`` contract then adds data to, and
 the ``sum`` function iterates over to sum all the values.
 
 .. code-block:: solidity
     :force:
 
     // SPDX-License-Identifier: GPL-3.0
-    pragma solidity >=0.6.8 <0.9.0;
+    pragma solidity ^0.8.8;
 
     struct IndexValue { uint keyIndex; uint value; }
     struct KeyFlag { uint key; bool deleted; }
@@ -136,6 +136,8 @@ the ``sum`` function iterates over to sum all the values.
         KeyFlag[] keys;
         uint size;
     }
+
+    type Iterator is uint;
 
     library IterableMapping {
         function insert(itmap storage self, uint key, uint value) internal returns (bool replaced) {
@@ -166,24 +168,28 @@ the ``sum`` function iterates over to sum all the values.
             return self.data[key].keyIndex > 0;
         }
 
-        function iterateStart(itmap storage self) internal view returns (uint keyIndex) {
-            return iterateNext(self, type(uint).max);
+        function iterateStart(itmap storage self) internal view returns (Iterator) {
+            return iteratorSkipDeleted(self, 0);
         }
 
-        function iterateValid(itmap storage self, uint keyIndex) internal view returns (bool) {
-            return keyIndex < self.keys.length;
+        function iterateValid(itmap storage self, Iterator iterator) internal view returns (bool) {
+            return Iterator.unwrap(iterator) < self.keys.length;
         }
 
-        function iterateNext(itmap storage self, uint keyIndex) internal view returns (uint r_keyIndex) {
-            keyIndex++;
-            while (keyIndex < self.keys.length && self.keys[keyIndex].deleted)
-                keyIndex++;
-            return keyIndex;
+        function iterateNext(itmap storage self, Iterator iterator) internal view returns (Iterator) {
+            return iteratorSkipDeleted(self, Iterator.unwrap(iterator) + 1);
         }
 
-        function iterateGet(itmap storage self, uint keyIndex) internal view returns (uint key, uint value) {
+        function iterateGet(itmap storage self, Iterator iterator) internal view returns (uint key, uint value) {
+            uint keyIndex = Iterator.unwrap(iterator);
             key = self.keys[keyIndex].key;
             value = self.data[key].value;
+        }
+
+        function iteratorSkipDeleted(itmap storage self, uint keyIndex) private view returns (Iterator) {
+            while (keyIndex < self.keys.length && self.keys[keyIndex].deleted)
+                keyIndex++;
+            return Iterator.wrap(keyIndex);
         }
     }
 
@@ -206,7 +212,7 @@ the ``sum`` function iterates over to sum all the values.
         // Computes the sum of all stored data.
         function sum() public view returns (uint s) {
             for (
-                uint i = data.iterateStart();
+                Iterator i = data.iterateStart();
                 data.iterateValid(i);
                 i = data.iterateNext(i)
             ) {
