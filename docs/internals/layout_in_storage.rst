@@ -126,8 +126,13 @@
 短数组（未设置）和长数组（设置）。
 
 .. note::
+<<<<<<< HEAD
   目前不支持处理无效编码的槽，但将来可能会加入。
   如果您通过实验性的基于IR的编译器通道进行编译，读取一个无效编码的槽会导致 ``Panic(0x22)`` 错误。
+=======
+  Handling invalidly encoded slots is currently not supported but may be added in the future.
+  If you are compiling via IR, reading an invalidly encoded slot results in a ``Panic(0x22)`` error.
+>>>>>>> 82e5a110eacf6600c7b526cf495730e6898a187d
 
 JSON输出
 ===========
