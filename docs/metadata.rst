@@ -15,10 +15,21 @@ Solidity 编译器自动生成一个 JSON 文件，即合约元数据，
 其他可用的选项是Swarm哈希值和不将元数据哈希值附加到字节码上。
 这些可以通过 :ref:`标准 JSON 接口 <compiler-api>` 来配置。
 
+<<<<<<< HEAD
 您必须将元数据文件发布到IPFS、Swarm或其他服务，
 以便其他人可以访问它。您可以通过使用 ``solc --metadata`` 命令来创建该文件，
 该命令生成一个名为 ``ContractName_meta.json`` 的文件。
 它包含IPFS和Swarm对源代码的引用，所以您必须上传所有的源文件和元数据文件。
+=======
+You have to publish the metadata file to IPFS, Swarm, or another service so
+that others can access it. You create the file by using the ``solc --metadata``
+command together with the ``--output-dir`` parameter. Without the parameter,
+the metadata will be written to standard output.
+The metadata contains IPFS and Swarm references to the source code, so you have to
+upload all source files in addition to the metadata file. For IPFS, the hash contained
+in the CID returned by ``ipfs add`` (not the direct sha2-256 hash of the file)
+shall match with the one contained in the bytecode.
+>>>>>>> 3c0a7355d01f97276915608a399235444a17606b
 
 元数据文件有以下格式。下面的例子是以人类可读的方式呈现的。
 正确的元数据格式应该正确地使用引号，
