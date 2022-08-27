@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 .. index:: ! error, revert
+=======
+.. index:: ! error, revert, ! selector; of an error
+>>>>>>> 7bfec3ba706d1fce6b3687f364c1db2dcf8cbbb9
 .. _errors:
 
 *******************************
@@ -67,6 +71,20 @@ Solidity 中的错误提供了一种方便且省gas的方式来向用户解释�
 同样，一个失败的 ``assert`` 或类似的条件将以一个内置的 ``Panic(uint256)`` 类型的错误来恢复。
 
 .. note::
+<<<<<<< HEAD
     错误数据应该只被用来指示失败，而不是作为控制流的手段。
     原因是内部调用的恢复数据默认是通过外部调用链传播回来的。
     这意味着内部调用可以 ”伪造” 恢复数据，使它看起来像是来自调用它的合约。
+=======
+    Error data should only be used to give an indication of failure, but
+    not as a means for control-flow. The reason is that the revert data
+    of inner calls is propagated back through the chain of external calls
+    by default. This means that an inner call
+    can "forge" revert data that looks like it could have come from the
+    contract that called it.
+
+Members of Errors
+=================
+
+- ``error.selector``: A ``bytes4`` value containing the error selector.
+>>>>>>> 7bfec3ba706d1fce6b3687f364c1db2dcf8cbbb9

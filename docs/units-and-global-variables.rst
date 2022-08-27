@@ -358,4 +358,19 @@ ABI编码和解码函数
     类型 ``T`` 所能代表的最小值。
 
 ``type(T).max``
+<<<<<<< HEAD
     类型 ``T`` 所能代表的最大值。
+=======
+    The largest value representable by type ``T``.
+
+Reserved Keywords
+=================
+
+These keywords are reserved in Solidity. They might become part of the syntax in the future:
+
+``after``, ``alias``, ``apply``, ``auto``, ``byte``, ``case``, ``copyof``, ``default``,
+``define``, ``final``, ``implements``, ``in``, ``inline``, ``let``, ``macro``, ``match``,
+``mutable``, ``null``, ``of``, ``partial``, ``promise``, ``reference``, ``relocatable``,
+``sealed``, ``sizeof``, ``static``, ``supports``, ``switch``, ``typedef``, ``typeof``,
+``var``.
+>>>>>>> 7bfec3ba706d1fce6b3687f364c1db2dcf8cbbb9
