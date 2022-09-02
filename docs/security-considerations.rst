@@ -84,7 +84,12 @@
         }
     }
 
+<<<<<<< HEAD
 为了避免重入，您可以使用 检查-生效-交互（Checks-Effects-Interactions）模式，下面将进一步介绍：
+=======
+To avoid re-entrancy, you can use the Checks-Effects-Interactions pattern as
+demonstrated below:
+>>>>>>> 51929652291a833889c2f3132b2ca6f037c02a56
 
 .. code-block:: solidity
 
@@ -102,8 +107,22 @@
         }
     }
 
+<<<<<<< HEAD
 请注意，重入不仅是以太传输的影响，也是对另一个合约的任何函数调用的影响。
 此外，您还必须考虑到多合约的情况。一个被调用的合约可以修改您所依赖的另一个合约的状态。
+=======
+The Checks-Effects-Interactions pattern ensures that all code paths through a contract complete all required checks
+of the supplied parameters before modifying the contract's state (Checks); only then it makes any changes to the state (Effects);
+it may make calls to functions in other contracts *after* all planned state changes have been written to
+storage (Interactions). This is a common foolproof way to prevent *re-entrancy attacks*, where an externally called
+malicious contract is able to double-spend an allowance, double-withdraw a balance, among other things, by using logic that calls back into the
+original contract before it has finalized its transaction.
+
+Note that re-entrancy is not only an effect of Ether transfer but of any
+function call on another contract. Furthermore, you also have to take
+multi-contract situations into account. A called contract could modify the
+state of another contract you depend on.
+>>>>>>> 51929652291a833889c2f3132b2ca6f037c02a56
 
 gas 限制和循环
 ===================
@@ -178,18 +197,18 @@ gas 限制和循环
     contract ProxyWithMoreFunctionality {
         PermissionlessProxy proxy;
 
-        function callOther(address _addr, bytes memory _payload) public
+        function callOther(address addr, bytes memory payload) public
                 returns (bool, bytes memory) {
-            return proxy.callOther(_addr, _payload);
+            return proxy.callOther(addr, payload);
         }
         // 其他函数和其他功能
     }
 
     // 这是完整的合约，它没有其他功能，不需要任何权限就可以工作。
     contract PermissionlessProxy {
-        function callOther(address _addr, bytes memory _payload) public
+        function callOther(address addr, bytes memory payload) public
                 returns (bool, bytes memory) {
-            return _addr.call(_payload);
+            return addr.call(payload);
         }
     }
 
@@ -294,17 +313,17 @@ Solidity ``mapping`` 类型（见 :ref:`mapping-types`）是一个仅有存储�
     contract Map {
         mapping (uint => uint)[] array;
 
-        function allocate(uint _newMaps) public {
-            for (uint i = 0; i < _newMaps; i++)
+        function allocate(uint newMaps) public {
+            for (uint i = 0; i < newMaps; i++)
                 array.push();
         }
 
-        function writeMap(uint _map, uint _key, uint _value) public {
-            array[_map][_key] = _value;
+        function writeMap(uint map, uint key, uint value) public {
+            array[map][key] = value;
         }
 
-        function readMap(uint _map, uint _key) public view returns (uint) {
-            return array[_map][_key];
+        function readMap(uint map, uint key) public view returns (uint) {
+            return array[map][key];
         }
 
         function eraseMaps() public {
