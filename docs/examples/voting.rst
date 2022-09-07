@@ -90,6 +90,7 @@
         function delegate(address to) external {
             // 指定引用
             Voter storage sender = voters[msg.sender];
+            require(sender.weight != 0, "You have no right to vote");
             require(!sender.voted, "You already voted.");
 
             require(to != msg.sender, "Self-delegation is disallowed.");
@@ -106,13 +107,23 @@
                 require(to != msg.sender, "Found loop in delegation.");
             }
 
+<<<<<<< HEAD
             // `sender` 是一个引用, 相当于对 `voters[msg.sender].voted` 进行修改
             Voter storage delegate_ = voters[to];
 
             // 选民不能委托给不能投票的钱包。
+=======
+            Voter storage delegate_ = voters[to];
+
+            // Voters cannot delegate to accounts that cannot vote.
+>>>>>>> 548a4b4ac6934b1103f93069fd69c11d2e33c27e
             require(delegate_.weight >= 1);
+
+            // Since `sender` is a reference, this
+            // modifies `voters[msg.sender]`.
             sender.voted = true;
             sender.delegate = to;
+
             if (delegate_.voted) {
                 // 若被委托者已经投过票了，直接增加得票数。
                 proposals[delegate_.vote].voteCount += sender.weight;
@@ -162,5 +173,13 @@
 可能的优化
 =====================
 
+<<<<<<< HEAD
 当前，为了把投票权分配给所有参与者，需要执行很多交易。
 您有没有更好的主意？
+=======
+Currently, many transactions are needed to
+assign the rights to vote to all participants.
+Moreover, if two or more proposals have the same
+number of votes, ``winningProposal()`` is not able
+to register a tie. Can you think of a way to fix these issues?
+>>>>>>> 548a4b4ac6934b1103f93069fd69c11d2e33c27e

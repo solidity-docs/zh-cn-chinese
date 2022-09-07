@@ -133,8 +133,13 @@ Solidity使用 ``extcodesize`` 操作码来检查即将被调用的合约是否�
     使用 ``f.value(x).gas(g)()``。这在Solidity 0.6.2中被废弃，
     并且从Solidity 0.7.0开始不再支持。
 
+<<<<<<< HEAD
 具名调用和匿名函数参数
 ----------------------
+=======
+Function Calls with Named Parameters
+------------------------------------
+>>>>>>> 548a4b4ac6934b1103f93069fd69c11d2e33c27e
 
 函数调用参数可以用名字来表示，如果用 ``{ }`` 括起来的话，
 可以用任何顺序，如下面的例子所示。
@@ -158,11 +163,21 @@ Solidity使用 ``extcodesize`` 操作码来检查即将被调用的合约是否�
 
     }
 
+<<<<<<< HEAD
 省略函数参数名称
 -----------------
 
 未使用的参数（尤其是返回参数）的名称可以省略。
 这些参数将仍然存在于堆栈中，但它们是不可访问的。
+=======
+Omitted Names in Function Definitions
+-------------------------------------
+
+The names of parameters and return values in the function declaration can be omitted.
+Those items with omitted names will still be present on the stack, but they are
+inaccessible by name. An omitted return value name
+can still return a value to the caller by use of the ``return`` statement.
+>>>>>>> 548a4b4ac6934b1103f93069fd69c11d2e33c27e
 
 .. code-block:: solidity
 
@@ -258,7 +273,7 @@ Solidity使用 ``extcodesize`` 操作码来检查即将被调用的合约是否�
                 salt,
                 keccak256(abi.encodePacked(
                     type(D).creationCode,
-                    arg
+                    abi.encode(arg)
                 ))
             )))));
 
