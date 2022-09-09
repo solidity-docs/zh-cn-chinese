@@ -2,11 +2,19 @@
 Solidity 源文件结构
 **********************
 
+<<<<<<< HEAD
 源文件可以包含任意数量的
 :ref:`contract 定义<contract_structure>`, import_ 指令,
 :ref:`pragma 指令<pragma>` 和 :ref:`struct<structs>`,
 :ref:`enum<enums>`, :ref:`function<functions>`, :ref:`error<errors>`
 以及 :ref:`constant 变量<constants>` 的定义。
+=======
+Source files can contain an arbitrary number of
+:ref:`contract definitions<contract_structure>`, import_ ,
+:ref:`pragma<pragma>` and :ref:`using for<using-for>` directives and
+:ref:`struct<structs>`, :ref:`enum<enums>`, :ref:`function<functions>`, :ref:`error<errors>`
+and :ref:`constant variable<constants>` definitions.
+>>>>>>> 99428838e5bc2dbc255b80cf406a72ee408bd57a
 
 .. index:: ! license, spdx
 
@@ -51,7 +59,7 @@ Solidity遵循 `npm 的推荐 <https://docs.npmjs.com/cli/v7/configuring-npm/pac
 如果您 :ref:`import<import>` 另一个文件，
 该文件的pragma指令 *不会* 自动应用于导入文件。
 
-.. index:: ! pragma, version
+.. index:: ! pragma;version
 
 .. _version_pragma:
 
@@ -83,19 +91,35 @@ Solidity遵循 `npm 的推荐 <https://docs.npmjs.com/cli/v7/configuring-npm/pac
   它只是指示编译器检查它的版本是否与编译指示所要求的版本一致。
   如果不匹配，编译器会发出一个错误。
 
+<<<<<<< HEAD
 
 ABI编码编译指示
+=======
+.. index:: ! ABI coder, ! pragma; abicoder, pragma; ABIEncoderV2
+.. _abi_coder:
+
+ABI Coder Pragma
+>>>>>>> 99428838e5bc2dbc255b80cf406a72ee408bd57a
 ----------------
 
 通过使用 ``pragma abicoder v1`` 或 ``pragma abicoder v2`` ，
 您可以选择ABI编码器和解码器的两种实现。
 
+<<<<<<< HEAD
 新的ABI编码器（v2）能够对任意的嵌套数组和结构进行编码和解码。
 它可能产生不太理想的代码，并且没有得到像旧编码器那样多的测试，
 但从 Solidity 0.6.0 起，它被认为是非实验性的。
 您仍然必须使用 ``pragma abicoder v2;`` 明确激活它。
 由于它将从Solidity 0.8.0 开始被默认激活，
 所以可以选择使用 ``pragma abicoder v1;`` 来选择旧的编码器。
+=======
+The new ABI coder (v2) is able to encode and decode arbitrarily nested
+arrays and structs. Apart from supporting more types, it involves more extensive
+validation and safety checks, which may result in higher gas costs, but also heightened
+security. It is considered
+non-experimental as of Solidity 0.6.0 and it is enabled by default starting
+with Solidity 0.8.0. The old ABI coder can still be selected using ``pragma abicoder v1;``.
+>>>>>>> 99428838e5bc2dbc255b80cf406a72ee408bd57a
 
 新编码器所支持的类型集是旧编码器所支持的类型的一个严格超集。
 使用新编码器的合约可以与不使用新编码器的合约进行交互，没有任何限制。
@@ -116,8 +140,7 @@ ABI编码编译指示
   到Solidity 0.7.4为止，可以通过使用 ``pragma experimental ABIEncoderV2``
   来选择ABI编码器v2，但不可能明确选择编码器v1，因为它是默认的。
 
-.. index:: ! pragma, experimental
-
+.. index:: ! pragma; experimental
 .. _experimental_pragma:
 
 实验性编译指示
@@ -127,6 +150,7 @@ ABI编码编译指示
 它可以用来启用编译器或语言中尚未默认启用的功能。
 目前支持以下实验性编译指示：
 
+.. index:: ! pragma; ABIEncoderV2
 
 ABI编码器V2
 ~~~~~~~~~~~~
@@ -134,6 +158,7 @@ ABI编码器V2
 因为ABI编码器v2不再被认为是实验性的，
 它可以通过 ``pragma abicoder v2`` （请见上文）从Solidity 0.7.4开始选择。
 
+.. index:: ! pragma; SMTChecker
 .. _smt_checker:
 
 SMT检查器
