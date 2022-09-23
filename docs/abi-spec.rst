@@ -13,20 +13,34 @@
 包括从区块链外部和合约间的交互。数据根据其类型进行编码，如本规范中所述。
 编码不是自描述的，因此需要一种特定的概要（schema）来进行解码。
 
+<<<<<<< HEAD
 我们假设合约的接口函数是强类型的，在编译时就知道，并且是静态的。
 我们假设所有合约在编译时都有它们所调用的任何合约的接口定义。
+=======
+We assume that the interface functions of a contract are strongly typed, known at compilation time and static.
+We assume that all contracts will have the interface definitions of any contracts they call available at compile-time.
+>>>>>>> d0103b5776a2acdcc3e9b20f2c23e43e4f060767
 
 本规范不涉及其接口是动态的或其他只有在运行时才知道的合约。
 
 .. _abi_function_selector:
-.. index:: selector
+.. index:: ! selector; of a function
 
 函数选择器
 =================
 
+<<<<<<< HEAD
 一个函数调用数据的前四个字节指定了要调用的函数。它是函数签名的Keccak-256哈希值的前4字节（高位在左的大端序）。
 签名被定义为基本原型的典型表达，没有数据位置的指定，
 也就是带有括号的参数类型列表的函数名。参数类型由一个逗号分割 - 不使用空格。
+=======
+The first four bytes of the call data for a function call specifies the function to be called. It is the
+first (left, high-order in big-endian) four bytes of the Keccak-256 hash of the signature of
+the function. The signature is defined as the canonical expression of the basic prototype without data
+location specifier, i.e.
+the function name with the parenthesised list of parameter types. Parameter types are split by a single
+comma — no spaces are used.
+>>>>>>> d0103b5776a2acdcc3e9b20f2c23e43e4f060767
 
 .. note::
     一个函数的返回类型不是这个签名的一部分。在 :ref:`Solidity的函数重载 <overload-function>` 中，
@@ -125,7 +139,12 @@ Solidity 支持上面介绍的除了元祖之外的所有同名类型。
    即需要四次读取次数来检索 ``a_i[k][l][r]``。
    在ABI的前一个版本中，在最坏的情况下，读取次数的数量与动态参数的总数成线性比例。
 
+<<<<<<< HEAD
 2. 变量或数组元素的数据不与其他数据交错，它是可重定位的，即它只使用相对的 "地址"。
+=======
+2. The data of a variable or an array element is not interleaved with other data and it is
+   relocatable, i.e. it only uses relative "addresses".
+>>>>>>> d0103b5776a2acdcc3e9b20f2c23e43e4f060767
 
 
 编码的形式化规范
@@ -179,9 +198,14 @@ Solidity 支持上面介绍的除了元祖之外的所有同名类型。
 
 - ``T[]`` 当 ``X`` 有 ``k`` 个元素 （ ``k`` 的类型为 ``uint256``）：
 
-  ``enc(X) = enc(k) enc([X[0], ..., X[k-1]])``
+  ``enc(X) = enc(k) enc((X[0], ..., X[k-1]))``
 
+<<<<<<< HEAD
   即，它就像是个由静态大小 ``k`` 的数组那样被编码的，且由元素的个数作为前缀。
+=======
+  i.e. it is encoded as if it were a tuple with ``k`` elements of the same type (resp. an array of static size ``k``), prefixed with
+  the number of elements.
+>>>>>>> d0103b5776a2acdcc3e9b20f2c23e43e4f060767
 
 - 具有 ``k`` 字节长度的 ``bytes``， （假设其类型为 ``uint256``）：
 
@@ -237,8 +261,13 @@ Solidity 支持上面介绍的除了元祖之外的所有同名类型。
     }
 
 
+<<<<<<< HEAD
 因此，对于我们的例子 ``Foo``，如果我们想用 ``69`` 和 ``true`` 做参数调用 ``baz``，
 我们总共需要传送 68 字节，可以分解为：
+=======
+Thus, for our ``Foo`` example if we wanted to call ``baz`` with the parameters ``69`` and
+``true``, we would pass 68 bytes total, which can be broken down into:
+>>>>>>> d0103b5776a2acdcc3e9b20f2c23e43e4f060767
 
 - ``0xcdcd77c0``： 方法ID。这源自ASCII格式的 ``baz(uint32,bool)`` 签名的 Keccak 哈希的前 4 字节。
 - ``0x0000000000000000000000000000000000000000000000000000000000000045``： 第一个参数，
@@ -293,8 +322,13 @@ Solidity 支持上面介绍的除了元祖之外的所有同名类型。
 动态类型的使用
 ====================
 
+<<<<<<< HEAD
 用值为 ``(0x123, [0x456, 0x789], "1234567890", "Hello, world!")`` 的签名参数调用
 函数 ``f(uint,uint32[],bytes10,bytes)``，其的编码方式如下：
+=======
+A call to a function with the signature ``f(uint256,uint32[],bytes10,bytes)`` with values
+``(0x123, [0x456, 0x789], "1234567890", "Hello, world!")`` is encoded in the following way:
+>>>>>>> d0103b5776a2acdcc3e9b20f2c23e43e4f060767
 
 取得 ``sha3("f(uint256,uint32[],bytes10,bytes)")`` 的前 4 字节，也就是 ``0x8be65246``。
 然后我们对所有 4 个参数的头部进行编码。 对静态类型 ``uint256`` 和 ``bytes10``，
@@ -333,8 +367,13 @@ Solidity 支持上面介绍的除了元祖之外的所有同名类型。
       000000000000000000000000000000000000000000000000000000000000000d
       48656c6c6f2c20776f726c642100000000000000000000000000000000000000
 
+<<<<<<< HEAD
 让我们使用相同的原理来对一个签名为 ``g(uint[][],string[])`` ，参数值为
 ``([[1, 2], [3]], ["one", "two", "three"])`` 的函数来进行编码；但从最原子的部分开始：
+=======
+Let us apply the same principle to encode the data for a function with a signature ``g(uint256[][],string[])``
+with values ``([[1, 2], [3]], ["one", "two", "three"])`` but start from the most atomic parts of the encoding:
+>>>>>>> d0103b5776a2acdcc3e9b20f2c23e43e4f060767
 
 首先我们将第一个根数组 ``[[1, 2], [3]]`` 的第一个嵌入的动态数组 ``[1, 2]`` 的长度和数据进行编码：
 
@@ -401,7 +440,12 @@ Solidity 支持上面介绍的除了元祖之外的所有同名类型。
 所以 ``e = 0x00000000000000000000000000000000000000000000000000000000000000e0``。
 
 
+<<<<<<< HEAD
 注意，根数组的嵌入元素的编码并不互相依赖，且具有对于函数签名 ``g(string[],uint[][])`` 所相同的编码。
+=======
+Note that the encodings of the embedded elements of the root arrays are not dependent on each other
+and have the same encodings for a function with a signature ``g(string[],uint256[][])``.
+>>>>>>> d0103b5776a2acdcc3e9b20f2c23e43e4f060767
 
 然后我们对第一个根数组的长度进行编码：
 
@@ -480,6 +524,7 @@ Solidity 支持上面介绍的除了元祖之外的所有同名类型。
 开发者可以通过定义具有两个参数的事件 -- 一个是索引的，一个是不索引的 -- 来克服这种权衡，实现高效搜索和任意可读性。
 
 .. _abi_errors:
+.. index:: error, selector; of an error
 
 错误
 ======
@@ -567,9 +612,17 @@ Constructor 和 fallback 函数没有 ``name`` 或 ``outputs``。Fallback 函数
   * ``components``： 供元组（tuple） 类型使用（详见下文）。
 
 .. note::
+<<<<<<< HEAD
   在JSON数组中可能有多个具有相同名称的错误，甚至具有相同的签名，
   例如，如果错误源自合约中的不同文件或从另一个合约引用。
   对于ABI来说，只有错误本身的名称是相关的，而不是它的定义位置。
+=======
+  There can be multiple errors with the same name and even with identical signature
+  in the JSON array; for example, if the errors originate from different
+  files in the smart contract or are referenced from another smart contract.
+  For the ABI, only the name of the error itself is relevant and not where it is
+  defined.
+>>>>>>> d0103b5776a2acdcc3e9b20f2c23e43e4f060767
 
 
 例如，
@@ -615,6 +668,7 @@ Constructor 和 fallback 函数没有 ``name`` 或 ``outputs``。Fallback 函数
 处理元组类型
 --------------------
 
+<<<<<<< HEAD
 尽管名称被有意地不作为 ABI 编码的一部分，但将它们包含进JSON来显示给最终用户是非常合理的。其结构会按下列方式进行嵌套：
 
 一个拥有 ``name``， ``type`` 和潜在的 ``components`` 成员的对象描述了某种类型的变量。
@@ -622,6 +676,18 @@ Constructor 和 fallback 函数没有 ``name`` 或 ``outputs``。Fallback 函数
 也就是说，在 ``tuple`` 之后紧跟一个 ``[]`` 或有整数 ``k`` 的 ``[k]``，才
 能确定一个元组。 元组的组件元素会被存储在成员 ``components`` 中，
 它是一个数组类型，且与顶级对象具有同样的结构，只是在这里不允许 ``已索引的（indexed）`` 数组元素。
+=======
+Despite the fact that names are intentionally not part of the ABI encoding, they do make a lot of sense to be included
+in the JSON to enable displaying it to the end user. The structure is nested in the following way:
+
+An object with members ``name``, ``type`` and potentially ``components`` describes a typed variable.
+The canonical type is determined until a tuple type is reached and the string description up
+to that point is stored in ``type`` prefix with the word ``tuple``, i.e. it will be ``tuple`` followed by
+a sequence of ``[]`` and ``[k]`` with
+integers ``k``. The components of the tuple are then stored in the member ``components``,
+which is of an array type and has the same structure as the top-level object except that
+``indexed`` is not allowed there.
+>>>>>>> d0103b5776a2acdcc3e9b20f2c23e43e4f060767
 
 示例代码：
 
@@ -703,6 +769,7 @@ Constructor 和 fallback 函数没有 ``name`` 或 ``outputs``。Fallback 函数
 严格的编码模式
 ====================
 
+<<<<<<< HEAD
 严格的编码模式是指导致与上述正式规范中定义的编码完全相同的模式。
 这意味着偏移量必须尽可能小，同时还不能在数据区域产生重叠，
 因此不允许有间隙。
@@ -710,6 +777,15 @@ Constructor 和 fallback 函数没有 ``name`` 或 ``outputs``。Fallback 函数
 通常，ABI解码器是以直接的方式编写的，只是遵循偏移指针，
 但有些解码器可能会强制执行严格模式。
 Solidity ABI 解码器目前并不强制执行严格模式，但编码器总是以严格模式创建数据。
+=======
+Strict encoding mode is the mode that leads to exactly the same encoding as defined in the formal specification above.
+This means that offsets have to be as small as possible while still not creating overlaps in the data areas, and thus no gaps are
+allowed.
+
+Usually, ABI decoders are written in a straightforward way by just following offset pointers, but some decoders
+might enforce strict mode. The Solidity ABI decoder currently does not enforce strict mode, but the encoder
+always creates data in strict mode.
+>>>>>>> d0103b5776a2acdcc3e9b20f2c23e43e4f060767
 
 非标准打包模式
 ========================
@@ -734,6 +810,7 @@ Solidity ABI 解码器目前并不强制执行严格模式，但编码器总是�
 
 更具体地说：
 
+<<<<<<< HEAD
 - 在编码过程中，所有东西都是直接编码的。这意味着没有像ABI编码那样区分头和尾，也没有对数组的长度进行编码。
 - ``abi.encodePacked`` 的直接参数被编码，没有填充，
   只要不是数组（或 ``string`` 或 ``bytes`` ）。
@@ -741,6 +818,20 @@ Solidity ABI 解码器目前并不强制执行严格模式，但编码器总是�
 - 动态大小的类型，如 ``string``， ``bytes`` 或 ``uint[]``，在编码时没有长度字段。
 - ``string`` 或 ``bytes`` 的编码不会在末尾应用填充，
   除非它是数组或结构的一部分（然后它被填充为32字节的倍数）。
+=======
+- During the encoding, everything is encoded in-place. This means that there is
+  no distinction between head and tail, as in the ABI encoding, and the length
+  of an array is not encoded.
+- The direct arguments of ``abi.encodePacked`` are encoded without padding,
+  as long as they are not arrays (or ``string`` or ``bytes``).
+- The encoding of an array is the concatenation of the
+  encoding of its elements **with** padding.
+- Dynamically-sized types like ``string``, ``bytes`` or ``uint[]`` are encoded
+  without their length field.
+- The encoding of ``string`` or ``bytes`` does not apply padding at the end,
+  unless it is part of an array or struct (then it is padded to a multiple of
+  32 bytes).
+>>>>>>> d0103b5776a2acdcc3e9b20f2c23e43e4f060767
 
 一般来说，只要有两个动态大小的元素，编码就会模糊不清，因为缺少长度字段。
 
@@ -763,8 +854,14 @@ Solidity ABI 解码器目前并不强制执行严格模式，但编码器总是�
 索引事件参数的编码
 ====================================
 
+<<<<<<< HEAD
 不属于值类型的索引事件参数，即数组和结构，不直接存储，
 而是存储一个编码的keccak256-hash。这个编码的定义如下：
+=======
+Indexed event parameters that are not value types, i.e. arrays and structs are not
+stored directly but instead a Keccak-256 hash of an encoding is stored. This encoding
+is defined as follows:
+>>>>>>> d0103b5776a2acdcc3e9b20f2c23e43e4f060767
 
 - ``bytes`` 和 ``string`` 值的编码只是字符串的内容，没有任何填充或长度前缀。
 - 结构的编码是其成员编码的串联，总是填充为32字节的倍数（甚至是 ``bytes`` 和 ``string``）。
