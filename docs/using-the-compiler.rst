@@ -286,8 +286,13 @@ EVM版本选项
         // 影响到类型检查和代码生成。版本可以是 homestead,
         // tangerineWhistle, spuriousDragon, byzantium, constantinople, petersburg, istanbul or berlin
         "evmVersion": "byzantium",
+<<<<<<< HEAD
         // 可选：改变编译管道以通过Yul的中间表示法。
         // 这是一个高度试验性的功能，不能用于生产。这在默认情况下是假的。
+=======
+        // Optional: Change compilation pipeline to go through the Yul intermediate representation.
+        // This is false by default.
+>>>>>>> 2201526a90a7ae318273e16480a88b4c7df8e690
         "viaIR": true,
         // 可选： 调试设置
         "debug": {
@@ -394,11 +399,22 @@ EVM版本选项
             "source1.sol": ["contract1"],
             "source2.sol": ["contract2", "contract3"]
           },
+<<<<<<< HEAD
           // 选择除法和模数操作是否应该用松弛变量的乘法来代替。默认为 `true`。
           // 如果您使用CHC引擎而不使用Spacer作为Horn求解器（例如使用Eldarica），建议在这里使用 `false`。
           // 关于这个选项的更详细解释，请参见形式化验证部分。
           "divModWithSlacks": true,
           // 选择要使用的模型检查器引擎：所有（默认）， bmc， chc， 无。
+=======
+          // Choose how division and modulo operations should be encoded.
+          // When using `false` they are replaced by multiplication with slack
+          // variables. This is the default.
+          // Using `true` here is recommended if you are using the CHC engine
+          // and not using Spacer as the Horn solver (using Eldarica, for example).
+          // See the Formal Verification section for a more detailed explanation of this option.
+          "divModNoSlacks": false,
+          // Choose which model checker engine to use: all (default), bmc, chc, none.
+>>>>>>> 2201526a90a7ae318273e16480a88b4c7df8e690
           "engine": "chc",
           // 选择哪些类型的不变性应该报告给用户：合约，重入。
           "invariants": ["contract", "reentrancy"],
@@ -579,6 +595,7 @@ EVM版本选项
 错误类型
 ~~~~~~~~~~~
 
+<<<<<<< HEAD
 1. ``JSONError``： JSON输入不符合所需格式，例如，输入不是JSON对象，不支持的语言等。
 2. ``IOError``： IO和导入处理错误，例如，在提供的源里包含无法解析的URL或哈希值不匹配。
 3. ``ParserError``： 源代码不符合语言规则。
@@ -593,6 +610,23 @@ EVM版本选项
 12. ``FatalError``： 未正确处理致命错误——应将此报告为一个issue。
 13. ``Warning``： 警告，不会停止编译，但应尽可能处理。
 14. ``Info``： 编译器认为用户可能会在其中发现有用的信息，并不危险，也不一定需要处理。
+=======
+1. ``JSONError``: JSON input doesn't conform to the required format, e.g. input is not a JSON object, the language is not supported, etc.
+2. ``IOError``: IO and import processing errors, such as unresolvable URL or hash mismatch in supplied sources.
+3. ``ParserError``: Source code doesn't conform to the language rules.
+4. ``DocstringParsingError``: The NatSpec tags in the comment block cannot be parsed.
+5. ``SyntaxError``: Syntactical error, such as ``continue`` is used outside of a ``for`` loop.
+6. ``DeclarationError``: Invalid, unresolvable or clashing identifier names. e.g. ``Identifier not found``
+7. ``TypeError``: Error within the type system, such as invalid type conversions, invalid assignments, etc.
+8. ``UnimplementedFeatureError``: Feature is not supported by the compiler, but is expected to be supported in future versions.
+9. ``InternalCompilerError``: Internal bug triggered in the compiler - this should be reported as an issue.
+10. ``Exception``: Unknown failure during compilation - this should be reported as an issue.
+11. ``CompilerError``: Invalid use of the compiler stack - this should be reported as an issue.
+12. ``FatalError``: Fatal error not processed correctly - this should be reported as an issue.
+13. ``YulException``: Error during Yul Code generation - this should be reported as an issue.
+14. ``Warning``: A warning, which didn't stop the compilation, but should be addressed if possible.
+15. ``Info``: Information that the compiler thinks the user might find useful, but is not dangerous and does not necessarily need to be addressed.
+>>>>>>> 2201526a90a7ae318273e16480a88b4c7df8e690
 
 
 .. _compiler-tools:
