@@ -144,8 +144,12 @@
 代码行的最大长度
 ===================
 
+<<<<<<< HEAD
 基于 `PEP 8 建议 <https://www.python.org/dev/peps/pep-0008/#maximum-line-length>`_，
 将代码行的字符长度控制在 79（或 99）字符来帮助读者阅读代码。
+=======
+Maximum suggested line length is 120 characters.
+>>>>>>> 16c4c7565acf58b2509bd062bfcf8b219c0ccccd
 
 折行时应该遵从以下指引。
 
@@ -1240,7 +1244,12 @@ Import 语句应始终放在文件的顶部。
 
 * ``singleTrailingUnderscore_``
 
+<<<<<<< HEAD
 当所起名称与内建或保留关键字相冲突时，建议照此惯例在名称后边添加下划线。
+=======
+This convention is suggested when the desired name collides with that of
+an existing state variable, function, built-in or otherwise reserved name.
+>>>>>>> 16c4c7565acf58b2509bd062bfcf8b219c0ccccd
 
 .. _style_guide_natspec:
 
