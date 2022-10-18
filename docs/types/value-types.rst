@@ -202,22 +202,41 @@
     如果您需要一个 ``address`` 类型的变量，并计划向其发送以太，那么就将其类型声明为 ``address payable``，
     以使这一要求可行。另外，尽量尽早地进行这种区分或转换。
 
+<<<<<<< HEAD
 运算符：
+=======
+    The distinction between ``address`` and ``address payable`` was introduced with version 0.5.0.
+    Also starting from that version, contracts are not implicitly convertible to the ``address`` type, but can still be explicitly converted to
+    ``address`` or to ``address payable``, if they have a receive or payable fallback function.
+
+
+Operators:
+>>>>>>> 2cb618a5c3059b1018a6e99bce60249b7577fd49
 
 * ``<=``, ``<``, ``==``, ``!=``, ``>=`` 和 ``>``
 
 .. warning::
+<<<<<<< HEAD
     如果您使用较大字节的类型转换为 ``address``，例如 ``bytes32``，那么 ``address`` 就被截断了。
     为了减少转换的模糊性，0.4.24及以上版本的编译器强迫你在转换中明确截断。以32字节的值
     ``0x111122333344556677888899AAAABBBBCCCCDDDDEEFFFFCCCC`` 为例。
+=======
+    If you convert a type that uses a larger byte size to an ``address``, for example ``bytes32``, then the ``address`` is truncated.
+    To reduce conversion ambiguity, starting with version 0.4.24, the compiler will force you to make the truncation explicit in the conversion.
+    Take for example the 32-byte value ``0x111122223333444455556666777788889999AAAABBBBCCCCDDDDEEEEFFFFCCCC``.
+>>>>>>> 2cb618a5c3059b1018a6e99bce60249b7577fd49
 
     您可以使用 ``address(uint160(bytes20(b)))``，结果是 ``0x111122223333444455556666777788889999aAaa``，
     或者您可以使用 ``address(uint160(uint256(b)))``，结果是 ``0x777788889999AaAAbBbbCcccddDdeeeEfFFfCcCc``。
 
 .. note::
+<<<<<<< HEAD
     ``address`` 和 ``address payable`` 之间的区别是在0.5.0版本中引入的。
     同样从该版本开始，合约不从地址类型派生，但仍然可以明确转换为 ``address`` 或 ``address payable``，
     如果它们有一个 receive 或 payable 类型的 fallback 函数。
+=======
+    Mixed-case hexadecimal numbers conforming to `EIP-55 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-55.md>`_ are automatically treated as literals of the ``address`` type. See :ref:`Address Literals<address_literals>`.
+>>>>>>> 2cb618a5c3059b1018a6e99bce60249b7577fd49
 
 .. _members-of-addresses:
 
@@ -326,9 +345,15 @@ Send是 ``transfer`` 的低级对应部分。如果执行失败，当前的合�
 
 * ``code`` 和 ``codehash``
 
+<<<<<<< HEAD
 您可以查询任何智能合约的部署代码。使用 ``.code`` 获得作为 ``bytes memory`` 的EVM字节码，
 这可能是空的。使用 ``.codehash`` 获得该代码的Keccak-256哈希值（作为 ``bytes32``）。
 注意，使用 ``addr.codehash`` 比 ``keccak256(addr.code)`` 更便宜。
+=======
+You can query the deployed code for any smart contract. Use ``.code`` to get the EVM bytecode as a
+``bytes memory``, which might be empty. Use ``.codehash`` to get the Keccak-256 hash of that code
+(as a ``bytes32``). Note that ``addr.codehash`` is cheaper than using ``keccak256(addr.code)``.
+>>>>>>> 2cb618a5c3059b1018a6e99bce60249b7577fd49
 
 .. note::
     所有的合约都可以转换为 ``address`` 类型，所以可以用 ``address(this).balance`` 查询当前合约的余额。
@@ -432,7 +457,12 @@ Send是 ``transfer`` 的低级对应部分。如果执行失败，当前的合�
 整数字面常数由范围在 0-9 的一串数字组成，表现成十进制。
 例如， ``69`` 表示十进制数字 69。 Solidity 中是没有八进制的，因此前置 0 是无效的。
 
+<<<<<<< HEAD
 十进制小数字面常数带有一个 ``.``，至少在其一边会有一个数字。 比如： ``1.``, ``.1`` 和 ``1.3``。
+=======
+Decimal fractional literals are formed by a ``.`` with at least one number after the decimal point.
+Examples include ``.1`` and ``1.3`` (but not ``1.``).
+>>>>>>> 2cb618a5c3059b1018a6e99bce60249b7577fd49
 
 也支持 ``2e10`` 形式的科学符号，其中尾数可以是小数，但指数必须是一个整数。
 字面的 ``MeE`` 相当于 ``M * 10**E``。
@@ -443,16 +473,39 @@ Send是 ``transfer`` 的低级对应部分。如果执行失败，当前的合�
 下划线只允许在两个数字之间，并且只允许一个连续的下划线。
 含有下划线的数字字面没有额外的语义，下划线被忽略。
 
+<<<<<<< HEAD
 数值字面常数表达式保留任意精度，直到它们被转换为非字面常数类型
 （即通过与非字面常数类型一起使用或通过显式转换）。
 这意味着在数值常量表达式中，计算不会溢出，除法不会截断。
+=======
+Number literal expressions retain arbitrary precision until they are converted to a non-literal type (i.e. by
+using them together with anything other than a number literal expression (like boolean literals) or by explicit conversion).
+This means that computations do not overflow and divisions do not truncate
+in number literal expressions.
+>>>>>>> 2cb618a5c3059b1018a6e99bce60249b7577fd49
 
 例如， ``(2**800 + 1) - 2**800`` 的结果是常数 ``1`` （类型 ``uint8``），
 尽管中间的结果甚至不符合机器字的大小。此外， ``.5 * 8`` 的结果是整数 ``4`` （尽管中间使用了非整数）。
 
+<<<<<<< HEAD
 只要操作数是整数，任何可以应用于整数的操作数也可以应用于数值字面常数表达式。
 如果两者中的任何一个是小数，则不允许进行位操作，
 如果指数是小数，则不允许进行幂运算（因为这可能导致无理数）。
+=======
+.. warning::
+    While most operators produce a literal expression when applied to literals, there are certain operators that do not follow this pattern:
+
+    - Ternary operator (``... ? ... : ...``),
+    - Array subscript (``<array>[<index>]``).
+
+    You might expect expressions like ``255 + (true ? 1 : 0)`` or ``255 + [1, 2, 3][0]`` to be equivalent to using the literal 256
+    directly, but in fact they are computed within the type ``uint8`` and can overflow.
+
+Any operator that can be applied to integers can also be applied to number literal expressions as
+long as the operands are integers. If any of the two is fractional, bit operations are disallowed
+and exponentiation is disallowed if the exponent is fractional (because that might result in
+a non-rational number).
+>>>>>>> 2cb618a5c3059b1018a6e99bce60249b7577fd49
 
 以数值字面常数表达式为左（或基数）操作数，以整数类型为右（指数）操作数的移位和幂运算，
 总是在 ``uint256`` （非负数数值字面常数）或 ``int256`` （负数数值字面常数）类型中进行。
