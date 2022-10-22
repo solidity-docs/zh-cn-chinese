@@ -127,8 +127,13 @@
 短数组（未设置）和长数组（设置）。
 
 .. note::
+<<<<<<< HEAD
   目前不支持处理无效编码的槽，但将来可能会加入。
   如果您通过实验性的基于IR的编译器通道进行编译，读取一个无效编码的槽会导致 ``Panic(0x22)`` 错误。
+=======
+  Handling invalidly encoded slots is currently not supported but may be added in the future.
+  If you are compiling via IR, reading an invalidly encoded slot results in a ``Panic(0x22)`` error.
+>>>>>>> 8830be981725f522fa996a2d79c83e8a3ced76a7
 
 JSON输出
 ===========
@@ -140,7 +145,7 @@ JSON输出
 ``storage`` 对象是一个数组，每个元素都有以下形式：
 
 
-.. code::
+.. code-block:: json
 
 
     {
@@ -164,7 +169,7 @@ JSON输出
 给定的 ``type``，在这里是 ``t_uint256``，代表 ``types`` 中的一个元素，它的形式是：
 
 
-.. code::
+.. code-block:: json
 
     {
         "encoding": "inplace",
@@ -218,7 +223,7 @@ JSON输出
         bytes b1;
     }
 
-.. code:: json
+.. code-block:: json
 
     {
       "storage": [

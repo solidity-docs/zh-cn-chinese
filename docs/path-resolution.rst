@@ -179,11 +179,19 @@ VFS的初始内容取决于您如何调用编译器：
 
 .. note::
 
+<<<<<<< HEAD
     一个源单元的名字只是一个标识符，即使它的值碰巧看起来像一个路径，
     它也不受您在shell中通常期望的规范化规则的约束。
     任何 ``/./`` 或 ``/../`` 的分隔符或多个斜线的序列都是它的一部分。
     当源是通过标准JSON接口提供的时候，完全有可能将不同的内容与源单元的名称联系起来，
     这些名称将指代磁盘上的同一个文件。
+=======
+    A source unit name is just an identifier and even if its value happens to look like a path, it
+    is not subject to the normalization rules you would typically expect in a shell.
+    Any ``/./`` or ``/../`` segments or sequences of multiple slashes remain a part of it.
+    When the source is provided via Standard JSON interface it is entirely possible to associate
+    different content with source unit names that would refer to the same file on disk.
+>>>>>>> 8830be981725f522fa996a2d79c83e8a3ced76a7
 
 当源文件在虚拟文件系统中不可用时，编译器会将源单元名称传递给导入回调。
 主机文件系统加载器将尝试使用它作为路径并在磁盘上查找文件。
@@ -228,6 +236,7 @@ VFS的初始内容取决于您如何调用编译器：
 分隔符是一个正斜杠或字符串的开头/结尾。
 例如，在 ``./abc/...//`` 中，有三个路径段。 ``.``, ``abc`` 和 ``..``。
 
+<<<<<<< HEAD
 编译器以下列方式从导入路径中计算出一个源单元的名称：
 
 1. 首先计算出一个前缀
@@ -239,12 +248,23 @@ VFS的初始内容取决于您如何调用编译器：
 
 2. 然后，前缀被预置到规范化的导入路径中。
    如果前缀不为空，则在它和导入路径之间插入一个单斜线。
+=======
+The compiler resolves the import into a source unit name based on the import path, in the following way:
+
+#. We start with the source unit name of the importing source unit.
+#. The last path segment with preceding slashes is removed from the resolved name.
+#. Then, for every segment in the import path, starting from the leftmost one:
+    - If the segment is ``.``, it is skipped.
+    - If the segment is ``..``, the last path segment with preceding slashes is removed from the resolved name.
+    - Otherwise, the segment (preceded by a single slash if the resolved name is not empty), is appended to the resolved name.
+>>>>>>> 8830be981725f522fa996a2d79c83e8a3ced76a7
 
 删除前面有斜线的最后一个路径段，可以理解为工作原理如下：
 
 1. 超过最后一个斜线的所有内容都被删除（即 ``a/b//c.sol`` 变成 ``a/b//``）。
 2. 所有的尾部斜线被删除（即 ``a/b//`` 变成 ``a/b``）。
 
+<<<<<<< HEAD
 归一化规则与UNIX路径相同，即：
 
 - 所有内部的 ``.`` 段被删除。
@@ -254,6 +274,14 @@ VFS的初始内容取决于您如何调用编译器：
 注意，规范化只在导入路径上执行。
 用于前缀的导入模块的源单元名称仍未被规范化。
 这确保了在导入文件被识别为URL时， ``protocol://`` 部分不会变成 ``protocol:/``。
+=======
+Note that the process normalizes the part of the resolved source unit name that comes from the import path according
+to the usual rules for UNIX paths, i.e. all ``.`` and ``..`` are removed and multiple slashes are
+squashed into a single one.
+On the other hand, the part that comes from the source unit name of the importing module remains unnormalized.
+This ensures that the ``protocol://`` part does not turn into ``protocol:/`` if the importing file
+is identified with a URL.
+>>>>>>> 8830be981725f522fa996a2d79c83e8a3ced76a7
 
 如果导入路径已经规范化，则可以期望上述算法产生非常直观的结果。
 下面是一些例子，告诉您如果不是的话会发生什么：
