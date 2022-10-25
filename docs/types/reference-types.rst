@@ -74,8 +74,15 @@ Calldata是一个不可修改的、非持久性的区域，用于存储函数参
             // 下面的就不可行了；需要在 storage 中创建新的未命名的临时数组，/
             // 但 storage 是“静态”分配的：
             // y = memoryArray;
+<<<<<<< HEAD
             // 下面这一行也不可行，因为这会“重置”指针，
             // 但并没有可以让它指向的合适的存储位置。
+=======
+            // Similarly, "delete y" is not valid, as assignments to local variables
+            // referencing storage objects can only be made from existing storage objects.
+            // It would "reset" the pointer, but there is no sensible location it could point to.
+            // For more details see the documentation of the "delete" operator.
+>>>>>>> 84cdcec2cfb1fe9d4a9171d3ed0ffefd6107ee42
             // delete y;
             g(x); // 调用 g 函数，同时移交对 x 的引用
             h(x); // 调用 h 函数，同时在 memory 中创建一个独立的临时拷贝
@@ -313,8 +320,14 @@ Solidity没有字符串操作函数，但有第三方的字符串库。
     动态存储数组和 ``bytes`` （不是 ``string`` ）有一个叫 ``push(x)`` 的成员函数，
     您可以用它在数组的末端追加一个指定的元素。该函数不返回任何东西。
 **pop()**:
+<<<<<<< HEAD
     动态存储数组和 ``bytes`` （不是 ``string`` ）有一个叫 ``pop()`` 的成员函数，
     您可以用它来从数组的末端移除一个元素。这也隐含地在被删除的元素上调用 :ref:`delete <delete>`。
+=======
+     Dynamic storage arrays and ``bytes`` (not ``string``) have a member
+     function called ``pop()`` that you can use to remove an element from the
+     end of the array. This also implicitly calls :ref:`delete<delete>` on the removed element. The function returns nothing.
+>>>>>>> 84cdcec2cfb1fe9d4a9171d3ed0ffefd6107ee42
 
 .. note::
     通过调用 ``push()`` 增加存储数组的长度有恒定的气体成本，因为存储是零初始化的，
@@ -337,10 +350,20 @@ Solidity没有字符串操作函数，但有第三方的字符串库。
 
     contract ArrayContract {
         uint[2**20] aLotOfIntegers;
+<<<<<<< HEAD
         // 注意下面的代码并不是一对动态数组，
         // 而是一个数组元素为一对变量的动态数组（也就是数组元素为长度为 2 的定长数组的动态数组）。
         // 因为，T[] 总是 T 的一个动态数组，即使 T 本身是一个数组。
         // 所有状态变量的数据位置是 storage。
+=======
+        // Note that the following is not a pair of dynamic arrays but a
+        // dynamic array of pairs (i.e. of fixed size arrays of length two).
+        // In Solidity, T[k] and T[] are always arrays with elements of type T,
+        // even if T itself is an array.
+        // Because of that, bool[2][] is a dynamic array of elements
+        // that are bool[2]. This is different from other languages, like C.
+        // Data location for all state variables is storage.
+>>>>>>> 84cdcec2cfb1fe9d4a9171d3ed0ffefd6107ee42
         bool[2][] pairsOfFlags;
 
         // newPairs被存储在memory中--这是公开合约函数参数的唯一可能性。
@@ -423,6 +446,120 @@ Solidity没有字符串操作函数，但有第三方的字符串库。
         }
     }
 
+.. index:: ! array;dangling storage references
+
+Dangling References to Storage Array Elements
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When working with storage arrays, you need to take care to avoid dangling references.
+A dangling reference is a reference that points to something that no longer exists or has been
+moved without updating the reference. A dangling reference can for example occur, if you store a
+reference to an array element in a local variable and then ``.pop()`` from the containing array:
+
+.. code-block:: solidity
+
+    // SPDX-License-Identifier: GPL-3.0
+    pragma solidity >=0.8.0 <0.9.0;
+
+    contract C {
+        uint[][] s;
+
+        function f() public {
+            // Stores a pointer to the last array element of s.
+            uint[] storage ptr = s[s.length - 1];
+            // Removes the last array element of s.
+            s.pop();
+            // Writes to the array element that is no longer within the array.
+            ptr.push(0x42);
+            // Adding a new element to ``s`` now will not add an empty array, but
+            // will result in an array of length 1 with ``0x42`` as element.
+            s.push();
+            assert(s[s.length - 1][0] == 0x42);
+        }
+    }
+
+The write in ``ptr.push(0x42)`` will **not** revert, despite the fact that ``ptr`` no
+longer refers to a valid element of ``s``. Since the compiler assumes that unused storage
+is always zeroed, a subsequent ``s.push()`` will not explicitly write zeroes to storage,
+so the last element of ``s`` after that ``push()`` will have length ``1`` and contain
+``0x42`` as its first element.
+
+Note that Solidity does not allow to declare references to value types in storage. These kinds
+of explicit dangling references are restricted to nested reference types. However, dangling references
+can also occur temporarily when using complex expressions in tuple assignments:
+
+.. code-block:: solidity
+
+    // SPDX-License-Identifier: GPL-3.0
+    pragma solidity >=0.8.0 <0.9.0;
+
+    contract C {
+        uint[] s;
+        uint[] t;
+        constructor() {
+            // Push some initial values to the storage arrays.
+            s.push(0x07);
+            t.push(0x03);
+        }
+
+        function g() internal returns (uint[] storage) {
+            s.pop();
+            return t;
+        }
+
+        function f() public returns (uint[] memory) {
+            // The following will first evaluate ``s.push()`` to a reference to a new element
+            // at index 1. Afterwards, the call to ``g`` pops this new element, resulting in
+            // the left-most tuple element to become a dangling reference. The assignment still
+            // takes place and will write outside the data area of ``s``.
+            (s.push(), g()[0]) = (0x42, 0x17);
+            // A subsequent push to ``s`` will reveal the value written by the previous
+            // statement, i.e. the last element of ``s`` at the end of this function will have
+            // the value ``0x42``.
+            s.push();
+            return s;
+        }
+    }
+
+It is always safer to only assign to storage once per statement and to avoid
+complex expressions on the left-hand-side of an assignment.
+
+You need to take particular care when dealing with references to elements of
+``bytes`` arrays, since a ``.push()`` on a bytes array may switch :ref:`from short
+to long layout in storage<bytes-and-string>`.
+
+.. code-block:: solidity
+
+    // SPDX-License-Identifier: GPL-3.0
+    pragma solidity >=0.8.0 <0.9.0;
+
+    // This will report a warning
+    contract C {
+        bytes x = "012345678901234567890123456789";
+
+        function test() external returns(uint) {
+            (x.push(), x.push()) = (0x01, 0x02);
+            return x.length;
+        }
+    }
+
+Here, when the first ``x.push()`` is evaluated, ``x`` is still stored in short
+layout, thereby ``x.push()`` returns a reference to an element in the first storage slot of
+``x``. However, the second ``x.push()`` switches the bytes array to large layout.
+Now the element that ``x.push()`` referred to is in the data area of the array while
+the reference still points at its original location, which is now a part of the length field
+and the assignment will effectively garble the length of ``x``.
+To be safe, only enlarge bytes arrays by at most one element during a single
+assignment and do not simultaneously index-access the array in the same statement.
+
+While the above describes the behaviour of dangling storage references in the
+current version of the compiler, any code with dangling references should be
+considered to have *undefined behaviour*. In particular, this means that
+any future version of the compiler may change the behaviour of code that
+involves dangling references.
+
+Be sure to avoid dangling references in your code!
+
 .. index:: ! array;slice
 
 .. _array-slices:
@@ -461,21 +598,30 @@ Solidity没有字符串操作函数，但有第三方的字符串库。
         /// @dev 由代理管理的客户合约的地址，即本合约的地址
         address client;
 
-        constructor(address _client) {
-            client = _client;
+        constructor(address client_) {
+            client = client_;
         }
 
+<<<<<<< HEAD
         /// 转发对 "setOwner(address)" 的调用，
         /// 该调用在对地址参数进行基本验证后由客户端执行。
         function forward(bytes calldata _payload) external {
             bytes4 sig = bytes4(_payload[:4]);
             // 由于截断行为，bytes4(_payload)的表现是相同的。
             // bytes4 sig = bytes4(_payload);
+=======
+        /// Forward call to "setOwner(address)" that is implemented by client
+        /// after doing basic validation on the address argument.
+        function forward(bytes calldata payload) external {
+            bytes4 sig = bytes4(payload[:4]);
+            // Due to truncating behaviour, bytes4(payload) performs identically.
+            // bytes4 sig = bytes4(payload);
+>>>>>>> 84cdcec2cfb1fe9d4a9171d3ed0ffefd6107ee42
             if (sig == bytes4(keccak256("setOwner(address)"))) {
-                address owner = abi.decode(_payload[4:], (address));
+                address owner = abi.decode(payload[4:], (address));
                 require(owner != address(0), "Address of owner cannot be zero.");
             }
-            (bool status,) = client.delegatecall(_payload);
+            (bool status,) = client.delegatecall(payload);
             require(status, "Forwarded call failed.");
         }
     }

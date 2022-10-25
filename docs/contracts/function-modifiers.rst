@@ -66,8 +66,8 @@
             registeredAddresses[msg.sender] = true;
         }
 
-        function changePrice(uint _price) public onlyOwner {
-            price = _price;
+        function changePrice(uint price_) public onlyOwner {
+            price = price_;
         }
     }
 
@@ -102,8 +102,20 @@
 修饰器不能隐式地访问或改变它们所修改的函数的参数和返回值。
 它们的值只能在调用的时候明确地传递给它们。
 
+<<<<<<< HEAD
 修饰器或函数体的显式返回只离开当前修饰器或函数体。
 返回变量会被赋值，但整个执行逻辑会从前一个修饰器中定义的 ``_`` 之后继续执行。
+=======
+In function modifiers, it is necessary to specify when you want the function to which the modifier is
+applied to be run. The placeholder statement (denoted by a single underscore character ``_``) is used to
+denote where the body of the function being modified should be inserted. Note that the
+placeholder operator is different from using underscores as leading or trailing characters in variable
+names, which is a stylistic choice.
+
+Explicit returns from a modifier or function body only leave the current
+modifier or function body. Return variables are assigned and
+control flow continues after the ``_`` in the preceding modifier.
+>>>>>>> 84cdcec2cfb1fe9d4a9171d3ed0ffefd6107ee42
 
 .. warning::
     在Solidity的早期版本中，具有修饰器的函数中的 ``return`` 语句会表现的不同。
