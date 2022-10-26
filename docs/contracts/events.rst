@@ -69,16 +69,26 @@ Topics允许您用来搜索事件，例如为特定的事件来过滤一系列�
 
     contract ClientReceipt {
         event Deposit(
-            address indexed _from,
-            bytes32 indexed _id,
-            uint _value
+            address indexed from,
+            bytes32 indexed id,
+            uint value
         );
 
+<<<<<<< HEAD
         function deposit(bytes32 _id) public payable {
             // 事件是用 `emit` 发出的，后面是事件的名称和括号里的参数（如果有）。
             // 任何这样的调用（甚至是深度嵌套）都可以通过过滤 `Deposit`
             // 从JavaScript API中检测出来。
             emit Deposit(msg.sender, _id, msg.value);
+=======
+        function deposit(bytes32 id) public payable {
+            // Events are emitted using `emit`, followed by
+            // the name of the event and the arguments
+            // (if any) in parentheses. Any such invocation
+            // (even deeply nested) can be detected from
+            // the JavaScript API by filtering for `Deposit`.
+            emit Deposit(msg.sender, id, msg.value);
+>>>>>>> abaa5c0eb321aab4cd09617598696172378a4b83
         }
     }
 
@@ -112,9 +122,9 @@ Topics允许您用来搜索事件，例如为特定的事件来过滤一系列�
 
     {
        "returnValues": {
-           "_from": "0x1111…FFFFCCCC",
-           "_id": "0x50…sd5adb20",
-           "_value": "0x420042"
+           "from": "0x1111…FFFFCCCC",
+           "id": "0x50…sd5adb20",
+           "value": "0x420042"
        },
        "raw": {
            "data": "0x7f…91385",

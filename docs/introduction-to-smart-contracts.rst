@@ -152,8 +152,8 @@ Solidity意义上的合约是代码（其 *函数*）和数据（其 *状态*）
 
 .. code-block:: solidity
 
-    function balances(address _account) external view returns (uint) {
-        return balances[_account];
+    function balances(address account) external view returns (uint) {
+        return balances[account];
     }
 
 您可以用这个函数来查询单个账户的余额。

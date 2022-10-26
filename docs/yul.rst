@@ -1004,9 +1004,21 @@ Yul对象被用来分组命名代码和数据部分。
 
 .. note::
 
+<<<<<<< HEAD
     可以定义名称中包含 ``.`` 的数据对象或子对象，
     但不可能通过 ``datasize``， ``dataoffset`` 或 ``datacopy`` 访问它们，
     因为 ``.`` 是作为分隔符用来访问另一个对象内的对象。
+=======
+    An object with a name that ends in ``_deployed`` is treated as deployed code by the Yul optimizer.
+    The only consequence of this is a different gas cost heuristic in the optimizer.
+
+.. note::
+
+    Data objects or sub-objects whose names contain a ``.`` can be defined
+    but it is not possible to access them through ``datasize``,
+    ``dataoffset`` or ``datacopy`` because ``.`` is used as a separator
+    to access objects inside another object.
+>>>>>>> abaa5c0eb321aab4cd09617598696172378a4b83
 
 .. note::
 
@@ -1046,6 +1058,7 @@ Yul对象被用来分组命名代码和数据部分。
             mstore(add(offset, size), 0x1234)
             pop(create(offset, add(size, 32), 0))
 
+<<<<<<< HEAD
             // 现在返回运行时对象
             //（当前执行的代码是构造函数代码）。
             size := datasize("runtime")
@@ -1053,12 +1066,21 @@ Yul对象被用来分组命名代码和数据部分。
             // 这将变成 Ewasm 的 内存->内存 拷贝
             // 和EVM的代码拷贝。
             datacopy(offset, dataoffset("runtime"), size)
+=======
+            // now return the runtime object (the currently
+            // executing code is the constructor code)
+            size := datasize("Contract1_deployed")
+            offset := allocate(size)
+            // This will turn into a memory->memory copy for Ewasm and
+            // a codecopy for EVM
+            datacopy(offset, dataoffset("Contract1_deployed"), size)
+>>>>>>> abaa5c0eb321aab4cd09617598696172378a4b83
             return(offset, size)
         }
 
         data "Table2" hex"4123"
 
-        object "runtime" {
+        object "Contract1_deployed" {
             code {
                 function allocate(size) -> ptr {
                     ptr := mload(0x40)
@@ -1080,7 +1102,7 @@ Yul对象被用来分组命名代码和数据部分。
                 // 此处是代码 ...
             }
 
-            object "runtime" {
+            object "Contract2_deployed" {
                 code {
                     // 此处是代码 ...
                 }

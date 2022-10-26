@@ -37,14 +37,21 @@ Constant 和 Immutable 状态变量
         uint immutable maxBalance;
         address immutable owner = msg.sender;
 
+<<<<<<< HEAD
         constructor(uint _decimals, address _reference) {
             decimals = _decimals;
             // 对不可变量的赋值甚至可以访问一些全局属性。
             maxBalance = _reference.balance;
+=======
+        constructor(uint decimals_, address ref) {
+            decimals = decimals_;
+            // Assignments to immutables can even access the environment.
+            maxBalance = ref.balance;
+>>>>>>> abaa5c0eb321aab4cd09617598696172378a4b83
         }
 
-        function isBalanceTooHigh(address _other) public view returns (bool) {
-            return _other.balance > maxBalance;
+        function isBalanceTooHigh(address other) public view returns (bool) {
+            return other.balance > maxBalance;
         }
     }
 

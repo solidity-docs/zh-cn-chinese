@@ -461,21 +461,30 @@ Solidity没有字符串操作函数，但有第三方的字符串库。
         /// @dev 由代理管理的客户合约的地址，即本合约的地址
         address client;
 
-        constructor(address _client) {
-            client = _client;
+        constructor(address client_) {
+            client = client_;
         }
 
+<<<<<<< HEAD
         /// 转发对 "setOwner(address)" 的调用，
         /// 该调用在对地址参数进行基本验证后由客户端执行。
         function forward(bytes calldata _payload) external {
             bytes4 sig = bytes4(_payload[:4]);
             // 由于截断行为，bytes4(_payload)的表现是相同的。
             // bytes4 sig = bytes4(_payload);
+=======
+        /// Forward call to "setOwner(address)" that is implemented by client
+        /// after doing basic validation on the address argument.
+        function forward(bytes calldata payload) external {
+            bytes4 sig = bytes4(payload[:4]);
+            // Due to truncating behaviour, bytes4(payload) performs identically.
+            // bytes4 sig = bytes4(payload);
+>>>>>>> abaa5c0eb321aab4cd09617598696172378a4b83
             if (sig == bytes4(keccak256("setOwner(address)"))) {
-                address owner = abi.decode(_payload[4:], (address));
+                address owner = abi.decode(payload[4:], (address));
                 require(owner != address(0), "Address of owner cannot be zero.");
             }
-            (bool status,) = client.delegatecall(_payload);
+            (bool status,) = client.delegatecall(payload);
             require(status, "Forwarded call failed.");
         }
     }

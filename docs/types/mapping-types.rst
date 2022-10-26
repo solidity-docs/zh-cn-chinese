@@ -4,11 +4,20 @@
 映射类型
 =============
 
+<<<<<<< HEAD
 映射类型使用语法 ``mapping(_KeyType => _ValueType)``，
 映射类型的变量使用语法 ``mapping(_KeyType => _ValueType) _VariableName`` 声明。
 ``_KeyType`` 可以是任何内置的值类型， ``bytes``， ``string``，或任何合约或枚举类型。
 其他用户定义的或复杂的类型，如映射、结构体或数组类型是不允许的。
 ``_ValueType`` 可以是任何类型，包括映射、数组和结构体。
+=======
+Mapping types use the syntax ``mapping(KeyType => ValueType)`` and variables
+of mapping type are declared using the syntax ``mapping(KeyType => ValueType) VariableName``.
+The ``KeyType`` can be any
+built-in value type, ``bytes``, ``string``, or any contract or enum type. Other user-defined
+or complex types, such as mappings, structs or array types are not allowed.
+``ValueType`` can be any type, including mappings, arrays and structs.
+>>>>>>> abaa5c0eb321aab4cd09617598696172378a4b83
 
 您可以把映射想象成 `哈希表 <https://en.wikipedia.org/wiki/Hash_table>`_，
 它实际上被初始化了，使每一个可能的键都存在，
@@ -23,11 +32,19 @@
 但它们不能被用作公开可见的合约函数的参数或返回参数。
 这些限制对于包含映射的数组和结构也是如此。
 
+<<<<<<< HEAD
 您可以把映射类型的状态变量标记为 ``public``，
 Solidity会为您创建一个 :ref:`getter <visibility-and-getters>` 函数。
 ``_KeyType`` 将成为getter的参数。
 如果 ``_ValueType`` 是一个值类型或一个结构，getter返回 ``_ValueType``。
 如果 ``_ValueType`` 是一个数组或映射，getter对每个 ``_KeyType`` 递归出一个参数。
+=======
+You can mark state variables of mapping type as ``public`` and Solidity creates a
+:ref:`getter <visibility-and-getters>` for you. The ``KeyType`` becomes a parameter for the getter.
+If ``ValueType`` is a value type or a struct, the getter returns ``ValueType``.
+If ``ValueType`` is an array or a mapping, the getter has one parameter for
+each ``KeyType``, recursively.
+>>>>>>> abaa5c0eb321aab4cd09617598696172378a4b83
 
 在下面的例子中， ``MappingExample`` 合约定义了一个公共的 ``balances`` 映射，
 键类型是 ``address``，值类型是 ``uint``，将一个Ethereum地址映射到一个无符号整数值。
@@ -120,7 +137,7 @@ Solidity会为您创建一个 :ref:`getter <visibility-and-getters>` 函数。
     :force:
 
     // SPDX-License-Identifier: GPL-3.0
-    pragma solidity >=0.6.8 <0.9.0;
+    pragma solidity ^0.8.8;
 
     struct IndexValue { uint keyIndex; uint value; }
     struct KeyFlag { uint key; bool deleted; }
@@ -130,6 +147,8 @@ Solidity会为您创建一个 :ref:`getter <visibility-and-getters>` 函数。
         KeyFlag[] keys;
         uint size;
     }
+
+    type Iterator is uint;
 
     library IterableMapping {
         function insert(itmap storage self, uint key, uint value) internal returns (bool replaced) {
@@ -160,24 +179,28 @@ Solidity会为您创建一个 :ref:`getter <visibility-and-getters>` 函数。
             return self.data[key].keyIndex > 0;
         }
 
-        function iterateStart(itmap storage self) internal view returns (uint keyIndex) {
-            return iterateNext(self, type(uint).max);
+        function iterateStart(itmap storage self) internal view returns (Iterator) {
+            return iteratorSkipDeleted(self, 0);
         }
 
-        function iterateValid(itmap storage self, uint keyIndex) internal view returns (bool) {
-            return keyIndex < self.keys.length;
+        function iterateValid(itmap storage self, Iterator iterator) internal view returns (bool) {
+            return Iterator.unwrap(iterator) < self.keys.length;
         }
 
-        function iterateNext(itmap storage self, uint keyIndex) internal view returns (uint r_keyIndex) {
-            keyIndex++;
-            while (keyIndex < self.keys.length && self.keys[keyIndex].deleted)
-                keyIndex++;
-            return keyIndex;
+        function iterateNext(itmap storage self, Iterator iterator) internal view returns (Iterator) {
+            return iteratorSkipDeleted(self, Iterator.unwrap(iterator) + 1);
         }
 
-        function iterateGet(itmap storage self, uint keyIndex) internal view returns (uint key, uint value) {
+        function iterateGet(itmap storage self, Iterator iterator) internal view returns (uint key, uint value) {
+            uint keyIndex = Iterator.unwrap(iterator);
             key = self.keys[keyIndex].key;
             value = self.data[key].value;
+        }
+
+        function iteratorSkipDeleted(itmap storage self, uint keyIndex) private view returns (Iterator) {
+            while (keyIndex < self.keys.length && self.keys[keyIndex].deleted)
+                keyIndex++;
+            return Iterator.wrap(keyIndex);
         }
     }
 
@@ -200,7 +223,7 @@ Solidity会为您创建一个 :ref:`getter <visibility-and-getters>` 函数。
         // 计算所有存储数据的总和。
         function sum() public view returns (uint s) {
             for (
-                uint i = data.iterateStart();
+                Iterator i = data.iterateStart();
                 data.iterateValid(i);
                 i = data.iterateNext(i)
             ) {

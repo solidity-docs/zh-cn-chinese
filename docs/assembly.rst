@@ -41,19 +41,31 @@
     pragma solidity >=0.4.16 <0.9.0;
 
     library GetCode {
-        function at(address _addr) public view returns (bytes memory code) {
+        function at(address addr) public view returns (bytes memory code) {
             assembly {
+<<<<<<< HEAD
                 // 获取代码大小，这需要汇编语言
                 let size := extcodesize(_addr)
                 // 分配输出字节数组 – 这也可以不用汇编语言来实现
                 // 通过使用 code = new bytes(size)
+=======
+                // retrieve the size of the code, this needs assembly
+                let size := extcodesize(addr)
+                // allocate output byte array - this could also be done without assembly
+                // by using code = new bytes(size)
+>>>>>>> abaa5c0eb321aab4cd09617598696172378a4b83
                 code := mload(0x40)
                 // 包括补位在内新的 “memory end”
                 mstore(0x40, add(code, and(add(add(size, 0x20), 0x1f), not(0x1f))))
                 // 把长度保存到内存中
                 mstore(code, size)
+<<<<<<< HEAD
                 // 实际获取代码，这需要汇编语言
                 extcodecopy(_addr, add(code, 0x20), 0, size)
+=======
+                // actually retrieve the code, this needs assembly
+                extcodecopy(addr, add(code, 0x20), 0, size)
+>>>>>>> abaa5c0eb321aab4cd09617598696172378a4b83
             }
         }
     }
@@ -67,6 +79,7 @@
 
 
     library VectorSum {
+<<<<<<< HEAD
         // 因为目前的优化器在访问数组时无法移除边界检查，
         // 所以这个函数的执行效率比较低。
         function sumSolidity(uint[] memory _data) public pure returns (uint sum) {
@@ -79,32 +92,60 @@
         // 所以我们在访问数组元素时需要加入 0x20 作为偏移量。
         function sumAsm(uint[] memory _data) public pure returns (uint sum) {
             for (uint i = 0; i < _data.length; ++i) {
+=======
+        // This function is less efficient because the optimizer currently fails to
+        // remove the bounds checks in array access.
+        function sumSolidity(uint[] memory data) public pure returns (uint sum) {
+            for (uint i = 0; i < data.length; ++i)
+                sum += data[i];
+        }
+
+        // We know that we only access the array in bounds, so we can avoid the check.
+        // 0x20 needs to be added to an array because the first slot contains the
+        // array length.
+        function sumAsm(uint[] memory data) public pure returns (uint sum) {
+            for (uint i = 0; i < data.length; ++i) {
+>>>>>>> abaa5c0eb321aab4cd09617598696172378a4b83
                 assembly {
-                    sum := add(sum, mload(add(add(_data, 0x20), mul(i, 0x20))))
+                    sum := add(sum, mload(add(add(data, 0x20), mul(i, 0x20))))
                 }
             }
         }
 
+<<<<<<< HEAD
         // 和上面一样，但在内联汇编内完成整个代码。
         function sumPureAsm(uint[] memory _data) public pure returns (uint sum) {
             assembly {
                 // 取得数组长度（前 32 字节）
                 let len := mload(_data)
+=======
+        // Same as above, but accomplish the entire code within inline assembly.
+        function sumPureAsm(uint[] memory data) public pure returns (uint sum) {
+            assembly {
+                // Load the length (first 32 bytes)
+                let len := mload(data)
+>>>>>>> abaa5c0eb321aab4cd09617598696172378a4b83
 
                 // 略过长度字段。
                 //
                 // 保持临时变量以便它可以在原地增加。
                 //
+<<<<<<< HEAD
                 // 注意：递增_data会导致在这个汇编块之后出现一个无法使用的_data变量。
                 let data := add(_data, 0x20)
+=======
+                // NOTE: incrementing data would result in an unusable
+                //       data variable after this assembly block
+                let dataElementLocation := add(data, 0x20)
+>>>>>>> abaa5c0eb321aab4cd09617598696172378a4b83
 
                 // 迭代到数组数据结束。
                 for
-                    { let end := add(data, mul(len, 0x20)) }
-                    lt(data, end)
-                    { data := add(data, 0x20) }
+                    { let end := add(dataElementLocation, mul(len, 0x20)) }
+                    lt(dataElementLocation, end)
+                    { data := add(dataElementLocation, 0x20) }
                 {
-                    sum := add(sum, mload(data))
+                    sum := add(sum, mload(dataElementLocation))
                 }
             }
         }
@@ -206,6 +247,7 @@
 Solidity的的惯例
 -----------------------
 
+<<<<<<< HEAD
 与EVM汇编相反，Solidity有比256位更窄的类型，例如： ``uint24``。
 为了提高效率，大多数算术运算忽略了类型可以短于256位的事实，高阶位在必要时被清理，
 即在它们被写入内存或进行比较前不久。这意味着，如果您从内联汇编中访问这样的变量，您可能不得不先手动清理高阶位。
@@ -216,6 +258,34 @@ Solidity以下列方式管理内存。在内存中 ``0x40`` 的位置有一个 "
 不能保证该内存以前没有被使用过，因此您不能假设其内容为零字节。
 没有内置的机制来释放或释放分配的内存。下面是一段汇编代码，
 您可以用它来分配内存，它遵循上述的过程
+=======
+.. _assembly-typed-variables:
+
+Values of Typed Variables
+=========================
+
+In contrast to EVM assembly, Solidity has types which are narrower than 256 bits,
+e.g. ``uint24``. For efficiency, most arithmetic operations ignore the fact that
+types can be shorter than 256
+bits, and the higher-order bits are cleaned when necessary,
+i.e., shortly before they are written to memory or before comparisons are performed.
+This means that if you access such a variable
+from within inline assembly, you might have to manually clean the higher-order bits
+first.
+
+.. _assembly-memory-management:
+
+Memory Management
+=================
+
+Solidity manages memory in the following way. There is a "free memory pointer"
+at position ``0x40`` in memory. If you want to allocate memory, use the memory
+starting from where this pointer points at and update it.
+There is no guarantee that the memory has not been used before and thus
+you cannot assume that its contents are zero bytes.
+There is no built-in mechanism to release or free allocated memory.
+Here is an assembly snippet you can use for allocating memory that follows the process outlined above
+>>>>>>> abaa5c0eb321aab4cd09617598696172378a4b83
 
 .. code-block:: yul
 
@@ -235,5 +305,107 @@ Solidity中内存数组中的元素总是占据32字节的倍数
 
 
 .. warning::
+<<<<<<< HEAD
     静态大小的内存数组没有长度字段，但以后可能会加入长度字段，
     以便在静态大小的数组和动态大小的数组之间有更好的转换性，所以不要依赖这个。
+=======
+    Statically-sized memory arrays do not have a length field, but it might be added later
+    to allow better convertibility between statically- and dynamically-sized arrays, so
+    do not rely on this.
+
+Memory Safety
+=============
+
+Without the use of inline assembly, the compiler can rely on memory to remain in a well-defined
+state at all times. This is especially relevant for :ref:`the new code generation pipeline via Yul IR <ir-breaking-changes>`:
+this code generation path can move local variables from stack to memory to avoid stack-too-deep errors and
+perform additional memory optimizations, if it can rely on certain assumptions about memory use.
+
+While we recommend to always respect Solidity's memory model, inline assembly allows you to use memory
+in an incompatible way. Therefore, moving stack variables to memory and additional memory optimizations are,
+by default, disabled in the presence of any inline assembly block that contains a memory operation or assigns
+to solidity variables in memory.
+
+However, you can specifically annotate an assembly block to indicate that it in fact respects Solidity's memory
+model as follows:
+
+.. code-block:: solidity
+
+    assembly ("memory-safe") {
+        ...
+    }
+
+In particular, a memory-safe assembly block may only access the following memory ranges:
+
+- Memory allocated by yourself using a mechanism like the ``allocate`` function described above.
+- Memory allocated by Solidity, e.g. memory within the bounds of a memory array you reference.
+- The scratch space between memory offset 0 and 64 mentioned above.
+- Temporary memory that is located *after* the value of the free memory pointer at the beginning of the assembly block,
+  i.e. memory that is "allocated" at the free memory pointer without updating the free memory pointer.
+
+Furthermore, if the assembly block assigns to Solidity variables in memory, you need to assure that accesses to
+the Solidity variables only access these memory ranges.
+
+Since this is mainly about the optimizer, these restrictions still need to be followed, even if the assembly block
+reverts or terminates. As an example, the following assembly snippet is not memory safe:
+
+.. code-block:: solidity
+
+    assembly {
+      returndatacopy(0, 0, returndatasize())
+      revert(0, returndatasize())
+    }
+
+But the following is:
+
+.. code-block:: solidity
+
+    assembly ("memory-safe") {
+      let p := mload(0x40)
+      returndatacopy(p, 0, returndatasize())
+      revert(p, returndatasize())
+    }
+
+Note that you do not need to update the free memory pointer if there is no following allocation,
+but you can only use memory starting from the current offset given by the free memory pointer.
+
+If the memory operations use a length of zero, it is also fine to just use any offset (not only if it falls into the scratch space):
+
+.. code-block:: solidity
+
+    assembly ("memory-safe") {
+      revert(0, 0)
+    }
+
+Note that not only memory operations in inline assembly itself can be memory-unsafe, but also assignments to
+solidity variables of reference type in memory. For example the following is not memory-safe:
+
+.. code-block:: solidity
+
+    bytes memory x;
+    assembly {
+      x := 0x40
+    }
+    x[0x20] = 0x42;
+
+Inline assembly that neither involves any operations that access memory nor assigns to any solidity variables
+in memory is automatically considered memory-safe and does not need to be annotated.
+
+.. warning::
+    It is your responsibility to make sure that the assembly actually satisfies the memory model. If you annotate
+    an assembly block as memory-safe, but violate one of the memory assumptions, this **will** lead to incorrect and
+    undefined behaviour that cannot easily be discovered by testing.
+
+In case you are developing a library that is meant to be compatible across multiple versions
+of solidity, you can use a special comment to annotate an assembly block as memory-safe:
+
+.. code-block:: solidity
+
+    /// @solidity memory-safe-assembly
+    assembly {
+        ...
+    }
+
+Note that we will disallow the annotation via comment in a future breaking release, so if you are not concerned with
+backwards-compatibility with older compiler versions, prefer using the dialect string.
+>>>>>>> abaa5c0eb321aab4cd09617598696172378a4b83

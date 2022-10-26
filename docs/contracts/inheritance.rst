@@ -377,8 +377,8 @@ Solidity支持多重继承，包括多态性。
     abstract contract A {
         uint public a;
 
-        constructor(uint _a) {
-            a = _a;
+        constructor(uint a_) {
+            a = a_;
         }
     }
 
@@ -415,7 +415,7 @@ Solidity支持多重继承，包括多态性。
 
     contract Base {
         uint x;
-        constructor(uint _x) { x = _x; }
+        constructor(uint x_) { x = x_; }
     }
 
     // 要么直接在继承列表中指定...
@@ -425,15 +425,28 @@ Solidity支持多重继承，包括多态性。
 
     // 或者通过派生构造函数的一个 "修改器"。
     contract Derived2 is Base {
-        constructor(uint _y) Base(_y * _y) {}
+        constructor(uint y) Base(y * y) {}
     }
 
+<<<<<<< HEAD
 一种方式是直接在继承列表中给出（ ``is Base(7)`` ）。
 另一种是通过修改器作为派生构造函数的一部分被调用的方式（ ``Base(_y * _y)`` ）。
 如果构造函数参数是一个常量，并且定义了合约的行为或描述了它，那么第一种方式更方便。
 如果基类合约的构造函数参数依赖于派生合约的参数，则必须使用第二种方式。
 参数必须在继承列表中或在派生构造函数中以修饰器的形式给出。
 在两个地方都指定参数是一个错误。
+=======
+One way is directly in the inheritance list (``is Base(7)``).  The other is in
+the way a modifier is invoked as part of
+the derived constructor (``Base(y * y)``). The first way to
+do it is more convenient if the constructor argument is a
+constant and defines the behaviour of the contract or
+describes it. The second way has to be used if the
+constructor arguments of the base depend on those of the
+derived contract. Arguments have to be given either in the
+inheritance list or in modifier-style in the derived constructor.
+Specifying arguments in both places is an error.
+>>>>>>> abaa5c0eb321aab4cd09617598696172378a4b83
 
 如果一个派生合约没有指定其所有基类合约的构造函数的参数，它将是抽象的合约。
 
