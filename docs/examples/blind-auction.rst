@@ -151,6 +151,7 @@
 盲拍的好处是，在竞价期即将结束时没有时间压力。
 在一个透明的计算平台上创建一个盲拍可能听起来是一个矛盾，但加密技术可以实现它。
 
+<<<<<<< HEAD
 在 **竞标期间**，竞标者实际上并没有发送他们的出价，
 而只是发送一个哈希版本的出价。 由于目前几乎不可能找到两个（足够长的）值，
 其哈希值是相等的，因此竞标者可通过该方式提交报价。 在竞标结束后，
@@ -160,6 +161,27 @@
 另一个挑战是如何使拍卖同时做到 **绑定和秘密** :
 唯一能阻止竞标者在赢得拍卖后不付款的方式是，让他们将钱和竞标一起发出。
 但由于资金转移在 以太坊 中不能被隐藏，因此任何人都可以看到转移的资金。
+=======
+During the **bidding period**, a bidder does not actually send their bid, but
+only a hashed version of it.  Since it is currently considered practically
+impossible to find two (sufficiently long) values whose hash values are equal,
+the bidder commits to the bid by that.  After the end of the bidding period,
+the bidders have to reveal their bids: They send their values unencrypted, and
+the contract checks that the hash value is the same as the one provided during
+the bidding period.
+
+Another challenge is how to make the auction **binding and blind** at the same
+time: The only way to prevent the bidder from just not sending the money after
+they won the auction is to make them send it together with the bid. Since value
+transfers cannot be blinded in Ethereum, anyone can see the value.
+
+The following contract solves this problem by accepting any value that is
+larger than the highest bid. Since this can of course only be checked during
+the reveal phase, some bids might be **invalid**, and this is on purpose (it
+even provides an explicit flag to place invalid bids with high-value
+transfers): Bidders can confuse competition by placing several high or low
+invalid bids.
+>>>>>>> ff14e40869aec2a4ac1d631c91041b05c4b8a33e
 
 下面的合约通过接受任何大于最高出价的值来解决这个问题。
 当然，因为这只能在揭示阶段进行检查，有些出价可能是 **无效** 的，
