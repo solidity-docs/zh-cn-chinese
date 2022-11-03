@@ -144,9 +144,12 @@ Solidity 编译器将通过 NatSpec 文档从您的 Solidity 源代码传递到�
 
 如果一个函数被调用，并且输入的 ``a`` 被赋值为10。
 
+<<<<<<< HEAD
 指定这些动态表达式超出了 Solidity 文档的范围，您可以在
 `radspec 项目 <https://github.com/aragon/radspec>`__ 阅读更多内容。
 
+=======
+>>>>>>> 46a7ebd5b66c5638427295b9c3dbf15fc48c4ed2
 .. _header-inheritance:
 
 继承说明
@@ -168,7 +171,7 @@ Solidity 编译器将通过 NatSpec 文档从您的 Solidity 源代码传递到�
 
 如果上述合约被保存为 ``ex1.sol``，那么您可以用以下方法生成文档：
 
-.. code::
+.. code-block:: shell
 
    solc --userdoc --devdoc ex1.sol
 
@@ -186,7 +189,7 @@ Solidity 编译器将通过 NatSpec 文档从您的 Solidity 源代码传递到�
 
 上述文档将产生以下用户文档 JSON 文件作为输出：
 
-.. code::
+.. code-block:: json
 
     {
       "version" : 1,
@@ -211,7 +214,7 @@ Solidity 编译器将通过 NatSpec 文档从您的 Solidity 源代码传递到�
 
 除了用户文档文件，还应该产生一个开发者文档的JSON文件，看起来应该是这样的：
 
-.. code::
+.. code-block:: json
 
     {
       "version" : 1,
