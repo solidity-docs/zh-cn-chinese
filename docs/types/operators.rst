@@ -3,22 +3,56 @@
 运算符
 =========
 
+<<<<<<< HEAD
 即使两个操作数的类型不一样，也可以应用算术和位操作数。
 例如，您可以计算 ``y = x + z``，其中 ``x`` 是 ``uint8``， ``z`` 的类型为 ``int32``。
 在这种情况下，下面的机制将被用来确定计算操作的类型（这在溢出的情况下很重要）和操作结果的类型：
+=======
+Arithmetic and bit operators can be applied even if the two operands do not have the same type.
+For example, you can compute ``y = x + z``, where ``x`` is a ``uint8`` and ``z`` has
+the type ``uint32``. In these cases, the following mechanism will be used to determine
+the type in which the operation is computed (this is important in case of overflow)
+and the type of the operator's result:
+>>>>>>> ce18dddd20d85c6258135fb02f80933bbe406a7f
 
 1. 如果右操作数的类型可以隐式转换为左操作数的类型，则使用左操作数的类型，
 2. 如果左操作数的类型可以隐式转换为右操作数的类型，则使用右操作数的类型，
 3. 否则的话，该操作不被允许。
 
+<<<<<<< HEAD
 如果其中一个操作数是 :ref:`字面常数 <rational_literals>`，
 它首先被转换为其 “移动类型（mobile type）”，也就是能容纳该值的最小类型
 （相同位宽的无符号类型被认为比有符号类型 "小"）。
 如果两者都是字面常数，则以任意的精度进行计算。
+=======
+In case one of the operands is a :ref:`literal number <rational_literals>` it is first converted to its
+"mobile type", which is the smallest type that can hold the value
+(unsigned types of the same bit-width are considered "smaller" than the signed types).
+If both are literal numbers, the operation is computed with effectively unlimited precision in
+that the expression is evaluated to whatever precision is necessary so that none is lost
+when the result is used with a non-literal type.
+>>>>>>> ce18dddd20d85c6258135fb02f80933bbe406a7f
 
 操作符的结果类型与操作的类型相同，除了比较操作符，其结果总是 ``bool``。
 
 运算符 ``**`` （幂运算）， ``<<`` 和 ``>>`` 使用左边操作数的类型进行运算和以其作为结果。
+
+Ternary Operator
+----------------
+The ternary operator is used in expressions of the form ``<expression> ? <trueExpression> : <falseExpression>``.
+It evaluates one of the latter two given expressions depending upon the result of the evaluation of the main ``<expression>``.
+If ``<expression>`` evaluates to ``true``, then ``<trueExpression>`` will be evaluated, otherwise ``<falseExpression>`` is evaluated.
+
+The result of the ternary operator does not have a rational number type, even if all of its operands are rational number literals.
+The result type is determined from the types of the two operands in the same way as above, converting to their mobile type first if required.
+
+As a consequence, ``255 + (true ? 1 : 0)`` will revert due to arithmetic overflow.
+The reason is that ``(true ? 1 : 0)`` is of ``uint8`` type, which forces the addition to be performed in ``uint8`` as well,
+and 256 exceeds the range allowed for this type.
+
+Another consequence is that an expression like ``1.5 + 1.5`` is valid but ``1.5 + (true ? 1.5 : 2.5)`` is not.
+This is because the former is a rational expression evaluated in unlimited precision and only its final value matters.
+The latter involves a conversion of a fractional rational number to an integer, which is currently disallowed.
 
 .. index:: assignment, lvalue, ! compound operators
 
@@ -80,3 +114,11 @@
             assert(y.length == 0);
         }
     }
+
+.. index:: ! operator; precedence
+.. _order:
+
+Order of Precedence of Operators
+--------------------------------
+
+.. include:: types/operator-precedence-table.rst

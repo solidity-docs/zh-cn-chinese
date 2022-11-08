@@ -221,9 +221,14 @@ ABI编码和解码函数
     （见 `EIP-2 <https://eips.ethereum.org/EIPS/eip-2#specification>`_），
     但ecrecover函数仍然没有改变。
 
+<<<<<<< HEAD
     这通常不是一个问题，除非您要求签名是唯一的，或者用它们来识别个体。
     OpenZeppelin有一个 `ECDSA辅助库 <https://docs.openzeppelin.com/contracts/2.x/api/cryptography#ECDSA>`_，
     您可以用它作为 ``ecrecover`` 的包装，那样就没有这个问题。
+=======
+    This is usually not a problem unless you require signatures to be unique or use them to identify items.
+    OpenZeppelin have a `ECDSA helper library <https://docs.openzeppelin.com/contracts/4.x/api/utils#ECDSA>`_ that you can use as a wrapper for ``ecrecover`` without this issue.
+>>>>>>> ce18dddd20d85c6258135fb02f80933bbe406a7f
 
 .. note::
 
@@ -358,4 +363,19 @@ ABI编码和解码函数
     类型 ``T`` 所能代表的最小值。
 
 ``type(T).max``
+<<<<<<< HEAD
     类型 ``T`` 所能代表的最大值。
+=======
+    The largest value representable by type ``T``.
+
+Reserved Keywords
+=================
+
+These keywords are reserved in Solidity. They might become part of the syntax in the future:
+
+``after``, ``alias``, ``apply``, ``auto``, ``byte``, ``case``, ``copyof``, ``default``,
+``define``, ``final``, ``implements``, ``in``, ``inline``, ``let``, ``macro``, ``match``,
+``mutable``, ``null``, ``of``, ``partial``, ``promise``, ``reference``, ``relocatable``,
+``sealed``, ``sizeof``, ``static``, ``supports``, ``switch``, ``typedef``, ``typeof``,
+``var``.
+>>>>>>> ce18dddd20d85c6258135fb02f80933bbe406a7f
