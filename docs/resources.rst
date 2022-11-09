@@ -85,7 +85,14 @@
     * `Solidity Visual Auditor 扩展 <https://marketplace.visualstudio.com/items?itemName=tintinweb.solidity-visual-auditor>`_
         在Visual Studio Code中增加了以安全为中心的语法和语义突出显示。
 
+<<<<<<< HEAD
 Solidity 工具
+=======
+    * `Hardhat + Solidity Visual Studio Code extension <https://marketplace.visualstudio.com/items?itemName=NomicFoundation.hardhat-solidity>`_
+        Solidity and Hardhat support by the Hardhat team.
+
+Solidity Tools
+>>>>>>> 9db2da0385c5abec0d1c3eab468648ec85fb5caa
 ==============
 
 * `ABI到Solidity接口转换器  <https://gist.github.com/chriseth/8f533d133fa0c15b0d6eaf3ec502c82b>`_

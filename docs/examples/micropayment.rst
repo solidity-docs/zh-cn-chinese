@@ -2,9 +2,17 @@
 微支付通道
 **********
 
+<<<<<<< HEAD
 在这一节中，我们将学习如何建立一个支付通道的实施实例。
 它使用加密签名，使以太币在同一当事人之间的重复转移变得安全、即时，并且没有交易费用。
 对于这个例子，我们需要了解如何签名和验证签名，并设置支付通道。
+=======
+In this section, we will learn how to build an example implementation
+of a payment channel. It uses cryptographic signatures to make
+repeated transfers of Ether between the same parties secure, instantaneous, and
+without transaction fees. For the example, we need to understand how to
+sign and verify signatures, and setup the payment channel.
+>>>>>>> 9db2da0385c5abec0d1c3eab468648ec85fb5caa
 
 创建和验证签名
 ==============
@@ -15,16 +23,31 @@
 Alice 只需要在链下发送经过加密签名的信息
 (例如通过电子邮件)给Bob，它类似于写支票。
 
+<<<<<<< HEAD
 Alice和Bob使用签名来授权交易，这在以太坊的智能合约中是可以实现的。
 Alice将建立一个简单的智能合约，让她传输以太币，但她不会自己调用一个函数来启动付款，
 而是让Bob来做，从而支付交易费用。
+=======
+Alice and Bob use signatures to authorize transactions, which is possible with smart contracts on Ethereum.
+Alice will build a simple smart contract that lets her transmit Ether, but instead of calling a function herself
+to initiate a payment, she will let Bob do that, and therefore pay the transaction fee.
+>>>>>>> 9db2da0385c5abec0d1c3eab468648ec85fb5caa
 
 该合约将按以下方式运作：
 
+<<<<<<< HEAD
     1. Alice部署了 ``ReceiverPays`` 合约，附加了足够的以太币来支付将要进行的付款。
     2. Alice通过用她的私钥签署一个消息来授权付款。
     3. Alice将经过加密签名的信息发送给Bob。该信息不需要保密（后面会解释），而且发送机制也不重要。
     4. Bob通过向智能合约发送签名的信息来索取他的付款，合约验证了信息的真实性，然后释放资金。
+=======
+    1. Alice deploys the ``ReceiverPays`` contract, attaching enough Ether to cover the payments that will be made.
+    2. Alice authorizes a payment by signing a message with her private key.
+    3. Alice sends the cryptographically signed message to Bob. The message does not need to be kept secret
+       (explained later), and the mechanism for sending it does not matter.
+    4. Bob claims his payment by presenting the signed message to the smart contract, it verifies the
+       authenticity of the message and then releases the funds.
+>>>>>>> 9db2da0385c5abec0d1c3eab468648ec85fb5caa
 
 创建签名
 --------
@@ -238,8 +261,13 @@ Alice通过向Bob发送签名信息进行支付。
 
 每条信息包括以下信息：
 
+<<<<<<< HEAD
     * 智能合约的地址，用于防止跨合约重放攻击。
     * 到目前为止，欠接收方的以太币的总金额。
+=======
+    * The smart contract's address, used to prevent cross-contract replay attacks.
+    * The total amount of Ether that is owed to the recipient so far.
+>>>>>>> 9db2da0385c5abec0d1c3eab468648ec85fb5caa
 
 一个支付通道只关闭一次，就是在一系列转账结束后。
 正因为如此，所发送的签名信息中只有一个能被赎回。
