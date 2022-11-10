@@ -8,11 +8,19 @@
 
 接口类似于抽象合约，但是它们不能实现任何函数。还有进一步的限制：
 
+<<<<<<< HEAD
 - 它们不能继承其他合约，但它们可以继承其他接口。
 - 所有声明的函数必须是外部的。
 - 它们不能定义构造函数。
 - 它们不能定义变量。
 - 它们不能定义修饰器。
+=======
+- They cannot inherit from other contracts, but they can inherit from other interfaces.
+- All declared functions must be external in the interface, even if they are public in the contract.
+- They cannot declare a constructor.
+- They cannot declare state variables.
+- They cannot declare modifiers.
+>>>>>>> 73e7b844dce88717151dd0f11f137a024ac1c810
 
 将来可能会解除这些里的某些限制。
 
