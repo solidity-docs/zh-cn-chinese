@@ -44,8 +44,16 @@ Solidity 0.6.0 版本突破性变化
 * 内联汇编中的变量声明不能再影射内联汇编块外的任何声明。
   如果变量名称中包含一个点，那么它的前缀到点的部分不能与内联汇编块外的任何声明冲突。
 
+<<<<<<< HEAD
 * 现在不允许状态变量阴影。 一个派生合约只能声明一个状态变量 ``x``，
   如果在它的任何基础上没有相同名称的可见状态变量。
+=======
+* In inline assembly, opcodes that do not take arguments are now represented as "built-in functions" instead of standalone identifiers. So ``gas`` is now ``gas()``.
+
+* State variable shadowing is now disallowed.  A derived contract can only
+  declare a state variable ``x``, if there is no visible state variable with
+  the same name in any of its bases.
+>>>>>>> 310a58dd31aa50df23437c2b26721cf0eb40b07b
 
 
 语义和语法变化
@@ -152,7 +160,18 @@ C API 变化
 
 * 为内联汇编中的变量声明选择唯一的标识符，不与内联汇编块外的声明冲突。
 
+<<<<<<< HEAD
 * 在每一个您打算重载的非接口函数上添加 ``virtual``。
   在所有没有具体实现的接口之外的函数上添加 ``virtual``。
   对于单继承，在每个重载的函数上添加 ``override``。对于多重继承，添加 ``override(A, B, ..)``，
   在括号中列出所有定义了重载函数的合约。当多个基类定义同一个函数时，继承的合约必须重载所有冲突的函数。
+=======
+* Add ``virtual`` to every non-interface function you intend to override. Add ``virtual``
+  to all functions without implementation outside interfaces. For single inheritance, add
+  ``override`` to every overriding function. For multiple inheritance, add ``override(A, B, ..)``,
+  where you list all contracts that define the overridden function in the parentheses. When
+  multiple bases define the same function, the inheriting contract must override all conflicting functions.
+
+* In inline assembly, add ``()`` to all opcodes that do not otherwise accept an argument.
+  For example, change ``pc`` to ``pc()``, and ``gas`` to ``gas()``.
+>>>>>>> 310a58dd31aa50df23437c2b26721cf0eb40b07b
