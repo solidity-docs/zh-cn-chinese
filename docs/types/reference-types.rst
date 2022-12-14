@@ -74,8 +74,15 @@ Calldata是一个不可修改的、非持久性的区域，用于存储函数参
             // 下面的就不可行了；需要在 storage 中创建新的未命名的临时数组，/
             // 但 storage 是“静态”分配的：
             // y = memoryArray;
+<<<<<<< HEAD
             // 下面这一行也不可行，因为这会“重置”指针，
             // 但并没有可以让它指向的合适的存储位置。
+=======
+            // Similarly, "delete y" is not valid, as assignments to local variables
+            // referencing storage objects can only be made from existing storage objects.
+            // It would "reset" the pointer, but there is no sensible location it could point to.
+            // For more details see the documentation of the "delete" operator.
+>>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
             // delete y;
             g(x); // 调用 g 函数，同时移交对 x 的引用
             h(x); // 调用 h 函数，同时在 memory 中创建一个独立的临时拷贝
@@ -338,10 +345,20 @@ Solidity没有字符串操作函数，但有第三方的字符串库。
 
     contract ArrayContract {
         uint[2**20] aLotOfIntegers;
+<<<<<<< HEAD
         // 注意下面的代码并不是一对动态数组，
         // 而是一个数组元素为一对变量的动态数组（也就是数组元素为长度为 2 的定长数组的动态数组）。
         // 因为，T[] 总是 T 的一个动态数组，即使 T 本身是一个数组。
         // 所有状态变量的数据位置是 storage。
+=======
+        // Note that the following is not a pair of dynamic arrays but a
+        // dynamic array of pairs (i.e. of fixed size arrays of length two).
+        // In Solidity, T[k] and T[] are always arrays with elements of type T,
+        // even if T itself is an array.
+        // Because of that, bool[2][] is a dynamic array of elements
+        // that are bool[2]. This is different from other languages, like C.
+        // Data location for all state variables is storage.
+>>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
         bool[2][] pairsOfFlags;
 
         // newPairs被存储在memory中--这是公开合约函数参数的唯一可能性。

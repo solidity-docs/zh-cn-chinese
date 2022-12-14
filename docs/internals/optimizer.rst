@@ -23,7 +23,15 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 您可以使用 ``solc --ir optimized --optimize`` 来为 Solidity 源码产生一个优化的 Yul IR。
 同样地，您可以使用 ``solc --strict-assembly --optimize`` 来产生一个独立的 Yul 模式。
 
+<<<<<<< HEAD
 您可以在下面找到关于这两个优化器模块及其优化步骤的更多细节。
+=======
+.. note::
+    The `peephole optimizer <https://en.wikipedia.org/wiki/Peephole_optimization>`_ and the inliner are always
+    enabled by default and can only be turned off via the :ref:`Standard JSON <compiler-api>`.
+
+You can find more details on both optimizer modules and their optimization steps below.
+>>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
 
 优化Solidity代码的好处
 ====================================
@@ -624,9 +632,15 @@ AST被遍历了两次：分别在在信息收集步骤和实际删除步骤中�
 只在一个映射中的语句或具有相同状态的语句不作改动地使用。
 冲突的值以如下方式解决：
 
+<<<<<<< HEAD
 - “未使用”， “未决定” -> “未决定”
 - “未使用”， “已使用” -> “已使用”
 - “未决定”， “已使用” -> “已使用”
+=======
+- "unused", "undecided" -> "undecided"
+- "unused", "used" -> "used"
+- "undecided", "used" -> "used"
+>>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
 
 对于For循环，考虑到条件下的连接控制流，将对条件、主体和后部进行两次访问。
 换句话说，我们创建了三条控制流路径：循环的零次运行、一次运行和两次运行，然后在最后合并它们。

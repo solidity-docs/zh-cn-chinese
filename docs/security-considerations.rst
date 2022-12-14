@@ -84,7 +84,12 @@
         }
     }
 
+<<<<<<< HEAD
 为了避免重入，您可以使用 检查-生效-交互（Checks-Effects-Interactions）模式，下面将进一步介绍：
+=======
+To avoid re-entrancy, you can use the Checks-Effects-Interactions pattern as
+demonstrated below:
+>>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
 
 .. code-block:: solidity
 
@@ -102,8 +107,22 @@
         }
     }
 
+<<<<<<< HEAD
 请注意，重入不仅是以太传输的影响，也是对另一个合约的任何函数调用的影响。
 此外，您还必须考虑到多合约的情况。一个被调用的合约可以修改您所依赖的另一个合约的状态。
+=======
+The Checks-Effects-Interactions pattern ensures that all code paths through a contract complete all required checks
+of the supplied parameters before modifying the contract's state (Checks); only then it makes any changes to the state (Effects);
+it may make calls to functions in other contracts *after* all planned state changes have been written to
+storage (Interactions). This is a common foolproof way to prevent *re-entrancy attacks*, where an externally called
+malicious contract is able to double-spend an allowance, double-withdraw a balance, among other things, by using logic that calls back into the
+original contract before it has finalized its transaction.
+
+Note that re-entrancy is not only an effect of Ether transfer but of any
+function call on another contract. Furthermore, you also have to take
+multi-contract situations into account. A called contract could modify the
+state of another contract you depend on.
+>>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
 
 gas 限制和循环
 ===================

@@ -27,8 +27,12 @@
 
 如果您有问题或拉动请求要讨论，或有兴趣听听团队和贡献者正在做什么，您可以加入我们的公共团队电话会议：
 
+<<<<<<< HEAD
 - 每周一下午3点，欧洲中部/中部时间。
 - 每周三下午2点，欧洲中部/西部时间。
+=======
+- Mondays and Wednesdays at 3pm CET/CEST.
+>>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
 
 这两个会议都在 `Jitsi <https://meet.ethereum.org/solidity>`_ 举行。
 

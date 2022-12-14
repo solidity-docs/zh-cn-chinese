@@ -202,22 +202,41 @@
     如果您需要一个 ``address`` 类型的变量，并计划向其发送以太，那么就将其类型声明为 ``address payable``，
     以使这一要求可行。另外，尽量尽早地进行这种区分或转换。
 
+<<<<<<< HEAD
 运算符：
+=======
+    The distinction between ``address`` and ``address payable`` was introduced with version 0.5.0.
+    Also starting from that version, contracts are not implicitly convertible to the ``address`` type, but can still be explicitly converted to
+    ``address`` or to ``address payable``, if they have a receive or payable fallback function.
+
+
+Operators:
+>>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
 
 * ``<=``, ``<``, ``==``, ``!=``, ``>=`` 和 ``>``
 
 .. warning::
+<<<<<<< HEAD
     如果您使用较大字节的类型转换为 ``address``，例如 ``bytes32``，那么 ``address`` 就被截断了。
     为了减少转换的模糊性，0.4.24及以上版本的编译器强迫您在转换中明确截断。以32字节的值
     ``0x111122333344556677888899AAAABBBBCCCCDDDDEEFFFFCCCC`` 为例。
+=======
+    If you convert a type that uses a larger byte size to an ``address``, for example ``bytes32``, then the ``address`` is truncated.
+    To reduce conversion ambiguity, starting with version 0.4.24, the compiler will force you to make the truncation explicit in the conversion.
+    Take for example the 32-byte value ``0x111122223333444455556666777788889999AAAABBBBCCCCDDDDEEEEFFFFCCCC``.
+>>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
 
     您可以使用 ``address(uint160(bytes20(b)))``，结果是 ``0x111122223333444455556666777788889999aAaa``，
     或者您可以使用 ``address(uint160(uint256(b)))``，结果是 ``0x777788889999AaAAbBbbCcccddDdeeeEfFFfCcCc``。
 
 .. note::
+<<<<<<< HEAD
     ``address`` 和 ``address payable`` 之间的区别是在0.5.0版本中引入的。
     同样从该版本开始，合约不从地址类型派生，但仍然可以明确转换为 ``address`` 或 ``address payable``，
     如果它们有一个 receive 或 payable 类型的 fallback 函数。
+=======
+    Mixed-case hexadecimal numbers conforming to `EIP-55 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-55.md>`_ are automatically treated as literals of the ``address`` type. See :ref:`Address Literals<address_literals>`.
+>>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
 
 .. _members-of-addresses:
 
@@ -326,9 +345,15 @@ Send是 ``transfer`` 的低级对应部分。如果执行失败，当前的合�
 
 * ``code`` 和 ``codehash``
 
+<<<<<<< HEAD
 您可以查询任何智能合约的部署代码。使用 ``.code`` 获得作为 ``bytes memory`` 的EVM字节码，
 这可能是空的。使用 ``.codehash`` 获得该代码的Keccak-256哈希值（作为 ``bytes32``）。
 注意，使用 ``addr.codehash`` 比 ``keccak256(addr.code)`` 更便宜。
+=======
+You can query the deployed code for any smart contract. Use ``.code`` to get the EVM bytecode as a
+``bytes memory``, which might be empty. Use ``.codehash`` to get the Keccak-256 hash of that code
+(as a ``bytes32``). Note that ``addr.codehash`` is cheaper than using ``keccak256(addr.code)``.
+>>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
 
 .. note::
     所有的合约都可以转换为 ``address`` 类型，所以可以用 ``address(this).balance`` 查询当前合约的余额。
