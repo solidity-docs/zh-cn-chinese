@@ -25,7 +25,7 @@ Solidity 编译器鼓励使用机器可读的 `SPDX 许可标识符 <https://spd
 
 如果您不想指定一个许可，或者源代码不是开源的，
 请使用特殊值 ``UNLICENSED``。请注意， ``UNLICENSED`` （不允许使用，
-不存在于SPDX许可证列表中）与 ``UNLICENSED`` （授予所有人所有权利）不同。
+不存在于SPDX许可证列表中）与 ``UNLICENSE`` （授予所有人所有权利）不同。
 Solidity 遵循 `npm 的推荐 <https://docs.npmjs.com/cli/v7/configuring-npm/package-json#license>`_。
 
 提供这个注释并不能使您摆脱与许可有关的其他义务，
