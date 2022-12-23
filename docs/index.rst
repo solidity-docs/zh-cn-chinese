@@ -3,11 +3,11 @@ Solidity
 
 .. warning::
 
-  您正在阅读的是社区翻译的 Solidity 文档。
-  Solidity 团队对所提供的翻译的质量和准确性不能给予保证。
-  英语参考版本是，且将一直是 Solidity 团队唯一正式支持的版本，
-  并且将永远是最准确和最新的版本。
-  如有疑问，请始终参考 `英文（原始）文档 <https://docs.soliditylang.org/en/latest/>`_。
+  You are reading a community translation of the Solidity documentation. The Solidity team
+  can give no guarantees on the quality and accuracy of the translations provided.
+  The English reference version is and will remain the only officially supported version
+  by the Solidity team and will always be the most accurate and most up-to-date one.
+  When in doubt, please always refer to the `English (original) documentation <https://docs.soliditylang.org/en/latest/>`_.
 
 Solidity是一门为实现智能合约而创建的面向对象的高级编程语言。 智能合约是管理以太坊中账户行为的程序。
 
