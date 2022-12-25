@@ -51,7 +51,7 @@
 - ``ripemd160(bytes memory) returns (bytes20)``： 计算输入的RIPEMD-160的哈希值
 - ``ecrecover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) returns (address)``： 从椭圆曲线签名中恢复与公钥相关的地址，错误时返回0
 - ``addmod(uint x, uint y, uint k) returns (uint)``： 计算 ``(x + y) % k`` 的值，其中加法的结果即使超过 ``2**256`` 也不会被截取。从 0.5.0 版本开始会加入对 ``k != 0`` 的 assert（即会在此函数开头执行 ``assert(k != 0);`` 作为参数检查，译者注）。
-- ``mulmod(uint x, uint y, uint k) returns (uint)``： 计算 ``(x + y) % k`` 的值，其中乘法的结果即使超过 ``2**256`` 也不会被截取。从 0.5.0 版本开始会加入对 ``k != 0`` 的 assert（即会在此函数开头执行 ``assert(k != 0);`` 作为参数检查，译者注）。
+- ``mulmod(uint x, uint y, uint k) returns (uint)``： 计算 ``(x * y) % k`` 的值，其中乘法的结果即使超过 ``2**256`` 也不会被截取。从 0.5.0 版本开始会加入对 ``k != 0`` 的 assert（即会在此函数开头执行 ``assert(k != 0);`` 作为参数检查，译者注）。
 - ``this`` （当前合约的类型）： 当前合约，可明确转换为 ``address`` 或 ``address payable``。
 - ``super``： 继承层次中高一级的合约
 - ``selfdestruct(address payable recipient)``： 销毁当前合约，将其资金发送到给定的地址。
