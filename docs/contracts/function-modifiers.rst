@@ -102,20 +102,13 @@
 修饰器不能隐式地访问或改变它们所修改的函数的参数和返回值。
 它们的值只能在调用的时候明确地传递给它们。
 
-<<<<<<< HEAD
+在函数修改器中，有必要指定何时运行应用修改器的函数。
+占位符语句（用单个下划线字符 ``_`` 表示）用于表示被修改的函数主体应该插入的位置。
+请注意，占位符操作符与在变量名中使用下划线作为前导或尾随字符不同，
+后者是一种风格上的选择。
+
 修饰器或函数体的显式返回只离开当前修饰器或函数体。
 返回变量会被赋值，但整个执行逻辑会从前一个修饰器中定义的 ``_`` 之后继续执行。
-=======
-In function modifiers, it is necessary to specify when you want the function to which the modifier is
-applied to be run. The placeholder statement (denoted by a single underscore character ``_``) is used to
-denote where the body of the function being modified should be inserted. Note that the
-placeholder operator is different from using underscores as leading or trailing characters in variable
-names, which is a stylistic choice.
-
-Explicit returns from a modifier or function body only leave the current
-modifier or function body. Return variables are assigned and
-control flow continues after the ``_`` in the preceding modifier.
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
 
 .. warning::
     在Solidity的早期版本中，具有修饰器的函数中的 ``return`` 语句会表现的不同。
