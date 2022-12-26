@@ -257,16 +257,9 @@ Solidity中内存数组中的元素总是占据32字节的倍数
 这个代码生成路径可以将局部变量从堆栈转移到内存，以避免堆栈过深的错误，并执行额外的内存优化，
 如果它可以依赖于对内存使用的某些假设的话。
 
-<<<<<<< HEAD
-虽然我们建议始终遵循 Solidity 的内存模型，但内联汇编允许您以不兼容的方式使用内存。
-因此，在默认情况下，如果存在任何包含内存操作或在内存中分配给 Solidity 变量的内联汇编块存在的情况，
-则禁用将堆栈变量移动到内存和其他内存优化。
-=======
-While we recommend to always respect Solidity's memory model, inline assembly allows you to use memory
-in an incompatible way. Therefore, moving stack variables to memory and additional memory optimizations are,
-by default, globally disabled in the presence of any inline assembly block that contains a memory operation
-or assigns to Solidity variables in memory.
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
+虽然我们建议始终尊重 Solidity 的内存模型，但内联汇编允许您以不兼容的方式使用内存。
+因此，在任何包含内存操作或在内存中分配给 Solidity 变量的内联汇编块存在的情况下，
+将堆栈变量移动到内存和额外的内存优化默认为全局禁用。
 
 然而，您可以特别注释一个汇编块，以表明它实际上是遵循 Solidity 内存模型的，如下所示：
 
