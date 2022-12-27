@@ -66,16 +66,6 @@
 
 函数参数可以像任何其他局部变量一样使用，它们也可以被赋值。
 
-<<<<<<< HEAD
-.. note::
-
-  一个 :ref:`外部函数 <external-function-calls>` 不能接受一个多维数组作为输入参数。
-  如果您通过在源文件中添加 ``pragma abicoder v2;`` 来启用ABI编码器v2，就可以实现这个功能。
-
-  一个 :ref:`内部函数 <external-function-calls>` 可以不启用该功能而接受一个多维数组。
-
-=======
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
 .. index:: return array, return string, array, string, array of strings, dynamic array, variably sized array, return struct, struct
 
 返回的变量
@@ -126,22 +116,16 @@
 如果您过早使用 ``return`` 来结束一个有返回变量的函数，您必须在返回语句中同时提供返回值。
 
 .. note::
-<<<<<<< HEAD
-    您不能从非内部函数返回某些类型，特别是多维动态数组和结构。
-    如果您通过在源文件中添加 ``pragma abicoder v2;`` 来启用ABI编码器v2，
-    那么就会有更多的类型可用，但 ``映射（mapping）`` 类型仍然被限制在单个合约内，您不能转移它们。
-=======
-    You cannot return some types from non-internal functions.
-    This includes the types listed below and any composite types that recursively contain them:
+    您不能从非内部函数返回某些类型。
+    这包括下面列出的类型和任何递归地包含它们的复合类型：
 
-    - mappings,
-    - internal function types,
-    - reference types with location set to ``storage``,
-    - multi-dimensional arrays (applies only to :ref:`ABI coder v1 <abi_coder>`),
-    - structs (applies only to :ref:`ABI coder v1 <abi_coder>`).
+    - 映射，
+    - 内部函数类型，
+    - 参考类型，位置设置为 ``storage``，
+    - 多维数组（仅适用于 :ref:`ABI coder v1 <abi_coder>`），
+    - 结构体（仅适用于 :ref:`ABI coder v1 <abi_coder>`）。
 
-    This restriction does not apply to library functions because of their different :ref:`internal ABI <library-selectors>`.
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
+    这个限制不适用于库函数，因为它们有不同的 :ref:`内部 ABI <library-selectors>`。
 
 .. _multi-return:
 
