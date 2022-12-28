@@ -133,13 +133,8 @@ Solidity使用 ``extcodesize`` 操作码来检查即将被调用的合约是否�
     使用 ``f.value(x).gas(g)()``。这在Solidity 0.6.2中被废弃，
     并且从Solidity 0.7.0开始不再支持。
 
-<<<<<<< HEAD
-具名调用和匿名函数参数
+带命名参数的函数调用
 ----------------------
-=======
-Function Calls with Named Parameters
-------------------------------------
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
 
 函数调用参数可以用名字来表示，如果用 ``{ }`` 括起来的话，
 可以用任何顺序，如下面的例子所示。
@@ -163,21 +158,12 @@ Function Calls with Named Parameters
 
     }
 
-<<<<<<< HEAD
-省略函数参数名称
+函数定义中省略的名称
 -----------------
 
-未使用的参数（尤其是返回参数）的名称可以省略。
-这些参数将仍然存在于堆栈中，但它们是不可访问的。
-=======
-Omitted Names in Function Definitions
--------------------------------------
-
-The names of parameters and return values in the function declaration can be omitted.
-Those items with omitted names will still be present on the stack, but they are
-inaccessible by name. An omitted return value name
-can still return a value to the caller by use of the ``return`` statement.
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
+函数声明中的参数和返回值的名称可以省略。
+那些名字被省略的参数仍然会出现在堆栈中，但是无法通过名字访问。
+省略的返回值名称仍然可以通过使用 ``return`` 语句向调用者返回一个值。
 
 .. code-block:: solidity
 
