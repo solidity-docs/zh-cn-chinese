@@ -166,13 +166,6 @@
 可能的优化
 =====================
 
-<<<<<<< HEAD
 当前，为了把投票权分配给所有参与者，需要执行很多交易。
-您有没有更好的主意？
-=======
-Currently, many transactions are needed to
-assign the rights to vote to all participants.
-Moreover, if two or more proposals have the same
-number of votes, ``winningProposal()`` is not able
-to register a tie. Can you think of a way to fix these issues?
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
+此外，如果两个或更多的提案有相同的票数， ``winningProposal()`` 无法登记平局。
+您能想出一个办法来解决这些问题吗？
