@@ -329,22 +329,16 @@ macOS Packages
     您可以使用任何满足上表要求的版本进行构建。
     然而，如果您这样做，请记得在 ``scripts/tests.sh`` 中传递 ``--no-smt`` 选项以跳过SMT测试。
 
-<<<<<<< HEAD
-最小编译器版本
-=======
 .. note::
-    By default the build is performed in *pedantic mode*, which enables extra warnings and tells the
-    compiler to treat all warnings as errors.
-    This forces developers to fix warnings as they arise, so they do not accumulate "to be fixed later".
-    If you are only interested in creating a release build and do not intend to modify the source code
-    to deal with such warnings, you can pass ``-DPEDANTIC=OFF`` option to CMake to disable this mode.
-    Doing this is not recommended for general use but may be necessary when using a toolchain we are
-    not testing with or trying to build an older version with newer tools.
-    If you encounter such warnings, please consider
-    `reporting them <https://github.com/ethereum/solidity/issues/new>`_.
+    默认情况下，编译是以 *语义模式* 进行的，这将启用额外的警告，并告诉编译器将所有警告视为错误。
+    这迫使开发人员在警告出现时进行修复，因此它们不会累积到“以后再修复”。
+    如果您只对创建发布版本感兴趣，不打算修改源代码来处理这些警告，
+    您可以向CMake传递 ``-DPEDANTIC=OFF`` 选项来禁用这种模式。
+    一般情况下不建议这样做，但在使用我们没有测试过的工具链或试图用较新的工具构建旧版本时，
+    可能需要这样做。
+    如果您遇到这种警告，请考虑 `报告它们 <https://github.com/ethereum/solidity/issues/new>`_。
 
-Minimum Compiler Versions
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
+最小编译器版本
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 以下C++编译器及其最小版本可构建 Solidity 代码库：
