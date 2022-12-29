@@ -164,15 +164,9 @@ Solidity意义上的合约是代码（其 *函数*）和数据（其 *状态*）
 它是在函数 ``send`` 的最后一行发出的。以太坊客户端，如网络应用，可以监听区块链上发出的这些事件，而不需要太多的成本。
 一旦发出，监听器就会收到参数 ``from``， ``to`` 和 ``amount``，这使得跟踪交易成为可能。
 
-<<<<<<< HEAD
 为了监听这个事件，您可以使用以下方法 JavaScript代码，
-使用 `web3.js <https://github.com/ethereum/web3.js/>`_ 来创建 ``Coin`` 合约对象。
+使用 `web3.js <https://github.com/ethereum/web3.js/>`_ 来创建 ``Coin`` 合约对象，
 然后在任何用户界面调用上面自动生成的 ``balances`` 函数：
-=======
-To listen for this event, you could use the following
-JavaScript code, which uses `web3.js <https://github.com/ethereum/web3.js/>`_ to create the ``Coin`` contract object,
-and any user interface calls the automatically generated ``balances`` function from above:
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
 
 .. code-block:: javascript
 
@@ -430,13 +424,8 @@ EVM的指令集应尽量保持最小，以避免不正确或不一致的实现�
 
 .. index:: delegatecall, library
 
-<<<<<<< HEAD
-委托调用/代码调用和库
-=====================================
-=======
-Delegatecall and Libraries
+委托调用和库
 ==========================
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
 
 存在一种特殊的消息调用，被称为 **委托调用（delegatecall）**，
 除了目标地址的代码是在调用合约的上下文（即地址）中执行，
