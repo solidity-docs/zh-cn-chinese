@@ -83,35 +83,21 @@ Solidity 遵循 `npm 的推荐 <https://docs.npmjs.com/cli/v7/configuring-npm/pa
   它只是指示编译器检查它的版本是否与编译指示所要求的版本一致。
   如果不匹配，编译器会发出一个错误。
 
-<<<<<<< HEAD
-
-ABI编码编译指示
-=======
 .. index:: ! ABI coder, ! pragma; abicoder, pragma; ABIEncoderV2
 .. _abi_coder:
 
-ABI Coder Pragma
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
+ABI编码编译指示
 ----------------
 
 通过使用 ``pragma abicoder v1`` 或 ``pragma abicoder v2`` ，
 您可以选择ABI编码器和解码器的两种实现。
 
-<<<<<<< HEAD
-新的 ABI 编码器（v2）能够对任意的嵌套数组和结构进行编码和解码。
-它可能产生不太理想的代码，并且没有得到像旧编码器那样多的测试，
-但从 Solidity 0.6.0 起，它被认为是非实验性的。
-您仍然必须使用 ``pragma abicoder v2;`` 明确激活它。
-由于它将从 Solidity 0.8.0 开始被默认激活，
-所以可以选择使用 ``pragma abicoder v1;`` 来选择旧的编码器。
-=======
-The new ABI coder (v2) is able to encode and decode arbitrarily nested
-arrays and structs. Apart from supporting more types, it involves more extensive
-validation and safety checks, which may result in higher gas costs, but also heightened
-security. It is considered
-non-experimental as of Solidity 0.6.0 and it is enabled by default starting
-with Solidity 0.8.0. The old ABI coder can still be selected using ``pragma abicoder v1;``.
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
+新的 ABI 编码器（v2）能够对任意嵌套的数组和结构进行编码和解码。
+除了支持更多的类型外，它还涉及更广泛的验证和安全检查，
+这可能导致更高的气体成本，但也提高了安全性。
+从 Solidity 0.6.0 开始，它被认为是非实验性的，
+并且从 Solidity 0.8.0 开始，它被默认启用。
+旧的 ABI 编码器仍然可以使用 ``pragma abicoder v1;`` 来选择。
 
 新编码器所支持的类型集是旧编码器所支持的类型的一个严格超集。
 使用新编码器的合约可以与不使用新编码器的合约进行交互，没有任何限制。
