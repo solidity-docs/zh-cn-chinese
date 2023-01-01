@@ -1038,6 +1038,7 @@ Yul对象被用来分组命名代码和数据部分。
         code {
             function allocate(size) -> ptr {
                 ptr := mload(0x40)
+                // 请注意，Solidity 生成的 IR 代码也保留了内存偏移量 ``0x60``，但一个纯 Yul 对象可以自由地使用内存。
                 if iszero(ptr) { ptr := 0x60 }
                 mstore(0x40, add(ptr, size))
             }
@@ -1067,6 +1068,7 @@ Yul对象被用来分组命名代码和数据部分。
             code {
                 function allocate(size) -> ptr {
                     ptr := mload(0x40)
+                    // 请注意，Solidity 生成的 IR 代码也保留了内存偏移量 ``0x60``，但一个纯 Yul 对象可以自由地使用内存。
                     if iszero(ptr) { ptr := 0x60 }
                     mstore(0x40, add(ptr, size))
                 }

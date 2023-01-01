@@ -202,22 +202,25 @@
     如果您需要一个 ``address`` 类型的变量，并计划向其发送以太，那么就将其类型声明为 ``address payable``，
     以使这一要求可行。另外，尽量尽早地进行这种区分或转换。
 
+    ``address`` 和 ``address payable`` 之间的区别是从 0.5.0 版本开始的。
+    同样从该版本开始，合约不能隐式地转换为 ``address`` 类型，但仍然可以显式地转换为
+    ``address`` 或 ``address payable``，如果它们有一个 receive 或 payable 类型的 fallback 函数的话。
+
+
 运算符：
 
 * ``<=``, ``<``, ``==``, ``!=``, ``>=`` 和 ``>``
 
 .. warning::
     如果您使用较大字节的类型转换为 ``address``，例如 ``bytes32``，那么 ``address`` 就被截断了。
-    为了减少转换的模糊性，0.4.24及以上版本的编译器强迫您在转换中明确截断。以32字节的值
+    为了减少转换的模糊性，从 0.4.24 版本开始，编译器将强迫您在转换中明确地进行截断处理。以32字节的值
     ``0x111122333344556677888899AAAABBBBCCCCDDDDEEFFFFCCCC`` 为例。
 
     您可以使用 ``address(uint160(bytes20(b)))``，结果是 ``0x111122223333444455556666777788889999aAaa``，
     或者您可以使用 ``address(uint160(uint256(b)))``，结果是 ``0x777788889999AaAAbBbbCcccddDdeeeEfFFfCcCc``。
 
 .. note::
-    ``address`` 和 ``address payable`` 之间的区别是在0.5.0版本中引入的。
-    同样从该版本开始，合约不从地址类型派生，但仍然可以明确转换为 ``address`` 或 ``address payable``，
-    如果它们有一个 receive 或 payable 类型的 fallback 函数。
+    符合 `EIP-55 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-55.md>`_ 的混合大小写十六进制数字会自动被视为 ``address`` 类型的字面数字。参见 :ref:`地址字面类型 <address_literals>`。
 
 .. _members-of-addresses:
 

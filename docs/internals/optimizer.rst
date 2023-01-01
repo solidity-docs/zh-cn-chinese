@@ -23,6 +23,10 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 您可以使用 ``solc --ir optimized --optimize`` 来为 Solidity 源码产生一个优化的 Yul IR。
 同样地，您可以使用 ``solc --strict-assembly --optimize`` 来产生一个独立的 Yul 模式。
 
+.. note::
+    `窥视孔（peephole）优化器 <https://en.wikipedia.org/wiki/Peephole_optimization>`_
+    和内联器总是默认启用的，只能通过 :ref:`标准 JSON 文件配置 <compiler-api>` 关闭。
+
 您可以在下面找到关于这两个优化器模块及其优化步骤的更多细节。
 
 优化Solidity代码的好处

@@ -589,12 +589,13 @@ EVM版本选项
 6. ``DeclarationError``： 无效的，无法解析的或冲突的标识符名称 比如 ``Identifier not found``
 7. ``TypeError``： 类型系统内的错误，例如无效类型转换，无效赋值等。
 8. ``UnimplementedFeatureError``： 当前编译器不支持该功能，但预计将在未来的版本中支持。
-9. ``InternalCompilerError``： 在编译器中触发的内部错误——应将此报告为一个issue。
-10. ``Exception``： 编译期间的未知失败——应将此报告为一个issue。
-11. ``CompilerError``： 编译器堆栈的无效使用——应将此报告为一个issue。
-12. ``FatalError``： 未正确处理致命错误——应将此报告为一个issue。
-13. ``Warning``： 警告，不会停止编译，但应尽可能处理。
-14. ``Info``： 编译器认为用户可能会在其中发现有用的信息，并不危险，也不一定需要处理。
+9. ``InternalCompilerError``： 在编译器中触发的内部错误 — 应将此报告为一个issue。
+10. ``Exception``： 编译期间的未知失败 — 应将此报告为一个issue。
+11. ``CompilerError``： 编译器堆栈的无效使用 — 应将此报告为一个issue。
+12. ``FatalError``： 未正确处理致命错误 — 应将此报告为一个issue。
+13. ``YulException``： 在Yul代码生成过程中出现错误 - 这应该作为一个问题报告。
+14. ``Warning``： 警告，不会停止编译，但应尽可能处理。
+15. ``Info``： 编译器认为用户可能会在其中发现有用的信息，并不危险，也不一定需要处理。
 
 
 .. _compiler-tools:
