@@ -15,21 +15,14 @@ Solidity 编译器自动生成一个 JSON 文件，即合约元数据，
 其他可用的选项是Swarm哈希值和不将元数据哈希值附加到字节码上。
 这些可以通过 :ref:`标准 JSON 接口 <compiler-api>` 来配置。
 
-<<<<<<< HEAD
-您必须将元数据文件发布到IPFS、Swarm或其他服务，
-以便其他人可以访问它。您可以通过使用 ``solc --metadata`` 命令来创建该文件，
-该命令生成一个名为 ``ContractName_meta.json`` 的文件。
-它包含IPFS和Swarm对源代码的引用，所以您必须上传所有的源文件和元数据文件。
-=======
-You have to publish the metadata file to IPFS, Swarm, or another service so
-that others can access it. You create the file by using the ``solc --metadata``
-command together with the ``--output-dir`` parameter. Without the parameter,
-the metadata will be written to standard output.
-The metadata contains IPFS and Swarm references to the source code, so you have to
-upload all source files in addition to the metadata file. For IPFS, the hash contained
-in the CID returned by ``ipfs add`` (not the direct sha2-256 hash of the file)
-shall match with the one contained in the bytecode.
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
+您必须将元数据文件发布到IPFS，Swarm或其他服务，
+以便其他人可以访问它。您可以通过使用 ``solc --metadata`` 命令
+和 ``--output-dir`` 参数来创建该文件。如果没有这个参数，
+元数据将被写到标准输出。
+元数据包含 IPFS 和 Swarm 对源代码的引用，
+所以除了元数据文件外，您还必须上传所有的源文件。
+对于IPFS， ``ipfs add`` 返回的 CID 中包含的哈希值（不是文件的直接sha2-256哈希值）
+应与字节码中包含的哈希值相匹配。
 
 元数据文件有以下格式。下面的例子是以人类可读的方式呈现的。
 正确的元数据格式应该正确地使用引号，
@@ -45,40 +38,22 @@ shall match with the one contained in the bytecode.
       "language": "Solidity",
       // 必选：编译器的详情，内容视语言而定。
       "compiler": {
-<<<<<<< HEAD
-        // 对 Solidity 来说是必须的：编译器的版本
-        "version": "0.4.6+commit.2dabbdf0.Emscripten.clang",
+        // 对 Solidity 来说是必选的：编译器的版本
+        "version": "0.8.2+commit.661d1103",
         // 可选： 生成此输出的编译器二进制文件的哈希值
         "keccak256": "0x123..."
       },
-      // 必选：编译的源文件／源单位，键值为文件名
-      "sources":
-      {
-        "myFile.sol": {
-          // 必选：源文件的 keccak256 哈希值
-          "keccak256": "0x123...",
-          // 必选（除非定义了“content”，详见下文）：
-          // 已排序的源文件的URL，URL的协议可以是任意的，但建议使用 Swarm 的URL
-          "urls": [ "bzzr://56ab..." ],
-          // 可选：源文件中给出的SPDX许可证标识符。
-=======
-        // Required for Solidity: Version of the compiler
-        "version": "0.8.2+commit.661d1103",
-        // Optional: Hash of the compiler binary which produced this output
-        "keccak256": "0x123..."
-      },
-      // Required: Compilation source files/source units, keys are file paths
+      // 必选：编译的源文件／源单元，键值为文件路径
       "sources":
       {
         "myDirectory/myFile.sol": {
-          // Required: keccak256 hash of the source file
+          // 必选：源文件的 keccak256 哈希值
           "keccak256": "0x123...",
-          // Required (unless "content" is used, see below): Sorted URL(s)
-          // to the source file, protocol is more or less arbitrary, but an
-          // IPFS URL is recommended
+          // 必选：（除非使用 “content”，见下文）：已排序的源文件的URL，
+          // 协议可以是任意的，
+          // 但建议使用 IPFS URL
           "urls": [ "bzz-raw://7d7a...", "dweb:/ipfs/QmN..." ],
-          // Optional: SPDX license identifier as given in the source file
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
+          // 可选：源文件中给出的 SPDX 许可证标识符。
           "license": "MIT"
         },
         "destructible": {
@@ -91,11 +66,7 @@ shall match with the one contained in the bytecode.
       // 必选：编译器的设置
       "settings":
       {
-<<<<<<< HEAD
-        // 对 Solidity 来说是必须的： 已排序的重定向列表
-=======
-        // Required for Solidity: Sorted list of import remappings
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
+        // 对 Solidity 来说是必选的：已排序的导入重映射列表
         "remappings": [ ":g=/dir" ],
         // 可选：优化器设置。“enabled” 和 "runs" 这两个字段已被废弃，
         // 这里只是为了向后兼容而给出。
@@ -122,21 +93,12 @@ shall match with the one contained in the bytecode.
           }
         },
         "metadata": {
-<<<<<<< HEAD
-          // 显示输入json中使用的设置，默认为false。
-=======
-          // Reflects the setting used in the input json, defaults to "false"
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
+          // 显示输入 json 中使用的设置，默认为 “false”
           "useLiteralContent": true,
           // 显示输入json中使用的设置，默认为 “ipfs“
           "bytecodeHash": "ipfs"
         },
-<<<<<<< HEAD
-        // 对 Solidity 来说是必须的：用以生成该元数据的文件名和合约名或库名
-=======
-        // Required for Solidity: File path and the name of the contract or library this
-        // metadata is created for.
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
+        // 对 Solidity 来说是必选的：用以生成该元数据的文件路径和合约名或库名
         "compilationTarget": {
           "myDirectory/myFile.sol": "MyContract"
         },
@@ -148,45 +110,37 @@ shall match with the one contained in the bytecode.
       // 必选：合约的生成信息
       "output":
       {
-<<<<<<< HEAD
-        // 必选：合约的 ABI 定义
+        // 必选：合约的 ABI 定义，见 “合约 ABI 规范”
         "abi": [/* ... */],
-        // 必选：合约的 NatSpec 用户文档
-        "userdoc": [/* ... */],
-        // 必选：合约的 NatSpec 开发者文档
-        "devdoc": [/* ... */]
-=======
-        // Required: ABI definition of the contract. See "Contract ABI Specification"
-        "abi": [/* ... */],
-        // Required: NatSpec developer documentation of the contract.
+        // 必选：合约的开发者 NatSpec 文档
         "devdoc": {
-          "version": 1 // NatSpec version
+          "version": 1 // NatSpec 版本
           "kind": "dev",
-          // Contents of the @author NatSpec field of the contract
+          // 合约中 @author NatSpec 字段的内容
           "author": "John Doe",
-          // Contents of the @title NatSpec field of the contract
+          // 合约中 @title NatSpec 字段的内容
           "title": "MyERC20: an example ERC20"
-          // Contents of the @dev NatSpec field of the contract
+          // 合约中 @dev NatSpec 字段的内容
           "details": "Interface of the ERC20 standard as defined in the EIP. See https://eips.ethereum.org/EIPS/eip-20 for details",
           "methods": {
             "transfer(address,uint256)": {
-              // Contents of the @dev NatSpec field of the method
+              // 方法的 @dev NatSpec 字段的内容
               "details": "Returns a boolean value indicating whether the operation succeeded. Must be called by the token holder address",
-              // Contents of the @param NatSpec fields of the method
+              // 方法的 @param NatSpec 字段的内容
               "params": {
                 "_value": "The amount tokens to be transferred",
                 "_to": "The receiver address"
               }
-              // Contents of the @return NatSpec field.
+              // 方法的 @return NatSpec 字段的内容
               "returns": {
-                // Return var name (here "success") if exists. "_0" as key if return var is unnamed
+                // 如果存在，返回var名称（这里是 “success”）。如果返回的var是未命名的，“_0” 作为键。
                 "success": "a boolean value indicating whether the operation succeeded"
               }
             }
           },
           "stateVariables": {
             "owner": {
-              // Contents of the @dev NatSpec field of the state variable
+              // 状态变量的 @dev NatSpec 字段的内容
               "details": "Must be set during contract creation. Can then only be changed by the owner"
             }
           }
@@ -201,9 +155,9 @@ shall match with the one contained in the bytecode.
              }
           }
         },
-        // Required: NatSpec user documentation of the contract
+        // 必选：合约的用户 NatSpec 文档
         "userdoc": {
-          "version": 1 // NatSpec version
+          "version": 1 // NatSpec 版本
           "kind": "user",
           "methods": {
             "transfer(address,uint256)": {
@@ -216,7 +170,6 @@ shall match with the one contained in the bytecode.
             }
           }
         }
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
       }
     }
 
@@ -249,13 +202,8 @@ shall match with the one contained in the bytecode.
     0x64 's' 'o' 'l' 'c' 0x43 <3字节的版本编码>
     0x00 0x33
 
-<<<<<<< HEAD
-因此，为了检索数据，可以检查部署的字节码的结尾是否符合该模式，
-并使用IPFS哈希值来检索文件。
-=======
-So in order to retrieve the data, the end of the deployed bytecode can be checked
-to match that pattern and the IPFS hash can be used to retrieve the file (if pinned/published).
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
+因此，为了检索数据，可以检查已部署字节码的末尾以匹配该模式，
+并且可以使用 IPFS 哈希值来检索文件（如果固定/发布）。
 
 SOLC的发布版本使用如上所示的3个字节的版本编码
 （主要、次要和补丁版本号各一个字节），
@@ -278,29 +226,15 @@ SOLC的发布版本使用如上所示的3个字节的版本编码
 自动化接口生成和NatSpec 的使用方法
 ====================================================
 
-<<<<<<< HEAD
 元数据的使用方式如下：一个想要与合约交互的组件
-（例如Mist或任何钱包）会检索合约的代码，
-从中检索出一个文件的IPFS/Swarm哈希值，然后再检索。
-该文件被JSON解码成一个类似于上述的结构。
-=======
-The metadata is used in the following way: A component that wants to interact
-with a contract (e.g. a wallet) retrieves the code of the contract.
-It decodes the CBOR encoded section containing the IPFS/Swarm hash of the
-metadata file. With that hash, the metadata file is retrieved. That file
-is JSON-decoded into a structure like above.
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
+（例如钱包）会检索合约的代码。
+它对包含元数据文件的 IPFS/Swarm 哈希的 CBOR 编码部分进行解码。
+通过该哈希值，元数据文件被检索出来。该文件被 JSON 解码成一个类似于上述的结构。
 
 然后，该组件可以使用ABI为合约自动生成一个基本的用户界面。
 
-<<<<<<< HEAD
-此外，钱包可以使用NatSpec用户文档，每当用户与合约交互时，
-就会向用户显示一条确认信息，同时要求对交易签名进行授权。
-=======
-Furthermore, the wallet can use the NatSpec user documentation to display a human-readable confirmation message to the user
-whenever they interact with the contract, together with requesting
-authorization for the transaction signature.
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
+此外，钱包可以使用 NatSpec 用户文档，每当用户与合约交互时，
+就会向用户显示一条可读的确认信息，同时要求对交易签名进行授权。
 
 有关其他信息，请阅读 :doc:`以太坊自然语言规范（NatSpec）格式 <natspec-format>`。
 
