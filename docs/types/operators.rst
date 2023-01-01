@@ -11,19 +11,11 @@
 2. 如果左操作数的类型可以隐式转换为右操作数的类型，则使用右操作数的类型，
 3. 否则的话，该操作不被允许。
 
-<<<<<<< HEAD
 如果其中一个操作数是 :ref:`字面常数 <rational_literals>`，
 它首先被转换为其 “移动类型（mobile type）”，也就是能容纳该值的最小类型
-（相同位宽的无符号类型被认为比有符号类型 "小"）。
-如果两者都是字面常数，则以任意的精度进行计算。
-=======
-In case one of the operands is a :ref:`literal number <rational_literals>` it is first converted to its
-"mobile type", which is the smallest type that can hold the value
-(unsigned types of the same bit-width are considered "smaller" than the signed types).
-If both are literal numbers, the operation is computed with effectively unlimited precision in
-that the expression is evaluated to whatever precision is necessary so that none is lost
-when the result is used with a non-literal type.
->>>>>>> 8df45f5f8632da4817bc7ceb81497518f298d290
+（相同位宽的无符号类型被认为比有符号类型 “小”）。
+如果两者都是字面常数，那么运算的精度实际上是无限的，
+因为表达式被转换到任何必要的精度，所以当结果被用于非字面类型时，没有任何损失。
 
 操作符的结果类型与操作的类型相同，除了比较操作符，其结果总是 ``bool``。
 
