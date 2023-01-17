@@ -1038,15 +1038,49 @@ Import 语句应始终放在文件的顶部。
 
 在每个合约，库或接口内，使用以下顺序：
 
+<<<<<<< HEAD
 1. 类型声明
 2. 状态变量
 3. 事件
 4. 修饰符
 5. 函数
+=======
+1. Type declarations
+2. State variables
+3. Events
+4. Errors
+5. Modifiers
+6. Functions
+>>>>>>> english/develop
 
 .. note::
 
     在接近事件或状态变量的使用时，声明类型可能会更清楚。
+
+Yes:
+
+.. code-block:: solidity
+
+    // SPDX-License-Identifier: GPL-3.0
+    pragma solidity >=0.8.4 <0.9.0;
+
+    abstract contract Math {
+        error DivideByZero();
+        function divide(int256 numerator, int256 denominator) public virtual returns (uint256);
+    }
+
+No:
+
+.. code-block:: solidity
+
+    // SPDX-License-Identifier: GPL-3.0
+    pragma solidity >=0.8.4 <0.9.0;
+
+    abstract contract Math {
+        function divide(int256 numerator, int256 denominator) public virtual returns (uint256);
+        error DivideByZero();
+    }
+
 
 ******************
 命名规范
@@ -1112,13 +1146,13 @@ Import 语句应始终放在文件的顶部。
     contract Owned {
         address public owner;
 
-        constructor() {
-            owner = msg.sender;
-        }
-
         modifier onlyOwner {
             require(msg.sender == owner);
             _;
+        }
+
+        constructor() {
+            owner = msg.sender;
         }
 
         function transferOwnership(address newOwner) public onlyOwner {
@@ -1151,13 +1185,13 @@ Import 语句应始终放在文件的顶部。
     contract owned {
         address public owner;
 
-        constructor() {
-            owner = msg.sender;
-        }
-
         modifier onlyOwner {
             require(msg.sender == owner);
             _;
+        }
+
+        constructor() {
+            owner = msg.sender;
         }
 
         function transferOwnership(address newOwner) public onlyOwner {

@@ -221,9 +221,14 @@ ABI编码和解码函数
     （见 `EIP-2 <https://eips.ethereum.org/EIPS/eip-2#specification>`_），
     但 ecrecover 函数仍然没有改变。
 
+<<<<<<< HEAD
     这通常不是一个问题，除非您要求签名是唯一的，或者用它们来识别个体。
     OpenZeppelin 有一个 `ECDSA 辅助库 <https://docs.openzeppelin.com/contracts/2.x/api/cryptography#ECDSA>`_，
     您可以用它作为 ``ecrecover`` 的包装，那样就没有这个问题。
+=======
+    This is usually not a problem unless you require signatures to be unique or use them to identify items.
+    OpenZeppelin have a `ECDSA helper library <https://docs.openzeppelin.com/contracts/4.x/api/utils#ECDSA>`_ that you can use as a wrapper for ``ecrecover`` without this issue.
+>>>>>>> english/develop
 
 .. note::
 
