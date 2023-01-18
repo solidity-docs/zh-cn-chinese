@@ -117,9 +117,19 @@ Calldata是一个不可修改的、非持久性的区域，用于存储函数参
 可以将状态变量数组标记为 ``public``，
 并让Solidity创建一个 :ref:`getter <visibility-and-getters>` 函数。数字索引成为该函数的一个必要参数。
 
+<<<<<<< HEAD
 访问一个超过它的末端的数组会导致一个失败的断言。
 方法 ``.push()`` 和 ``.push(value)`` 可以用来在数组的末端追加一个新的元素，
 其中 ``.push()`` 追加一个零初始化的元素并返回它的引用。
+=======
+Accessing an array past its end causes a failing assertion. Methods ``.push()`` and ``.push(value)`` can be used
+to append a new element at the end of a dynamically-sized array, where ``.push()`` appends a zero-initialized element and returns
+a reference to it.
+>>>>>>> english/develop
+
+.. note::
+    Dynamically-sized arrays can only be resized in storage.
+    In memory, such arrays can be of arbitrary size but the size cannot be changed once an array is allocated.
 
 .. index:: ! string, ! bytes
 
