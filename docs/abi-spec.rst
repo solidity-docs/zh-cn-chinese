@@ -180,9 +180,14 @@ Solidity 支持上面介绍的除了元祖之外的所有同名类型。
 
 - ``T[]`` 当 ``X`` 有 ``k`` 个元素 （ ``k`` 的类型为 ``uint256``）：
 
-  ``enc(X) = enc(k) enc([X[0], ..., X[k-1]])``
+  ``enc(X) = enc(k) enc((X[0], ..., X[k-1]))``
 
+<<<<<<< HEAD
   即，它就像是个由静态大小 ``k`` 的数组那样被编码的，且由元素的个数作为前缀。
+=======
+  i.e. it is encoded as if it were a tuple with ``k`` elements of the same type (resp. an array of static size ``k``), prefixed with
+  the number of elements.
+>>>>>>> english/develop
 
 - 具有 ``k`` 字节长度的 ``bytes``， （假设其类型为 ``uint256``）：
 

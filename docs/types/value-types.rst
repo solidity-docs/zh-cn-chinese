@@ -635,8 +635,14 @@ Unicode 字面常数
 函数 ``C.wrap`` 被用来从底层类型转换到自定义类型。同样地，
 函数 ``C.unwrap`` 用于从自定义类型转换到底层类型。
 
+<<<<<<< HEAD
 类型 ``C`` 没有任何运算符或约束成员函数。特别的是，甚至运算符 ``==`` 也没有定义。
 也不允许与其他类型进行显式和隐式转换。
+=======
+The type ``C`` does not have any operators or attached member functions. In particular, even the
+operator ``==`` is not defined. Explicit and implicit conversions to and from other types are
+disallowed.
+>>>>>>> english/develop
 
 这种类型的值的数据表示是从底层类型中继承的，底层类型也被用于ABI中。
 
@@ -725,11 +731,29 @@ Unicode 字面常数
 
 其他函数类型之间的转换是不可能的。
 
+<<<<<<< HEAD
 关于 ``payable`` 和 ``non-payable`` 的规则可能有点混乱，
 但实质上，如果一个函数是 ``payable``，这意味着
 它也接受零以太的支付，所以它也是 ``non-payable``。
 另一方面，一个 ``non-payable`` 的函数将拒绝发送给它的以太，
 所以 ``non-payable`` 的函数不能被转换为 ``payable`` 的函数。
+=======
+The rule about ``payable`` and ``non-payable`` might be a little
+confusing, but in essence, if a function is ``payable``, this means that it
+also accepts a payment of zero Ether, so it also is ``non-payable``.
+On the other hand, a ``non-payable`` function will reject Ether sent to it,
+so ``non-payable`` functions cannot be converted to ``payable`` functions.
+To clarify, rejecting ether is more restrictive than not rejecting ether.
+This means you can override a payable function with a non-payable but not the
+other way around.
+
+Additionally, When you define a ``non-payable`` function pointer,
+the compiler does not enforce that the pointed function will actually reject ether.
+Instead, it enforces that the function pointer is never used to send ether.
+Which makes it possible to assign a ``payable`` function pointer to a ``non-payable``
+function pointer ensuring both types behave the same way, i.e, both cannot be used
+to send ether.
+>>>>>>> english/develop
 
 如果一个函数类型的变量没有被初始化，调用它将导致
 会出现 :ref:`异常<assert-and-require>`。如果您在一个函数上使用了 ``delete`` 之后再调用它，
@@ -742,12 +766,36 @@ Unicode 字面常数
 如果想将一个函数当作内部函数使用，就用 ``f`` 调用，
 如果想将其当作外部函数，使用 ``this.f`` 。
 
+<<<<<<< HEAD
 一个内部类型的函数可以被分配给一个内部函数类型的变量，而不管它在哪里被定义。
 这包括合约和库合约的隐私、内部和公共函数，以及自由函数。
 另一方面，外部函数类型只与公共和外部合约函数兼容。
 库合约被排除在外，因为它们需要一个 ``delegatecall``，
 并且 :ref:`对它们的选择器使用不同的 ABI 约定 <library-selectors>`。
 在接口中声明的函数没有定义，所以指向它们也没有意义。
+=======
+A function of an internal type can be assigned to a variable of an internal function type regardless
+of where it is defined.
+This includes private, internal and public functions of both contracts and libraries as well as free
+functions.
+External function types, on the other hand, are only compatible with public and external contract
+functions.
+
+.. note::
+    External functions with ``calldata`` parameters are incompatible with external function types with ``calldata`` parameters.
+    They are compatible with the corresponding types with ``memory`` parameters instead.
+    For example, there is no function that can be pointed at by a value of type ``function (string calldata) external`` while
+    ``function (string memory) external`` can point at both ``function f(string memory) external {}`` and
+    ``function g(string calldata) external {}``.
+    This is because for both locations the arguments are passed to the function in the same way.
+    The caller cannot pass its calldata directly to an external function and always ABI-encodes the arguments into memory.
+    Marking the parameters as ``calldata`` only affects the implementation of the external function and is
+    meaningless in a function pointer on the caller's side.
+
+Libraries are excluded because they require a ``delegatecall`` and use :ref:`a different ABI
+convention for their selectors <library-selectors>`.
+Functions declared in interfaces do not have definitions so pointing at them does not make sense either.
+>>>>>>> english/develop
 
 成员：
 外部（或公共）函数有以下成员：
