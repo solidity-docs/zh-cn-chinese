@@ -6,6 +6,7 @@
 
 特别是，我们感谢在以下领域的支持:
 
+<<<<<<< HEAD
 * 报告问题。
 * 修复和回应 `Solidity的GitHub问题
   <https://github.com/ethereum/solidity/issues>`_，特别是那些被标记为
@@ -16,6 +17,19 @@
 * 在 `StackExchange <https://ethereum.stackexchange.com>`_ 和
   `Solidity Gitter Chat <https://gitter.im/ethereum/solidity>`_ 上回答其他用户的问题。
 * 通过在 `Solidity论坛 <https://forum.soliditylang.org/>`_ 上提出语言修改或新功能并提供反馈，参与语言设计过程。
+=======
+* Reporting issues.
+* Fixing and responding to `Solidity's GitHub issues
+  <https://github.com/ethereum/solidity/issues>`_, especially those tagged as
+  `"good first issue" <https://github.com/ethereum/solidity/labels/good%20first%20issue>`_ which are
+  meant as introductory issues for external contributors.
+* Improving the documentation.
+* `Translating <https://github.com/solidity-docs>`_ the documentation into more languages.
+* Responding to questions from other users on `StackExchange
+  <https://ethereum.stackexchange.com>`_ and the `Solidity Gitter Chat
+  <https://gitter.im/ethereum/solidity>`_.
+* Getting involved in the language design process by proposing language changes or new features in the `Solidity forum <https://forum.soliditylang.org/>`_ and providing feedback.
+>>>>>>> english/develop
 
 为了开始参与，您可以尝试 :ref:`building-from-source`，以熟悉 Solidity 的组件和构建过程。
 此外，精通在 Solidity 中编写智能合约可能是有用的。
@@ -27,9 +41,15 @@
 
 如果您有问题或拉动请求要讨论，或有兴趣听听团队和贡献者正在做什么，您可以加入我们的公共团队电话会议：
 
+<<<<<<< HEAD
 - 每周一和周三下午3点，欧洲中部/欧洲中部夏令时间。
 
 这两个会议都在 `Jitsi <https://meet.ethereum.org/solidity>`_ 举行。
+=======
+- Mondays and Wednesdays at 3PM CET/CEST.
+
+Both calls take place on `Jitsi <https://meet.soliditylang.org/>`_.
+>>>>>>> english/develop
 
 如何报告问题
 ====================
@@ -46,7 +66,14 @@
 
 将导致问题的源代码减少到最低限度总是非常有帮助的，有时甚至可以澄清一个误解。
 
+<<<<<<< HEAD
 Pull Request 的工作流
+=======
+For technical discussions about language design, a post in the
+`Solidity forum <https://forum.soliditylang.org/>`_ is the correct place (see :ref:`solidity_language_design`).
+
+Workflow for Pull Requests
+>>>>>>> english/develop
 ==========================
 
 为了进行贡献，请 fork 一个 ``develop`` 分支并在那里进行修改。
@@ -68,7 +95,14 @@ Pull Request 的工作流
 最后，请确保您遵守了这个项目的 `编码风格 <https://github.com/ethereum/solidity/blob/develop/CODING_STYLE.md>`_ 。
 还有，虽然我们采用了持续集成测试，但是在提交 pull request 之前，请测试您的代码并确保它能在本地进行编译。
 
+<<<<<<< HEAD
 感谢您的帮助！
+=======
+We highly recommend going through our `review checklist <https://github.com/ethereum/solidity/blob/develop/ReviewChecklist.md>`_ before submitting the pull request.
+We thoroughly review every PR and will help you get it right, but there are many common problems that can be easily avoided, making the review much smoother.
+
+Thank you for your help!
+>>>>>>> english/develop
 
 运行编译器测试
 ==========================
@@ -384,8 +418,14 @@ Whiskers 系统
 
 .. note::
 
+<<<<<<< HEAD
     虽然官方的 Solidity 文档是用英语写的，但也有社区贡献的其他语言的 :ref:`translations` 可用。
     请参考 `翻译指南 <https://github.com/solidity-docs/translation-guide>`_ 以了解如何为社区翻译作出贡献。
+=======
+    While the official Solidity documentation is written in English, there are community contributed :ref:`translations`
+    in other languages available. Please refer to the `translation guide <https://github.com/solidity-docs#solidity-documentation-translation-guide>`_
+    for information on how to contribute to the community translations.
+>>>>>>> english/develop
 
 标题的大小写
 -----------------------
@@ -448,7 +488,13 @@ CI进程在您创建PR时，使用 ``./test/cmdlineTests.sh`` 脚本测试所有
 通过运行 ``./scripts/docs.sh`` 来确保您的贡献通过我们的文档测试，
 它安装了文档所需的依赖，并检查是否存在问题，如无效的链接或语法问题。
 
+<<<<<<< HEAD
 Solidity语言设计
+=======
+.. _solidity_language_design:
+
+Solidity Language Design
+>>>>>>> english/develop
 ========================
 
 为了积极参与语言设计过程，并分享您关于 Solidity 未来的想法，请加入 `Solidity 论坛 <https://forum.soliditylang.org/>`_。
