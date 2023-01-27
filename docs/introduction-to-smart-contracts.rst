@@ -468,9 +468,20 @@ EVM的指令集应尽量保持最小，以避免不正确或不一致的实现�
 因为如果有人向被删除的合约发送以太币，以太币就会永远丢失。
 
 .. warning::
+<<<<<<< HEAD
     即使一个合约被 ``selfdestruct`` 删除，它仍然是区块链历史的一部分，
     可能被大多数以太坊节点保留。
     因此，使用 ``selfdestruct`` 与从硬盘上删除数据不一样。
+=======
+    From version 0.8.18 and up, the use of ``selfdestruct`` in both Solidity and Yul will trigger a
+    deprecation warning, since the ``SELFDESTRUCT`` opcode will eventually undergo breaking changes in behaviour
+    as stated in `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_.
+
+.. warning::
+    Even if a contract is removed by ``selfdestruct``, it is still part of the
+    history of the blockchain and probably retained by most Ethereum nodes.
+    So using ``selfdestruct`` is not the same as deleting data from a hard disk.
+>>>>>>> english/develop
 
 .. note::
     尽管一个合约的代码中没有显式地调用 ``selfdestruct`` ，
