@@ -91,6 +91,7 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 您可以通过点击左下角的语言切换器来切换语言。
 在弹出的菜单中，选择您需要的语言即可切换。
 
+<<<<<<< HEAD
 * `法语 <https://docs.soliditylang.org/fr/latest/>`_
 * `印度尼西亚语 <https://github.com/solidity-docs/id-indonesian>`_
 * `波斯语 <https://github.com/solidity-docs/fa-persian>`_
@@ -103,6 +104,23 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
    我们最近建立了一个新的 GitHub 组织和翻译流程，以帮助简化社区的翻译工作。
    有关如何开始新的翻译语言或为社区翻译作出贡献的信息，
    请参阅 `翻译指南 <https://github.com/solidity-docs/translation-guide>`_。
+=======
+* `Chinese <https://docs.soliditylang.org/zh/latest/>`_
+* `French <https://docs.soliditylang.org/fr/latest/>`_
+* `Indonesian <https://github.com/solidity-docs/id-indonesian>`_
+* `Japanese <https://github.com/solidity-docs/ja-japanese>`_
+* `Korean <https://github.com/solidity-docs/ko-korean>`_
+* `Persian <https://github.com/solidity-docs/fa-persian>`_
+* `Russian <https://github.com/solidity-docs/ru-russian>`_
+* `Spanish <https://github.com/solidity-docs/es-spanish>`_
+* `Turkish <https://docs.soliditylang.org/tr/latest/>`_
+
+.. note::
+
+   We set up a GitHub organization and translation workflow to help streamline the
+   community efforts. Please refer to the translation guide in the `solidity-docs org <https://github.com/solidity-docs>`_
+   for information on how to start a new language or contribute to the community translations.
+>>>>>>> english/develop
 
 目录
 ========
