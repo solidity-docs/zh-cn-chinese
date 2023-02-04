@@ -13,6 +13,7 @@
 
 许多项目会实施他们自己的编码风格指南。如遇冲突，应优先使用具体项目的风格指南。
 
+<<<<<<< HEAD
 本风格指南中的结构和许多建议是取自 python 的
 `pep8 风格指南 <https://www.python.org/dev/peps/pep-0008/>`_。
 
@@ -20,6 +21,16 @@
 本指南的目的是保持代码的 *一致性* 。
 来自 python 的参考文档 `pep8 <https://www.python.org/dev/peps/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds>`_，
 很好地阐述了这个概念。
+=======
+The structure and many of the recommendations within this style guide were
+taken from python's
+`pep8 style guide <https://peps.python.org/pep-0008/>`_.
+
+The goal of this guide is *not* to be the right way or the best way to write
+Solidity code.  The goal of this guide is *consistency*.  A quote from python's
+`pep8 <https://peps.python.org/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds>`_
+captures this concept well.
+>>>>>>> english/develop
 
 .. note::
 
@@ -1038,15 +1049,49 @@ Import 语句应始终放在文件的顶部。
 
 在每个合约，库或接口内，使用以下顺序：
 
+<<<<<<< HEAD
 1. 类型声明
 2. 状态变量
 3. 事件
 4. 修饰符
 5. 函数
+=======
+1. Type declarations
+2. State variables
+3. Events
+4. Errors
+5. Modifiers
+6. Functions
+>>>>>>> english/develop
 
 .. note::
 
     在接近事件或状态变量的使用时，声明类型可能会更清楚。
+
+Yes:
+
+.. code-block:: solidity
+
+    // SPDX-License-Identifier: GPL-3.0
+    pragma solidity >=0.8.4 <0.9.0;
+
+    abstract contract Math {
+        error DivideByZero();
+        function divide(int256 numerator, int256 denominator) public virtual returns (uint256);
+    }
+
+No:
+
+.. code-block:: solidity
+
+    // SPDX-License-Identifier: GPL-3.0
+    pragma solidity >=0.8.4 <0.9.0;
+
+    abstract contract Math {
+        function divide(int256 numerator, int256 denominator) public virtual returns (uint256);
+        error DivideByZero();
+    }
+
 
 ******************
 命名规范
@@ -1112,13 +1157,13 @@ Import 语句应始终放在文件的顶部。
     contract Owned {
         address public owner;
 
-        constructor() {
-            owner = msg.sender;
-        }
-
         modifier onlyOwner {
             require(msg.sender == owner);
             _;
+        }
+
+        constructor() {
+            owner = msg.sender;
         }
 
         function transferOwnership(address newOwner) public onlyOwner {
@@ -1151,13 +1196,13 @@ Import 语句应始终放在文件的顶部。
     contract owned {
         address public owner;
 
-        constructor() {
-            owner = msg.sender;
-        }
-
         modifier onlyOwner {
             require(msg.sender == owner);
             _;
+        }
+
+        constructor() {
+            owner = msg.sender;
         }
 
         function transferOwnership(address newOwner) public onlyOwner {

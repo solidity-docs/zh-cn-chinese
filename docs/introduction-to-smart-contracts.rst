@@ -83,7 +83,7 @@ Solidity意义上的合约是代码（其 *函数*）和数据（其 *状态*）
     contract Coin {
         // 关键字 "public" 使变量可以从其他合约中访问。
         address public minter;
-        mapping (address => uint) public balances;
+        mapping(address => uint) public balances;
 
         // 事件允许客户端对您声明的特定合约变化做出反应
         event Sent(address from, address to, uint amount);
@@ -137,9 +137,15 @@ Solidity意义上的合约是代码（其 *函数*）和数据（其 *状态*）
 
 .. index:: mapping
 
+<<<<<<< HEAD
 下一行， ``mapping (address => uint) public balances;`` 也创建了一个公共状态变量，
 但它是一个更复杂的数据类型。
 :ref:`映射 <mapping-types>` 类型将地址映射到 :ref:`无符号整数 <integers>`。
+=======
+The next line, ``mapping(address => uint) public balances;`` also
+creates a public state variable, but it is a more complex datatype.
+The :ref:`mapping <mapping-types>` type maps addresses to :ref:`unsigned integers <integers>`.
+>>>>>>> english/develop
 
 映射可以被看作是 `哈希表 <https://en.wikipedia.org/wiki/Hash_table>`_，
 它实际上是被初始化的，因此每一个可能的键从一开始就存在，并被映射到一个值，其字节表示为全零的值。
@@ -164,9 +170,15 @@ Solidity意义上的合约是代码（其 *函数*）和数据（其 *状态*）
 它是在函数 ``send`` 的最后一行发出的。以太坊客户端，如网络应用，可以监听区块链上发出的这些事件，而不需要太多的成本。
 一旦发出，监听器就会收到参数 ``from``， ``to`` 和 ``amount``，这使得跟踪交易成为可能。
 
+<<<<<<< HEAD
 为了监听这个事件，您可以使用以下方法 JavaScript代码，
 使用 `web3.js <https://github.com/ethereum/web3.js/>`_ 来创建 ``Coin`` 合约对象，
 然后在任何用户界面调用上面自动生成的 ``balances`` 函数：
+=======
+To listen for this event, you could use the following
+JavaScript code, which uses `web3.js <https://github.com/web3/web3.js/>`_ to create the ``Coin`` contract object,
+and any user interface calls the automatically generated ``balances`` function from above:
+>>>>>>> english/develop
 
 .. code-block:: javascript
 
@@ -468,9 +480,20 @@ EVM的指令集应尽量保持最小，以避免不正确或不一致的实现�
 因为如果有人向被删除的合约发送以太币，以太币就会永远丢失。
 
 .. warning::
+<<<<<<< HEAD
     即使一个合约被 ``selfdestruct`` 删除，它仍然是区块链历史的一部分，
     可能被大多数以太坊节点保留。
     因此，使用 ``selfdestruct`` 与从硬盘上删除数据不一样。
+=======
+    From version 0.8.18 and up, the use of ``selfdestruct`` in both Solidity and Yul will trigger a
+    deprecation warning, since the ``SELFDESTRUCT`` opcode will eventually undergo breaking changes in behaviour
+    as stated in `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_.
+
+.. warning::
+    Even if a contract is removed by ``selfdestruct``, it is still part of the
+    history of the blockchain and probably retained by most Ethereum nodes.
+    So using ``selfdestruct`` is not the same as deleting data from a hard disk.
+>>>>>>> english/develop
 
 .. note::
     尽管一个合约的代码中没有显式地调用 ``selfdestruct`` ，
