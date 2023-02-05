@@ -8,9 +8,15 @@
 
 集成开发环境，如 `Remix <https://remix.ethereum.org/>`_，使用UI元素使创建过程无缝化。
 
+<<<<<<< HEAD
 在以太坊上以编程方式创建合约的一种方法是通过JavaScript API `web3.js <https://github.com/ethereum/web3.js>`_。
 它有一个名为 `web3.eth.Contract <https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#new-contract>`_ 的函数，
 以方便创建合约。
+=======
+One way to create contracts programmatically on Ethereum is via the JavaScript API `web3.js <https://github.com/web3/web3.js>`_.
+It has a function called `web3.eth.Contract <https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#new-contract>`_
+to facilitate contract creation.
+>>>>>>> english/develop
 
 当一个合约被创建时，它的 :ref:`构造函数（constructor） <constructor>`
 （一个用 ``constructor`` 关键字声明的函数）被执行一次。
