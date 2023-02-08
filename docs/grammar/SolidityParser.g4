@@ -311,8 +311,13 @@ errorDefinition:
 	Semicolon;
 
 /**
+<<<<<<< HEAD
  * 使用指令将库函数和自由函数与类型绑定。
  * 可以在合同和库中以及文件层面中出现。
+=======
+ * Using directive to attach library functions and free functions to types.
+ * Can occur within contracts and libraries and at the file level.
+>>>>>>> v0.8.18
  */
 usingDirective: Using (identifierPath | (LBrace identifierPath (Comma identifierPath)* RBrace)) For (Mul | typeName) Global? Semicolon;
 /**
@@ -501,7 +506,7 @@ variableDeclarationTuple:
 variableDeclarationStatement: ((variableDeclaration (Assign expression)?) | (variableDeclarationTuple Assign expression)) Semicolon;
 expressionStatement: expression Semicolon;
 
-mappingType: Mapping LParen key=mappingKeyType DoubleArrow value=typeName RParen;
+mappingType: Mapping LParen key=mappingKeyType name=identifier? DoubleArrow value=typeName name=identifier? RParen;
 /**
  * 只有基本类型或用户定义的类型可以作为映射类型的键值。
  */

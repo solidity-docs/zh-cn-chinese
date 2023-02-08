@@ -35,7 +35,12 @@
 
 您在智能合约中使用的所有东西都是公开可见的，即使是标记为 ``private`` 的局部变量和状态变量。
 
+<<<<<<< HEAD
 如果您不希望矿工能够作弊，在智能合约中使用随机数是相当棘手的。
+=======
+Using random numbers in smart contracts is quite tricky if you do not want
+block builders to be able to cheat.
+>>>>>>> v0.8.18
 
 重入
 ===========

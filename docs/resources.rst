@@ -28,8 +28,13 @@
     * `Embark <https://framework.embarklabs.io/>`_
         构建和部署去中心化应用程序的开发者平台。
 
+<<<<<<< HEAD
     * `Foundry <https://github.com/gakonst/foundry>`_
         用Rust编写的用于Ethereum应用开发的快速，可移植和模块化的工具包。
+=======
+    * `Foundry <https://github.com/foundry-rs/foundry>`_
+        Fast, portable and modular toolkit for Ethereum application development written in Rust.
+>>>>>>> v0.8.18
 
     * `Hardhat <https://hardhat.org/>`_
         以太坊开发环境具有本地以太坊网络，调试功能和插件生态系统。
@@ -37,12 +42,18 @@
     * `Remix <https://remix.ethereum.org/>`_
         基于浏览器的IDE，具有集成的编译器和Solidity运行环境，没有服务器端组件。
 
+<<<<<<< HEAD
     * `Truffle <https://www.trufflesuite.com/truffle>`_
         以太坊开发框架。
+=======
+    * `Truffle <https://trufflesuite.com/truffle/>`_
+        Ethereum development framework.
+>>>>>>> v0.8.18
 
 编辑器集成
 ===================
 
+<<<<<<< HEAD
 * Atom
 
     * `Etheratom <https://github.com/0mkara/etheratom>`_
@@ -54,6 +65,8 @@
     * `Atom Solium 语法检查器 <https://atom.io/packages/linter-solium>`_
         以Solium（现在的Ethlint）为基础，为Atom提供可配置的Solidity语法检查器。
 
+=======
+>>>>>>> v0.8.18
 * Emacs
 
     * `Emacs Solidity <https://github.com/ethereum/emacs-solidity/>`_
@@ -61,24 +74,38 @@
 
 * IntelliJ
 
+<<<<<<< HEAD
     * `IntelliJ IDEA 插件 <https://plugins.jetbrains.com/plugin/9475-intellij-solidity>`_
         IntelliJ IDEA（和所有其他JetBrains IDEs）的Solidity插件
+=======
+    * `IntelliJ IDEA plugin <https://plugins.jetbrains.com/plugin/9475-solidity/>`_
+        Solidity plugin for IntelliJ IDEA (and all other JetBrains IDEs).
+>>>>>>> v0.8.18
 
-* Sublime
+* Sublime Text
 
     * `SublimeText的软件包 - Solidity语言语法 <https://packagecontrol.io/packages/Ethereum/>`_
         用于 SublimeText 编辑器的 Solidity 语法高亮。
 
 * Vim
 
+<<<<<<< HEAD
     * `Vim Solidity <https://github.com/tomlion/vim-solidity/>`_
         为Vim编辑器提供语法高亮的插件。
+=======
+    * `Vim Solidity by Thesis <https://github.com/thesis/vim-solidity/>`_
+        Syntax highlighting for Solidity in Vim.
+
+    * `Vim Solidity by TovarishFin <https://github.com/TovarishFin/vim-solidity>`_
+        Vim syntax file for Solidity.
+>>>>>>> v0.8.18
 
     * `Vim Syntastic <https://github.com/vim-syntastic/syntastic>`_
         为Vim编辑器提供编译检查的插件。
 
-* Visual Studio Code
+* Visual Studio Code (VS Code)
 
+<<<<<<< HEAD
     * `Visual Studio Code 扩展 <https://juan.blanco.ws/solidity-contracts-in-visual-studio-code/>`_
         Microsoft Visual Studio Code的Solidity插件，包括语法高亮和Solidity编译器。
 
@@ -86,6 +113,24 @@
         在Visual Studio Code中增加了以安全为中心的语法和语义突出显示。
 
 Solidity 工具
+=======
+    * `Ethereum Remix Visual Studio Code extension <https://marketplace.visualstudio.com/items?itemName=RemixProject.ethereum-remix>`_
+        Ethereum Remix extension pack for VS Code
+
+    * `Solidity Visual Studio Code extension, by Juan Blanco <https://juan.blanco.ws/solidity-contracts-in-visual-studio-code/>`_
+        Solidity plugin for Microsoft Visual Studio Code that includes syntax highlighting and the Solidity compiler.
+
+    * `Solidity Visual Studio Code extension, by Nomic Foundation <https://marketplace.visualstudio.com/items?itemName=NomicFoundation.hardhat-solidity>`_
+        Solidity and Hardhat support by the Hardhat team, including: syntax highlighting, jump to definition, renames, quick fixes and inline solc warnings and errors.
+
+    * `Solidity Visual Auditor extension <https://marketplace.visualstudio.com/items?itemName=tintinweb.solidity-visual-auditor>`_
+        Adds security centric syntax and semantic highlighting to Visual Studio Code.
+
+    * `Truffle for VS Code <https://marketplace.visualstudio.com/items?itemName=trufflesuite-csi.truffle-vscode>`_
+        Build, debug and deploy smart contracts on Ethereum and EVM-compatible blockchains.
+
+Solidity Tools
+>>>>>>> v0.8.18
 ==============
 
 * `ABI到Solidity接口转换器  <https://gist.github.com/chriseth/8f533d133fa0c15b0d6eaf3ec502c82b>`_

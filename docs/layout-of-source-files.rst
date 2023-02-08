@@ -167,10 +167,17 @@ SMT检查器
 语法与语义
 ----------
 
+<<<<<<< HEAD
 Solidity 支持导入语句，以帮助模块化您的代码，
 这些语句与 JavaScript 中可用的语句相似(从ES6开始)。
 然而，Solidity 并不支持 `默认导出 <https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export#Description>`_
 的概念。
+=======
+Solidity supports import statements to help modularise your code that
+are similar to those available in JavaScript
+(from ES6 on). However, Solidity does not support the concept of
+a `default export <https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export#description>`_.
+>>>>>>> v0.8.18
 
 在全局层面，您可以使用以下形式的导入语句：
 

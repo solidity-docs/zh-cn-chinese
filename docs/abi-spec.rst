@@ -180,9 +180,14 @@ Solidity 支持上面介绍的除了元祖之外的所有同名类型。
 
 - ``T[]`` 当 ``X`` 有 ``k`` 个元素 （ ``k`` 的类型为 ``uint256``）：
 
-  ``enc(X) = enc(k) enc([X[0], ..., X[k-1]])``
+  ``enc(X) = enc(k) enc((X[0], ..., X[k-1]))``
 
+<<<<<<< HEAD
   即，它就像是个由静态大小 ``k`` 的数组那样被编码的，且由元素的个数作为前缀。
+=======
+  i.e. it is encoded as if it were a tuple with ``k`` elements of the same type (resp. an array of static size ``k``), prefixed with
+  the number of elements.
+>>>>>>> v0.8.18
 
 - 具有 ``k`` 字节长度的 ``bytes``， （假设其类型为 ``uint256``）：
 
@@ -297,11 +302,19 @@ Solidity 支持上面介绍的除了元祖之外的所有同名类型。
 用值为 ``(0x123, [0x456, 0x789], "1234567890", "Hello, world!")`` 的签名参数调用
 函数 ``f(uint256,uint32[],bytes10,bytes)``，其的编码方式如下：
 
+<<<<<<< HEAD
 取得 ``sha3("f(uint256,uint32[],bytes10,bytes)")`` 的前 4 字节，也就是 ``0x8be65246``。
 然后我们对所有 4 个参数的头部进行编码。 对静态类型 ``uint256`` 和 ``bytes10``，
 这些我们可以直接传递的值，对于动态类型 ``uint32[]`` 和 ``bytes``，
 我们使用的字节数偏移量是它们的数据区域的起始位置，
 由需编码的值的开始位置算起（也就是说，不计算包含了函数签名的前 4 字节），这就是：
+=======
+We take the first four bytes of ``keccak("f(uint256,uint32[],bytes10,bytes)")``, i.e. ``0x8be65246``.
+Then we encode the head parts of all four arguments. For the static types ``uint256`` and ``bytes10``,
+these are directly the values we want to pass, whereas for the dynamic types ``uint32[]`` and ``bytes``,
+we use the offset in bytes to the start of their data area, measured from the start of the value
+encoding (i.e. not counting the first four bytes containing the hash of the function signature). These are:
+>>>>>>> v0.8.18
 
 - ``0x0000000000000000000000000000000000000000000000000000000000000123`` （ ``0x123`` 补充到 32 字节）
 - ``0x0000000000000000000000000000000000000000000000000000000000000080`` （第二个参数的数据部分起始位置的偏移量，4*32 字节，正好是头部的大小）

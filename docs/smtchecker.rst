@@ -580,6 +580,7 @@ BMC使用一个SMT求解器，而CHC使用一个Horn求解器。
 作为一个Horn求解器使用，而 `Eldarica <https://github.com/uuverifiers/eldarica>`_
 则同时做这两种工作。
 
+<<<<<<< HEAD
 如果求解器可用的话，用户可以通过CLI选项 ``--model-checker-solvers {all,cvc4,smtlib2,z3}``
 或JSON选项 ``settings.modelChecker.solvers=[smtlib2,z3]`` 来选择应该使用哪个求解器，
 其中：
@@ -600,6 +601,29 @@ BMC使用一个SMT求解器，而CHC使用一个Horn求解器。
   z3 4.8.16 版本破坏了与以前版本的 ABI 兼容性，
   不能与 solc <=0.8.13 一起使用。
   如果您正在使用 z3 >=4.8.16，请使用 solc >=0.8.14 的版本。
+=======
+The user can choose which solvers should be used, if available, via the CLI
+option ``--model-checker-solvers {all,cvc4,eld,smtlib2,z3}`` or the JSON option
+``settings.modelChecker.solvers=[smtlib2,z3]``, where:
+
+- ``cvc4`` is only available if the ``solc`` binary is compiled with it. Only BMC uses ``cvc4``.
+- ``eld`` is used via its binary which must be installed in the system. Only CHC uses ``eld``, and only if ``z3`` is not enabled.
+- ``smtlib2`` outputs SMT/Horn queries in the `smtlib2 <http://smtlib.cs.uiowa.edu/>`_ format.
+  These can be used together with the compiler's `callback mechanism <https://github.com/ethereum/solc-js>`_ so that
+  any solver binary from the system can be employed to synchronously return the results of the queries to the compiler.
+  This can be used by both BMC and CHC depending on which solvers are called.
+- ``z3`` is available
+
+  - if ``solc`` is compiled with it;
+  - if a dynamic ``z3`` library of version >=4.8.x is installed in a Linux system (from Solidity 0.7.6);
+  - statically in ``soljson.js`` (from Solidity 0.6.9), that is, the Javascript binary of the compiler.
+
+.. note::
+  z3 version 4.8.16 broke ABI compatibility with previous versions and cannot
+  be used with solc <=0.8.13. If you are using z3 >=4.8.16 please use solc
+  >=0.8.14, and conversely, only use older z3 with older solc releases.
+  We also recommend using the latest z3 release which is what SMTChecker also does.
+>>>>>>> v0.8.18
 
 由于 BMC 和 CHC 都使用 ``z3``，而且 ``z3`` 可以在更多的环境中使用，包括在浏览器中，
 大多数用户几乎不需要关心这个选项。更高级的用户可能会应用这个选项，在更复杂的问题上尝试其他求解器。

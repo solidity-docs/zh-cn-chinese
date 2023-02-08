@@ -13,6 +13,7 @@ Using For
 
 第一部分， ``A``，可以是以下之一：
 
+<<<<<<< HEAD
 - 文件级别或库函数的列表（ ``using {f, g, h, L.t} for uint;``）-
   只有这些函数才会被附加到类型上。
 - 一个库合约的名字（ ``using L for uint;``）-
@@ -29,6 +30,29 @@ Using For
 如果您使用函数列表（ ``using {f, g, h, L.t} for uint;``），
 那么类型（ ``uint``）必须隐式可转换为这些函数的第一个参数。
 即使这些函数都没有被调用，这个检查也会执行。
+=======
+- A list of file-level or library functions (e.g. ``using {f, g, h, L.t} for uint;``) -
+  only those functions will be attached to the type as member functions.
+  Note that private library functions can only be specified when ``using for`` is inside the library.
+- The name of a library (e.g. ``using L for uint;``) -
+  all non-private functions of the library are attached to the type.
+
+At file level, the second part, ``B``, has to be an explicit type (without data location specifier).
+Inside contracts, you can also use ``*`` in place of the type (e.g. ``using L for *;``),
+which has the effect that all functions of the library ``L``
+are attached to *all* types.
+
+If you specify a library, *all* functions in the library get attached,
+even those where the type of the first parameter does not
+match the type of the object. The type is checked at the
+point the function is called and function overload
+resolution is performed.
+
+If you use a list of functions (e.g. ``using {f, g, h, L.t} for uint;``),
+then the type (``uint``) has to be implicitly convertible to the
+first parameter of each of these functions. This check is
+performed even if none of these functions are called.
+>>>>>>> v0.8.18
 
 ``using A for B;`` 指令只在当前作用域（合约或当前模块/源单元）内有效，
 包括其中所有的函数，在使用它的合约或模块之外没有任何效果。

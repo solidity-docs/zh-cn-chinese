@@ -164,9 +164,15 @@ Solidity意义上的合约是代码（其 *函数*）和数据（其 *状态*）
 它是在函数 ``send`` 的最后一行发出的。以太坊客户端，如网络应用，可以监听区块链上发出的这些事件，而不需要太多的成本。
 一旦发出，监听器就会收到参数 ``from``， ``to`` 和 ``amount``，这使得跟踪交易成为可能。
 
+<<<<<<< HEAD
 为了监听这个事件，您可以使用以下方法 JavaScript代码，
 使用 `web3.js <https://github.com/ethereum/web3.js/>`_ 来创建 ``Coin`` 合约对象，
 然后在任何用户界面调用上面自动生成的 ``balances`` 函数：
+=======
+To listen for this event, you could use the following
+JavaScript code, which uses `web3.js <https://github.com/web3/web3.js/>`_ to create the ``Coin`` contract object,
+and any user interface calls the automatically generated ``balances`` function from above:
+>>>>>>> v0.8.18
 
 .. code-block:: javascript
 
@@ -468,9 +474,20 @@ EVM的指令集应尽量保持最小，以避免不正确或不一致的实现�
 因为如果有人向被删除的合约发送以太币，以太币就会永远丢失。
 
 .. warning::
+<<<<<<< HEAD
     即使一个合约被 ``selfdestruct`` 删除，它仍然是区块链历史的一部分，
     可能被大多数以太坊节点保留。
     因此，使用 ``selfdestruct`` 与从硬盘上删除数据不一样。
+=======
+    From version 0.8.18 and up, the use of ``selfdestruct`` in both Solidity and Yul will trigger a
+    deprecation warning, since the ``SELFDESTRUCT`` opcode will eventually undergo breaking changes in behaviour
+    as stated in `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_.
+
+.. warning::
+    Even if a contract is removed by ``selfdestruct``, it is still part of the
+    history of the blockchain and probably retained by most Ethereum nodes.
+    So using ``selfdestruct`` is not the same as deleting data from a hard disk.
+>>>>>>> v0.8.18
 
 .. note::
     尽管一个合约的代码中没有显式地调用 ``selfdestruct`` ，

@@ -114,8 +114,13 @@ Solidity 可以通过两种不同的方式生成 EVM 字节码：
           modifier mod() { _; _; }
       }
 
+<<<<<<< HEAD
   如果您在旧的代码生成器中执行 ``f(0)``，它将返回 ``2``，
   而在使用新的代码生成器时，它将返回 ``1``。
+=======
+  If you execute ``f(0)`` in the old code generator, it will return ``1``, while
+  it will return ``0`` when using the new code generator.
+>>>>>>> v0.8.18
 
   .. code-block:: solidity
 

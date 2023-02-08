@@ -166,12 +166,22 @@ EVM版本选项
 - ``istanbul``
    - 在汇编中可使用操作码 ``chainid`` 和 ``selfbalance``。
 - ``berlin``
+<<<<<<< HEAD
    - ``SLOAD``, ``*CALL``, ``BALANCE``, ``EXT*`` 和 ``SELFDESTRUCT`` 的gas成本增加。
      编译器假设这类操作的gas成本是固定的。这与gas估计和优化器有关。
 - ``london`` (**default**)
    - 区块的基本费用（ `EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ 和 `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_ ）
      可以通过全局的 ``block.basefee`` 或内联汇编中的 ``basefee()`` 访问。
 
+=======
+   - Gas costs for ``SLOAD``, ``*CALL``, ``BALANCE``, ``EXT*`` and ``SELFDESTRUCT`` increased. The
+     compiler assumes cold gas costs for such operations. This is relevant for gas estimation and
+     the optimizer.
+- ``london``
+   - The block's base fee (`EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ and `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_) can be accessed via the global ``block.basefee`` or ``basefee()`` in inline assembly.
+- ``paris`` (**default**)
+   - Introduces ``prevrandao()`` and ``block.prevrandao``, and changes the semantics of the now deprecated ``block.difficulty``, disallowing ``difficulty()`` in inline assembly (see `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_).
+>>>>>>> v0.8.18
 
 .. index:: ! standard JSON, ! --standard-json
 .. _compiler-api:
@@ -276,15 +286,36 @@ EVM版本选项
               // 改善变量的堆栈槽的分配，可以提前释放堆栈槽。
               // 如果Yul优化器被激活，则默认激活。
               "stackAllocation": true,
+<<<<<<< HEAD
               // 选择要应用的优化步骤。
               // 可选, 如果省略，优化器将使用默认序列。
+=======
+              // Select optimization steps to be applied. It is also possible to modify both the
+              // optimization sequence and the clean-up sequence. Instructions for each sequence
+              // are separated with the ":" delimiter and the values are provided in the form of
+              // optimization-sequence:clean-up-sequence. For more information see
+              // "The Optimizer > Selecting Optimizations".
+              // This field is optional, and if not provided, the default sequences for both
+              // optimization and clean-up are used. If only one of the options is provivded
+              // the other will not be run.
+              // If only the delimiter ":" is provided then neither the optimization nor the clean-up
+              // sequence will be run.
+              // If set to an empty value, only the default clean-up sequence is used and
+              // no optimization steps are applied.
+>>>>>>> v0.8.18
               "optimizerSteps": "dhfoDgvulfnTUtnIf..."
             }
           }
         },
+<<<<<<< HEAD
         // 编译EVM的版本。
         // 影响到类型检查和代码生成。版本可以是 homestead,
         // tangerineWhistle, spuriousDragon, byzantium, constantinople, petersburg, istanbul or berlin
+=======
+        // Version of the EVM to compile for.
+        // Affects type checking and code generation. Can be homestead,
+        // tangerineWhistle, spuriousDragon, byzantium, constantinople, petersburg, istanbul, berlin, london or paris
+>>>>>>> v0.8.18
         "evmVersion": "byzantium",
         // 可选：改变编译管道以通过Yul的中间表示法。
         // 这在默认情况下是假的。
@@ -311,7 +342,14 @@ EVM版本选项
         },
         // 元数据设置 (可选)
         "metadata": {
+<<<<<<< HEAD
           // 只使用字面内容，不使用URL（默认为false）。
+=======
+          // The CBOR metadata is appended at the end of the bytecode by default.
+          // Setting this to false omits the metadata from the runtime and deploy time code.
+          "appendCBOR": true,
+          // Use only literal content and not URLs (false by default)
+>>>>>>> v0.8.18
           "useLiteralContent": true,
           // 对附加在字节码上的元数据哈希值使用给定的哈希值方法。
           // 元数据哈希可以通过选项 "none "从字节码中删除。
@@ -581,6 +619,7 @@ EVM版本选项
 错误类型
 ~~~~~~~~~~~
 
+<<<<<<< HEAD
 1. ``JSONError``： JSON输入不符合所需格式，例如，输入不是JSON对象，不支持的语言等。
 2. ``IOError``： IO和导入处理错误，例如，在提供的源里包含无法解析的URL或哈希值不匹配。
 3. ``ParserError``： 源代码不符合语言规则。
@@ -808,3 +847,20 @@ Solidity-升级
             d.f{value: 5}();
         }
     }
+=======
+1. ``JSONError``: JSON input doesn't conform to the required format, e.g. input is not a JSON object, the language is not supported, etc.
+2. ``IOError``: IO and import processing errors, such as unresolvable URL or hash mismatch in supplied sources.
+3. ``ParserError``: Source code doesn't conform to the language rules.
+4. ``DocstringParsingError``: The NatSpec tags in the comment block cannot be parsed.
+5. ``SyntaxError``: Syntactical error, such as ``continue`` is used outside of a ``for`` loop.
+6. ``DeclarationError``: Invalid, unresolvable or clashing identifier names. e.g. ``Identifier not found``
+7. ``TypeError``: Error within the type system, such as invalid type conversions, invalid assignments, etc.
+8. ``UnimplementedFeatureError``: Feature is not supported by the compiler, but is expected to be supported in future versions.
+9. ``InternalCompilerError``: Internal bug triggered in the compiler - this should be reported as an issue.
+10. ``Exception``: Unknown failure during compilation - this should be reported as an issue.
+11. ``CompilerError``: Invalid use of the compiler stack - this should be reported as an issue.
+12. ``FatalError``: Fatal error not processed correctly - this should be reported as an issue.
+13. ``YulException``: Error during Yul Code generation - this should be reported as an issue.
+14. ``Warning``: A warning, which didn't stop the compilation, but should be addressed if possible.
+15. ``Info``: Information that the compiler thinks the user might find useful, but is not dangerous and does not necessarily need to be addressed.
+>>>>>>> v0.8.18

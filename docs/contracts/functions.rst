@@ -267,12 +267,23 @@ Pure 函数能够使用 ``revert()`` 和 ``require()`` 函数来恢复潜在的�
 这个函数不能有参数，不能返回任何东西，必须具有 ``external`` 的可见性和 ``payable`` 的状态可变性。
 它可以是虚拟的，可以重载，也可以有修饰器。
 
+<<<<<<< HEAD
 receive 函数是在调用合约时执行的，并带有空的 calldata。
 这是在纯以太传输（例如通过 ``.send()`` 或 ``.transfer()`` ）时执行的函数。
 如果不存在这样的函数，但存在一个 payable 类型的 :ref:`fallback函数 <fallback-function>`，
 这个fallback函数将在纯以太传输时被调用。
 如果既没有直接接收以太（receive函数），也没有可接收以太的 fallback 函数，
 合约就不能通过常规交易接收以太，并抛出一个异常。
+=======
+The receive function is executed on a
+call to the contract with empty calldata. This is the function that is executed
+on plain Ether transfers (e.g. via ``.send()`` or ``.transfer()``). If no such
+function exists, but a payable :ref:`fallback function <fallback-function>`
+exists, the fallback function will be called on a plain Ether transfer. If
+neither a receive Ether nor a payable fallback function is present, the
+contract cannot receive Ether through a transaction that does not represent a payable function call and throws an
+exception.
+>>>>>>> v0.8.18
 
 在最坏的情况下， ``receive`` 函数只有2300个气体可用（例如当使用 ``send`` 或 ``transfer`` 时），
 除了基本的记录外，几乎没有空间来执行其他操作。以下操作的消耗气体将超过2300气体的规定：

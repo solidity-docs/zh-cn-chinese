@@ -93,7 +93,13 @@ Solidity 编译器自动生成一个 JSON 文件，即合约元数据，
           }
         },
         "metadata": {
+<<<<<<< HEAD
           // 显示输入 json 中使用的设置，默认为 “false”
+=======
+          // Reflects the setting used in the input json, defaults to "true"
+          "appendCBOR": true,
+          // Reflects the setting used in the input json, defaults to "false"
+>>>>>>> v0.8.18
           "useLiteralContent": true,
           // 显示输入json中使用的设置，默认为 “ipfs“
           "bytecodeHash": "ipfs"
@@ -208,6 +214,10 @@ Solidity 编译器自动生成一个 JSON 文件，即合约元数据，
 SOLC的发布版本使用如上所示的3个字节的版本编码
 （主要、次要和补丁版本号各一个字节），
 而预发布版本将使用一个完整的版本字符串，包括提交哈希和构建日期。
+
+The commandline flag ``--no-cbor-metadata`` can be used to skip metadata
+from getting appended at the end of the deployed bytecode. Equivalently, the
+boolean field ``settings.metadata.appendCBOR`` in Standard JSON input can be set to false.
 
 .. note::
   CBOR映射也可以包含其他的键，所以最好是完全解码，
