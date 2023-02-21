@@ -33,7 +33,8 @@ Solidity支持多重继承，包括多态性。
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.7.0 <0.9.0;
-    // This will report a warning due to deprecated selfdestruct
+    // 这将报告一个由于废弃的 selfdestruct 而产生的警告
+
 
     contract Owned {
         constructor() { owner = payable(msg.sender); }
@@ -112,7 +113,7 @@ Solidity支持多重继承，包括多态性。
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.7.0 <0.9.0;
-    // This will report a warning due to deprecated selfdestruct
+    // 这将报告一个由于废弃的 selfdestruct 而产生的警告
 
     contract owned {
         constructor() { owner = payable(msg.sender); }
@@ -144,7 +145,7 @@ Solidity支持多重继承，包括多态性。
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.7.0 <0.9.0;
-    // This will report a warning due to deprecated selfdestruct
+    // 这将报告一个由于废弃的 selfdestruct 而产生的警告
 
     contract owned {
         constructor() { owner = payable(msg.sender); }
