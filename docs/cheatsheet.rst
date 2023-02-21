@@ -13,7 +13,6 @@
 全局变量
 ================
 
-<<<<<<< HEAD
 - ``abi.decode(bytes memory encodedData, (...)) returns (...)``： :ref:`ABI <ABI>` -对提供的数据进行解码。类型在括号中作为第二个参数给出。
   示例： ``(uint a, uint[2] memory b, bytes memory c) = abi.decode(data, (uint, uint[2], bytes))``
 - ``abi.encode(...) returns (bytes memory)``： :ref:`ABI <ABI>`-对给定的参数进行编码。
@@ -24,15 +23,16 @@
 - ``abi.encodeCall(function functionPointer, (...)) returns (bytes memory)``： 对 ``functionPointer`` 的调用进行ABI编码，
   参数在元组中找到。执行全面的类型检查，确保类型与函数签名相符。结果等于 ``abi.encodeWithSelector(functionPointer.selector(..))``。
 - ``abi.encodeWithSignature(string memory signature, ...) returns (bytes memory)``： 等价于
-  ``abi.encodeWithSelector(bytes4(keccak256(bytes(signature)), ...)``
+  ``abi.encodeWithSelector(bytes4(keccak256(bytes(signature))), ...)``
 - ``bytes.concat(...) returns (bytes memory)``： :ref:`将可变数量的参数连接成一个字节数组 <bytes-concat>`。
 - ``string.concat(...) returns (string memory)``： :ref:`将可变数量的参数连接成一个字符串数组 <string-concat>`。
 - ``block.basefee`` (``uint``)： 当前区块的基本费用 （ `EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ 和 `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_ ）
 - ``block.chainid`` (``uint``)： 当前链的ID
 - ``block.coinbase`` (``address payable``)： 当前区块矿工的地址
-- ``block.difficulty`` (``uint``)： 当前区块的难度值
+- ``block.difficulty`` (``uint``)： 当前区块的难度值（ ``EVM < Paris`` ）。对于其他EVM版本，它是 ``block.prevrandao`` 的一个废弃的别名，将在下一个重大改变版本中被删除。
 - ``block.gaslimit`` (``uint``)： 当前区块的 gas 上限
 - ``block.number`` (``uint``)： 当前区块的区块号
+- ``block.prevrandao`` (``uint``)： 由信标链提供的随机数（ ``EVM >= Paris`` ）（见 `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）。
 - ``block.timestamp`` (``uint``)： 当前区块的时间戳，自Unix epoch以来的秒数
 - ``gasleft() returns (uint256)``： 剩余gas
 - ``msg.data`` (``bytes``)： 完整的调用数据
@@ -67,71 +67,6 @@
 - ``type(I).interfaceId`` (``bytes4``)： 包含给定接口的EIP-165接口标识符的值，参见 :ref:`类型信息 <meta-type>`。
 - ``type(T).min`` (``T``)： 整数类型 ``T`` 所能代表的最小值，参见 :ref:`类型信息 <meta-type>`。
 - ``type(T).max`` (``T``)： 整数类型 ``T`` 所能代表的最大值，参见 :ref:`类型信息 <meta-type>`。
-=======
-- ``abi.decode(bytes memory encodedData, (...)) returns (...)``: :ref:`ABI <ABI>`-decodes
-  the provided data. The types are given in parentheses as second argument.
-  Example: ``(uint a, uint[2] memory b, bytes memory c) = abi.decode(data, (uint, uint[2], bytes))``
-- ``abi.encode(...) returns (bytes memory)``: :ref:`ABI <ABI>`-encodes the given arguments
-- ``abi.encodePacked(...) returns (bytes memory)``: Performs :ref:`packed encoding <abi_packed_mode>` of
-  the given arguments. Note that this encoding can be ambiguous!
-- ``abi.encodeWithSelector(bytes4 selector, ...) returns (bytes memory)``: :ref:`ABI <ABI>`-encodes
-  the given arguments starting from the second and prepends the given four-byte selector
-- ``abi.encodeCall(function functionPointer, (...)) returns (bytes memory)``: ABI-encodes a call to ``functionPointer`` with the arguments found in the
-  tuple. Performs a full type-check, ensuring the types match the function signature. Result equals ``abi.encodeWithSelector(functionPointer.selector, (...))``
-- ``abi.encodeWithSignature(string memory signature, ...) returns (bytes memory)``: Equivalent
-  to ``abi.encodeWithSelector(bytes4(keccak256(bytes(signature))), ...)``
-- ``bytes.concat(...) returns (bytes memory)``: :ref:`Concatenates variable number of
-  arguments to one byte array<bytes-concat>`
-- ``string.concat(...) returns (string memory)``: :ref:`Concatenates variable number of
-  arguments to one string array<string-concat>`
-- ``block.basefee`` (``uint``): current block's base fee (`EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ and `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_)
-- ``block.chainid`` (``uint``): current chain id
-- ``block.coinbase`` (``address payable``): current block miner's address
-- ``block.difficulty`` (``uint``): current block difficulty (``EVM < Paris``). For other EVM versions it behaves as a deprecated alias for ``block.prevrandao`` that will be removed in the next breaking release
-- ``block.gaslimit`` (``uint``): current block gaslimit
-- ``block.number`` (``uint``): current block number
-- ``block.prevrandao`` (``uint``): random number provided by the beacon chain (``EVM >= Paris``) (see `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ )
-- ``block.timestamp`` (``uint``): current block timestamp in seconds since Unix epoch
-- ``gasleft() returns (uint256)``: remaining gas
-- ``msg.data`` (``bytes``): complete calldata
-- ``msg.sender`` (``address``): sender of the message (current call)
-- ``msg.sig`` (``bytes4``): first four bytes of the calldata (i.e. function identifier)
-- ``msg.value`` (``uint``): number of wei sent with the message
-- ``tx.gasprice`` (``uint``): gas price of the transaction
-- ``tx.origin`` (``address``): sender of the transaction (full call chain)
-- ``assert(bool condition)``: abort execution and revert state changes if condition is ``false`` (use for internal error)
-- ``require(bool condition)``: abort execution and revert state changes if condition is ``false`` (use
-  for malformed input or error in external component)
-- ``require(bool condition, string memory message)``: abort execution and revert state changes if
-  condition is ``false`` (use for malformed input or error in external component). Also provide error message.
-- ``revert()``: abort execution and revert state changes
-- ``revert(string memory message)``: abort execution and revert state changes providing an explanatory string
-- ``blockhash(uint blockNumber) returns (bytes32)``: hash of the given block - only works for 256 most recent blocks
-- ``keccak256(bytes memory) returns (bytes32)``: compute the Keccak-256 hash of the input
-- ``sha256(bytes memory) returns (bytes32)``: compute the SHA-256 hash of the input
-- ``ripemd160(bytes memory) returns (bytes20)``: compute the RIPEMD-160 hash of the input
-- ``ecrecover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) returns (address)``: recover address associated with
-  the public key from elliptic curve signature, return zero on error
-- ``addmod(uint x, uint y, uint k) returns (uint)``: compute ``(x + y) % k`` where the addition is performed with
-  arbitrary precision and does not wrap around at ``2**256``. Assert that ``k != 0`` starting from version 0.5.0.
-- ``mulmod(uint x, uint y, uint k) returns (uint)``: compute ``(x * y) % k`` where the multiplication is performed
-  with arbitrary precision and does not wrap around at ``2**256``. Assert that ``k != 0`` starting from version 0.5.0.
-- ``this`` (current contract's type): the current contract, explicitly convertible to ``address`` or ``address payable``
-- ``super``: the contract one level higher in the inheritance hierarchy
-- ``selfdestruct(address payable recipient)``: destroy the current contract, sending its funds to the given address
-- ``<address>.balance`` (``uint256``): balance of the :ref:`address` in Wei
-- ``<address>.code`` (``bytes memory``): code at the :ref:`address` (can be empty)
-- ``<address>.codehash`` (``bytes32``): the codehash of the :ref:`address`
-- ``<address payable>.send(uint256 amount) returns (bool)``: send given amount of Wei to :ref:`address`,
-  returns ``false`` on failure
-- ``<address payable>.transfer(uint256 amount)``: send given amount of Wei to :ref:`address`, throws on failure
-- ``type(C).name`` (``string``): the name of the contract
-- ``type(C).creationCode`` (``bytes memory``): creation bytecode of the given contract, see :ref:`Type Information<meta-type>`.
-- ``type(C).runtimeCode`` (``bytes memory``): runtime bytecode of the given contract, see :ref:`Type Information<meta-type>`.
-- ``type(I).interfaceId`` (``bytes4``): value containing the EIP-165 interface identifier of the given interface, see :ref:`Type Information<meta-type>`.
-- ``type(T).min`` (``T``): the minimum value representable by the integer type ``T``, see :ref:`Type Information<meta-type>`.
-- ``type(T).max`` (``T``): the maximum value representable by the integer type ``T``, see :ref:`Type Information<meta-type>`.
->>>>>>> v0.8.18
 
 
 .. index:: visibility, public, private, external, internal
