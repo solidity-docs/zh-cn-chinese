@@ -13,46 +13,24 @@ Using For
 
 第一部分， ``A``，可以是以下之一：
 
-<<<<<<< HEAD
-- 文件级别或库函数的列表（ ``using {f, g, h, L.t} for uint;``）-
-  只有这些函数才会被附加到类型上。
-- 一个库合约的名字（ ``using L for uint;``）-
-  库合约的所有函数（公共函数和内部函数）都被附加到了该类型上。
+- 文件级或库函数的列表（例如 ``using {f, g, h, L.t} for uint;`` ）-
+  只有这些函数将作为成员函数附加到该类型上。
+  注意，只有当 ``using for`` 在库合约内时，才能指定私有库函数。
+- 一个库合约的名称（例如 ``using L for uint;`` ）-
+  该库合约的所有非私有函数都附加在该类型上。
 
-在文件级别，第二部分， ``B``， 必须是一个显式类型（没有数据位置指定符）。
-在合约内部，您还可以使用 ``using L for *;``，
-这会使库合约 ``L`` 的所有函数都被附加到 *所有* 类型上。
+在文件级别中，第二部分， ``B``，必须是一个明确的类型（没有数据位置指定）。
+在合约内部，您也可以用 ``*`` 代替类型（例如 ``using L for *;`` ），
+这样做的效果是，库合约 ``L`` 中所有的函数都会被附加到 *所有* 类型上。
 
-如果您指定了一个库合约，那么库合约中的 *所有* 函数都会被附加上，
-即使那些第一个参数的类型与对象的类型不匹配的函数也是如此。
-类型会在函数被调用的时候检查，并执行函数重载解析。
+如果您指定了一个库合约，那么该库合约中的 *所有* 函数都会被附加上，
+即使是那些第一个参数的类型与对象的类型不匹配的函数。
+类型会在函数被调用的时候检查，
+并执行函数重载解析。
 
-如果您使用函数列表（ ``using {f, g, h, L.t} for uint;``），
-那么类型（ ``uint``）必须隐式可转换为这些函数的第一个参数。
-即使这些函数都没有被调用，这个检查也会执行。
-=======
-- A list of file-level or library functions (e.g. ``using {f, g, h, L.t} for uint;``) -
-  only those functions will be attached to the type as member functions.
-  Note that private library functions can only be specified when ``using for`` is inside the library.
-- The name of a library (e.g. ``using L for uint;``) -
-  all non-private functions of the library are attached to the type.
-
-At file level, the second part, ``B``, has to be an explicit type (without data location specifier).
-Inside contracts, you can also use ``*`` in place of the type (e.g. ``using L for *;``),
-which has the effect that all functions of the library ``L``
-are attached to *all* types.
-
-If you specify a library, *all* functions in the library get attached,
-even those where the type of the first parameter does not
-match the type of the object. The type is checked at the
-point the function is called and function overload
-resolution is performed.
-
-If you use a list of functions (e.g. ``using {f, g, h, L.t} for uint;``),
-then the type (``uint``) has to be implicitly convertible to the
-first parameter of each of these functions. This check is
-performed even if none of these functions are called.
->>>>>>> v0.8.18
+如果您使用一个函数列表（例如 ``用{f, g, h, L.t}表示uint;`` ），
+那么类型（ ``uint`` ）必须可以隐式地转换为这些函数的第一个参数。
+即使这些函数都没有被调用，也要进行这种检查。
 
 ``using A for B;`` 指令只在当前作用域（合约或当前模块/源单元）内有效，
 包括其中所有的函数，在使用它的合约或模块之外没有任何效果。
@@ -83,7 +61,7 @@ performed even if none of these functions are called.
         returns (bool)
     {
         if (self.flags[value])
-            return false; // already there
+            return false; // 已经存在
         self.flags[value] = true;
         return true;
     }
@@ -92,7 +70,7 @@ performed even if none of these functions are called.
         returns (bool)
     {
         if (!self.flags[value])
-            return false; // not there
+            return false; // 不存在
         self.flags[value] = false;
         return true;
     }
