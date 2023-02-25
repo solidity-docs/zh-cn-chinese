@@ -311,13 +311,8 @@ errorDefinition:
 	Semicolon;
 
 /**
-<<<<<<< HEAD
- * 使用指令将库函数和自由函数与类型绑定。
+ * 使用指令将库函数和自由函数附加到类型上。
  * 可以在合同和库中以及文件层面中出现。
-=======
- * Using directive to attach library functions and free functions to types.
- * Can occur within contracts and libraries and at the file level.
->>>>>>> v0.8.18
  */
 usingDirective: Using (identifierPath | (LBrace identifierPath (Comma identifierPath)* RBrace)) For (Mul | typeName) Global? Semicolon;
 /**
