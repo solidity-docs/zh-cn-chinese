@@ -253,20 +253,16 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 - 冗余赋值消除器
 - 完全内联
 
-<<<<<<< HEAD
-优化器的步骤
-=======
 .. _optimizer-steps:
 
-Optimizer Steps
->>>>>>> v0.8.18
+优化器的步骤
 ---------------
 
 这是按字母顺序排列的基于Yul的优化器的所有步骤的列表。
 您可以在下面找到更多关于各个步骤和它们的顺序的信息。
 
 ============ ===============================
-Abbreviation Full name
+缩略语        全称  
 ============ ===============================
 ``f``        :ref:`block-flattener`
 ``l``        :ref:`circular-reference-pruner`
@@ -292,7 +288,7 @@ Abbreviation Full name
 ``L``        :ref:`load-resolver`
 ``M``        :ref:`loop-invariant-code-motion`
 ``r``        :ref:`redundant-assign-eliminator`
-``R``        :ref:`reasoning-based-simplifier` - highly experimental
+``R``        :ref:`reasoning-based-simplifier` - 高度实验性
 ``m``        :ref:`rematerialiser`
 ``V``        :ref:`SSA-reverser`
 ``a``        :ref:`SSA-transform`
@@ -303,51 +299,38 @@ Abbreviation Full name
 ``d``        :ref:`var-decl-initializer`
 ============ ===============================
 
-Some steps depend on properties ensured by ``BlockFlattener``, ``FunctionGrouper``, ``ForLoopInitRewriter``.
-For this reason the Yul optimizer always applies them before applying any steps supplied by the user.
+一些步骤依赖于 ``BlockFlattener``， ``FunctionGrouper``， ``ForLoopInitRewriter`` 所保证的属性。
+由于这个原因，Yul 优化器总是在应用用户提供的任何步骤之前应用它们。
 
-The ReasoningBasedSimplifier is an optimizer step that is currently not enabled
-in the default set of steps. It uses an SMT solver to simplify arithmetic expressions
-and boolean conditions. It has not received thorough testing or validation yet and can produce
-non-reproducible results, so please use with care!
+基于推理的简化器（ReasoningBasedSimplifier）是一个优化器步骤，
+目前在默认步骤集中没有启用。它使用一个 SMT 求解器来简化算术表达式和布尔条件。
+此外，它还没有得到彻底的测试或验证，可能会产生不可复现的结果，所以请谨慎使用!
 
 选择优化方案
 -----------------------
 
-<<<<<<< HEAD
-默认情况下，优化器对生成的程序集应用其预定义的优化步骤序列。
-您可以使用 ``yul-optimizations`` 选项覆盖这个序列并提供您自己的序列：
-=======
-By default the optimizer applies its predefined sequence of optimization steps to the generated assembly.
-You can override this sequence and supply your own using the ``--yul-optimizations`` option:
->>>>>>> v0.8.18
+默认情况下，优化器将其预定义的优化步骤序列应用于生成的程序集。
+您可以使用 ``--yul-optimizations`` 选项来覆盖这个序列并提供您自己的序列：
 
 .. code-block:: bash
 
     solc --optimize --ir-optimized --yul-optimizations 'dhfoD[xarrscLMcCTU]uljmul:fDnTOc'
 
-The order of steps is significant and affects the quality of the output.
-Moreover, applying a step may uncover new optimization opportunities for others that were already applied,
-so repeating steps is often beneficial.
+步骤的顺序很重要，会影响到输出的质量。
+此外，应用一个步骤可能为其他已经应用的步骤发现新的优化机会。因此，重复步骤往往是有益的。
 
-<<<<<<< HEAD
-``[...]`` 里面的序列将被循环应用多次，直到Yul代码保持不变或达到最大轮数（目前为12）。
+``[...]`` 里面的序列将在一个循环中多次应用，
+直到 Yul 代码保持不变或达到最大轮数（目前是12）。
+方括号（ ``[]`` ）可以在一个序列中多次使用，但不能嵌套。
 
-可用的缩写列在 `Yul 优化器文档 <optimization-step-sequence>`_ 中。
-=======
-The sequence inside ``[...]`` will be applied multiple times in a loop until the Yul code
-remains unchanged or until the maximum number of rounds (currently 12) has been reached.
-Brackets (``[]``) may be used multiple times in a sequence, but can not be nested.
+需要注意的一件事是，有一些硬编码的步骤总是在用户提供的序列之前和之后运行，
+如果用户没有提供序列，则是默认序列。
 
-An important thing to note, is that there are some hardcoded steps that are always run before and after the
-user-supplied sequence, or the default sequence if one was not supplied by the user.
-
-The cleanup sequence delimiter ``:`` is optional, and is used to supply a custom cleanup sequence
-in order to replace the default one. If omitted, the optimizer will simply apply the default cleanup
-sequence. In addition, the delimiter may be placed at the beginning of the user-supplied sequence,
-which will result in the optimization sequence being empty, whereas conversely, if placed at the end of
-the sequence, will be treated as an empty cleanup sequence.
->>>>>>> v0.8.18
+清理序列分界符 ``:`` 是可选的，用于提供一个自定义的清理序列，
+以取代默认序列。如果省略，优化器将简单地应用默认的清理序列。
+此外，定界符可以放在用户提供的序列的开头，
+这将导致优化序列为空，反之，如果放在序列的末尾，
+将被视为一个空的清理序列。
 
 预处理
 -------------
@@ -891,13 +874,8 @@ AST被遍历了两次：分别在在信息收集步骤和实际删除步骤中�
 
 这个优化阶段删除了不可到达的代码。
 
-<<<<<<< HEAD
-无法访问代码可以是一个块中的任何代码，
-其前面有leave，return，invalid，break，continue，selfdestruct 或 revert。
-=======
-Unreachable code is any code within a block which is preceded by a
-leave, return, invalid, break, continue, selfdestruct, revert or by a call to a user-defined function that recurses infinitely.
->>>>>>> v0.8.18
+无法访问的代码是指在一个区块内的任何代码，
+其前面有 leave，return，invalid，break，continue，selfdestruct，revert 或调用用户定义的函数，并无限地递归。
 
 函数定义被保留下来，因为它们可能被早期的代码调用，因此被认为是可访问的。
 
@@ -1055,18 +1033,17 @@ leave, return, invalid, break, continue, selfdestruct, revert or by a call to a 
 .. index:: ! unused store eliminator
 .. _unused-store-eliminator:
 
-UnusedStoreEliminator
+未使用的存储清除器
 ^^^^^^^^^^^^^^^^^^^^^
 
-Optimizer component that removes redundant ``sstore`` and memory store statements.
-In case of an ``sstore``, if all outgoing code paths revert (due to an explicit ``revert()``, ``invalid()``, or infinite recursion) or
-lead to another ``sstore`` for which the optimizer can tell that it will overwrite the first store, the statement will be removed.
-However, if there is a read operation between the initial ``sstore`` and the revert, or the overwriting ``sstore``, the statement
-will not be removed.
-Such read operations include: external calls, user-defined functions with any storage access, and ``sload`` of a slot that cannot be
-proven to differ from the slot written by the initial ``sstore``.
+优化器组件，删除多余的 ``sstore`` 和内存存储语句。
+对于一个 ``sstore``，如果所有传出的代码路径都恢复了（由于显式的的 ``revert()``, ``invalid()``, 或无限递归）
+或导致另一个 ``sstore``，优化器可以知道它将覆写第一个存储，该语句将被删除。
+然而，如果在初始 ``sstore`` 和恢复之间有读操作，或者覆写的 ``sstore``，
+该语句将不会被删除。
+这样的读操作包括：外部调用，有任何存储访问的用户定义的函数，以及不能证明与初始 ``sstore`` 写的槽不同的 ``sload``。
 
-For example, the following code
+例如，下面的代码
 
 .. code-block:: yul
 
@@ -1079,7 +1056,7 @@ For example, the following code
         sstore(c, 3)
     }
 
-will be transformed into the code below after the Unused Store Eliminator step is run
+在运行未使用的存储消除器步骤后，将被转化为以下代码
 
 .. code-block:: yul
 
@@ -1089,14 +1066,14 @@ will be transformed into the code below after the Unused Store Eliminator step i
         sstore(c, 3)
     }
 
-For memory store operations, things are generally simpler, at least in the outermost yul block as all such
-statements will be removed if they are never read from in any code path.
-At function analysis level, however, the approach is similar to ``sstore``, as we do not know whether the memory location will
-be read once we leave the function's scope, so the statement will be removed only if all code paths lead to a memory overwrite.
+对于内存存储操作，事情一般比较简单，至少在最外层的yul块中是这样，
+因为如果在任何代码路径中从未被读取，所有这样的语句都将被删除。
+然而，在函数分析层面，其方法与 ``sstore`` 类似，因为我们不知道一旦离开函数的范围，内存位置是否会被读取，
+所以只有当所有的代码路径都导致内存被覆写时，语句才会被删除。
 
-Best run in SSA form.
+最好以SSA形式运行。
 
-Prerequisites: Disambiguator, ForLoopInitRewriter.
+先决条件： Disambiguator, ForLoopInitRewriter.
 
 .. _equivalent-function-combiner:
 
