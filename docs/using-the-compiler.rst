@@ -172,7 +172,7 @@ EVM版本选项
    - 区块的基本费用（ `EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ 和 `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_ ）
      可以通过全局的 ``block.basefee`` 或内联汇编中的 ``basefee()`` 访问。
 - ``paris`` （ **默认项** ）
-   - 引入了 ``prevrandao()`` 和 ``block.prevrandao``，并改变了现在已经废弃的 ``block.difficulty`` 的语义，不允许在内联汇编中使用 ``difficulty()``（见 `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）。
+   - 引入了 ``prevrandao()`` 和 ``block.prevrandao``，并改变了现在已经废弃的 ``block.difficulty`` 的语义，不允许在内联汇编中使用 ``difficulty()`` （见 `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）。
 
 .. index:: ! standard JSON, ! --standard-json
 .. _compiler-api:
