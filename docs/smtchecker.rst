@@ -580,50 +580,27 @@ BMC使用一个SMT求解器，而CHC使用一个Horn求解器。
 作为一个Horn求解器使用，而 `Eldarica <https://github.com/uuverifiers/eldarica>`_
 则同时做这两种工作。
 
-<<<<<<< HEAD
-如果求解器可用的话，用户可以通过CLI选项 ``--model-checker-solvers {all,cvc4,smtlib2,z3}``
+如果求解器可用的话，用户可以通过CLI选项 ``--model-checker-solvers {all,cvc4,eld,smtlib2,z3}``
 或JSON选项 ``settings.modelChecker.solvers=[smtlib2,z3]`` 来选择应该使用哪个求解器，
 其中：
 
 - ``cvc4`` 仅在使用 ``solc`` 编译二进制文件时可用。并且只有BMC使用 ``cvc4``。
+- ``eld`` 是通过其二进制文件使用的，必须安装在系统中。只有CHC使用了 ``eld``，并且是在只有 ``z3`` 没有被启用的情况下。
 - ``smtlib2`` 以 `smtlib2 <http://smtlib.cs.uiowa.edu/>`_ 格式输出 SMT/Horn 查询。
   这些可以和编译器的 `回调机制 <https://github.com/ethereum/solc-js>`_ 一起使用，
   这样就可以采用系统中的任何求解器二进制来同步返回查询的结果给编译器。
-  例如，这是目前使用Eldarica的唯一方法，因为它没有C++ API。
   根据调用哪个求解器，BMC和CHC都可以使用此方法。
-- ``z3`` 是可用的
+- ``z3`` 是可用的情况
 
   - 如果 ``solc`` 与它一起被编译的话。
-  - 如果Linux系统中安装了4.8.x版本的动态 ``z3`` 库（从Solidity 0.7.6开始）。
+  - 如果Linux系统中安装了4.8.x及其以上版本的动态 ``z3`` 库（从Solidity 0.7.6开始）。
   - 在 ``soljson.js`` （从Solidity 0.6.9开始）中静态的，也就是编译器的Javascript二进制。
 
 .. note::
   z3 4.8.16 版本破坏了与以前版本的 ABI 兼容性，
-  不能与 solc <=0.8.13 一起使用。
-  如果您正在使用 z3 >=4.8.16，请使用 solc >=0.8.14 的版本。
-=======
-The user can choose which solvers should be used, if available, via the CLI
-option ``--model-checker-solvers {all,cvc4,eld,smtlib2,z3}`` or the JSON option
-``settings.modelChecker.solvers=[smtlib2,z3]``, where:
-
-- ``cvc4`` is only available if the ``solc`` binary is compiled with it. Only BMC uses ``cvc4``.
-- ``eld`` is used via its binary which must be installed in the system. Only CHC uses ``eld``, and only if ``z3`` is not enabled.
-- ``smtlib2`` outputs SMT/Horn queries in the `smtlib2 <http://smtlib.cs.uiowa.edu/>`_ format.
-  These can be used together with the compiler's `callback mechanism <https://github.com/ethereum/solc-js>`_ so that
-  any solver binary from the system can be employed to synchronously return the results of the queries to the compiler.
-  This can be used by both BMC and CHC depending on which solvers are called.
-- ``z3`` is available
-
-  - if ``solc`` is compiled with it;
-  - if a dynamic ``z3`` library of version >=4.8.x is installed in a Linux system (from Solidity 0.7.6);
-  - statically in ``soljson.js`` (from Solidity 0.6.9), that is, the Javascript binary of the compiler.
-
-.. note::
-  z3 version 4.8.16 broke ABI compatibility with previous versions and cannot
-  be used with solc <=0.8.13. If you are using z3 >=4.8.16 please use solc
-  >=0.8.14, and conversely, only use older z3 with older solc releases.
-  We also recommend using the latest z3 release which is what SMTChecker also does.
->>>>>>> v0.8.18
+  不能与 solc <=0.8.13 版本一起使用。如果您正在使用 z3 >=4.8.16 的版本，
+  请使用 solc >=0.8.14 的版本。反之，只使用旧的z3与旧的solc版本。
+  我们也建议使用最新的z3版本，这也是SMT检查器的作用。
 
 由于 BMC 和 CHC 都使用 ``z3``，而且 ``z3`` 可以在更多的环境中使用，包括在浏览器中，
 大多数用户几乎不需要关心这个选项。更高级的用户可能会应用这个选项，在更复杂的问题上尝试其他求解器。
