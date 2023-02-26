@@ -1266,7 +1266,7 @@ Import 语句应始终放在文件的顶部。
 * ``singleTrailingUnderscore_``
 
 当所需的名称与现有状态变量，函数，内置或其他保留关键字名称冲突时，建议使用此约定。
-=======
+
 .. _style_guide_natspec:
 
 *******

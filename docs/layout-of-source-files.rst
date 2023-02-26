@@ -131,7 +131,7 @@ ABI编码编译指示
 .. index:: ! pragma; ABIEncoderV2
 
 ABI 编码器 V2
-~~~~~~~~~~~~
+~~~~~~~~~~~~~
 
 因为 ABI 编码器v2不再被认为是实验性的，
 它可以通过 ``pragma abicoder v2`` （请见上文）从 Solidity 0.7.4 开始选择。
