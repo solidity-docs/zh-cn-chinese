@@ -4,21 +4,13 @@
 映射类型
 =============
 
-<<<<<<< HEAD
-映射类型使用语法 ``mapping(KeyType => ValueType)``，
-映射类型的变量使用语法 ``mapping(KeyType => ValueType) VariableName`` 声明。
+映射类型使用语法 ``mapping(KeyType KeyName? => ValueType ValueName?)``，
+映射类型的变量使用语法 ``mapping(KeyType KeyName? => ValueType ValueName?) VariableName`` 声明。
 ``KeyType`` 可以是任何内置的值类型， ``bytes``， ``string``，或任何合约或枚举类型。
 其他用户定义的或复杂的类型，如映射，结构体或数组类型是不允许的。
 ``ValueType`` 可以是任何类型，包括映射，数组和结构体。
-=======
-Mapping types use the syntax ``mapping(KeyType KeyName? => ValueType ValueName?)`` and variables of
-mapping type are declared using the syntax ``mapping(KeyType KeyName? => ValueType ValueName?)
-VariableName``. The ``KeyType`` can be any built-in value type, ``bytes``, ``string``, or any
-contract or enum type. Other user-defined or complex types, such as mappings, structs or array types
-are not allowed. ``ValueType`` can be any type, including mappings, arrays and structs. ``KeyName``
-and ``ValueName`` are optional (so ``mapping(KeyType => ValueType)`` works as well) and can be any
-valid identifier that is not a type.
->>>>>>> v0.8.18
+``KeyName`` 和 ``ValueName`` 是可选的（所以 ``mapping(KeyType => ValueType)`` 也可以使用），
+可以是任何有效的标识符，而不是一个类型。
 
 您可以把映射想象成 `哈希表 <https://en.wikipedia.org/wiki/Hash_table>`_，
 它实际上被初始化了，使每一个可能的键都存在，
@@ -33,21 +25,12 @@ valid identifier that is not a type.
 但它们不能被用作公开可见的合约函数的参数或返回参数。
 这些限制对于包含映射的数组和结构也是如此。
 
-<<<<<<< HEAD
 您可以把映射类型的状态变量标记为 ``public``，
-Solidit y会为您创建一个 :ref:`getter <visibility-and-getters>` 函数。
-``KeyType`` 将成为 getter 函数的参数。
-如果 ``ValueType`` 是一个值类型或一个结构，getter 返回 ``ValueType``。
+Solidity 会为您创建一个 :ref:`getter <visibility-and-getters>` 函数。
+``KeyType`` 成为 getter 函数的参数，名称为 ``KeyName`` （如果指定）。
+如果 ``ValueType`` 是一个值类型或一个结构，getter 返回 ``ValueType``，
+名称为 ``ValueName`` （如果指定）。
 如果 ``ValueType`` 是一个数组或映射，getter 对每个 ``KeyType`` 递归出一个参数。
-=======
-You can mark state variables of mapping type as ``public`` and Solidity creates a
-:ref:`getter <visibility-and-getters>` for you. The ``KeyType`` becomes a parameter
-with name ``KeyName`` (if specified) for the getter.
-If ``ValueType`` is a value type or a struct, the getter returns ``ValueType`` with
-name ``ValueName`` (if specified).
-If ``ValueType`` is an array or a mapping, the getter has one parameter for
-each ``KeyType``, recursively.
->>>>>>> v0.8.18
 
 在下面的例子中， ``MappingExample`` 合约定义了一个公共的 ``balances`` 映射，
 键类型是 ``address``，值类型是 ``uint``，将一个Ethereum地址映射到一个无符号整数值。
@@ -75,20 +58,13 @@ each ``KeyType``, recursively.
         }
     }
 
-<<<<<<< HEAD
 下面的例子是一个简化版本的
 `ERC20 代币 <https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol>`_。
 ``_allowances`` 是一个映射类型在另一个映射类型中的例子。
-下面的例子使用 ``_allowances`` 来记录别人允许从您的账户中提取的金额。
 
-=======
-The example below is a simplified version of an
-`ERC20 token <https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol>`_.
-``_allowances`` is an example of a mapping type inside another mapping type.
-
-In the example below, the optional ``KeyName`` and ``ValueName`` are provided for the mapping.
-It does not affect any contract functionality or bytecode, it only sets the ``name`` field
-for the inputs and outputs in the ABI for the mapping's getter.
+在下面的例子中，为映射提供了可选的 ``KeyName`` 和 ``ValueName``。
+它不影响任何合约的功能或字节码，
+它只是为映射的 getter 在 ABI 中设置输入和输出的 ``name`` 字段。
 
 .. code-block:: solidity
 
@@ -104,8 +80,7 @@ for the inputs and outputs in the ABI for the mapping's getter.
     }
 
 
-The example below uses ``_allowances`` to record the amount someone else is allowed to withdraw from your account.
->>>>>>> v0.8.18
+下面的例子使用 ``_allowances`` 来记录其他人可以从你的账户中提取的金额。
 
 .. code-block:: solidity
 
