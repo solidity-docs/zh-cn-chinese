@@ -67,12 +67,11 @@
 区块和交易属性
 ---------------
 
-<<<<<<< HEAD
 - ``blockhash(uint blockNumber) returns (bytes32)``: 当 ``blocknumber`` 是最近的256个区块之一时，给定区块的哈希值；否则返回0。
 - ``block.basefee`` （ ``uint``）： 当前区块的基本费用 （ `EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ 和 `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_）
 - ``block.chainid`` （ ``uint``）： 当前链的ID
 - ``block.coinbase`` （ ``address payable``）： 挖出当前区块的矿工地址
-- ``block.difficulty`` （ ``uint``）： 挖出当前区块的矿工地址
+- ``block.difficulty`` （ ``uint``）： 当前块的难度（ ``EVM < Paris`` ）。对于其他EVM版本，它是为 ``block.prevrandao`` 的已废弃别名 （`EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）
 - ``block.gaslimit`` （ ``uint``）： 当前区块 gas 限额
 - ``block.number`` （ ``uint``）： 当前区块号
 - ``block.timestamp`` （ ``uint``）： 自 unix epoch 起始到当前区块以秒计的时间戳
@@ -83,24 +82,6 @@
 - ``msg.value`` （ ``uint``）： 随消息发送的 wei 的数量
 - ``tx.gasprice`` （ ``uint``）： 随消息发送的 wei 的数量
 - ``tx.origin`` （ ``address``）： 交易发起者（完全的调用链）
-=======
-- ``blockhash(uint blockNumber) returns (bytes32)``: hash of the given block when ``blocknumber`` is one of the 256 most recent blocks; otherwise returns zero
-- ``block.basefee`` (``uint``): current block's base fee (`EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ and `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_)
-- ``block.chainid`` (``uint``): current chain id
-- ``block.coinbase`` (``address payable``): current block miner's address
-- ``block.difficulty`` (``uint``): current block difficulty (``EVM < Paris``). For other EVM versions it behaves as a deprecated alias for ``block.prevrandao`` (`EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ )
-- ``block.gaslimit`` (``uint``): current block gaslimit
-- ``block.number`` (``uint``): current block number
-- ``block.prevrandao`` (``uint``): random number provided by the beacon chain (``EVM >= Paris``)
-- ``block.timestamp`` (``uint``): current block timestamp as seconds since unix epoch
-- ``gasleft() returns (uint256)``: remaining gas
-- ``msg.data`` (``bytes calldata``): complete calldata
-- ``msg.sender`` (``address``): sender of the message (current call)
-- ``msg.sig`` (``bytes4``): first four bytes of the calldata (i.e. function identifier)
-- ``msg.value`` (``uint``): number of wei sent with the message
-- ``tx.gasprice`` (``uint``): gas price of the transaction
-- ``tx.origin`` (``address``): sender of the transaction (full call chain)
->>>>>>> v0.8.18
 
 .. note::
     对于每一个 **外部（external）** 函数调用，
@@ -240,14 +221,9 @@ ABI编码和解码函数
     （见 `EIP-2 <https://eips.ethereum.org/EIPS/eip-2#specification>`_），
     但 ecrecover 函数仍然没有改变。
 
-<<<<<<< HEAD
     这通常不是一个问题，除非您要求签名是唯一的，或者用它们来识别个体。
-    OpenZeppelin 有一个 `ECDSA 辅助库 <https://docs.openzeppelin.com/contracts/2.x/api/cryptography#ECDSA>`_，
+    OpenZeppelin 有一个 `ECDSA 辅助库 <https://docs.openzeppelin.com/contracts/4.x/api/utils#ECDSA>`_，
     您可以用它作为 ``ecrecover`` 的包装，那样就没有这个问题。
-=======
-    This is usually not a problem unless you require signatures to be unique or use them to identify items.
-    OpenZeppelin have a `ECDSA helper library <https://docs.openzeppelin.com/contracts/4.x/api/utils#ECDSA>`_ that you can use as a wrapper for ``ecrecover`` without this issue.
->>>>>>> v0.8.18
 
 .. note::
 
@@ -335,17 +311,11 @@ ABI编码和解码函数
     - 接收合约的接收函数不会被执行。
     - 合约只有在交易结束时才真正被销毁， 任何一个 ``revert`` 可能会 "恢复" 销毁。
 
-<<<<<<< HEAD
-
 此外，当前合约的所有函数都可以直接调用，包括当前函数。
-=======
-Furthermore, all functions of the current contract are callable directly including the current function.
->>>>>>> v0.8.18
 
 .. warning::
-    From version 0.8.18 and up, the use of ``selfdestruct`` in both Solidity and Yul will trigger a
-    deprecation warning, since the ``SELFDESTRUCT`` opcode will eventually undergo breaking changes in behaviour
-    as stated in `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_.
+    从 0.8.18 及以上版本开始，在 Solidity 和 Yul 中使用 ``selfdestruct`` 将触发一个已废弃警告，
+    因为 ``SELFDESTRUCT`` 操作码最终会发生如 `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_ 中所述的行为上的重大变化。
 
 .. note::
     在 0.5.0 版本之前，有一个叫做 ``suicide`` 的函数，其语义与 ``selfdestruct`` 相同。
@@ -398,16 +368,8 @@ Furthermore, all functions of the current contract are callable directly includi
 
 这些关键字在 Solidity 中是保留的。它们在将来可能成为语法的一部分：
 
-<<<<<<< HEAD
 ``after``， ``alias``， ``apply``， ``auto``， ``byte``， ``case``， ``copyof``， ``default``，
 ``define``， ``final``， ``implements``， ``in``， ``inline``， ``let``， ``macro``， ``match``，
 ``mutable``， ``null``， ``of``， ``partial``， ``promise``， ``reference``， ``relocatable``，
 ``sealed``， ``sizeof``， ``static``， ``supports``， ``switch``， ``typedef``， ``typeof``，
 ``var``。
-=======
-``after``, ``alias``, ``apply``, ``auto``, ``byte``, ``case``, ``copyof``, ``default``,
-``define``, ``final``, ``implements``, ``in``, ``inline``, ``let``, ``macro``, ``match``,
-``mutable``, ``null``, ``of``, ``partial``, ``promise``, ``reference``, ``relocatable``,
-``sealed``, ``sizeof``, ``static``, ``supports``, ``switch``, ``typedef``, ``typeof``,
-``var``.
->>>>>>> v0.8.18
