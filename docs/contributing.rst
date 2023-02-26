@@ -7,15 +7,15 @@
 特别是，我们感谢在以下领域的支持:
 
 * 报告问题。
-* 修复和回应 `Solidity的GitHub问题
+* 修复和响应 `Solidity 的 GitHub 问题
   <https://github.com/ethereum/solidity/issues>`_，特别是那些被标记为
   `"很好的第一个问题" <https://github.com/ethereum/solidity/labels/good%20first%20issue>`_，这是
   作为外部贡献者的介绍性问题。
 * 完善文档。
-* 将文档翻译成更多的语言。
+* 将文档 `翻译 <https://github.com/solidity-docs>`_ 成更多的语言。
 * 在 `StackExchange <https://ethereum.stackexchange.com>`_ 和
   `Solidity Gitter Chat <https://gitter.im/ethereum/solidity>`_ 上回答其他用户的问题。
-* 通过在 `Solidity论坛 <https://forum.soliditylang.org/>`_ 上提出语言修改或新功能并提供反馈，参与语言设计过程。
+* 通过在 `Solidity论坛 <https://forum.soliditylang.org/>`_ 上提出语言改进或新功能，并提供反馈来参与语言设计的过程。
 
 为了开始参与，您可以尝试 :ref:`building-from-source`，以熟悉 Solidity 的组件和构建过程。
 此外，精通在 Solidity 中编写智能合约可能是有用的。
@@ -29,7 +29,7 @@
 
 - 每周一和周三下午3点，欧洲中部/欧洲中部夏令时间。
 
-这两个会议都在 `Jitsi <https://meet.ethereum.org/solidity>`_ 举行。
+这两个会议都在 `Jitsi <https://meet.soliditylang.org/>`_ 举行。
 
 如何报告问题
 ====================
@@ -46,7 +46,10 @@
 
 将导致问题的源代码减少到最低限度总是非常有帮助的，有时甚至可以澄清一个误解。
 
-Pull Request 的工作流
+关于语言设计的技术讨论，去
+`Solidity 论坛 <https://forum.soliditylang.org/>`_ 才是正确的选择（见 :ref:`solidity_language_design`）。
+
+拉取请求的工作流程
 ==========================
 
 为了进行贡献，请 fork 一个 ``develop`` 分支并在那里进行修改。
@@ -68,6 +71,9 @@ Pull Request 的工作流
 最后，请确保您遵守了这个项目的 `编码风格 <https://github.com/ethereum/solidity/blob/develop/CODING_STYLE.md>`_ 。
 还有，虽然我们采用了持续集成测试，但是在提交 pull request 之前，请测试您的代码并确保它能在本地进行编译。
 
+我们强烈建议在提交拉动请求之前，先看一下我们的 `审查清单 <https://github.com/ethereum/solidity/blob/develop/ReviewChecklist.md>`_。
+我们会彻底审查每一个PR，并会帮助您把它弄好，但有许多常见问题可以很容易地避免，使审查更加顺利。
+
 感谢您的帮助！
 
 运行编译器测试
@@ -84,10 +90,11 @@ Pull Request 的工作流
 在 macOS 系统上，一些测试脚本需要安装 GNU 核心工具。
 可以使用 Homebrew 很简单地完成安装： ``brew install coreutils``。
 
-在 Windows 系统上，确保您有创建符号链接的权限，否则一些测试可能会失败。
+在 Windows 系统上，确保您有创建符号链接的权限，
+否则一些测试可能会失败。
 管理员应该有这个权限，但您也可以
-`将其授予其他用户 <https://docs.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/create-symbolic-links#policy-management>`_
-或 `启用开发者模式 <https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development>`_。
+`将其授予其他用户 <https://learn.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/create-symbolic-links#policy-management>`_
+或 `启用开发者模式 <https://learn.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development>`_。
 
 运行测试
 -----------------
@@ -379,13 +386,14 @@ Whiskers 系统
 
 * `简化技术英语 <https://en.wikipedia.org/wiki/Simplified_Technical_English>`_
 * `国际英语 <https://en.wikipedia.org/wiki/International_English>`_
-* `英式英语拼写 <https://en.oxforddictionaries.com/spelling/british-and-spelling>`_
+* `英式英语拼写 <https://web.archive.org/web/20220324094038/https://www.lexico.com/grammar/british-and-spelling>`_
 
 
 .. note::
 
     虽然官方的 Solidity 文档是用英语写的，但也有社区贡献的其他语言的 :ref:`translations` 可用。
-    请参考 `翻译指南 <https://github.com/solidity-docs/translation-guide>`_ 以了解如何为社区翻译作出贡献。
+    请参考 `翻译指南 <https://github.com/solidity-docs#solidity-documentation-translation-guide>`_ 
+    以了解如何为社区翻译作出贡献。
 
 标题的大小写
 -----------------------
@@ -448,6 +456,8 @@ CI进程在您创建PR时，使用 ``./test/cmdlineTests.sh`` 脚本测试所有
 通过运行 ``./scripts/docs.sh`` 来确保您的贡献通过我们的文档测试，
 它安装了文档所需的依赖，并检查是否存在问题，如无效的链接或语法问题。
 
+.. _solidity_language_design:
+
 Solidity语言设计
 ========================
 
@@ -472,4 +482,4 @@ Solidity论坛作为提出和讨论新的语言功能及其在早期构思阶段
 对于特殊情况和问题，您可以通过 `Solidity-dev Gitter 频道 <https://gitter.im/ethereum/solidity-dev>`_ 与我们联系，
 - 这是一个专门用于围绕 Solidity 编译器和语言开发的聊天室。
 
-我们很高兴听到你对我们如何改进语言设计过程，使之更加协作和透明的想法。
+我们很高兴听到您对我们如何改进语言设计过程，使之更加协作和透明的想法。

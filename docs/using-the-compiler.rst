@@ -166,12 +166,13 @@ EVM版本选项
 - ``istanbul``
    - 在汇编中可使用操作码 ``chainid`` 和 ``selfbalance``。
 - ``berlin``
-   - ``SLOAD``, ``*CALL``, ``BALANCE``, ``EXT*`` 和 ``SELFDESTRUCT`` 的gas成本增加。
+   - ``SLOAD``， ``*CALL``， ``BALANCE``， ``EXT*`` 和 ``SELFDESTRUCT`` 的gas成本增加。
      编译器假设这类操作的gas成本是固定的。这与gas估计和优化器有关。
-- ``london`` (**default**)
+- ``london`` 
    - 区块的基本费用（ `EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ 和 `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_ ）
      可以通过全局的 ``block.basefee`` 或内联汇编中的 ``basefee()`` 访问。
-
+- ``paris`` （ **默认项** ）
+   - 引入了 ``prevrandao()`` 和 ``block.prevrandao``，并改变了现在已经废弃的 ``block.difficulty`` 的语义，不允许在内联汇编中使用 ``difficulty()`` （见 `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）。
 
 .. index:: ! standard JSON, ! --standard-json
 .. _compiler-api:
@@ -277,14 +278,22 @@ EVM版本选项
               // 如果Yul优化器被激活，则默认激活。
               "stackAllocation": true,
               // 选择要应用的优化步骤。
-              // 可选, 如果省略，优化器将使用默认序列。
+              // 也可以同时修改优化序列和清理序列。
+              // 每个序列的指令用 “:” 分隔，该值以 优化-序列:清理-序列 的形式提供。
+              // 更多信息见 “优化器 > 选择优化”。
+              // 这个字段是可选的，如果不提供，优化和清理的默认序列都会使用。
+              // 如果只提供了其中一个选项，另一个将不会被运行。
+              // 如果只提供分隔符 “:”，
+              // 那么优化和清理序列都不会被运行。
+              // 如果设置为空值，则只使用默认的清理序列，
+              // 不应用任何优化步骤。
               "optimizerSteps": "dhfoDgvulfnTUtnIf..."
             }
           }
         },
         // 编译EVM的版本。
         // 影响到类型检查和代码生成。版本可以是 homestead,
-        // tangerineWhistle, spuriousDragon, byzantium, constantinople, petersburg, istanbul or berlin
+        // tangerineWhistle, spuriousDragon, byzantium, constantinople, petersburg, istanbul, berlin, london or paris
         "evmVersion": "byzantium",
         // 可选：改变编译管道以通过Yul的中间表示法。
         // 这在默认情况下是假的。
@@ -311,7 +320,10 @@ EVM版本选项
         },
         // 元数据设置 (可选)
         "metadata": {
-          // 只使用字面内容，不使用URL（默认为false）。
+          // CBOR元数据默认是附加在字节码的最后。
+          // 将此设置为false，会从运行时和部署时代码中省略元数据。
+          "appendCBOR": true,
+          // 只使用字面内容，不使用URL（默认为false）
           "useLiteralContent": true,
           // 对附加在字节码上的元数据哈希值使用给定的哈希值方法。
           // 元数据哈希可以通过选项 "none "从字节码中删除。
@@ -596,215 +608,3 @@ EVM版本选项
 13. ``YulException``： 在Yul代码生成过程中出现错误 - 这应该作为一个问题报告。
 14. ``Warning``： 警告，不会停止编译，但应尽可能处理。
 15. ``Info``： 编译器认为用户可能会在其中发现有用的信息，并不危险，也不一定需要处理。
-
-
-.. _compiler-tools:
-
-编译器工具
-**************
-
-Solidity-升级
-----------------
-
-``solidity-upgrade`` 可以帮助您半自动地升级您的合约，以适应语言的变化。
-虽然它没有也不可能为每一个中断的版本实现所有需要的变化，
-但它仍然支持那些需要大量重复性手工调整的版本。
-
-.. note::
-
-    ``solidity-upgrade`` 在很大程度上进行了工作，但您的合约很可能需要进一步的手工调整。
-    我们建议为您的文件使用一个版本控制系统。这有助于审查和最终回滚所做的修改。
-
-.. warning::
-
-    ``solidity-upgrade`` 并不被认为是完整的或没有漏洞的，所以请谨慎使用。
-
-它是如何工作的
-~~~~~~~~~~~~~~
-
-您可以将 （一个或多个）Solidity 源文件传递给 ``solidity-upgrade [files]``。
-如果这些文件使用了 ``import`` 语句，指的是当前源文件目录以外的文件，
-您需要通过 ``--allow-paths [directory]`` 来指定允许读取和导入文件的目录。
-您可以通过传递 ``--ignore-missing`` 来忽略丢失的文件。
-
-``solidity-upgrade`` 是基于 ``libsolidity`` 的，
-可以解析，编译和分析您的源文件，并可能在其中找到适用的源升级。
-
-源码升级被认为是对您的源代码的轻微的文字修改。
-它们被应用于在内存中表示的给定源文件。默认情况下，相应的源文件会被更新，
-但您可以通过 ``--dry-run`` 来模拟整个升级过程，而不写到任何文件中。
-
-升级过程本身有两个阶段。在第一阶段，源文件被解析，
-由于不可能在这个层面上升级源代码。错误被收集起来，
-可以通过 ``--verbose`` 来记录。
-没有源代码在这一点上可以升级。
-
-在第二阶段，所有的源代码都被编译，
-所有激活的升级分析模块都与编译同时运行。默认情况下，所有可用的模块都被激活。
-请阅读 :ref:`可用的模块 <upgrade-modules>` 的文档以了解更多细节。
-
-
-这可能会导致编译错误，而这些错误可能会被源码升级所修复。
-如果没有错误发生，就没有报告源码升级，您就完成了。
-如果发生错误，并且一些升级模块报告了源码升级，
-那么第一个报告的源码就会被应用，并且对所有给定的源码文件再次触发编译。
-只要报告了源码升级，就会重复上一步。
-如果仍然发生错误，您可以通过 ``--verbose`` 来记录它们。
-如果没有错误发生，您的合约是最新的，可以用最新版本的编译器进行编译。
-
-.. _upgrade-modules:
-
-可用的升级模块
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-+----------------------------+-------+--------------------------------------------+
-|            模块            | 版本  |                    说明                    |
-+============================+=======+============================================+
-| ``constructor``            | 0.5.0 | 现在必须使用 ``constructor`` 关键字        |
-|                            |       | 来定义构造器。                             |
-+----------------------------+-------+--------------------------------------------+
-| ``visibility``             | 0.5.0 | 明确的函数可见性现在是强制的，             |
-|                            |       | 默认为 ``public``。                        |
-+----------------------------+-------+--------------------------------------------+
-| ``abstract``               | 0.6.0 | 如果一个合约没有实现其所有的功能，         |
-|                            |       | 就必须使用关键字 ``abstract``。            |
-+----------------------------+-------+--------------------------------------------+
-| ``virtual``                | 0.6.0 | 在接口之外没有实现的函数                   |
-|                            |       | 必须被标记为 ``virtual``。                 |
-+----------------------------+-------+--------------------------------------------+
-| ``override``               | 0.6.0 | 当覆盖一个函数或修改器时，                 |
-|                            |       | 必须使用新的关键字 ``override``。          |
-+----------------------------+-------+--------------------------------------------+
-| ``dotsyntax``              | 0.7.0 | 以下语法已被弃用：                         |
-|                            |       | ``f.gas(...)()``， ``f.value(...)()`` 和   |
-|                            |       | ``(new C).value(...)()``。                 |
-|                            |       | 用 ``f{gas: ...， value: ...}()`` 和       |
-|                            |       | ``(new C){value: ...}()`` 来替代这些方法。 |
-+----------------------------+-------+--------------------------------------------+
-| ``now``                    | 0.7.0 | ``now`` 关键字已被弃用。 Use               |
-|                            |       | 使用 ``block.timestamp`` 代替。            |
-+----------------------------+-------+--------------------------------------------+
-| ``constructor-visibility`` | 0.7.0 | 移除构造函数的可见性。                     |
-|                            |       |                                            |
-+----------------------------+-------+--------------------------------------------+
-
-更多详情，请参阅 :doc:`0.5.0 版本说明 <050-breaking-changes>`,
-:doc:`0.6.0 版本说明 <060-breaking-changes>`,
-:doc:`0.7.0 版本说明 <070-breaking-changes>` 和 :doc:`0.8.0 版本说明 <080-breaking-changes>`。
-
-简介
-~~~~~~~~
-
-.. code-block:: none
-
-    用法： solidity-upgrade [options] contract.sol
-
-    允许的选项：
-        --help               显示帮助信息并退出。
-        --version            显示版本并退出。
-        --allow-paths path(s)
-                             允许导入一个给定的路径。
-                             可以通过用逗号分隔来提供一个路径列表。
-        --ignore-missing     忽略缺失的文件。
-        --modules module(s)  只激活一个特定的升级模块。
-                             可以用逗号隔开提供一个模块的列表。
-        --dry-run            只在内存中应用变化，不写到输入文件。
-        --verbose            打印日志、错误和变化。缩短了升级补丁的输出。
-        --unsafe             接受 *不安全* 的修改。
-
-
-
-错误报告/功能请求
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-如果您发现了一个错误，或者您有一个功能请求，请
-`在Github上提交一个问题 <https://github.com/ethereum/solidity/issues/new/choose>`_。
-
-
-示例
-~~~~~~~
-
-假设您在 ``Source.sol`` 里有以下合约：
-
-.. code-block:: Solidity
-
-    pragma solidity >=0.6.0 <0.6.4;
-    // 这在0.7.0之后将无法编译。
-    // SPDX-License-Identifier: GPL-3.0
-    contract C {
-        // FIXME: 移除构造函数的可见性，并使合约成为 abstract 合约
-        constructor() internal {}
-    }
-
-    contract D {
-        uint time;
-
-        function f() public payable {
-            // FIXME: 将 now 改成 block.timestamp
-            time = now;
-        }
-    }
-
-    contract E {
-        D d;
-
-        // FIXME: 移除构造函数的可见性
-        constructor() public {}
-
-        function g() public {
-            // FIXME: 将 .value(5) 改成  {value: 5}
-            d.f.value(5)();
-        }
-    }
-
-
-
-必要的改变
-^^^^^^^^^^^^^^^^
-
-上述合约从0.7.0开始将不会被编译。为了使合约与当前的 Solidity 版本保持一致，
-必须执行以下升级模块。 ``constructor-visibility``， ``now`` 和 ``dotsyntax``。
-请阅读 :ref:`可用的模块 <upgrade-modules>` 的文件以了解更多细节。
-
-
-
-运行升级
-^^^^^^^^^^^^^^^^^^^
-
-建议通过使用 ``--modules`` 参数明确指定升级模块。
-
-.. code-block:: bash
-
-    solidity-upgrade --modules constructor-visibility,now,dotsyntax Source.sol
-
-上面的命令应用了如下所示的所有变化。请仔细查看（pragma必须手动更新）。
-
-.. code-block:: Solidity
-
-    // SPDX-License-Identifier: GPL-3.0
-    pragma solidity >=0.7.0 <0.9.0;
-    abstract contract C {
-        // FIXME: 移除构造函数的可见性，并使合约成为 abstract 合约
-        constructor() {}
-    }
-
-    contract D {
-        uint time;
-
-        function f() public payable {
-            // FIXME: 将 now 改成 block.timestamp
-            time = block.timestamp;
-        }
-    }
-
-    contract E {
-        D d;
-
-        // FIXME: 移除构造函数的可见性
-        constructor() {}
-
-        function g() public {
-            // FIXME: 将 .value(5) 改成  {value: 5}
-            d.f{value: 5}();
-        }
-    }

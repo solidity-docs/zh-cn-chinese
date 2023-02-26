@@ -253,58 +253,84 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 - 冗余赋值消除器
 - 完全内联
 
+.. _optimizer-steps:
+
 优化器的步骤
 ---------------
 
 这是按字母顺序排列的基于Yul的优化器的所有步骤的列表。
 您可以在下面找到更多关于各个步骤和它们的顺序的信息。
 
-- :ref:`block-flattener`.
-- :ref:`circular-reference-pruner`.
-- :ref:`common-subexpression-eliminator`.
-- :ref:`conditional-simplifier`.
-- :ref:`conditional-unsimplifier`.
-- :ref:`control-flow-simplifier`.
-- :ref:`dead-code-eliminator`.
-- :ref:`equal-store-eliminator`.
-- :ref:`equivalent-function-combiner`.
-- :ref:`expression-joiner`.
-- :ref:`expression-simplifier`.
-- :ref:`expression-splitter`.
-- :ref:`for-loop-condition-into-body`.
-- :ref:`for-loop-condition-out-of-body`.
-- :ref:`for-loop-init-rewriter`.
-- :ref:`expression-inliner`.
-- :ref:`full-inliner`.
-- :ref:`function-grouper`.
-- :ref:`function-hoister`.
-- :ref:`function-specializer`.
-- :ref:`literal-rematerialiser`.
-- :ref:`load-resolver`.
-- :ref:`loop-invariant-code-motion`.
-- :ref:`redundant-assign-eliminator`.
-- :ref:`reasoning-based-simplifier`.
-- :ref:`rematerialiser`.
-- :ref:`SSA-reverser`.
-- :ref:`SSA-transform`.
-- :ref:`structural-simplifier`.
-- :ref:`unused-function-parameter-pruner`.
-- :ref:`unused-pruner`.
-- :ref:`var-decl-initializer`.
+============ ===============================
+缩略语        全称  
+============ ===============================
+``f``        :ref:`block-flattener`
+``l``        :ref:`circular-reference-pruner`
+``c``        :ref:`common-subexpression-eliminator`
+``C``        :ref:`conditional-simplifier`
+``U``        :ref:`conditional-unsimplifier`
+``n``        :ref:`control-flow-simplifier`
+``D``        :ref:`dead-code-eliminator`
+``E``        :ref:`equal-store-eliminator`
+``v``        :ref:`equivalent-function-combiner`
+``e``        :ref:`expression-inliner`
+``j``        :ref:`expression-joiner`
+``s``        :ref:`expression-simplifier`
+``x``        :ref:`expression-splitter`
+``I``        :ref:`for-loop-condition-into-body`
+``O``        :ref:`for-loop-condition-out-of-body`
+``o``        :ref:`for-loop-init-rewriter`
+``i``        :ref:`full-inliner`
+``g``        :ref:`function-grouper`
+``h``        :ref:`function-hoister`
+``F``        :ref:`function-specializer`
+``T``        :ref:`literal-rematerialiser`
+``L``        :ref:`load-resolver`
+``M``        :ref:`loop-invariant-code-motion`
+``r``        :ref:`redundant-assign-eliminator`
+``R``        :ref:`reasoning-based-simplifier` - 高度实验性
+``m``        :ref:`rematerialiser`
+``V``        :ref:`SSA-reverser`
+``a``        :ref:`SSA-transform`
+``t``        :ref:`structural-simplifier`
+``p``        :ref:`unused-function-parameter-pruner`
+``S``        :ref:`unused-store-eliminator`
+``u``        :ref:`unused-pruner`
+``d``        :ref:`var-decl-initializer`
+============ ===============================
+
+一些步骤依赖于 ``BlockFlattener``， ``FunctionGrouper``， ``ForLoopInitRewriter`` 所保证的属性。
+由于这个原因，Yul 优化器总是在应用用户提供的任何步骤之前应用它们。
+
+基于推理的简化器（ReasoningBasedSimplifier）是一个优化器步骤，
+目前在默认步骤集中没有启用。它使用一个 SMT 求解器来简化算术表达式和布尔条件。
+此外，它还没有得到彻底的测试或验证，可能会产生不可复现的结果，所以请谨慎使用!
 
 选择优化方案
 -----------------------
 
-默认情况下，优化器对生成的程序集应用其预定义的优化步骤序列。
-您可以使用 ``yul-optimizations`` 选项覆盖这个序列并提供您自己的序列：
+默认情况下，优化器将其预定义的优化步骤序列应用于生成的程序集。
+您可以使用 ``--yul-optimizations`` 选项来覆盖这个序列并提供您自己的序列：
 
 .. code-block:: bash
 
-    solc --optimize --ir-optimized --yul-optimizations 'dhfoD[xarrscLMcCTU]uljmul'
+    solc --optimize --ir-optimized --yul-optimizations 'dhfoD[xarrscLMcCTU]uljmul:fDnTOc'
 
-``[...]`` 里面的序列将被循环应用多次，直到Yul代码保持不变或达到最大轮数（目前为12）。
+步骤的顺序很重要，会影响到输出的质量。
+此外，应用一个步骤可能为其他已经应用的步骤发现新的优化机会。因此，重复步骤往往是有益的。
 
-可用的缩写列在 `Yul 优化器文档 <optimization-step-sequence>`_ 中。
+``[...]`` 里面的序列将在一个循环中多次应用，
+直到 Yul 代码保持不变或达到最大轮数（目前是12）。
+方括号（ ``[]`` ）可以在一个序列中多次使用，但不能嵌套。
+
+需要注意的一件事是，有一些硬编码的步骤总是在用户提供的序列之前和之后运行，
+如果用户没有提供序列，则是默认序列。
+
+清理序列分界符 ``:`` 是可选的，用于提供一个自定义的清理序列，
+以取代默认序列。如果省略，优化器将简单地应用默认的清理序列。
+此外，定界符可以放在用户提供的序列的开头，
+这将导致优化序列为空，反之，如果放在序列的末尾，
+将被视为一个空的清理序列。
 
 预处理
 -------------
@@ -848,8 +874,8 @@ AST被遍历了两次：分别在在信息收集步骤和实际删除步骤中�
 
 这个优化阶段删除了不可到达的代码。
 
-无法访问代码可以是一个块中的任何代码，
-其前面有leave，return，invalid，break，continue，selfdestruct 或 revert。
+无法访问的代码是指在一个区块内的任何代码，
+其前面有 leave，return，invalid，break，continue，selfdestruct，revert 或调用用户定义的函数，并无限地递归。
 
 函数定义被保留下来，因为它们可能被早期的代码调用，因此被认为是可访问的。
 
@@ -1003,6 +1029,51 @@ AST被遍历了两次：分别在在信息收集步骤和实际删除步骤中�
 它有助于处理诸如以下情况：
 ``function f(x) -> y { revert(y, y} }`` 其中字面意思 ``y``  将被其值 ``0`` 取代，
 使我们能够重写该函数。
+
+.. index:: ! unused store eliminator
+.. _unused-store-eliminator:
+
+未使用的存储清除器
+^^^^^^^^^^^^^^^^^^^^^
+
+优化器组件，删除多余的 ``sstore`` 和内存存储语句。
+对于一个 ``sstore``，如果所有传出的代码路径都恢复了（由于显式的的 ``revert()``, ``invalid()``, 或无限递归）
+或导致另一个 ``sstore``，优化器可以知道它将覆写第一个存储，该语句将被删除。
+然而，如果在初始 ``sstore`` 和恢复之间有读操作，或者覆写的 ``sstore``，
+该语句将不会被删除。
+这样的读操作包括：外部调用，有任何存储访问的用户定义的函数，以及不能证明与初始 ``sstore`` 写的槽不同的 ``sload``。
+
+例如，下面的代码
+
+.. code-block:: yul
+
+    {
+        let c := calldataload(0)
+        sstore(c, 1)
+        if c {
+            sstore(c, 2)
+        }
+        sstore(c, 3)
+    }
+
+在运行未使用的存储消除器步骤后，将被转化为以下代码
+
+.. code-block:: yul
+
+    {
+        let c := calldataload(0)
+        if c { }
+        sstore(c, 3)
+    }
+
+对于内存存储操作，事情一般比较简单，至少在最外层的yul块中是这样，
+因为如果在任何代码路径中从未被读取，所有这样的语句都将被删除。
+然而，在函数分析层面，其方法与 ``sstore`` 类似，因为我们不知道一旦离开函数的范围，内存位置是否会被读取，
+所以只有当所有的代码路径都导致内存被覆写时，语句才会被删除。
+
+最好以SSA形式运行。
+
+先决条件： Disambiguator, ForLoopInitRewriter.
 
 .. _equivalent-function-combiner:
 

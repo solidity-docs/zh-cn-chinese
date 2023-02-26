@@ -164,8 +164,8 @@ Solidity意义上的合约是代码（其 *函数*）和数据（其 *状态*）
 它是在函数 ``send`` 的最后一行发出的。以太坊客户端，如网络应用，可以监听区块链上发出的这些事件，而不需要太多的成本。
 一旦发出，监听器就会收到参数 ``from``， ``to`` 和 ``amount``，这使得跟踪交易成为可能。
 
-为了监听这个事件，您可以使用以下方法 JavaScript代码，
-使用 `web3.js <https://github.com/ethereum/web3.js/>`_ 来创建 ``Coin`` 合约对象，
+为了监听这个事件，您可以使用以下方法 JavaScript 代码，
+使用 `web3.js <https://github.com/web3/web3.js/>`_ 来创建 ``Coin`` 合约对象，
 然后在任何用户界面调用上面自动生成的 ``balances`` 函数：
 
 .. code-block:: javascript
@@ -468,7 +468,12 @@ EVM的指令集应尽量保持最小，以避免不正确或不一致的实现�
 因为如果有人向被删除的合约发送以太币，以太币就会永远丢失。
 
 .. warning::
-    即使一个合约被 ``selfdestruct`` 删除，它仍然是区块链历史的一部分，
+    从0.8.18及更高版本开始，在 Solidity 和 Yul 中使用 ``selfdestruct`` 将触发弃用警告，
+    因为 ``SELFDESTRUCT`` 操作码最终将经历 `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_ 
+    中所述的行为的重大变化。
+
+.. warning::
+    即使一个合约通过 ``selfdestruct`` 删除，它仍然是区块链历史的一部分，
     可能被大多数以太坊节点保留。
     因此，使用 ``selfdestruct`` 与从硬盘上删除数据不一样。
 

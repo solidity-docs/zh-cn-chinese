@@ -131,7 +131,7 @@ ABI编码编译指示
 .. index:: ! pragma; ABIEncoderV2
 
 ABI 编码器 V2
-~~~~~~~~~~~~
+~~~~~~~~~~~~~
 
 因为 ABI 编码器v2不再被认为是实验性的，
 它可以通过 ``pragma abicoder v2`` （请见上文）从 Solidity 0.7.4 开始选择。
@@ -169,7 +169,7 @@ SMT检查器
 
 Solidity 支持导入语句，以帮助模块化您的代码，
 这些语句与 JavaScript 中可用的语句相似(从ES6开始)。
-然而，Solidity 并不支持 `默认导出 <https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export#Description>`_
+然而，Solidity 并不支持 `默认导出 <https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export#description>`_
 的概念。
 
 在全局层面，您可以使用以下形式的导入语句：

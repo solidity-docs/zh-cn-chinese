@@ -4,11 +4,13 @@
 映射类型
 =============
 
-映射类型使用语法 ``mapping(KeyType => ValueType)``，
-映射类型的变量使用语法 ``mapping(KeyType => ValueType) VariableName`` 声明。
+映射类型使用语法 ``mapping(KeyType KeyName? => ValueType ValueName?)``，
+映射类型的变量使用语法 ``mapping(KeyType KeyName? => ValueType ValueName?) VariableName`` 声明。
 ``KeyType`` 可以是任何内置的值类型， ``bytes``， ``string``，或任何合约或枚举类型。
 其他用户定义的或复杂的类型，如映射，结构体或数组类型是不允许的。
 ``ValueType`` 可以是任何类型，包括映射，数组和结构体。
+``KeyName`` 和 ``ValueName`` 是可选的（所以 ``mapping(KeyType => ValueType)`` 也可以使用），
+可以是任何有效的标识符，而不是一个类型。
 
 您可以把映射想象成 `哈希表 <https://en.wikipedia.org/wiki/Hash_table>`_，
 它实际上被初始化了，使每一个可能的键都存在，
@@ -24,9 +26,10 @@
 这些限制对于包含映射的数组和结构也是如此。
 
 您可以把映射类型的状态变量标记为 ``public``，
-Solidit y会为您创建一个 :ref:`getter <visibility-and-getters>` 函数。
-``KeyType`` 将成为 getter 函数的参数。
-如果 ``ValueType`` 是一个值类型或一个结构，getter 返回 ``ValueType``。
+Solidity 会为您创建一个 :ref:`getter <visibility-and-getters>` 函数。
+``KeyType`` 成为 getter 函数的参数，名称为 ``KeyName`` （如果指定）。
+如果 ``ValueType`` 是一个值类型或一个结构，getter 返回 ``ValueType``，
+名称为 ``ValueName`` （如果指定）。
 如果 ``ValueType`` 是一个数组或映射，getter 对每个 ``KeyType`` 递归出一个参数。
 
 在下面的例子中， ``MappingExample`` 合约定义了一个公共的 ``balances`` 映射，
@@ -58,8 +61,26 @@ Solidit y会为您创建一个 :ref:`getter <visibility-and-getters>` 函数。
 下面的例子是一个简化版本的
 `ERC20 代币 <https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol>`_。
 ``_allowances`` 是一个映射类型在另一个映射类型中的例子。
-下面的例子使用 ``_allowances`` 来记录别人允许从您的账户中提取的金额。
 
+在下面的例子中，为映射提供了可选的 ``KeyName`` 和 ``ValueName``。
+它不影响任何合约的功能或字节码，
+它只是为映射的 getter 在 ABI 中设置输入和输出的 ``name`` 字段。
+
+.. code-block:: solidity
+
+    // SPDX-License-Identifier: GPL-3.0
+    pragma solidity ^0.8.18;
+
+    contract MappingExampleWithNames {
+        mapping(address user => uint balance) public balances;
+
+        function update(uint newBalance) public {
+            balances[msg.sender] = newBalance;
+        }
+    }
+
+
+下面的例子使用 ``_allowances`` 来记录其他人可以从你的账户中提取的金额。
 
 .. code-block:: solidity
 

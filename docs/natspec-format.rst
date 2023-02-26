@@ -39,7 +39,7 @@ NatSpec 也可以包括第三方工具使用的注释。
    或以 ``/**`` 开始，并以 ``*/`` 结束的符号用于多行注释
 
 -  对于Vyper来说，使用 ``""""`` 缩进到内部内容来裸注释（译者注：无标记符号注释）。
-   参见 `Vyper 文档 <https://vyper.readthedocs.io/en/latest/natspec.html>`__。
+   参见 `Vyper 文档 <https://docs.vyperlang.org/en/latest/natspec.html>`__。
 
 下面的例子显示了一个合约和一个使用所有可用标记的函数。
 
@@ -143,9 +143,6 @@ Solidity 编译器将通过 NatSpec 文档从您的 Solidity 源代码传递到�
     这个函数将10乘以7
 
 如果一个函数被调用，并且输入的 ``a`` 被赋值为10。
-
-指定这些动态表达式超出了 Solidity 文档的范围，您可以在
-`radspec 项目 <https://github.com/aragon/radspec>`__ 阅读更多内容。
 
 .. _header-inheritance:
 

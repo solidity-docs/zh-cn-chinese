@@ -30,7 +30,7 @@ Alice将建立一个简单的智能合约，让她传输以太币，但她不会
 --------
 
 Alice不需要与以太坊网络交互来签署交易，这个过程是完全离线的。
-在本教程中，我们将使用 `web3.js <https://github.com/ethereum/web3.js>`_ 和
+在本教程中，我们将使用 `web3.js <https://github.com/web3/web3.js>`_ 和
 `MetaMask <https://metamask.io>`_ 在浏览器中签署信息。
 使用 `EIP-712 <https://github.com/ethereum/EIPs/pull/712>`_ 中描述的方法，
 因为它提供了许多其他安全优势。
@@ -130,6 +130,7 @@ web3.js 产生的签名是 ``r``, ``s`` 和 ``v`` 的拼接的，
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.7.0 <0.9.0;
+    // 这将报告一个由于废弃的 selfdestruct 而产生的警告
     contract ReceiverPays {
         address owner = msg.sender;
 
@@ -321,6 +322,7 @@ Alice需要一个方法来收回她的托管资金。在合同部署的时候，
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.7.0 <0.9.0;
+    // 这将报告一个由于废弃的 selfdestruct 而产生的警告
     contract SimplePaymentChannel {
         address payable public sender;      // 发送付款的账户。
         address payable public recipient;   // 接收付款的账户。

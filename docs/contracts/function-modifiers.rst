@@ -17,6 +17,7 @@
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.7.1 <0.9.0;
+    // 这将报告一个由于废弃的 selfdestruct 而产生的警告
 
     contract owned {
         constructor() { owner = payable(msg.sender); }

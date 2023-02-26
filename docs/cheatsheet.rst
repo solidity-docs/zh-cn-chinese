@@ -8,7 +8,7 @@
 ================================
 .. include:: types/operator-precedence-table.rst
 
-.. index:: assert, block, coinbase, difficulty, number, block;number, timestamp, block;timestamp, msg, data, gas, sender, value, gas price, origin, revert, require, keccak256, ripemd160, sha256, ecrecover, addmod, mulmod, cryptography, this, super, selfdestruct, balance, codehash, send
+.. index:: assert, block, coinbase, difficulty, prevrandao, number, block;number, timestamp, block;timestamp, msg, data, gas, sender, value, gas price, origin, revert, require, keccak256, ripemd160, sha256, ecrecover, addmod, mulmod, cryptography, this, super, selfdestruct, balance, codehash, send
 
 全局变量
 ================
@@ -23,15 +23,16 @@
 - ``abi.encodeCall(function functionPointer, (...)) returns (bytes memory)``： 对 ``functionPointer`` 的调用进行ABI编码，
   参数在元组中找到。执行全面的类型检查，确保类型与函数签名相符。结果等于 ``abi.encodeWithSelector(functionPointer.selector(..))``。
 - ``abi.encodeWithSignature(string memory signature, ...) returns (bytes memory)``： 等价于
-  ``abi.encodeWithSelector(bytes4(keccak256(bytes(signature)), ...)``
+  ``abi.encodeWithSelector(bytes4(keccak256(bytes(signature))), ...)``
 - ``bytes.concat(...) returns (bytes memory)``： :ref:`将可变数量的参数连接成一个字节数组 <bytes-concat>`。
 - ``string.concat(...) returns (string memory)``： :ref:`将可变数量的参数连接成一个字符串数组 <string-concat>`。
 - ``block.basefee`` (``uint``)： 当前区块的基本费用 （ `EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ 和 `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_ ）
 - ``block.chainid`` (``uint``)： 当前链的ID
 - ``block.coinbase`` (``address payable``)： 当前区块矿工的地址
-- ``block.difficulty`` (``uint``)： 当前区块的难度值
+- ``block.difficulty`` (``uint``)： 当前区块的难度值（ ``EVM < Paris`` ）。对于其他EVM版本，它是 ``block.prevrandao`` 的一个废弃的别名，将在下一个重大改变版本中被删除。
 - ``block.gaslimit`` (``uint``)： 当前区块的 gas 上限
 - ``block.number`` (``uint``)： 当前区块的区块号
+- ``block.prevrandao`` (``uint``)： 由信标链提供的随机数（ ``EVM >= Paris`` ）（见 `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）。
 - ``block.timestamp`` (``uint``)： 当前区块的时间戳，自Unix epoch以来的秒数
 - ``gasleft() returns (uint256)``： 剩余gas
 - ``msg.data`` (``bytes``)： 完整的调用数据

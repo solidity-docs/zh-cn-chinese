@@ -61,7 +61,7 @@
 
 有一些特殊的变量和函数总是存在于全局命名空间，主要用于提供区块链的信息，或者是通用的工具函数。
 
-.. index:: abi, block, coinbase, difficulty, encode, number, block;number, timestamp, block;timestamp, msg, data, gas, sender, value, gas price, origin
+.. index:: abi, block, coinbase, difficulty, prevrandao, encode, number, block;number, timestamp, block;timestamp, msg, data, gas, sender, value, gas price, origin
 
 
 区块和交易属性
@@ -71,7 +71,7 @@
 - ``block.basefee`` （ ``uint``）： 当前区块的基本费用 （ `EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ 和 `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_）
 - ``block.chainid`` （ ``uint``）： 当前链的ID
 - ``block.coinbase`` （ ``address payable``）： 挖出当前区块的矿工地址
-- ``block.difficulty`` （ ``uint``）： 挖出当前区块的矿工地址
+- ``block.difficulty`` （ ``uint``）： 当前块的难度（ ``EVM < Paris`` ）。对于其他EVM版本，它是为 ``block.prevrandao`` 的已废弃别名 （`EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）
 - ``block.gaslimit`` （ ``uint``）： 当前区块 gas 限额
 - ``block.number`` （ ``uint``）： 当前区块号
 - ``block.timestamp`` （ ``uint``）： 自 unix epoch 起始到当前区块以秒计的时间戳
@@ -222,7 +222,7 @@ ABI编码和解码函数
     但 ecrecover 函数仍然没有改变。
 
     这通常不是一个问题，除非您要求签名是唯一的，或者用它们来识别个体。
-    OpenZeppelin 有一个 `ECDSA 辅助库 <https://docs.openzeppelin.com/contracts/2.x/api/cryptography#ECDSA>`_，
+    OpenZeppelin 有一个 `ECDSA 辅助库 <https://docs.openzeppelin.com/contracts/4.x/api/utils#ECDSA>`_，
     您可以用它作为 ``ecrecover`` 的包装，那样就没有这个问题。
 
 .. note::
@@ -311,8 +311,11 @@ ABI编码和解码函数
     - 接收合约的接收函数不会被执行。
     - 合约只有在交易结束时才真正被销毁， 任何一个 ``revert`` 可能会 "恢复" 销毁。
 
-
 此外，当前合约的所有函数都可以直接调用，包括当前函数。
+
+.. warning::
+    从 0.8.18 及以上版本开始，在 Solidity 和 Yul 中使用 ``selfdestruct`` 将触发一个已废弃警告，
+    因为 ``SELFDESTRUCT`` 操作码最终会发生如 `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_ 中所述的行为上的重大变化。
 
 .. note::
     在 0.5.0 版本之前，有一个叫做 ``suicide`` 的函数，其语义与 ``selfdestruct`` 相同。
