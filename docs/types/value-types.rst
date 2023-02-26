@@ -241,7 +241,7 @@
     address myAddress = address(this);
     if (x.balance < 10 && myAddress.balance >= 10) x.transfer(10);
 
-如果当前合约的余额不足，或者以太币转账被接收账户拒绝，那么 ``transfer`` 功能就会失败。
+如果当前合约的余额不足，或者以太币转账被接收账户拒收，那么 ``transfer`` 功能就会失败。
 ``transfer`` 功能在失败后会被还原。
 
 .. note::
@@ -635,14 +635,8 @@ Unicode 字面常数
 函数 ``C.wrap`` 被用来从底层类型转换到自定义类型。同样地，
 函数 ``C.unwrap`` 用于从自定义类型转换到底层类型。
 
-<<<<<<< HEAD
-类型 ``C`` 没有任何运算符或约束成员函数。特别的是，甚至运算符 ``==`` 也没有定义。
-也不允许与其他类型进行显式和隐式转换。
-=======
-The type ``C`` does not have any operators or attached member functions. In particular, even the
-operator ``==`` is not defined. Explicit and implicit conversions to and from other types are
-disallowed.
->>>>>>> v0.8.18
+类型 ``C`` 没有任何运算符或附加成员函数。特别是，甚至运算符 ``==`` 也没有定义。
+不允许对其他类型进行显式和隐式转换。
 
 这种类型的值的数据表示是从底层类型中继承的，底层类型也被用于ABI中。
 
@@ -725,35 +719,25 @@ disallowed.
 并且 ``A`` 的状态可变性比 ``B`` 的状态可变性更具限制性时，
 一个函数类型 ``A`` 就可以隐式转换为一个函数类型 ``B``。特别是：
 
-- ``pure`` 函数可以转换为 ``view`` 和 ``non-payable`` 函数
-- ``view`` 函数可以转换为 ``non-payable`` 函数
-- ``payable`` 函数可以转换为 ``non-payable`` 函数
+- ``pure`` 函数可以转换为 ``view`` 和 ``非 payable`` 函数
+- ``view`` 函数可以转换为 ``非 payable`` 函数
+- ``payable`` 函数可以转换为 ``非 payable`` 函数
 
 其他函数类型之间的转换是不可能的。
 
-<<<<<<< HEAD
-关于 ``payable`` 和 ``non-payable`` 的规则可能有点混乱，
+关于 ``payable`` 和 ``非 payable`` 的规则可能有点混乱，
 但实质上，如果一个函数是 ``payable``，这意味着
-它也接受零以太的支付，所以它也是 ``non-payable``。
-另一方面，一个 ``non-payable`` 的函数将拒绝发送给它的以太，
-所以 ``non-payable`` 的函数不能被转换为 ``payable`` 的函数。
-=======
-The rule about ``payable`` and ``non-payable`` might be a little
-confusing, but in essence, if a function is ``payable``, this means that it
-also accepts a payment of zero Ether, so it also is ``non-payable``.
-On the other hand, a ``non-payable`` function will reject Ether sent to it,
-so ``non-payable`` functions cannot be converted to ``payable`` functions.
-To clarify, rejecting ether is more restrictive than not rejecting ether.
-This means you can override a payable function with a non-payable but not the
-other way around.
+它也接受零以太的支付，所以它也是 ``非 payable``。
+另一方面，一个 ``非 payable`` 的函数将拒收发送给它的以太，
+所以 ``非 payable`` 的函数不能被转换为 ``payable`` 的函数。
+声明一下，拒收以太比不拒收以太更有限制性。
+这意味着您可以用一个不可支付的函数覆写一个可支付的函数，但不能反过来。
 
-Additionally, When you define a ``non-payable`` function pointer,
-the compiler does not enforce that the pointed function will actually reject ether.
-Instead, it enforces that the function pointer is never used to send ether.
-Which makes it possible to assign a ``payable`` function pointer to a ``non-payable``
-function pointer ensuring both types behave the same way, i.e, both cannot be used
-to send ether.
->>>>>>> v0.8.18
+此外，当您定义一个 ``非 payable`` 的函数指针时，
+编译器并不强制要求被指向的函数实际拒收以太。
+相反，它强制要求该函数指针永远不会被用来发送以太。
+这使得我们有可能将一个 ``payable`` 的函数指针分配给一个 ``非 payable`` 的函数指针，
+以确保这两种类型的函数表现相同，即都不能用来发送以太。
 
 如果一个函数类型的变量没有被初始化，调用它将导致
 会出现 :ref:`异常<assert-and-require>`。如果您在一个函数上使用了 ``delete`` 之后再调用它，
@@ -762,40 +746,27 @@ to send ether.
 如果外部函数类型在 Solidity 的上下文中被使用，
 它们将被视为 ``function`` 类型，它将地址和函数标识符一起编码为一个 ``bytes24`` 类型。
 
-请注意，当前合约的公开函数既可以被当作内部函数也可以被当作外部函数使用。
+请注意，当前合约的公共函数既可以被当作内部函数也可以被当作外部函数使用。
 如果想将一个函数当作内部函数使用，就用 ``f`` 调用，
 如果想将其当作外部函数，使用 ``this.f`` 。
 
-<<<<<<< HEAD
-一个内部类型的函数可以被分配给一个内部函数类型的变量，而不管它在哪里被定义。
-这包括合约和库合约的隐私、内部和公共函数，以及自由函数。
+一个内部类型的函数可以被分配给一个内部函数类型的变量，无论它在哪里被定义。
+这包括合约和库的私有，内部和公共函数，以及自由函数。
 另一方面，外部函数类型只与公共和外部合约函数兼容。
-库合约被排除在外，因为它们需要一个 ``delegatecall``，
-并且 :ref:`对它们的选择器使用不同的 ABI 约定 <library-selectors>`。
-在接口中声明的函数没有定义，所以指向它们也没有意义。
-=======
-A function of an internal type can be assigned to a variable of an internal function type regardless
-of where it is defined.
-This includes private, internal and public functions of both contracts and libraries as well as free
-functions.
-External function types, on the other hand, are only compatible with public and external contract
-functions.
 
 .. note::
-    External functions with ``calldata`` parameters are incompatible with external function types with ``calldata`` parameters.
-    They are compatible with the corresponding types with ``memory`` parameters instead.
-    For example, there is no function that can be pointed at by a value of type ``function (string calldata) external`` while
-    ``function (string memory) external`` can point at both ``function f(string memory) external {}`` and
-    ``function g(string calldata) external {}``.
-    This is because for both locations the arguments are passed to the function in the same way.
-    The caller cannot pass its calldata directly to an external function and always ABI-encodes the arguments into memory.
-    Marking the parameters as ``calldata`` only affects the implementation of the external function and is
-    meaningless in a function pointer on the caller's side.
+    带有 ``calldata`` 参数的外部函数与带有 ``calldata`` 参数的外部函数类型不兼容。
+    它们与相应的带有 ``memory`` 参数的类型兼容。
+    例如，没有一个函数可以被 ``function (string calldata) external`` 类型的值所指向，
+    而 ``function (string memory) external`` 可以同时指向 ``function f(string memory) external {}``
+    和 ``function g(string calldata) external {}``。
+    这是因为对于这两个位置，参数是以同样的方式传递给函数的。
+    调用者不能直接将其calldata传递给外部函数，总是ABI将参数编码到内存中。
+    将参数标记为 ``calldata`` 只影响到外部函数的实现，在调用者一方的函数指针中是没有意义的。
 
-Libraries are excluded because they require a ``delegatecall`` and use :ref:`a different ABI
-convention for their selectors <library-selectors>`.
-Functions declared in interfaces do not have definitions so pointing at them does not make sense either.
->>>>>>> v0.8.18
+库合约被排除在外，因为它们需要 ``delegatecall``，
+并且 :ref:`对它们的选择器使用不同的 ABI 约定 <library-selectors>`。
+接口中声明的函数没有定义，所以指向它们也没有意义。
 
 成员：
 外部（或公共）函数有以下成员：
