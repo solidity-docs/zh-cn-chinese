@@ -29,7 +29,7 @@
         address public richest;
         uint public mostSent;
 
-        mapping (address => uint) pendingWithdrawals;
+        mapping(address => uint) pendingWithdrawals;
 
         /// 发送的以太数量不高于目前的最高量。
         error NotEnoughEther();
