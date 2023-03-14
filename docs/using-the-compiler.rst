@@ -414,9 +414,21 @@ EVM版本选项
           "divModWithSlacks": false,
           // 选择要使用的模型检查器引擎：所有（默认）， bmc， chc， 无。
           "engine": "chc",
+<<<<<<< HEAD
           // 选择哪些类型的不变性应该报告给用户：合约，重入。
           "invariants": ["contract", "reentrancy"],
           // 选择是否输出所有未验证的目标。默认为 `false`。
+=======
+          // Choose whether external calls should be considered trusted in case the
+          // code of the called function is available at compile-time.
+          // For details see the SMTChecker section.
+          "extCalls": "trusted",
+          // Choose which types of invariants should be reported to the user: contract, reentrancy.
+          "invariants": ["contract", "reentrancy"],
+          // Choose whether to output all proved targets. The default is `false`.
+          "showProved": true,
+          // Choose whether to output all unproved targets. The default is `false`.
+>>>>>>> english/develop
           "showUnproved": true,
           // 如果有的话，选择应该使用哪些求解器。
           // 关于求解器的描述，见形式验证部分。
