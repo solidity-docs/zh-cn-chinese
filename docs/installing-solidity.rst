@@ -398,7 +398,7 @@ Visual Studio 2019 同时提供IDE和必要的编译器和库。
 * C++/CLI support
 
 .. _Visual Studio 2019: https://www.visualstudio.com/vs/
-.. _Visual Studio 2019 Build Tools: https://www.visualstudio.com/downloads/#build-tools-for-visual-studio-2019
+.. _Visual Studio 2019 Build Tools: https://visualstudio.microsoft.com/vs/older-downloads/#visual-studio-2019-and-other-products
 
 我们有一个辅助脚本，您可以用它来安装所有需要的外部依赖：
 

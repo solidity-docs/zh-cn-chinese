@@ -188,12 +188,12 @@ getter函数具有外部可见性。
         struct Data {
             uint a;
             bytes3 b;
-            mapping (uint => uint) map;
+            mapping(uint => uint) map;
             uint[3] c;
             uint[] d;
             bytes e;
         }
-        mapping (uint => mapping(bool => Data[])) public data;
+        mapping(uint => mapping(bool => Data[])) public data;
     }
 
 它生成了一个如下形式的函数。结构中的映射和数组（字节数组除外）被省略了，
