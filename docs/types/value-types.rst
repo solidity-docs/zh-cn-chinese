@@ -4,8 +4,13 @@
 值类型
 ========
 
+<<<<<<< HEAD
 以下类型也称为值类型，因为这些类型的变量将始终按值来传递。
 也就是说，当这些变量被用作函数参数或者用在赋值语句中时，总会进行值拷贝。
+=======
+The following are called value types because their variables will always be passed by value, i.e. they are always copied when they
+are used as function arguments or in assignments.
+>>>>>>> english/develop
 
 .. index:: ! bool, ! true, ! false
 
@@ -47,11 +52,19 @@
 
 .. warning::
 
+<<<<<<< HEAD
   Solidity 中的整数被限制在一个特定的范围内。例如，对于 ``uint32``，这是 ``0`` 到 ``2**32 - 1``。
   有两种模式在这些类型上进行算术。“包装” 或 “未检查” 模式和 “检查” 模式。
   默认情况下，算术总是 “检查” 模式的，这意味着如果一个操作的结果超出了该类型的值范围，
   调用将通过一个 :ref:`失败的断言 <assert-and-require>` 而被恢复。
   您可以用 ``unchecked { ... }``。 更多的细节可以在关于 :ref:`未检查 <unchecked>` 的章节中找到。
+=======
+  Integers in Solidity are restricted to a certain range. For example, with ``uint32``, this is ``0`` up to ``2**32 - 1``.
+  There are two modes in which arithmetic is performed on these types: The "wrapping" or "unchecked" mode and the "checked" mode.
+  By default, arithmetic is always "checked", meaning that if an operation's result falls outside the value range
+  of the type, the call is reverted through a :ref:`failing assertion<assert-and-require>`. You can switch to "unchecked" mode
+  using ``unchecked { ... }``. More details can be found in the section about :ref:`unchecked <unchecked>`.
+>>>>>>> english/develop
 
 比较运算
 ^^^^^^^^^^^
@@ -177,7 +190,11 @@
 地址类型
 ---------
 
+<<<<<<< HEAD
 地址类型有两种，大体上是相同的：
+=======
+The address type comes in two largely identical flavors:
+>>>>>>> english/develop
 
 - ``address``: 保存一个20字节的值（一个以太坊地址的大小）。
 - ``address payable``: 与 ``address`` 类型相同，但有额外的方法 ``transfer`` 和 ``send``。
@@ -624,6 +641,7 @@ Unicode 字面常数
 
 .. _user-defined-value-types:
 
+<<<<<<< HEAD
 用户定义的值类型
 -----------------
 
@@ -634,6 +652,18 @@ Unicode 字面常数
 ``V`` 必须是一个内置的值类型（“底层类型”）。
 函数 ``C.wrap`` 被用来从底层类型转换到自定义类型。同样地，
 函数 ``C.unwrap`` 用于从自定义类型转换到底层类型。
+=======
+User-defined Value Types
+------------------------
+
+A user-defined value type allows creating a zero cost abstraction over an elementary value type.
+This is similar to an alias, but with stricter type requirements.
+
+A user-defined value type is defined using ``type C is V``, where ``C`` is the name of the newly
+introduced type and ``V`` has to be a built-in value type (the "underlying type"). The function
+``C.wrap`` is used to convert from the underlying type to the custom type. Similarly, the
+function ``C.unwrap`` is used to convert from the custom type to the underlying type.
+>>>>>>> english/develop
 
 类型 ``C`` 没有任何运算符或附加成员函数。特别是，甚至运算符 ``==`` 也没有定义。
 不允许对其他类型进行显式和隐式转换。
@@ -649,7 +679,11 @@ Unicode 字面常数
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity ^0.8.8;
 
+<<<<<<< HEAD
     // 使用用户定义的值类型表示一个18位小数，256位宽的定点类型。
+=======
+    // Represent a 18 decimal, 256 bit wide fixed point type using a user-defined value type.
+>>>>>>> english/develop
     type UFixed256x18 is uint256;
 
     /// 一个在UFixed256x18上进行定点操作的最小库。
