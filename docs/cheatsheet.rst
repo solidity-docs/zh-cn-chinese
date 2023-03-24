@@ -89,7 +89,7 @@
 
 .. index:: modifiers, pure, view, payable, constant, anonymous, indexed
 
-修改器
+修饰器
 =========
 
 - ``pure`` 修饰函数时：不允许修改或访问状态。
