@@ -73,8 +73,13 @@ Yul在其纯粹的形式下没有任何内置的操作，函数或类型。
         }
     }
 
+<<<<<<< HEAD
 也可以用for-loop而不是递归来实现同样的函数。
 这里， ``lt(a, b)`` 计算 ``a`` 是否小于 ``b``。
+=======
+It is also possible to implement the same function using a for-loop
+instead of with recursion. Here, ``lt(a, b)`` computes whether ``a`` is less than ``b``.
+>>>>>>> english/develop
 
 .. code-block:: yul
 
