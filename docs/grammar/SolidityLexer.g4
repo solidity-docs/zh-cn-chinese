@@ -62,7 +62,7 @@ New: 'new';
 /**
  * 数字的单位计价。
  */
-NumberUnit: 'wei' | 'gwei' | 'ether' | 'seconds' | 'minutes' | 'hours' | 'days' | 'weeks' | 'years';
+SubDenomination: 'wei' | 'gwei' | 'ether' | 'seconds' | 'minutes' | 'hours' | 'days' | 'weeks' | 'years';
 Override: 'override';
 Payable: 'payable';
 Pragma: 'pragma' -> pushMode(PragmaMode);
@@ -198,9 +198,7 @@ fragment EscapeSequence:
 /**
  * 单引号字符串字面量，允许任意的unicode字符。
  */
-UnicodeStringLiteral:
-	'unicode"' DoubleQuotedUnicodeStringCharacter* '"'
-	| 'unicode\'' SingleQuotedUnicodeStringCharacter* '\'';
+UnicodeStringLiteral: 'unicode' (('"' DoubleQuotedUnicodeStringCharacter* '"') | ('\'' SingleQuotedUnicodeStringCharacter* '\''));
 //@doc:inline
 fragment DoubleQuotedUnicodeStringCharacter: ~["\r\n\\] | EscapeSequence;
 //@doc:inline
@@ -223,8 +221,22 @@ fragment EvenHexDigits: HexCharacter HexCharacter ('_'? HexCharacter HexCharacte
 fragment HexCharacter: [0-9A-Fa-f];
 
 /**
+<<<<<<< HEAD
  * 一个十进制数字的字面量由十进制数字组成，可以用下划线和一个可选的正负指数来分隔。
  * 如果这些数字包含一个小数点，则该数字具有定点类型。
+=======
+ * Scanned but not used by any rule, i.e, disallowed.
+ * solc parser considers number starting with '0', not immediately followed by '.' or 'x' as
+ * octal, even if non octal digits '8' and '9' are present.
+ */
+OctalNumber: '0' DecimalDigits ('.' DecimalDigits)?;
+
+
+/**
+ * A decimal number literal consists of decimal digits that may be delimited by underscores and
+ * an optional positive or negative exponent.
+ * If the digits contain a decimal point, the literal has fixed point type.
+>>>>>>> english/develop
  */
 DecimalNumber: (DecimalDigits | (DecimalDigits? '.' DecimalDigits)) ([eE] '-'? DecimalDigits)?;
 //@doc:inline
@@ -232,7 +244,18 @@ fragment DecimalDigits: [0-9] ('_'? [0-9])* ;
 
 
 /**
+<<<<<<< HEAD
  * solidity中的标识符必须以字母，美元符号或下划线开头，并且可以在第一个符号之后再包含数字。
+=======
+ * This is needed to avoid successfully parsing a number followed by a string with no whitespace between.
+ */
+DecimalNumberFollowedByIdentifier: DecimalNumber Identifier;
+
+
+/**
+ * An identifier in solidity has to start with a letter, a dollar-sign or an underscore and
+ * may additionally contain numbers after the first symbol.
+>>>>>>> english/develop
  */
 Identifier: IdentifierStart IdentifierPart*;
 //@doc:inline
