@@ -29,7 +29,7 @@
         address public richest;
         uint public mostSent;
 
-        mapping (address => uint) pendingWithdrawals;
+        mapping(address => uint) pendingWithdrawals;
 
         /// 发送的以太数量不高于目前的最高量。
         error NotEnoughEther();
@@ -48,8 +48,13 @@
 
         function withdraw() public {
             uint amount = pendingWithdrawals[msg.sender];
+<<<<<<< HEAD
             // 记得在发送前将待处理的退款归零，
             // 以防止重入攻击
+=======
+            // Remember to zero the pending refund before
+            // sending to prevent reentrancy attacks
+>>>>>>> english/develop
             pendingWithdrawals[msg.sender] = 0;
             payable(msg.sender).transfer(amount);
         }

@@ -631,11 +631,11 @@ Solidity 提供了一种以结构形式定义新类型的方法，以下是一�
             uint fundingGoal;
             uint numFunders;
             uint amount;
-            mapping (uint => Funder) funders;
+            mapping(uint => Funder) funders;
         }
 
         uint numCampaigns;
-        mapping (uint => Campaign) campaigns;
+        mapping(uint => Campaign) campaigns;
 
         function newCampaign(address payable beneficiary, uint goal) public returns (uint campaignID) {
             campaignID = numCampaigns++; // campaignID 作为一个变量返回
