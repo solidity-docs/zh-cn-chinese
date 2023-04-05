@@ -159,6 +159,12 @@ Solidity包括不同类型的测试，其中大部分捆绑在
 如果您想使用GDB进行调试，确保您的构建方式与 “通常” 不同。
 例如，您可以在您的 ``build`` 文件夹中运行以下命令：
 
+<<<<<<< HEAD
+=======
+If you want to debug using GDB, make sure you build differently than the "usual".
+For example, you could run the following command in your ``build`` folder:
+
+>>>>>>> english/develop
 .. code-block:: bash
 
    cmake -DCMAKE_BUILD_TYPE=Debug ..
