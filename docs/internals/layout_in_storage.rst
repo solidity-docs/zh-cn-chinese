@@ -212,7 +212,7 @@ JSON输出
         uint y;
         S s;
         address addr;
-        mapping (uint => mapping (address => bool)) map;
+        mapping(uint => mapping(address => bool)) map;
         uint[] array;
         string s1;
         bytes b1;

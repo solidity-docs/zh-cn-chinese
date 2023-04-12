@@ -37,7 +37,11 @@
 
 如果你不希望区块构造者能够作弊，在智能合约中使用随机数是相当棘手的。
 
+<<<<<<< HEAD
 重入
+=======
+Reentrancy
+>>>>>>> english/develop
 ===========
 
 一个合约（A）与另一个合约（B）的任何交互和任何以太币的转移都会将控制权交给该合约（B）。
@@ -84,7 +88,12 @@
         }
     }
 
+<<<<<<< HEAD
 为了避免重入，您可以使用如下所示的 检查-生效-交互（Checks-Effects-Interactions）模式：
+=======
+To avoid reentrancy, you can use the Checks-Effects-Interactions pattern as
+demonstrated below:
+>>>>>>> english/develop
 
 .. code-block:: solidity
 
@@ -102,6 +111,7 @@
         }
     }
 
+<<<<<<< HEAD
 检查-生效-交互模式确保所有通过合约的代码路径
 在修改合约的状态（检查）之前完成对所提供的参数的所有必要检查；只有这样它才会对状态进行任何改变（生效）；
 在所有计划的状态改变被写入存储 *之后* ，它可能会对其他合约中的函数进行调用（交互）。
@@ -112,6 +122,19 @@
 也是对另一个合约的任何函数调用的影响。
 此外，您还必须考虑到多合约的情况。
 一个被调用的合约可以修改您所依赖的另一个合约的状态。
+=======
+The Checks-Effects-Interactions pattern ensures that all code paths through a contract complete all required checks
+of the supplied parameters before modifying the contract's state (Checks); only then it makes any changes to the state (Effects);
+it may make calls to functions in other contracts *after* all planned state changes have been written to
+storage (Interactions). This is a common foolproof way to prevent *reentrancy attacks*, where an externally called
+malicious contract is able to double-spend an allowance, double-withdraw a balance, among other things, by using logic that calls back into the
+original contract before it has finalized its transaction.
+
+Note that reentrancy is not only an effect of Ether transfer but of any
+function call on another contract. Furthermore, you also have to take
+multi-contract situations into account. A called contract could modify the
+state of another contract you depend on.
+>>>>>>> english/develop
 
 gas 限制和循环
 ===================
@@ -300,7 +323,7 @@ Solidity ``mapping`` 类型（见 :ref:`mapping-types`）是一个仅有存储�
     pragma solidity >=0.6.0 <0.9.0;
 
     contract Map {
-        mapping (uint => uint)[] array;
+        mapping(uint => uint)[] array;
 
         function allocate(uint newMaps) public {
             for (uint i = 0; i < newMaps; i++)
@@ -382,8 +405,14 @@ Solidity ``mapping`` 类型（见 :ref:`mapping-types`）是一个仅有存储�
 第二步，如果所有的检查都通过了，就应该对当前合约的状态变量进行影响。
 与其他合约的交互应该是任何函数的最后一步。
 
+<<<<<<< HEAD
 早期的合约延迟了一些效果，等待外部函数调用在非错误状态下返回。
 这往往是一个严重的错误，因为上面解释了重入问题。
+=======
+Early contracts delayed some effects and waited for external function
+calls to return in a non-error state. This is often a serious mistake
+because of the reentrancy problem explained above.
+>>>>>>> english/develop
 
 请注意，对已知合约的调用也可能反过来导致对未知合约的调用，因此，最好总是应用这种模式。
 
