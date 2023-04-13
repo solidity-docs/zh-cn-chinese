@@ -164,8 +164,13 @@ Solidity 可以通过两种不同的方式生成 EVM 字节码：
 
   函数 ``preincr_u8(1)`` 返回以下值：
 
+<<<<<<< HEAD
   - 旧的代码生成器：3 ( ``1 + 2`` )，但一般情况下返回值是不指定的
   - 新的代码生成器：4 ( ``2 + 2`` )，但不能保证返回值
+=======
+  - Old code generator: ``3`` (``1 + 2``) but the return value is unspecified in general
+  - New code generator: ``4`` (``2 + 2``) but the return value is not guaranteed
+>>>>>>> english/develop
 
   .. index:: ! evaluation order; function arguments
 
