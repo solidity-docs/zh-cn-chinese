@@ -25,11 +25,20 @@
 团队电话会议
 ============
 
+<<<<<<< HEAD
 如果您有问题或拉动请求要讨论，或有兴趣听听团队和贡献者正在做什么，您可以加入我们的公共团队电话会议：
 
 - 每周一和周三下午3点，欧洲中部/欧洲中部夏令时间。
 
 这两个会议都在 `Jitsi <https://meet.soliditylang.org/>`_ 举行。
+=======
+If you have issues or pull requests to discuss, or are interested in hearing what
+the team and contributors are working on, you can join our public team call:
+
+- Wednesdays at 3PM CET/CEST.
+
+The call takes place on `Jitsi <https://meet.soliditylang.org/>`_.
+>>>>>>> english/develop
 
 如何报告问题
 ====================
@@ -159,6 +168,12 @@ Solidity包括不同类型的测试，其中大部分捆绑在
 如果您想使用GDB进行调试，确保您的构建方式与 “通常” 不同。
 例如，您可以在您的 ``build`` 文件夹中运行以下命令：
 
+<<<<<<< HEAD
+=======
+If you want to debug using GDB, make sure you build differently than the "usual".
+For example, you could run the following command in your ``build`` folder:
+
+>>>>>>> english/develop
 .. code-block:: bash
 
    cmake -DCMAKE_BUILD_TYPE=Debug ..
