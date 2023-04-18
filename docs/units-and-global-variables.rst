@@ -296,13 +296,24 @@ ABI编码和解码函数
     在 0.5.0 版本之前，有一个名为 ``callcode`` 的成员，其语义与 ``delegatecall`` 相似但略有不同。
 
 
-.. index:: this, selfdestruct
+.. index:: this, selfdestruct, super
 
+<<<<<<< HEAD
 合约相关
 ----------
 
 ``this`` （当前合约类型）
     当前合约，可以明确转换为 :ref:`address`
+=======
+Contract-related
+----------------
+
+``this`` (current contract's type)
+    The current contract, explicitly convertible to :ref:`address`
+
+``super``
+    A contract one level higher in the inheritance hierarchy
+>>>>>>> english/develop
 
 ``selfdestruct(address payable recipient)``
     销毁当前合约，将其资金发送到给定的 :ref:`address` 并结束执行。
