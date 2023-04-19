@@ -54,6 +54,7 @@ conditions
     当EVM版本设置为 ``constantinople`` 或更高时，该错误就会出现。
     如果没有给出条件，则假定该错误存在。
 check
+<<<<<<< HEAD
     这个字段包含不同的检查，报告智能合约是否包含错误。
     第一种类型的检查是Javascript正则表达式，如果存在该错误，将与源代码（“source-regex”）进行匹配。
     如果没有匹配，那么该漏洞很可能不存在。如果有一个匹配，则该错误可能存在。
@@ -61,6 +62,20 @@ check
     第二种类型的检查是在Solidity程序的紧凑AST上检查的模式（“ast-compact-json path”）。
     指定的搜索查询是一个 `JsonPath <https://github.com/json-path/JsonPath>`_ 表达式。
     如果Solidity AST中至少有一个路径与该查询相匹配，则该错误可能存在。
+=======
+    This field contains different checks that report whether the smart contract
+    contains the bug or not. The first type of check are JavaScript regular
+    expressions that are to be matched against the source code ("source-regex")
+    if the bug is present.  If there is no match, then the bug is very likely
+    not present. If there is a match, the bug might be present.  For improved
+    accuracy, the checks should be applied to the source code after stripping
+    comments.
+    The second type of check are patterns to be checked on the compact AST of
+    the Solidity program ("ast-compact-json-path"). The specified search query
+    is a `JsonPath <https://github.com/json-path/JsonPath>`_ expression.
+    If at least one path of the Solidity AST matches the query, the bug is
+    likely present.
+>>>>>>> english/develop
 
 .. literalinclude:: bugs.json
    :language: js
