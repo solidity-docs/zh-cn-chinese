@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 *****************
 单位和全局变量
 *****************
+=======
+.. index:: ! denomination
 
-.. index:: wei, finney, szabo, gwei, ether
+**************************************
+Units and Globally Available Variables
+**************************************
+>>>>>>> english/develop
+
+.. index:: ! wei, ! finney, ! szabo, ! gwei, ! ether, ! denomination;ether
 
 以太币（Ether） 单位
 ======================
@@ -22,7 +30,7 @@
 .. note::
     0.7.0 版本中删除了 ``finney`` 和 ``szabo`` 这两个单位。
 
-.. index:: time, seconds, minutes, hours, days, weeks, years
+.. index:: ! seconds, ! minutes, ! hours, ! days, ! weeks, ! years, ! denomination;time
 
 时间单位
 ==========
@@ -50,7 +58,7 @@
 
     function f(uint start, uint daysAfter) public {
         if (block.timestamp >= start + daysAfter * 1 days) {
-          // ...
+            // ...
         }
     }
 
@@ -296,13 +304,24 @@ ABI编码和解码函数
     在 0.5.0 版本之前，有一个名为 ``callcode`` 的成员，其语义与 ``delegatecall`` 相似但略有不同。
 
 
-.. index:: this, selfdestruct
+.. index:: this, selfdestruct, super
 
+<<<<<<< HEAD
 合约相关
 ----------
 
 ``this`` （当前合约类型）
     当前合约，可以明确转换为 :ref:`address`
+=======
+Contract-related
+----------------
+
+``this`` (current contract's type)
+    The current contract, explicitly convertible to :ref:`address`
+
+``super``
+    A contract one level higher in the inheritance hierarchy
+>>>>>>> english/develop
 
 ``selfdestruct(address payable recipient)``
     销毁当前合约，将其资金发送到给定的 :ref:`address` 并结束执行。

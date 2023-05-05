@@ -1,4 +1,4 @@
-.. index:: ! functions
+.. index:: ! functions, ! function;free
 
 .. _functions:
 
@@ -255,7 +255,7 @@ Pure 函数能够使用 ``revert()`` 和 ``require()`` 函数来恢复潜在的�
 特殊的函数
 =================
 
-.. index:: ! receive ether function, function;receive ! receive
+.. index:: ! receive ether function, function;receive, ! receive
 
 .. _receive-ether-function:
 
