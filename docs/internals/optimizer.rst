@@ -750,11 +750,20 @@ AST被遍历了两次：分别在在信息收集步骤和实际删除步骤中�
 
 .. _expression-simplifier:
 
+<<<<<<< HEAD
 表达式简化器
 ^^^^^^^^^^^^^^^^^^^^^
 
 表达式简化器使用数据流分析器，
 并利用表达式的等价变换列表，如 ``X + 0 -> X`` 来简化代码。
+=======
+ExpressionSimplifier
+^^^^^^^^^^^^^^^^^^^^
+
+The ExpressionSimplifier uses the Dataflow Analyzer and makes use
+of a list of equivalence transforms on expressions like ``X + 0 -> X``
+to simplify the code.
+>>>>>>> english/develop
 
 它试图在每个子表达式上匹配诸如 ``X + 0`` 的模式。
 在匹配过程中，它将变量解析为当前分配的表达式，

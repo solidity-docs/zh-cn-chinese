@@ -1,6 +1,7 @@
 Solidity
 ========
 
+<<<<<<< HEAD
 .. warning::
 
   You are reading a community translation of the Solidity documentation. The Solidity team
@@ -26,13 +27,41 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 .. warning::
 
   Solidity最近发布了0.8.x版本，该版本引入了许多重大更新。 清务必阅读 :doc:`完整列表 <080-breaking-changes>`。
+=======
+Solidity is an object-oriented, high-level language for implementing smart contracts.
+Smart contracts are programs that govern the behavior of accounts within the Ethereum state.
+
+Solidity is a `curly-bracket language <https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Curly-bracket_languages>`_ designed to target the Ethereum Virtual Machine (EVM).
+It is influenced by C++, Python, and JavaScript.
+You can find more details about which languages Solidity has been inspired by in the :doc:`language influences <language-influences>` section.
+
+Solidity is statically typed, supports inheritance, libraries, and complex user-defined types, among other features.
+
+With Solidity, you can create contracts for uses such as voting, crowdfunding, blind auctions, and multi-signature wallets.
+
+When deploying contracts, you should use the latest released version of Solidity.
+Apart from exceptional cases, only the latest version receives
+`security fixes <https://github.com/ethereum/solidity/security/policy#supported-versions>`_.
+Furthermore, breaking changes, as well as new features, are introduced regularly.
+We currently use a 0.y.z version number `to indicate this fast pace of change <https://semver.org/#spec-item-4>`_.
+
+.. warning::
+
+  Solidity recently released the 0.8.x version that introduced a lot of breaking changes.
+  Make sure you read :doc:`the full list <080-breaking-changes>`.
+>>>>>>> english/develop
 
 始终欢迎改进 Solidity 或此文档的想法,
 请阅读我们的 :doc:`贡献者指南 <contributing>` 以了解更多细节。
 
 .. Hint::
 
+<<<<<<< HEAD
   您可以通过点击左下角的版本号弹出的菜单来选择首选的下载格式来下载该文档的 PDF，HTML 或 Epub 格式。
+=======
+  You can download this documentation as PDF, HTML or Epub
+  by clicking on the versions flyout menu in the bottom-left corner and selecting the preferred download format.
+>>>>>>> english/develop
 
 
 入门指南
@@ -40,7 +69,11 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 
 **1. 了解智能合约基础知识**
 
+<<<<<<< HEAD
 如果您是智能合约概念的新手，我们建议您从深入了解 "智能合约介绍" 部分开始，其中包括：
+=======
+If you are new to the concept of smart contracts, we recommend you to get started by digging into the "Introduction to Smart Contracts" section, which covers the following:
+>>>>>>> english/develop
 
 * 用 Solidity 编写的 :ref:`一个简单的智能合约例子 <simple-smart-contract>`。
 * :ref:`区块链基础知识 <blockchain-basics>`.
@@ -57,6 +90,7 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 只需选择您喜欢的选项，并按照 :ref:`安装页面 <installing-solidity>` 上提供的步骤操作即可。
 
 .. hint::
+<<<<<<< HEAD
   您可以通过 `Remix IDE <https://remix.ethereum.org>`_ 在浏览器中直接尝试代码示例。
   Remix 是一个基于网络浏览器的IDE，允许您编写，部署和管理Solidity智能合约，
   无需在本地安装 Solidity。
@@ -69,24 +103,54 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
     区块链和智能合约也存在独特的问题，
     因此在开始编写生产代码之前，请确保您已阅读
     :ref:`security_considerations` 部分。
+=======
+  You can try out code examples directly in your browser with the
+  `Remix IDE <https://remix.ethereum.org>`_.
+  Remix is a web browser-based IDE that allows you to write, deploy and administer Solidity smart contracts,
+  without the need to install Solidity locally.
+
+.. warning::
+    As humans write software, it can have bugs.
+    Therefore, you should follow established software development best practices when writing your smart contracts.
+    This includes code review, testing, audits, and correctness proofs.
+    Smart contract users are sometimes more confident with code than their authors,
+    and blockchains and smart contracts have their own unique issues to watch out for,
+    so before working on production code, make sure you read the :ref:`security_considerations` section.
+>>>>>>> english/develop
 
 **4. 了解更多**
 
+<<<<<<< HEAD
 如果您想更深入了解如何在以太坊上构建去中心化应用，
 `以太坊开发者资源 <https://ethereum.org/en/developers/>`_ 可以为您提供有关以太坊的更多文档，
 以及各种教程、工具和开发框架。
 
 如果您有任何问题，可以在 `以太坊 StackExchange <https://ethereum.stackexchange.com/>`_ 上寻找答案，
 或者在我们的 `Gitter 频道 <https://gitter.im/ethereum/solidity/>`_。
+=======
+If you want to learn more about building decentralized applications on Ethereum,
+the `Ethereum Developer Resources <https://ethereum.org/en/developers/>`_ can help you with further general documentation around Ethereum,
+and a wide selection of tutorials, tools, and development frameworks.
+
+If you have any questions, you can try searching for answers or asking on the
+`Ethereum StackExchange <https://ethereum.stackexchange.com/>`_,
+or our `Gitter channel <https://gitter.im/ethereum/solidity/>`_.
+>>>>>>> english/develop
 
 .. _translations:
 
 翻译
 ------------
 
+<<<<<<< HEAD
 社区贡献者帮助将本文档翻译成多种语言。
 请注意，这些翻译的完整度和及时性各不相同。
 因此英文版才是参考的标准。
+=======
+Community contributors help translate this documentation into several languages.
+Note that they have varying degrees of completeness and up-to-dateness.
+The English version stands as a reference.
+>>>>>>> english/develop
 
 您可以通过点击左下角的语言切换器来切换语言。
 在弹出的菜单中，选择您需要的语言即可切换。
@@ -103,9 +167,15 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 
 .. note::
 
+<<<<<<< HEAD
    我们建立了一个 GitHub 组织和翻译工作流程，以帮助简化社区的工作。
    请参考 `solidity-文档 组织 <https://github.com/solidity-docs>`_ 中的翻译指南，
    了解如何开启新的语言翻译或为社区翻译做出贡献。
+=======
+   We set up a GitHub organization and translation workflow to help streamline the community efforts.
+   Please refer to the translation guide in the `solidity-docs org <https://github.com/solidity-docs>`_
+   for information on how to start a new language or contribute to the community translations.
+>>>>>>> english/develop
 
 目录
 ========
@@ -117,8 +187,8 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
    :caption: 基础知识
 
    introduction-to-smart-contracts.rst
-   installing-solidity.rst
    solidity-by-example.rst
+   installing-solidity.rst
 
 .. toctree::
    :maxdepth: 2
@@ -157,21 +227,35 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 
 .. toctree::
    :maxdepth: 2
+<<<<<<< HEAD
    :caption: 补充材料
+=======
+   :caption: Advisory content
+>>>>>>> english/develop
 
+   security-considerations.rst
+   bugs.rst
    050-breaking-changes.rst
    060-breaking-changes.rst
    070-breaking-changes.rst
    080-breaking-changes.rst
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Additional Material
+
    natspec-format.rst
-   security-considerations.rst
    smtchecker.rst
-   resources.rst
-   path-resolution.rst
    yul.rst
+   path-resolution.rst
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Resources
+
    style-guide.rst
    common-patterns.rst
-   bugs.rst
+   resources.rst
    contributing.rst
-   brand-guide.rst
    language-influences.rst
+   brand-guide.rst
