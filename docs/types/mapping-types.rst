@@ -89,8 +89,8 @@ Solidity 会为您创建一个 :ref:`getter <visibility-and-getters>` 函数。
 
     contract MappingExample {
 
-        mapping (address => uint256) private _balances;
-        mapping (address => mapping (address => uint256)) private _allowances;
+        mapping(address => uint256) private _balances;
+        mapping(address => mapping(address => uint256)) private _allowances;
 
         event Transfer(address indexed from, address indexed to, uint256 value);
         event Approval(address indexed owner, address indexed spender, uint256 value);
