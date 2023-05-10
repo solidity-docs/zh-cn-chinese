@@ -119,6 +119,7 @@
         }
     }
 
+.. index:: ! literal;conversion, literal;rational, literal;hexadecimal number
 .. _types-conversion-literals:
 
 字面常数和基本类型之间的转换
@@ -139,7 +140,13 @@
     在0.8.0版本之前，任何十进制或十六进制的数字字面常数都可以显式转换为整数类型。
     从0.8.0开始，这种显式转换和隐式转换一样严格，也就是说，只有当字面意义符合所产生的范围时，才允许转换。
 
+<<<<<<< HEAD
 固定大小的字节数组
+=======
+.. index:: literal;string, literal;hexadecimal
+
+Fixed-Size Byte Arrays
+>>>>>>> english/develop
 ----------------------
 
 十进制数字字面常数不能被隐含地转换为固定大小的字节数组。
@@ -168,7 +175,13 @@
     bytes2 e = "x"; // 不允许
     bytes2 f = "xyz"; // 不允许
 
+<<<<<<< HEAD
 地址类型
+=======
+.. index:: literal;address
+
+Addresses
+>>>>>>> english/develop
 ---------
 
 正如在 :ref:`address_literals` 中所描述的那样，正确大小并通过校验测试的十六进制字是 ``address`` 类型。

@@ -398,7 +398,7 @@ Visual Studio 2019 同时提供IDE和必要的编译器和库。
 * C++/CLI support
 
 .. _Visual Studio 2019: https://www.visualstudio.com/vs/
-.. _Visual Studio 2019 Build Tools: https://www.visualstudio.com/downloads/#build-tools-for-visual-studio-2019
+.. _Visual Studio 2019 Build Tools: https://visualstudio.microsoft.com/vs/older-downloads/#visual-studio-2019-and-other-products
 
 我们有一个辅助脚本，您可以用它来安装所有需要的外部依赖：
 
@@ -492,8 +492,13 @@ CMake 选项
 
 SMT 解算器
 -----------
+<<<<<<< HEAD
 Solidity 可以针对 SMT 解算器进行构建，如果它们在系统中被发现，
 将默认为是这样做的。每个解算器都可以通过 `cmake` 选项禁用。
+=======
+Solidity can be built against SMT solvers and will do so by default if
+they are found in the system. Each solver can be disabled by a ``cmake`` option.
+>>>>>>> english/develop
 
 *注意：在某些情况下，这也可以是构建失败后，可能的变通方法。*
 
