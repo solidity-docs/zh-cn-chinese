@@ -151,16 +151,22 @@ stateMutability: Pure | View | Payable;
  */
 overrideSpecifier: Override (LParen overrides+=identifierPath (Comma overrides+=identifierPath)* RParen)?;
 /**
+<<<<<<< HEAD
  * 合约，库和接口功能的定义。
  * 根据定义函数的上下文，可能会有进一步的限制。
  * 例如，接口中的函数必须是未实现的，也就是说，不能包含主体块。
+=======
+ * The definition of contract, library, interface or free functions.
+ * Depending on the context in which the function is defined, further restrictions may apply,
+ * e.g. functions in interfaces have to be unimplemented, i.e. may not contain a body block.
+>>>>>>> english/develop
  */
 functionDefinition
 locals[
 	boolean visibilitySet = false,
 	boolean mutabilitySet = false,
 	boolean virtualSet = false,
-	boolean overrideSpecifierSet = false
+	boolean overrideSpecifierSet = false,
 ]
 :
 	Function (identifier | Fallback | Receive)
@@ -174,6 +180,7 @@ locals[
 	 )*
 	(Returns LParen returnParameters=parameterList RParen)?
 	(Semicolon | body=block);
+
 /**
  * 修改器的定义。
  * 注意，在修改器的主体块中，下划线不能作为标识符使用，
@@ -311,10 +318,35 @@ errorDefinition:
 	Semicolon;
 
 /**
+<<<<<<< HEAD
  * 使用指令将库函数和自由函数附加到类型上。
  * 可以在合同和库中以及文件层面中出现。
+=======
+ * Operators that users are allowed to implement for some types with `using for`.
  */
-usingDirective: Using (identifierPath | (LBrace identifierPath (Comma identifierPath)* RBrace)) For (Mul | typeName) Global? Semicolon;
+userDefinableOperator:
+	BitAnd
+	| BitNot
+	| BitOr
+	| BitXor
+	| Add
+	| Div
+	| Mod
+	| Mul
+	| Sub
+	| Equal
+	| GreaterThan
+	| GreaterThanOrEqual
+	| LessThan
+	| LessThanOrEqual
+	| NotEqual;
+
+/**
+ * Using directive to attach library functions and free functions to types.
+ * Can occur within contracts and libraries and at the file level.
+>>>>>>> english/develop
+ */
+usingDirective: Using (identifierPath | (LBrace identifierPath (As userDefinableOperator)? (Comma identifierPath (As userDefinableOperator)?)* RBrace)) For (Mul | typeName) Global? Semicolon;
 /**
  * 一个类型名称可以是一个基本类型，一个函数类型，一个映射类型，
  * 一个用户定义的类型（如合约类型或结构体类型）或一个数组类型。
@@ -346,7 +378,7 @@ dataLocation: Memory | Storage | Calldata;
  */
 expression:
 	expression LBrack index=expression? RBrack # IndexAccess
-	| expression LBrack start=expression? Colon end=expression? RBrack # IndexRangeAccess
+	| expression LBrack startIndex=expression? Colon endIndex=expression? RBrack # IndexRangeAccess
 	| expression Period (identifier | Address) # MemberAccess
 	| expression LBrace (namedArgument (Comma namedArgument)*)? RBrace # FunctionCallOptions
 	| expression callArgumentList # FunctionCall
@@ -367,12 +399,13 @@ expression:
 	| expression Or expression # OrOperation
 	|<assoc=right> expression Conditional expression Colon expression # Conditional
 	|<assoc=right> expression assignOp expression # Assignment
-	| New typeName # NewExpression
+	| New typeName # NewExpr
 	| tupleExpression # Tuple
 	| inlineArrayExpression # InlineArray
  	| (
 		identifier
 		| literal
+		| literalWithSubDenomination
 		| elementaryTypeName[false]
 	  ) # PrimaryExpression
 ;
@@ -391,6 +424,9 @@ inlineArrayExpression: LBrack (expression ( Comma expression)* ) RBrack;
 identifier: Identifier | From | Error | Revert | Global;
 
 literal: stringLiteral | numberLiteral | booleanLiteral | hexStringLiteral | unicodeStringLiteral;
+
+literalWithSubDenomination: numberLiteral SubDenomination;
+
 booleanLiteral: True | False;
 /**
  * 一个完整的字符串字面量由一个或几个连续的引号字符串组成。
@@ -408,7 +444,8 @@ unicodeStringLiteral: UnicodeStringLiteral+;
 /**
  * 数字字面量可以是带可选单位的十进制或十六进制数字。
  */
-numberLiteral: (DecimalNumber | HexNumber) NumberUnit?;
+numberLiteral: DecimalNumber | HexNumber;
+
 /**
  * 带花括号的语句块。可以打开自己的作用域。
  */

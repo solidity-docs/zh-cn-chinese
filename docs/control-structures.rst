@@ -155,7 +155,6 @@ Solidity使用 ``extcodesize`` 操作码来检查即将被调用的合约是否�
         function set(uint key, uint value) public {
             data[key] = value;
         }
-
     }
 
 函数定义中省略的名称
@@ -585,8 +584,14 @@ Assert应该只用于测试内部错误，以及检查不变量。
 #. 如果您的合约通过一个没有 ``payable`` 修饰符的公开函数（包括构造函数和备用函数）接收以太。
 #. 如果您的合约通过一个公共的getter函数接收以太。
 
+<<<<<<< HEAD
 对于以下情况，来自外部调用的错误数据（如果提供的话）会被转发。
 这意味着它既可以引起 `Error` 异常，也可以引起 `Panic` 异常（或提供的其他什么错误）。
+=======
+For the following cases, the error data from the external call
+(if provided) is forwarded. This means that it can either cause
+an ``Error`` or a ``Panic`` (or whatever else was given):
+>>>>>>> english/develop
 
 #. 如果 ``.transfer()`` 失败。
 #. 如果您通过消息调用一个函数，但它不能正常完成
