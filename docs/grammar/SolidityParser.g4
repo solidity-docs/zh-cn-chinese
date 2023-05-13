@@ -311,10 +311,30 @@ errorDefinition:
 	Semicolon;
 
 /**
+ * 用户可以通过 `using for` 为某些类型实现的操作符。
+ */
+userDefinableOperator:
+	BitAnd
+	| BitNot
+	| BitOr
+	| BitXor
+	| Add
+	| Div
+	| Mod
+	| Mul
+	| Sub
+	| Equal
+	| GreaterThan
+	| GreaterThanOrEqual
+	| LessThan
+	| LessThanOrEqual
+	| NotEqual;
+
+/**
  * 使用指令将库函数和自由函数附加到类型上。
  * 可以在合同和库中以及文件层面中出现。
  */
-usingDirective: Using (identifierPath | (LBrace identifierPath (Comma identifierPath)* RBrace)) For (Mul | typeName) Global? Semicolon;
+usingDirective: Using (identifierPath | (LBrace identifierPath (As userDefinableOperator)? (Comma identifierPath (As userDefinableOperator)?)* RBrace)) For (Mul | typeName) Global? Semicolon;
 /**
  * 一个类型名称可以是一个基本类型，一个函数类型，一个映射类型，
  * 一个用户定义的类型（如合约类型或结构体类型）或一个数组类型。
