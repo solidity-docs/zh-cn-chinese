@@ -487,6 +487,177 @@ SMT检查器创建的验证目标的类型也可以通过CLI选项 ``--model-che
         "source2.sol": ["contract2", "contract3"]
     }
 
+可信任的外部调用
+======================
+
+默认情况下，SMT检查器不假定编译时可用的代码与外部调用的运行时代码相同。
+以以下合约为例：
+
+.. code-block:: solidity
+
+    // SPDX-License-Identifier: GPL-3.0
+    pragma solidity >=0.8.0;
+
+    contract Ext {
+        uint public x;
+        function setX(uint _x) public { x = _x; }
+    }
+    contract MyContract {
+        function callExt(Ext _e) public {
+            _e.setX(42);
+            assert(_e.x() == 42);
+        }
+    }
+
+当调用 ``MyContract.callExt`` 时，一个地址被作为参数给出。
+在部署时，我们不能确定地知道地址 ``_e`` 实际上是否包含了 ``Ext`` 合约的部署。
+因此，SMT检查器会警告上述断言可能被违反，
+这是真实的，如果 ``_e`` 包含了其他不是 ``Ext`` 的合约。
+
+然而，将这些外部调用视为可信是有用的，
+例如，测试不同接口的实现是否符合相同的属性。
+这意味着假设地址 ``_e`` 确实被作为 ``Ext`` 合约部署。
+这种模式可以通过 CLI 选项 ``--model-checker-ext-calls=trusted`` 
+或 JSON 字段 ``settings.modelChecker.extCalls: "trusted"`` 启用。
+
+请注意，启用此模式可能会使SMT检查器分析的计算成本大大提高。
+
+这种模式的一个重要部分是，它适用于合约类型和对合约的高级外部调用，
+而不适用于如 ``call`` 和 ``delegatecall`` 等低级调用。
+一个地址的存储是按合约类型存储的，
+SMT检查器假定外部调用的合约具有调用者表达式的类型。
+因此，将一个 ``address`` 或一个合约转换为不同的合约类型将产生不同的存储值，
+如果假设不一致，可能会产生不可靠的结果，如下例：
+
+.. code-block:: solidity
+
+    // SPDX-License-Identifier: GPL-3.0
+    pragma solidity >=0.8.0;
+
+    contract D {
+        constructor(uint _x) { x = _x; }
+        uint public x;
+        function setX(uint _x) public { x = _x; }
+    }
+
+    contract E {
+        constructor() { x = 2; }
+        uint public x;
+        function setX(uint _x) public { x = _x; }
+    }
+
+    contract C {
+        function f() public {
+            address d = address(new D(42));
+
+            // `d` 被部署为 `D`, 所以现在它的 `x` 应该是42。
+            assert(D(d).x() == 42); // 应该成功
+            assert(D(d).x() == 43); // 应该失败
+
+            // E 和 D 具有相同的接口，
+            // 所以以下的调用在运行时也会工作。
+            // 然而，对 `E(d)` 的更改并没有反映在 `D(d)` 上。
+            E(d).setX(1024);
+
+            // 现在从 `D(d)` 读取将显示旧值。
+            // 下面的断言在运行时应该失败，
+            // 但在这种模式的分析中却成功了（因此不可靠）。
+            assert(D(d).x() == 42);
+            // 下面的断言在运行时应该成功，
+            // 但在这种模式的分析中却会失败（假阳性）。
+            assert(D(d).x() == 1024);
+        }
+    }
+
+由于以上原因，确保对某个 ``address`` 或 ``contract`` 类型的变量的可信外部调用总是具有相同的调用者表达式类型。
+
+在继承的情况下，将被调用的合约的变量作为最终派生类型的类型进行转换也是有帮助的。
+
+   .. code-block:: solidity
+
+    // SPDX-License-Identifier: GPL-3.0
+    pragma solidity >=0.8.0;
+
+    interface Token {
+        function balanceOf(address _a) external view returns (uint);
+        function transfer(address _to, uint _amt) external;
+    }
+
+    contract TokenCorrect is Token {
+        mapping (address => uint) balance;
+        constructor(address _a, uint _b) {
+            balance[_a] = _b;
+        }
+        function balanceOf(address _a) public view override returns (uint) {
+            return balance[_a];
+        }
+        function transfer(address _to, uint _amt) public override {
+            require(balance[msg.sender] >= _amt);
+            balance[msg.sender] -= _amt;
+            balance[_to] += _amt;
+        }
+    }
+
+    contract Test {
+        function property_transfer(address _token, address _to, uint _amt) public {
+            require(_to != address(this));
+
+            TokenCorrect t = TokenCorrect(_token);
+
+            uint xPre = t.balanceOf(address(this));
+            require(xPre >= _amt);
+            uint yPre = t.balanceOf(_to);
+
+            t.transfer(_to, _amt);
+            uint xPost = t.balanceOf(address(this));
+            uint yPost = t.balanceOf(_to);
+
+            assert(xPost == xPre - _amt);
+            assert(yPost == yPre + _amt);
+        }
+    }
+
+注意，在函数 ``property_transfer`` 中，外部调用是在变量 ``t`` 上执行的
+
+这种模式的另一个注意事项是对合约类型的状态变量的调用在被分析的合约之外。
+在下面的代码中，即使合约 ``B`` 部署了合约 ``A``，
+也有可能在对 ``B`` 本身的交易之间， ``B.a`` 中存储的地址被任何人在外部调用。
+存储在 ``B.a`` 中的地址也可以被任何人在合约 ``B`` 之外和合约 ``B`` 本身的交易之间调用。
+为了反映对 ``B.a`` 的可能更改，编码允许对 ``B.a`` 进行无限次数的外部调用。
+编码将跟踪 ``B.a`` 的存储，因此断言（2）应该成立。
+然而，目前的编码允许这样的调用从概念上从合约 ``B`` 进行，因此断言（3）失败。
+逻辑上使编码更强大是信任模式的扩展，正在开发中。
+请注意，编码不跟踪 ``address`` 变量的存储，因此，
+如果 ``B.a`` 的类型是 ``address``，编码将假定其存储在对合约 ``B`` 的交易之间不会更改。
+
+   .. code-block:: solidity
+
+    pragma solidity >=0.8.0;
+
+    contract A {
+        uint public x;
+        address immutable public owner;
+        constructor() {
+            owner = msg.sender;
+        }
+        function setX(uint _x) public {
+            require(msg.sender == owner);
+            x = _x;
+        }
+    }
+
+    contract B {
+        A a;
+        constructor() {
+            a = new A();
+            assert(a.x() == 0); // (1) 应该成功
+        }
+        function g() public view {
+            assert(a.owner() == address(this)); // (2) 应该成功
+            assert(a.x() == 0); // (3) 应该成功，但是由于假阳性而失败
+        }
+    }
+
 报告推断的归纳变量
 ======================================
 
