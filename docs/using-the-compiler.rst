@@ -414,6 +414,10 @@ EVM版本选项
           "divModWithSlacks": false,
           // 选择要使用的模型检查器引擎：所有（默认）， bmc， chc， 无。
           "engine": "chc",
+          // 选择在被调用函数的代码在编译时可用的情况下，
+          // 是否应将外部调用视为可信。
+          // 有关详细信息，请参阅SMT检查器部分。
+          "extCalls": "trusted",
           // 选择哪些类型的不变性应该报告给用户：合约，重入。
           "invariants": ["contract", "reentrancy"],
           // 选择是否输出所有未验证的目标。默认为 `false`。
