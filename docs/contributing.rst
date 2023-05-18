@@ -25,11 +25,20 @@
 团队电话会议
 ============
 
+<<<<<<< HEAD
 如果您有问题或拉动请求要讨论，或有兴趣听听团队和贡献者正在做什么，您可以加入我们的公共团队电话会议：
 
 - 每周一和周三下午3点，欧洲中部/欧洲中部夏令时间。
 
 这两个会议都在 `Jitsi <https://meet.soliditylang.org/>`_ 举行。
+=======
+If you have issues or pull requests to discuss, or are interested in hearing what
+the team and contributors are working on, you can join our public team call:
+
+- Wednesdays at 3PM CET/CEST.
+
+The call takes place on `Jitsi <https://meet.soliditylang.org/>`_.
+>>>>>>> english/develop
 
 如何报告问题
 ====================
@@ -82,10 +91,16 @@
 先决条件
 -------------
 
+<<<<<<< HEAD
 为了运行所有的编译器测试，您可能想选择性地安装一些依赖项
 （ `evmone <https://github.com/ethereum/evmone/releases>`_，
 `libz3 <https://github.com/Z3Prover/z3>`_， 和
 `libhera <https://github.com/ewasm/hera>`_）。
+=======
+For running all compiler tests you may want to optionally install a few
+dependencies (`evmone <https://github.com/ethereum/evmone/releases>`_,
+`libz3 <https://github.com/Z3Prover/z3>`_).
+>>>>>>> english/develop
 
 在 macOS 系统上，一些测试脚本需要安装 GNU 核心工具。
 可以使用 Homebrew 很简单地完成安装： ``brew install coreutils``。
@@ -116,12 +131,17 @@ Solidity包括不同类型的测试，其中大部分捆绑在
 ``evmone`` 主要用于运行语义和gas测试。
 如果您没有安装它，您可以通过向 ``scripts/soltest.sh`` 传递 ``--no-semantic-tests`` 标志来跳过这些测试。
 
+<<<<<<< HEAD
 运行Ewasm测试默认是禁用的，可以通过 ``./scripts/soltest.sh --ewasm`` 明确启用，
 要求 `hera <https://github.com/ewasm/hera>`_ 被 ``soltest`` 找到。
 定位 ``hera`` 库的机制与 ``evmone`` 相同，只是用于指定明确位置的变量被称为 ``ETH_HERA``。
 
 ``evmone`` 和 ``hera`` 库的文件名后缀都应该
 是Linux上的 ``.so``，Windows系统上的 ``.dll``，MacOS上的 ``.dylib``。
+=======
+The ``evmone`` library should both end with the file name
+extension ``.so`` on Linux, ``.dll`` on Windows systems and ``.dylib`` on macOS.
+>>>>>>> english/develop
 
 为了运行SMT测试， ``libz3`` 库必须被安装，并在编译器配置阶段被 ``cmake`` 可以找到。
 
@@ -150,7 +170,11 @@ Solidity包括不同类型的测试，其中大部分捆绑在
 - `run_test (-t) <https://www.boost.org/doc/libs/release/libs/test/doc/html/boost_test/utf_reference/rt_param_reference/run_test.html>`_ 来运行特定的测试案例，以及
 - `report-level (-r) <https://www.boost.org/doc/libs/release/libs/test/doc/html/boost_test/utf_reference/rt_param_reference/report_level.html>`_ 给出一个更详细的报告。
 
+<<<<<<< HEAD
 ..  note::
+=======
+.. note::
+>>>>>>> english/develop
 
     那些在Windows环境下使用的人，想在没有libz3的情况下运行上述基本集，可以使用Git Bash，
     使用命令为： ``./build/test/Release/soltest.exe -- --no-smt``。
@@ -159,6 +183,12 @@ Solidity包括不同类型的测试，其中大部分捆绑在
 如果您想使用GDB进行调试，确保您的构建方式与 “通常” 不同。
 例如，您可以在您的 ``build`` 文件夹中运行以下命令：
 
+<<<<<<< HEAD
+=======
+If you want to debug using GDB, make sure you build differently than the "usual".
+For example, you could run the following command in your ``build`` folder:
+
+>>>>>>> english/develop
 .. code-block:: bash
 
    cmake -DCMAKE_BUILD_TYPE=Debug ..
@@ -381,6 +411,7 @@ Whiskers 系统
 英语
 ----------------
 
+<<<<<<< HEAD
 使用英语，除非使用项目或品牌名称，否则首选英式拼写。
 尽量减少使用当地的俚语和参考资料，尽量使您的语言对所有的读者都尽可能清晰。以下是一些参考资料，希望对大家有所帮助：
 
@@ -388,6 +419,14 @@ Whiskers 系统
 * `国际英语 <https://en.wikipedia.org/wiki/International_English>`_
 * `英式英语拼写 <https://web.archive.org/web/20220324094038/https://www.lexico.com/grammar/british-and-spelling>`_
 
+=======
+Use International English, unless using project or brand names. Try to reduce the usage of
+local slang and references, making your language as clear to all readers as possible.
+Below are some references to help:
+
+* `Simplified technical English <https://en.wikipedia.org/wiki/Simplified_Technical_English>`_
+* `International English <https://en.wikipedia.org/wiki/International_English>`_
+>>>>>>> english/develop
 
 .. note::
 
