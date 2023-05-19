@@ -492,8 +492,13 @@ CMake 选项
 
 SMT 解算器
 -----------
+<<<<<<< HEAD
 Solidity 可以针对 SMT 解算器进行构建，如果它们在系统中被发现，
 将默认为是这样做的。每个解算器都可以通过 `cmake` 选项禁用。
+=======
+Solidity can be built against SMT solvers and will do so by default if
+they are found in the system. Each solver can be disabled by a ``cmake`` option.
+>>>>>>> english/develop
 
 *注意：在某些情况下，这也可以是构建失败后，可能的变通方法。*
 
