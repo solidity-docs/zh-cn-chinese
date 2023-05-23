@@ -13,6 +13,7 @@
 
 许多项目会实施他们自己的编码风格指南。如遇冲突，应优先使用具体项目的风格指南。
 
+<<<<<<< HEAD
 本风格指南中的结构和许多建议是取自 python 的
 `pep8 风格指南 <https://peps.python.org/pep-0008/>`_ 。
 
@@ -20,6 +21,16 @@
 本指南的目的是保持代码的 *一致性* 。
 来自 python 的参考文档 `pep8 <https://peps.python.org/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds>`_，
 很好地阐述了这个概念。
+=======
+The structure and many of the recommendations within this style guide were
+taken from Python's
+`pep8 style guide <https://peps.python.org/pep-0008/>`_.
+
+The goal of this guide is *not* to be the right way or the best way to write
+Solidity code.  The goal of this guide is *consistency*.  A quote from Python's
+`pep8 <https://peps.python.org/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds>`_
+captures this concept well.
+>>>>>>> english/develop
 
 .. note::
 
@@ -1280,6 +1291,21 @@ Import 语句应始终放在文件的顶部。
 这将迫使您在重命名时查看每一个调用点。
 这应该是一个重要的手动检查，以防止出现非预期的外部函数
 和常见的安全漏洞（避免对这种变化使用全文查找替换工具）。
+
+Underscore Prefix for Non-external Functions and Variables
+==========================================================
+
+* ``_singleLeadingUnderscore``
+
+This convention is suggested for non-external functions and state variables (``private`` or ``internal``). State variables without a specified visibility are ``internal`` by default.
+
+When designing a smart contract, the public-facing API (functions that can be called by any account)
+is an important consideration.
+Leading underscores allow you to immediately recognize the intent of such functions,
+but more importantly, if you change a function from non-external to external (including ``public``)
+and rename it accordingly, this forces you to review every call site while renaming.
+This can be an important manual check against unintended external functions
+and a common source of security vulnerabilities (avoid find-replace-all tooling for this change).
 
 .. _style_guide_natspec:
 
