@@ -214,7 +214,7 @@ Solidity没有字符串操作函数，但有第三方的字符串库。
         }
     }
 
-.. index:: ! array;literals, ! inline;arrays
+.. index:: ! literal;array, ! inline;arrays
 
 数组字面常数
 ^^^^^^^^^^^^^^
