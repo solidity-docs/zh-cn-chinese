@@ -137,9 +137,15 @@ Solidity意义上的合约是代码（其 *函数*）和数据（其 *状态*）
 
 .. index:: mapping
 
+<<<<<<< HEAD
 下一行， ``mapping(address => uint) public balances;`` 也创建了一个公共状态变量，
 但它是一个更复杂的数据类型。
 :ref:`映射 <mapping-types>` 类型将地址映射到 :ref:`无符号整数 <integers>`。
+=======
+The next line, ``mapping(address => uint) public balances;`` also
+creates a public state variable, but it is a more complex datatype.
+The :ref:`mapping <mapping-types>` type maps addresses to :ref:`unsigned integers <integers>`.
+>>>>>>> english/develop
 
 映射可以被看作是 `哈希表 <https://en.wikipedia.org/wiki/Hash_table>`_，
 它实际上是被初始化的，因此每一个可能的键从一开始就存在，并被映射到一个值，其字节表示为全零的值。
@@ -242,9 +248,16 @@ Solidity意义上的合约是代码（其 *函数*）和数据（其 *状态*）
 数据库的事务特性确保了如果从一个账户扣除金额，它总被添加到另一个账户。
 如果由于某些原因，无法添加金额到目标账户时，源账户也不会发生任何变化。
 
+<<<<<<< HEAD
 此外，交易总是由发送人（创建者）签名。
 这样，就可非常简单地为数据库的特定修改增加访问保护机制。
 在电子货币的例子中，一个简单的检查可以确保只有持有账户密钥的人才能从中转账。
+=======
+Furthermore, a transaction is always cryptographically signed by the sender (creator).
+This makes it straightforward to guard access to specific modifications of the
+database. In the example of the electronic currency, a simple check ensures that
+only the person holding the keys to the account can transfer some compensation, e.g. Ether, from it.
+>>>>>>> english/develop
 
 .. index:: ! block
 
@@ -261,9 +274,15 @@ Solidity意义上的合约是代码（其 *函数*）和数据（其 *状态*）
 然后它们将在所有参与节点中执行和分发。
 如果两个交易相互矛盾，最终排在第二位的那个交易将被拒绝，不会成为区块的一部分。
 
+<<<<<<< HEAD
 这些区块在时间上形成了一个线性序列，这正是 “区块链” 一词的来源。
 区块以规律的间隔被添加到链上，尽管这些间隔在未来可能会发生变化。
 为了获取最新的信息，建议监控网络，例如可以在 `Etherscan <https://etherscan.io/chart/blocktime>`_ 上。
+=======
+These blocks form a linear sequence in time, and that is where the word "blockchain" derives from.
+Blocks are added to the chain at regular intervals, although these intervals may be subject to change in the future.
+For the most up-to-date information, it is recommended to monitor the network, for example, on `Etherscan <https://etherscan.io/chart/blocktime>`_.
+>>>>>>> english/develop
 
 作为 “顺序选择机制”（也就是所谓的“挖矿”）的一部分，
 可能有时会发生块（blocks）被回滚的情况，但仅在链的“末端”。
