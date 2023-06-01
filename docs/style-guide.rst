@@ -13,6 +13,7 @@
 
 许多项目会实施他们自己的编码风格指南。如遇冲突，应优先使用具体项目的风格指南。
 
+<<<<<<< HEAD
 本风格指南中的结构和许多建议是取自 python 的
 `pep8 风格指南 <https://peps.python.org/pep-0008/>`_ 。
 
@@ -25,6 +26,22 @@
 
     风格指南是关于一致性的。重要的是与此风格指南保持一致，但项目中的一致性更重要。
     一个模块或功能内的一致性是最重要的。
+=======
+The structure and many of the recommendations within this style guide were
+taken from Python's
+`pep8 style guide <https://peps.python.org/pep-0008/>`_.
+
+The goal of this guide is *not* to be the right way or the best way to write
+Solidity code.  The goal of this guide is *consistency*.  A quote from Python's
+`pep8 <https://peps.python.org/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds>`_
+captures this concept well.
+
+.. note::
+
+    A style guide is about consistency. Consistency with this style guide is important. Consistency within a project is more important. Consistency within one module or function is most important.
+
+    But most importantly: **know when to be inconsistent** -- sometimes the style guide just doesn't apply. When in doubt, use your best judgment. Look at other examples and decide what looks best. And do not hesitate to ask!
+>>>>>>> english/develop
 
     但最重要的是：**知道什么时候不一致** —— 有时风格指南不适用。如有疑问，请自行判断。
     看看其他例子，并决定什么看起来最好，并应毫不犹豫地询问他人！
@@ -446,7 +463,11 @@ Import 语句应始终放在文件的顶部。
     y            = 2;
     longVariable = 3;
 
+<<<<<<< HEAD
 在receive和fallback函数中不要包含空格：
+=======
+Do not include a whitespace in the receive and fallback functions:
+>>>>>>> english/develop
 
 正确写法：
 
@@ -1280,6 +1301,21 @@ Import 语句应始终放在文件的顶部。
 这将迫使您在重命名时查看每一个调用点。
 这应该是一个重要的手动检查，以防止出现非预期的外部函数
 和常见的安全漏洞（避免对这种变化使用全文查找替换工具）。
+
+Underscore Prefix for Non-external Functions and Variables
+==========================================================
+
+* ``_singleLeadingUnderscore``
+
+This convention is suggested for non-external functions and state variables (``private`` or ``internal``). State variables without a specified visibility are ``internal`` by default.
+
+When designing a smart contract, the public-facing API (functions that can be called by any account)
+is an important consideration.
+Leading underscores allow you to immediately recognize the intent of such functions,
+but more importantly, if you change a function from non-external to external (including ``public``)
+and rename it accordingly, this forces you to review every call site while renaming.
+This can be an important manual check against unintended external functions
+and a common source of security vulnerabilities (avoid find-replace-all tooling for this change).
 
 .. _style_guide_natspec:
 
