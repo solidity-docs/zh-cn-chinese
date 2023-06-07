@@ -15,6 +15,7 @@
 基本用法
 -----------
 
+<<<<<<< HEAD
 ``solc`` 是 Solidity 仓库的构建目标之一, 它是 solidity 命令行编译器。
 使用 ``solc --help`` 可以为您提供所有选项的解释。编译器可以产生各种输出，
 从简单的二进制文件和抽象语法树(解析树)上的汇编到气体使用量的估计。
@@ -22,6 +23,11 @@
 如果您想通过 ``solc`` 获得一些更高级的输出信息，
 可以通过 ``solc -o outputDirectory --bin --ast-compact-json --asm sourceFile.sol`` 命令
 将所有的输出都保存到单独的文件中。
+=======
+One of the build targets of the Solidity repository is ``solc``, the Solidity commandline compiler.
+Using ``solc --help`` provides you with an explanation of all options. The compiler can produce various outputs, ranging from simple binaries and assembly over an abstract syntax tree (parse tree) to estimations of gas usage.
+If you only want to compile a single file, you run it as ``solc --bin sourceFile.sol`` and it will print the binary. If you want to get some of the more advanced output variants of ``solc``, it is probably better to tell it to output everything to separate files using ``solc -o outputDirectory --bin --ast-compact-json --asm sourceFile.sol``.
+>>>>>>> english/develop
 
 优化器选项
 -----------------
@@ -54,11 +60,21 @@
 相对于使用 ``--base-path`` 和 ``--include-path`` 选项指定的目录（如果没有指定基本路径，则是当前工作目录）。
 此外，通过这些选项添加的路径部分将不会出现在合约元数据中。
 
+<<<<<<< HEAD
 出于安全考虑，编译器 :ref:`对它可以访问的目录有一些限制 <allowed-paths>`。
 在命令行中指定的源文件的目录和重映射的目标路径被自动允许被文件阅读器访问，
 但其他的都是默认为拒绝的。
 通过 ``--allow-paths /sample/path,/another/sample/path`` 语句可以允许额外的路径（和它们的子目录）。
 通过 ``--base-path`` 指定的路径内的所有内容都是允许的。
+=======
+For security reasons the compiler has :ref:`restrictions on what directories it can access <allowed-paths>`.
+Directories of source files specified on the command-line and target paths of
+remappings are automatically allowed to be accessed by the file reader, but everything
+else is rejected by default.
+Additional paths (and their subdirectories) can be allowed via the
+``--allow-paths /sample/path,/another/sample/path`` switch.
+Everything inside the path specified via ``--base-path`` is always allowed.
+>>>>>>> english/develop
 
 以上只是对编译器如何处理导入路径的一个简化。
 关于详细的解释，包括例子和边缘情况的讨论，请参考 :ref:`路径解析 <path-resolution>` 一节。
@@ -115,6 +131,7 @@
 将EVM版本设置为目标版本
 *********************************
 
+<<<<<<< HEAD
 当您编译您的合约代码时，您可以指定以太坊虚拟机版本来编译，以避免特定的功能或行为。
 
 .. warning::
@@ -123,6 +140,18 @@
    请确保，特别是在运行一个私有链的情况下，您使用匹配的EVM版本。
 
 在命令行中，您可以选择EVM的版本，如下所示：
+=======
+When you compile your contract code you can specify the Ethereum virtual machine
+version to compile for to avoid particular features or behaviors.
+
+.. warning::
+
+   Compiling for the wrong EVM version can result in wrong, strange and failing
+   behavior. Please ensure, especially if running a private chain, that you
+   use matching EVM versions.
+
+On the command-line, you can select the EVM version as follows:
+>>>>>>> english/develop
 
 .. code-block:: shell
 
@@ -159,13 +188,19 @@ EVM版本选项
    - 可以访问从函数调用返回的动态数据。
    - 引入了 ``revert`` 操作码，这意味着 ``revert`` 将不会浪费gas。
 - ``constantinople``
+<<<<<<< HEAD
    - 在汇编中可使用操作码 ``create2``, ``extcodehash``, ``shl``, ``shr`` 和 ``sar``。
    - 移位运算符使用移位运算码，因此需要的gas较少。
+=======
+   - Opcodes ``create2``, ``extcodehash``, ``shl``, ``shr`` and ``sar`` are available in assembly.
+   - Shifting operators use shifting opcodes and thus need less gas.
+>>>>>>> english/develop
 - ``petersburg``
    - 编译器的行为与 constantinople 版本的行为相同。
 - ``istanbul``
    - 在汇编中可使用操作码 ``chainid`` 和 ``selfbalance``。
 - ``berlin``
+<<<<<<< HEAD
    - ``SLOAD``， ``*CALL``， ``BALANCE``， ``EXT*`` 和 ``SELFDESTRUCT`` 的gas成本增加。
      编译器假设这类操作的gas成本是固定的。这与gas估计和优化器有关。
 - ``london`` 
@@ -173,6 +208,17 @@ EVM版本选项
      可以通过全局的 ``block.basefee`` 或内联汇编中的 ``basefee()`` 访问。
 - ``paris`` （ **默认项** ）
    - 引入了 ``prevrandao()`` 和 ``block.prevrandao``，并改变了现在已经废弃的 ``block.difficulty`` 的语义，不允许在内联汇编中使用 ``difficulty()`` （见 `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）。
+=======
+   - Gas costs for ``SLOAD``, ``*CALL``, ``BALANCE``, ``EXT*`` and ``SELFDESTRUCT`` increased. The
+     compiler assumes cold gas costs for such operations. This is relevant for gas estimation and
+     the optimizer.
+- ``london``
+   - The block's base fee (`EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ and `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_) can be accessed via the global ``block.basefee`` or ``basefee()`` in inline assembly.
+- ``paris``
+   - Introduces ``prevrandao()`` and ``block.prevrandao``, and changes the semantics of the now deprecated ``block.difficulty``, disallowing ``difficulty()`` in inline assembly (see `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_).
+- ``shanghai`` (**default**)
+  - Smaller code size and gas savings due to the introduction of ``push0`` (see `EIP-3855 <https://eips.ethereum.org/EIPS/eip-3855>`_).
+>>>>>>> english/develop
 
 .. index:: ! standard JSON, ! --standard-json
 .. _compiler-api:
@@ -197,7 +243,11 @@ EVM版本选项
 .. code-block:: javascript
 
     {
+<<<<<<< HEAD
       // 必选：源代码语言。目前支持的是 “Solidity“ 和 “Yul“。
+=======
+      // Required: Source code language. Currently supported are "Solidity", "Yul" and "SolidityAST" (experimental).
+>>>>>>> english/develop
       "language": "Solidity",
       // 必选
       "sources":
@@ -219,8 +269,21 @@ EVM版本选项
             "bzzr://56ab...",
             "ipfs://Qma...",
             "/tmp/path/to/file.sol"
+<<<<<<< HEAD
             // 如果使用文件，其目录应通过 `--allow-paths <path>` 添加到命令行中。
+=======
+            // If files are used, their directories should be added to the command-line via
+            // `--allow-paths <path>`.
+>>>>>>> english/develop
           ]
+          // If language is set to "SolidityAST", an AST needs to be supplied under the "ast" key.
+          // Note that importing ASTs is experimental and in particular that:
+          // - importing invalid ASTs can produce undefined results and
+          // - no proper error reporting is available on invalid ASTs.
+          // Furthermore, note that the AST import only consumes the fields of the AST as
+          // produced by the compiler in "stopAfter": "parsing" mode and then re-performs
+          // analysis, so any analysis-based annotations of the AST are ignored upon import.
+          "ast": { ... } // formatted as the json ast requested with the ``ast`` output selection.
         },
         "destructible":
         {
@@ -254,11 +317,19 @@ EVM版本选项
           "details": {
             // 如果没有给出 details，窥视孔优化器总是打开的，使用 details 来关闭它。
             "peephole": true,
+<<<<<<< HEAD
             // 如果没有给出 details，内联器总是打开的，
             // 使用 details来关闭它。
             "inliner": true,
             // 如果没有给出 details，未使用的跳板移除器总是打开的，
             // 使用 details来关闭它。
+=======
+            // The inliner is always off if no details are given,
+            // use details to switch it on.
+            "inliner": false,
+            // The unused jumpdest remover is always on if no details are given,
+            // use details to switch it off.
+>>>>>>> english/develop
             "jumpdestRemover": true,
             // 在换元运算中，有时会对字词重新排序。
             "orderLiterals": false,
@@ -358,6 +429,7 @@ EVM版本选项
         //
         // 合约级别（需要合约名称或 "*"）：
         //   abi - ABI
+<<<<<<< HEAD
         //   devdoc - 开发者文档（Natspec格式）
         //   userdoc - 用户文档（Natspec格式）
         //   metadata - 元数据
@@ -381,6 +453,31 @@ EVM版本选项
         //
         // 注意，使用 `evm`， `evm.bytecode`， `ewasm` 等将选择该输出的每个目标部分。
         // 此外，`*` 可以作为通配符来请求所有东西。
+=======
+        //   devdoc - Developer documentation (natspec)
+        //   userdoc - User documentation (natspec)
+        //   metadata - Metadata
+        //   ir - Yul intermediate representation of the code before optimization
+        //   irAst - AST of Yul intermediate representation of the code before optimization
+        //   irOptimized - Intermediate representation after optimization
+        //   irOptimizedAst - AST of intermediate representation after optimization
+        //   storageLayout - Slots, offsets and types of the contract's state variables.
+        //   evm.assembly - New assembly format
+        //   evm.legacyAssembly - Old-style assembly format in JSON
+        //   evm.bytecode.functionDebugData - Debugging information at function level
+        //   evm.bytecode.object - Bytecode object
+        //   evm.bytecode.opcodes - Opcodes list
+        //   evm.bytecode.sourceMap - Source mapping (useful for debugging)
+        //   evm.bytecode.linkReferences - Link references (if unlinked object)
+        //   evm.bytecode.generatedSources - Sources generated by the compiler
+        //   evm.deployedBytecode* - Deployed bytecode (has all the options that evm.bytecode has)
+        //   evm.deployedBytecode.immutableReferences - Map from AST ids to bytecode ranges that reference immutables
+        //   evm.methodIdentifiers - The list of function hashes
+        //   evm.gasEstimates - Function gas estimates
+        //
+        // Note that using a using `evm`, `evm.bytecode`, etc. will select every
+        // target part of that output. Additionally, `*` can be used as a wildcard to request everything.
+>>>>>>> english/develop
         //
         "outputSelection": {
           "*": {
@@ -414,6 +511,7 @@ EVM版本选项
           "divModWithSlacks": false,
           // 选择要使用的模型检查器引擎：所有（默认）， bmc， chc， 无。
           "engine": "chc",
+<<<<<<< HEAD
           // 选择在被调用函数的代码在编译时可用的情况下，
           // 是否应将外部调用视为可信。
           // 有关详细信息，请参阅SMT检查器部分。
@@ -424,6 +522,22 @@ EVM版本选项
           "showUnproved": true,
           // 如果有的话，选择应该使用哪些求解器。
           // 关于求解器的描述，见形式验证部分。
+=======
+          // Choose whether external calls should be considered trusted in case the
+          // code of the called function is available at compile-time.
+          // For details see the SMTChecker section.
+          "extCalls": "trusted",
+          // Choose which types of invariants should be reported to the user: contract, reentrancy.
+          "invariants": ["contract", "reentrancy"],
+          // Choose whether to output all proved targets. The default is `false`.
+          "showProved": true,
+          // Choose whether to output all unproved targets. The default is `false`.
+          "showUnproved": true,
+          // Choose whether to output all unsupported language features. The default is `false`.
+          "showUnsupported": true,
+          // Choose which solvers should be used, if available.
+          // See the Formal Verification section for the solvers description.
+>>>>>>> english/develop
           "solvers": ["cvc4", "smtlib2", "z3"],
           // 选择哪些目标应该被检查：常数条件，下溢，溢出，除以零，余额，断言，弹出空数组，界外。
           // 如果没有给出该选项，所有目标都被默认检查，除了 Solidity >=0.8.7 的下溢/溢出。
@@ -465,7 +579,11 @@ EVM版本选项
           // 强制：错误类型，如 “TypeError“， “InternalCompilerError“， “Exception” 等等。
           // 完整的类型清单见下文。
           "type": "TypeError",
+<<<<<<< HEAD
           // 强制：发生错误的组件，例如“general”，“ewasm”等
+=======
+          // Mandatory: Component where the error originated, such as "general" etc.
+>>>>>>> english/develop
           "component": "general",
           // 强制：错误的严重级别（“error”，“warning” 或 “info”，但请注意，这可能在未来被扩展。）
           "severity": "error",
@@ -502,9 +620,21 @@ EVM版本选项
             "userdoc": {},
             // 开发人员文档（natspec）
             "devdoc": {},
+<<<<<<< HEAD
             // 中间表示形式 (string)
             "ir": "",
             // 请参阅 "存储布局" 文档。
+=======
+            // Intermediate representation before optimization (string)
+            "ir": "",
+            // AST of intermediate representation before optimization
+            "irAst":  {/* ... */},
+            // Intermediate representation after optimization (string)
+            "irOptimized": "",
+            // AST of intermediate representation after optimization
+            "irOptimizedAst": {/* ... */},
+            // See the Storage Layout documentation.
+>>>>>>> english/develop
             "storageLayout": {"storage": [/* ... */], "types": {/* ... */} },
             // EVM相关输出
             "evm": {
@@ -580,6 +710,7 @@ EVM版本选项
                   "heavyLifting()": "infinite"
                 }
               }
+<<<<<<< HEAD
             },
             // Ewasm相关的输出
             "ewasm": {
@@ -587,6 +718,8 @@ EVM版本选项
               "wast": "",
               // 二进制格式（十六进制字符串）
               "wasm": ""
+=======
+>>>>>>> english/develop
             }
           }
         }
@@ -597,6 +730,7 @@ EVM版本选项
 错误类型
 ~~~~~~~~~~~
 
+<<<<<<< HEAD
 1. ``JSONError``： JSON输入不符合所需格式，例如，输入不是JSON对象，不支持的语言等。
 2. ``IOError``： IO和导入处理错误，例如，在提供的源里包含无法解析的URL或哈希值不匹配。
 3. ``ParserError``： 源代码不符合语言规则。
@@ -612,3 +746,20 @@ EVM版本选项
 13. ``YulException``： 在Yul代码生成过程中出现错误 - 这应该作为一个问题报告。
 14. ``Warning``： 警告，不会停止编译，但应尽可能处理。
 15. ``Info``： 编译器认为用户可能会在其中发现有用的信息，并不危险，也不一定需要处理。
+=======
+1. ``JSONError``: JSON input doesn't conform to the required format, e.g. input is not a JSON object, the language is not supported, etc.
+2. ``IOError``: IO and import processing errors, such as unresolvable URL or hash mismatch in supplied sources.
+3. ``ParserError``: Source code doesn't conform to the language rules.
+4. ``DocstringParsingError``: The NatSpec tags in the comment block cannot be parsed.
+5. ``SyntaxError``: Syntactical error, such as ``continue`` is used outside of a ``for`` loop.
+6. ``DeclarationError``: Invalid, unresolvable or clashing identifier names. e.g. ``Identifier not found``
+7. ``TypeError``: Error within the type system, such as invalid type conversions, invalid assignments, etc.
+8. ``UnimplementedFeatureError``: Feature is not supported by the compiler, but is expected to be supported in future versions.
+9. ``InternalCompilerError``: Internal bug triggered in the compiler - this should be reported as an issue.
+10. ``Exception``: Unknown failure during compilation - this should be reported as an issue.
+11. ``CompilerError``: Invalid use of the compiler stack - this should be reported as an issue.
+12. ``FatalError``: Fatal error not processed correctly - this should be reported as an issue.
+13. ``YulException``: Error during Yul code generation - this should be reported as an issue.
+14. ``Warning``: A warning, which didn't stop the compilation, but should be addressed if possible.
+15. ``Info``: Information that the compiler thinks the user might find useful, but is not dangerous and does not necessarily need to be addressed.
+>>>>>>> english/develop
