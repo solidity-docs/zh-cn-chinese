@@ -13,10 +13,19 @@
 简单的公开拍卖
 ===================
 
+<<<<<<< HEAD
 下面这个简单的拍卖合约的总体思路是，每个人都可以在竞标期间发送他们的竞标。
 竞标已经包括发送资金/以太币，以便将竞标者与他们的竞标绑定。
 如果最高出价被提高，之前的最高出价者就会拿回他们的钱。
 竞价期结束后，受益人需要手动调用合约，才能收到他们的钱 - 合约不能自己激活接收。
+=======
+The general idea of the following simple auction contract is that everyone can
+send their bids during a bidding period. The bids already include sending some compensation,
+e.g. Ether, in order to bind the bidders to their bid. If the highest bid is
+raised, the previous highest bidder gets their Ether back.  After the end of
+the bidding period, the contract has to be called manually for the beneficiary
+to receive their Ether - contracts cannot activate themselves.
+>>>>>>> english/develop
 
 .. code-block:: solidity
 
@@ -78,17 +87,33 @@
             if (block.timestamp > auctionEndTime)
                 revert AuctionAlreadyEnded();
 
+<<<<<<< HEAD
             // 如果出价不高，就把钱送回去
             //（revert语句将恢复这个函数执行中的所有变化，
             // 包括它已经收到钱）。
+=======
+            // If the bid is not higher, send the
+            // Ether back (the revert statement
+            // will revert all changes in this
+            // function execution including
+            // it having received the Ether).
+>>>>>>> english/develop
             if (msg.value <= highestBid)
                 revert BidNotHighEnough(highestBid);
 
             if (highestBid != 0) {
+<<<<<<< HEAD
                 // 简单地使用 highestBidder.send(highestBid)
                 // 返还出价时，是有安全风险的，
                 // 因为它可能执行一个不受信任的合约。
                 // 让接收方自己取钱总是比较安全的。
+=======
+                // Sending back the Ether by simply using
+                // highestBidder.send(highestBid) is a security risk
+                // because it could execute an untrusted contract.
+                // It is always safer to let the recipients
+                // withdraw their Ether themselves.
+>>>>>>> english/develop
                 pendingReturns[highestBidder] += highestBid;
             }
             highestBidder = msg.sender;
@@ -157,9 +182,23 @@
 竞标者必须公开他们的出价：他们发送未加密的值，
 合约检查出价的哈希值是否与竞标期间提供的值相同。
 
+<<<<<<< HEAD
 另一个挑战是如何使拍卖同时做到 **绑定和秘密** ：
 唯一能阻止竞标者在赢得拍卖后不付款的方式是，让他们将钱和竞标一起发出。
 但由于资金转移在以太坊中不能被隐藏，因此任何人都可以看到转移的资金。
+=======
+Another challenge is how to make the auction **binding and blind** at the same
+time: The only way to prevent the bidder from just not sending the Ether after
+they won the auction is to make them send it together with the bid. Since value
+transfers cannot be blinded in Ethereum, anyone can see the value.
+
+The following contract solves this problem by accepting any value that is
+larger than the highest bid. Since this can of course only be checked during
+the reveal phase, some bids might be **invalid**, and this is on purpose (it
+even provides an explicit flag to place invalid bids with high-value
+transfers): Bidders can confuse competition by placing several high or low
+invalid bids.
+>>>>>>> english/develop
 
 下面的合约通过接受任何大于最高出价的值来解决这个问题。
 当然，因为这只能在揭示阶段进行检查，有些出价可能是 **无效** 的，
