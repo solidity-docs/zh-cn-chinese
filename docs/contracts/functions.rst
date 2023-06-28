@@ -1,4 +1,4 @@
-.. index:: ! functions
+.. index:: ! functions, ! function;free
 
 .. _functions:
 
@@ -233,7 +233,11 @@ Pure 函数能够使用 ``revert()`` 和 ``require()`` 函数来恢复潜在的�
 因为只有之前在没有 ``view`` 或 ``pure`` 限制的代码中对状态的改变才会被恢复，
 并且该代码可以选择捕捉 ``revert`` 而不传递给它。
 
+<<<<<<< HEAD
 这种行为也与 ``STATICCALL`` 操作码一致。
+=======
+This behavior is also in line with the ``STATICCALL`` opcode.
+>>>>>>> english/develop
 
 .. warning::
   在EVM层面不可能阻止函数读取状态，只可能阻止它们写入状态
@@ -255,7 +259,7 @@ Pure 函数能够使用 ``revert()`` 和 ``require()`` 函数来恢复潜在的�
 特殊的函数
 =================
 
-.. index:: ! receive ether function, function;receive ! receive
+.. index:: ! receive ether function, function;receive, ! receive
 
 .. _receive-ether-function:
 
