@@ -23,7 +23,11 @@
         面向以太坊虚拟机的基于Python的智能合约开发和测试框架。
 
     * `Dapp <https://dapp.tools/>`_
+<<<<<<< HEAD
         用于从命令行构建，测试和部署智能合约的工具。
+=======
+        Tool for building, testing and deploying smart contracts from the command-line.
+>>>>>>> english/develop
 
     * `Embark <https://framework.embarklabs.io/>`_
         构建和部署去中心化应用程序的开发者平台。
