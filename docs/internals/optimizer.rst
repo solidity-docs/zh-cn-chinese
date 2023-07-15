@@ -24,8 +24,13 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 同样地，您可以使用 ``solc --strict-assembly --optimize`` 来产生一个独立的 Yul 模式。
 
 .. note::
+<<<<<<< HEAD
     `窥视孔（peephole）优化器 <https://en.wikipedia.org/wiki/Peephole_optimization>`_
     和内联器总是默认启用的，只能通过 :ref:`标准 JSON 文件配置 <compiler-api>` 关闭。
+=======
+    The `peephole optimizer <https://en.wikipedia.org/wiki/Peephole_optimization>`_ is always
+    enabled by default and can only be turned off via the :ref:`Standard JSON <compiler-api>`.
+>>>>>>> english/develop
 
 您可以在下面找到关于这两个优化器模块及其优化步骤的更多细节。
 
@@ -288,7 +293,10 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 ``L``        :ref:`load-resolver`
 ``M``        :ref:`loop-invariant-code-motion`
 ``r``        :ref:`redundant-assign-eliminator`
+<<<<<<< HEAD
 ``R``        :ref:`reasoning-based-simplifier` - 高度实验性
+=======
+>>>>>>> english/develop
 ``m``        :ref:`rematerialiser`
 ``V``        :ref:`SSA-reverser`
 ``a``        :ref:`SSA-transform`
@@ -302,9 +310,12 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 一些步骤依赖于 ``BlockFlattener``， ``FunctionGrouper``， ``ForLoopInitRewriter`` 所保证的属性。
 由于这个原因，Yul 优化器总是在应用用户提供的任何步骤之前应用它们。
 
+<<<<<<< HEAD
 基于推理的简化器（ReasoningBasedSimplifier）是一个优化器步骤，
 目前在默认步骤集中没有启用。它使用一个 SMT 求解器来简化算术表达式和布尔条件。
 此外，它还没有得到彻底的测试或验证，可能会产生不可复现的结果，所以请谨慎使用!
+=======
+>>>>>>> english/develop
 
 选择优化方案
 -----------------------
@@ -750,11 +761,20 @@ AST被遍历了两次：分别在在信息收集步骤和实际删除步骤中�
 
 .. _expression-simplifier:
 
+<<<<<<< HEAD
 表达式简化器
 ^^^^^^^^^^^^^^^^^^^^^
 
 表达式简化器使用数据流分析器，
 并利用表达式的等价变换列表，如 ``X + 0 -> X`` 来简化代码。
+=======
+ExpressionSimplifier
+^^^^^^^^^^^^^^^^^^^^
+
+The ExpressionSimplifier uses the Dataflow Analyzer and makes use
+of a list of equivalence transforms on expressions like ``X + 0 -> X``
+to simplify the code.
+>>>>>>> english/develop
 
 它试图在每个子表达式上匹配诸如 ``X + 0`` 的模式。
 在匹配过程中，它将变量解析为当前分配的表达式，
@@ -784,6 +804,7 @@ AST被遍历了两次：分别在在信息收集步骤和实际删除步骤中�
 
 先决条件：消歧器，循环初始重写器。
 
+<<<<<<< HEAD
 .. _reasoning-based-simplifier:
 
 基于推理的简化器
@@ -801,6 +822,9 @@ AST被遍历了两次：分别在在信息收集步骤和实际删除步骤中�
 先决条件：消歧器，SSA转换。
 
 声明规模的简化
+=======
+Statement-Scale Simplifications
+>>>>>>> english/develop
 -------------------------------
 
 .. _circular-reference-pruner:
@@ -1170,9 +1194,16 @@ SSA反转器
 这是一个微小的步骤，如果它与通用子表达式消除器和未使用过的处理器相结合，
 则有助于扭转SSA转换的影响。
 
+<<<<<<< HEAD
 我们生成的SSA形式对EVM和WebAssembly的代码生成是不利的，
 因为它生成了许多局部变量。最好的办法是用赋值重新使用现有的变量，
 而不是用新的变量声明。
+=======
+The SSA form we generate is detrimental to code generation
+because it produces many local variables. It would
+be better to just re-use existing variables with assignments instead of
+fresh variable declarations.
+>>>>>>> english/develop
 
 SSA转换改写
 
@@ -1281,6 +1312,7 @@ SSA转换改变了这种形式的语句，只需将声明和赋值互换。
     ...
     }
 
+<<<<<<< HEAD
 字面意义上的再物质化器应在此步骤之前运行。
 
 
@@ -1293,3 +1325,6 @@ SSA转换改变了这种形式的语句，只需将声明和赋值互换。
 将最上面的块改变为一个具有特定名称（“main”）的函数，它没有输入和输出。
 
 取决于函数分组器。
+=======
+The LiteralRematerialiser should be run before this step.
+>>>>>>> english/develop
