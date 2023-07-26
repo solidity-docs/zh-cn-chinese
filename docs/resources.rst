@@ -23,7 +23,11 @@
         面向以太坊虚拟机的基于Python的智能合约开发和测试框架。
 
     * `Dapp <https://dapp.tools/>`_
+<<<<<<< HEAD
         用于从命令行构建，测试和部署智能合约的工具。
+=======
+        Tool for building, testing and deploying smart contracts from the command-line.
+>>>>>>> english/develop
 
     * `Embark <https://framework.embarklabs.io/>`_
         构建和部署去中心化应用程序的开发者平台。
@@ -71,8 +75,13 @@
 
 * Visual Studio Code (VS Code)
 
+<<<<<<< HEAD
     * `以太坊 Remix 的 Visual Studio 代码扩展包 <https://marketplace.visualstudio.com/items?itemName=RemixProject.ethereum-remix>`_
         VS Code 的以太坊 Remix 扩展包
+=======
+    * `Ethereum Remix Visual Studio Code extension <https://github.com/ethereum/remix-vscode>`_
+        Ethereum Remix extension pack for VS Code
+>>>>>>> english/develop
 
     * `Juan Blanco 的 Solidity Visual Studio 代码扩展包 <https://juan.blanco.ws/solidity-contracts-in-visual-studio-code/>`_
         Microsoft Visual Studio Code 的 Solidity 插件，包括语法高亮和 Solidity 编译器。
@@ -113,9 +122,12 @@ Solidity 工具
 * `leafleth <https://github.com/clemlak/leafleth>`_
     Solidity智能合约的文档生成器。
 
+<<<<<<< HEAD
 * `PIET <https://piet.slock.it/>`_
     一个通过简单图形界面开发，审计和使用Solidity智能合约的工具。
 
+=======
+>>>>>>> english/develop
 * `Scaffold-ETH <https://github.com/scaffold-eth/scaffold-eth>`_
     专注于产品快速迭代的可分叉的以太坊开发堆栈。
 
