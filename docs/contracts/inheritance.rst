@@ -393,7 +393,6 @@ Solidity支持多重继承，包括多态性。
 在这种情况下，合约必须被标记为 :ref:`abstract <abstract-contract>`，
 因为这些参数不能从外部分配有效的值，只能通过派生合约的构造函数来赋值。
 
-<<<<<<< HEAD
 
 .. warning::
     在0.4.22版本之前，构造函数被定义为与合约同名的函数。
@@ -401,15 +400,6 @@ Solidity支持多重继承，包括多态性。
 
 .. warning::
     在0.7.0版本之前，您必须指定构造函数的可见性为 ``internal`` 或 ``public``。
-=======
-.. warning::
-    Prior to version 0.4.22, constructors were defined as functions with the same name as the contract.
-    This syntax was deprecated and is not allowed anymore in version 0.5.0.
-
-.. warning::
-    Prior to version 0.7.0, you had to specify the visibility of constructors as either
-    ``internal`` or ``public``.
->>>>>>> english/develop
 
 
 .. index:: ! base;constructor, inheritance list, contract;abstract, abstract contract
