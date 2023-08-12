@@ -4,8 +4,13 @@
 值类型
 ========
 
+<<<<<<< HEAD
 以下被称为值类型，因为它们的变量总是按值传递，
 也就是说，当这些变量被用作函数参数或者用在赋值语句中时，总会进行值拷贝。
+=======
+The following are called value types because their variables will always be passed by value, i.e. they are always copied when they
+are used as function arguments or in assignments.
+>>>>>>> english/develop
 
 .. index:: ! bool, ! true, ! false
 
@@ -47,11 +52,19 @@
 
 .. warning::
 
+<<<<<<< HEAD
   Solidity 中的整数被限制在一个特定的范围内。例如，对于 ``uint32``，这是 ``0`` 到 ``2**32 - 1``。
   有两种模式在这些类型上进行算术。“包装” 或 “未检查” 模式和 “检查” 模式。
   默认情况下，算术总是 “检查” 模式的，这意味着如果一个操作的结果超出了该类型的值范围，
   调用将通过一个 :ref:`失败的断言 <assert-and-require>` 而被恢复。
   您可以用 ``unchecked { ... }``。 更多的细节可以在关于 :ref:`未检查 <unchecked>` 的章节中找到。
+=======
+  Integers in Solidity are restricted to a certain range. For example, with ``uint32``, this is ``0`` up to ``2**32 - 1``.
+  There are two modes in which arithmetic is performed on these types: The "wrapping" or "unchecked" mode and the "checked" mode.
+  By default, arithmetic is always "checked", meaning that if an operation's result falls outside the value range
+  of the type, the call is reverted through a :ref:`failing assertion<assert-and-require>`. You can switch to "unchecked" mode
+  using ``unchecked { ... }``. More details can be found in the section about :ref:`unchecked <unchecked>`.
+>>>>>>> english/develop
 
 比较运算
 ^^^^^^^^^^^
@@ -135,8 +148,14 @@
 幂运算
 ^^^^^^
 
+<<<<<<< HEAD
 幂运算只适用于指数中的无符号类型。幂运算的结果类型总是等于基数的类型。
 请注意，它要足够大以容纳结果，并为潜在的断言失败或包装行为做好准备。
+=======
+Exponentiation is only available for unsigned types in the exponent. The resulting type
+of an exponentiation is always equal to the type of the base. Please take care that it is
+large enough to hold the result and prepare for potential assertion failures or wrapping behavior.
+>>>>>>> english/develop
 
 .. note::
   在检查模式下，幂运算只对小基数使用相对便宜的 ``exp`` 操作码。
@@ -177,7 +196,11 @@
 地址类型
 ---------
 
+<<<<<<< HEAD
 地址类型有两种大致相同的形式：
+=======
+The address type comes in two largely identical flavors:
+>>>>>>> english/develop
 
 - ``address``: 保存一个20字节的值（一个以太坊地址的大小）。
 - ``address payable``: 与 ``address`` 类型相同，但有额外的方法 ``transfer`` 和 ``send``。
@@ -251,6 +274,7 @@
 
 * ``send``
 
+<<<<<<< HEAD
 Send是 ``transfer`` 的低级对应部分。如果执行失败，当前的合约不会因异常而停止，但 ``send`` 会返回 ``false``。
 
 .. warning::
@@ -258,6 +282,15 @@ Send是 ``transfer`` 的低级对应部分。如果执行失败，当前的合�
     如果接收者的气体耗尽，也会失败。因此，为了安全地进行以太币转账，
     一定要检查 ``send`` 的返回值，或者使用 ``transfer``，甚至使用更好的方式：
     使用收款人提款的模式。
+=======
+``send`` is the low-level counterpart of ``transfer``. If the execution fails, the current contract will not stop with an exception, but ``send`` will return ``false``.
+
+.. warning::
+    There are some dangers in using ``send``: The transfer fails if the call stack depth is at 1024
+    (this can always be forced by the caller) and it also fails if the recipient runs out of gas. So in order
+    to make safe Ether transfers, always check the return value of ``send``, use ``transfer`` or even better:
+    use a pattern where the recipient withdraws the Ether.
+>>>>>>> english/develop
 
 * ``call``, ``delegatecall`` 和 ``staticcall``
 
@@ -410,7 +443,7 @@ Send是 ``transfer`` 的低级对应部分。如果执行失败，当前的合�
 ``string``:
     变长 UTF-8 编码字符串类型，参见 :ref:`arrays`。并不是值类型！
 
-.. index:: address, literal;address
+.. index:: address, ! literal;address
 
 .. _address_literals:
 
@@ -425,7 +458,7 @@ Send是 ``transfer`` 的低级对应部分。如果执行失败，当前的合�
 .. note::
     混合大小写的地址校验和格式定义在 `EIP-55 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-55.md>`_。
 
-.. index:: literal, literal;rational
+.. index:: integer, rational number, ! literal;rational
 
 .. _rational_literals:
 
@@ -490,7 +523,7 @@ Send是 ``transfer`` 的低级对应部分。如果执行失败，当前的合�
     uint128 a = 1;
     uint128 b = 2.5 + a + 0.5;
 
-.. index:: literal, literal;string, string
+.. index:: ! literal;string, string
 .. _string_literals:
 
 字符串字面常数和类型
@@ -541,7 +574,13 @@ Send是 ``transfer`` 的低级对应部分。如果执行失败，当前的合�
 任何非换行的 Unicode 行结束符（即LF, VF, FF, CR, NEL, LS, PS）都被认为是字符串字面的结束。
 换行只在字符串字面内容前面没有 ``\`` 的情况下终止。
 
+<<<<<<< HEAD
 Unicode 字面常数
+=======
+.. index:: ! literal;unicode
+
+Unicode Literals
+>>>>>>> english/develop
 ----------------
 
 普通字符串字面常数只能包含ASCII码，而 Unicode 字面常数 - 以关键字 ``unicode`` 为前缀 - 可以包含任何有效的UTF-8序列。
@@ -551,7 +590,7 @@ Unicode 字面常数
 
     string memory a = unicode"Hello 😃";
 
-.. index:: literal, bytes
+.. index:: ! literal;hexadecimal, bytes
 
 十六进制字面常数
 --------------------
@@ -564,7 +603,12 @@ Unicode 字面常数
 由空格分隔的多个十六进制字面常数被串联成一个字面常数：
 ``hex"00112233" hex"44556677"`` 相当于 ``hex"0011223344556677"``。
 
+<<<<<<< HEAD
 十六进制字面常数的行为与 :ref:`字符串字面常数 <string_literals>` 类似，并有相同的可转换性限制。
+=======
+Hexadecimal literals in some ways behave like :ref:`string literals <string_literals>` but are not
+implicitly convertible to the ``string`` type.
+>>>>>>> english/develop
 
 .. index:: enum
 
@@ -624,6 +668,7 @@ Unicode 字面常数
 
 .. _user-defined-value-types:
 
+<<<<<<< HEAD
 用户定义的值类型
 -----------------
 
@@ -634,6 +679,18 @@ Unicode 字面常数
 ``V`` 必须是一个内置的值类型（“底层类型”）。
 函数 ``C.wrap`` 被用来从底层类型转换到自定义类型。同样地，
 函数 ``C.unwrap`` 用于从自定义类型转换到底层类型。
+=======
+User-defined Value Types
+------------------------
+
+A user-defined value type allows creating a zero cost abstraction over an elementary value type.
+This is similar to an alias, but with stricter type requirements.
+
+A user-defined value type is defined using ``type C is V``, where ``C`` is the name of the newly
+introduced type and ``V`` has to be a built-in value type (the "underlying type"). The function
+``C.wrap`` is used to convert from the underlying type to the custom type. Similarly, the
+function ``C.unwrap`` is used to convert from the custom type to the underlying type.
+>>>>>>> english/develop
 
 类型 ``C`` 没有任何运算符或附加成员函数。特别是，甚至运算符 ``==`` 也没有定义。
 不允许对其他类型进行显式和隐式转换。
@@ -649,7 +706,11 @@ Unicode 字面常数
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity ^0.8.8;
 
+<<<<<<< HEAD
     // 使用用户定义的值类型表示一个18位小数，256位宽的定点类型。
+=======
+    // Represent a 18 decimal, 256 bit wide fixed point type using a user-defined value type.
+>>>>>>> english/develop
     type UFixed256x18 is uint256;
 
     /// 一个在UFixed256x18上进行定点操作的最小库。
