@@ -50,7 +50,7 @@ NatSpec 也可以包括第三方工具使用的注释。
 
   这在未来可能会发生变化。
 
-.. code-block:: Solidity
+.. code-block:: solidity
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.8.2 < 0.9.0;

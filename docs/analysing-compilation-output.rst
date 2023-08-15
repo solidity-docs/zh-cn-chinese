@@ -11,7 +11,7 @@
 
 以下合约（命名为 ``contract.sol`` ）为例：
 
-.. code-block:: Solidity
+.. code-block:: solidity
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.5.0 <0.9.0;
