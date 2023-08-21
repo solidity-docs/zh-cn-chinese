@@ -176,7 +176,7 @@ locals[
 	(Semicolon | body=block);
 
 /**
- * The definition of a free function.
+ * 自由函数的定义。
  */
  freeFunctionDefinition:
  	Function (identifier | Fallback | Receive)
@@ -322,11 +322,7 @@ errorDefinition:
 	Semicolon;
 
 /**
-<<<<<<< HEAD
- * 使用指令将库函数和自由函数附加到类型上。
- * 可以在合同和库中以及文件层面中出现。
-=======
- * Operators that users are allowed to implement for some types with `using for`.
+ * 允许用户使用 `using for` 为某些类型实现的运算符。
  */
 userDefinableOperator:
 	BitAnd
@@ -346,9 +342,8 @@ userDefinableOperator:
 	| NotEqual;
 
 /**
- * Using directive to attach library functions and free functions to types.
- * Can occur within contracts and libraries and at the file level.
->>>>>>> english/develop
+ * 使用指令将库函数和自由函数附加到类型上。
+ * 可以在合约和库中以及文件层面中出现。
  */
 usingDirective: Using (identifierPath | (LBrace identifierPath (As userDefinableOperator)? (Comma identifierPath (As userDefinableOperator)?)* RBrace)) For (Mul | typeName) Global? Semicolon;
 /**
