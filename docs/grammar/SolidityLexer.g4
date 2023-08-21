@@ -222,22 +222,16 @@ fragment EvenHexDigits: HexCharacter HexCharacter ('_'? HexCharacter HexCharacte
 fragment HexCharacter: [0-9A-Fa-f];
 
 /**
-<<<<<<< HEAD
- * 一个十进制数字的字面量由十进制数字组成，可以用下划线和一个可选的正负指数来分隔。
- * 如果这些数字包含一个小数点，则该数字具有定点类型。
-=======
- * Scanned but not used by any rule, i.e, disallowed.
- * solc parser considers number starting with '0', not immediately followed by '.' or 'x' as
- * octal, even if non octal digits '8' and '9' are present.
+ * 已扫描，但未被任何规则使用，即不允许。
+ * solc 解析器认为以'0'开头，后面没有紧跟'.'或'x'的数字为八进制数
+ * 即使存在非八进制数字'8'和'9'。
  */
 OctalNumber: '0' DecimalDigits ('.' DecimalDigits)?;
 
 
 /**
- * A decimal number literal consists of decimal digits that may be delimited by underscores and
- * an optional positive or negative exponent.
- * If the digits contain a decimal point, the literal has fixed point type.
->>>>>>> english/develop
+ * 一个十进制数字的字面量由十进制数字组成，可以用下划线和一个可选的正负指数来分隔。
+ * 如果这些数字包含一个小数点，则该数字具有定点类型。
  */
 DecimalNumber: (DecimalDigits | (DecimalDigits? '.' DecimalDigits)) ([eE] '-'? DecimalDigits)?;
 //@doc:inline
@@ -245,18 +239,14 @@ fragment DecimalDigits: [0-9] ('_'? [0-9])* ;
 
 
 /**
-<<<<<<< HEAD
- * solidity中的标识符必须以字母，美元符号或下划线开头，并且可以在第一个符号之后再包含数字。
-=======
- * This is needed to avoid successfully parsing a number followed by a string with no whitespace between.
+ * 需要这样做是为了避免成功解析一个数字后面的字符串，而字符串之间没有空白。
  */
 DecimalNumberFollowedByIdentifier: DecimalNumber Identifier;
 
 
 /**
- * An identifier in solidity has to start with a letter, a dollar-sign or an underscore and
- * may additionally contain numbers after the first symbol.
->>>>>>> english/develop
+ * solidity中的标识符必须以字母，美元符号或下划线开头，
+ * 并且可以在第一个符号之后再包含数字。
  */
 Identifier: IdentifierStart IdentifierPart*;
 //@doc:inline
