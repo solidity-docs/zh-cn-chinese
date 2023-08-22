@@ -18,14 +18,9 @@
 这些源文件及其标识符可以通过 ``output['contracts'][sourceName][contractName]['evm']['bytecode']['generatedSources']`` 获得。
 
 .. note::
-<<<<<<< HEAD
-    如果指令没有与任何特定的源文件相关联，源映射将分配一个整数标识符 ``-1``。
+    如果指令没有与任何特定的源文件相关联，
+    源映射将分配一个整数标识符 ``-1``。
     这可能发生在编译器生成的内联汇编语句所产生的字节码部分。
-=======
-    In the case of instructions that are not associated with any particular source file,
-    the source mapping assigns an integer identifier of ``-1``. This may happen for
-    bytecode sections stemming from compiler-generated inline assembly statements.
->>>>>>> english/develop
 
 AST内部的源映射使用以下符号：
 
