@@ -137,15 +137,9 @@ Solidity意义上的合约是代码（其 *函数*）和数据（其 *状态*）
 
 .. index:: mapping
 
-<<<<<<< HEAD
-下一行， ``mapping (address => uint) public balances;`` 也创建了一个公共状态变量，
+下一行， ``mapping(address => uint) public balances;`` 也创建了一个公共状态变量，
 但它是一个更复杂的数据类型。
 :ref:`映射 <mapping-types>` 类型将地址映射到 :ref:`无符号整数 <integers>`。
-=======
-The next line, ``mapping(address => uint) public balances;`` also
-creates a public state variable, but it is a more complex datatype.
-The :ref:`mapping <mapping-types>` type maps addresses to :ref:`unsigned integers <integers>`.
->>>>>>> english/develop
 
 映射可以被看作是 `哈希表 <https://en.wikipedia.org/wiki/Hash_table>`_，
 它实际上是被初始化的，因此每一个可能的键从一开始就存在，并被映射到一个值，其字节表示为全零的值。
@@ -267,14 +261,9 @@ The :ref:`mapping <mapping-types>` type maps addresses to :ref:`unsigned integer
 然后它们将在所有参与节点中执行和分发。
 如果两个交易相互矛盾，最终排在第二位的那个交易将被拒绝，不会成为区块的一部分。
 
-<<<<<<< HEAD
-这些块按时间形成了一个线性序列，这正是“区块链”这个词的来源。
-区块以一定的时间间隔添加到链上 — 对于以太坊，这间隔大约是17秒。
-=======
-These blocks form a linear sequence in time, and that is where the word "blockchain" derives from.
-Blocks are added to the chain at regular intervals, although these intervals may be subject to change in the future.
-For the most up-to-date information, it is recommended to monitor the network, for example, on `Etherscan <https://etherscan.io/chart/blocktime>`_.
->>>>>>> english/develop
+这些区块按时间形成了一个线性序列，这就是 “区块链” 一词的由来。
+区块每隔一段时间就会被添加到链上，但这些时间间隔在未来可能会发生变化。
+如需了解最新信息，建议在 `Etherscan <https://etherscan.io/chart/blocktime>`_ 等网站上对网络进行监控。
 
 作为 “顺序选择机制”（也就是所谓的“挖矿”）的一部分，
 可能有时会发生块（blocks）被回滚的情况，但仅在链的“末端”。
