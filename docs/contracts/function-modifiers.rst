@@ -6,8 +6,14 @@
 函数修饰器
 ******************
 
+<<<<<<< HEAD
 函数修饰器可以用来以声明的方式改变函数的行为。
 例如，您可以使用修饰器在执行函数之前自动检查一个条件。
+=======
+Modifiers can be used to change the behavior of functions in a declarative way.
+For example,
+you can use a modifier to automatically check a condition prior to executing the function.
+>>>>>>> english/develop
 
 修饰器是合约的可继承属性，可以被派生合约重载，
 但只有当它们被标记为 ``virtual`` 时，才能被重载。
