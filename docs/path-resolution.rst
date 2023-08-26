@@ -230,22 +230,13 @@ VFS的初始内容取决于您如何调用编译器：
 
 编译器根据导入路径将导入解析为一个源单元名称，方法如下：
 
-<<<<<<< HEAD
-#. 我们从导入源单位的源单位名称开始。
+#. 我们从导入源单元的源单元名称开始。
 #. 最后一个带有斜线的路径段将从解析的名称中删除。
 #. 然后，对于导入路径中的每一段，从最左边的一段开始：
+
     - 如果该段是 ``.``，则跳过。
     - 如果该段是 ``..``，最后一个带有斜线的路径段将从解析的名称中删除。
     - 否则，该段（如果解析的名称不是空的，前面有一个单斜线）被附加到解析的名称上。
-=======
-#. We start with the source unit name of the importing source unit.
-#. The last path segment with preceding slashes is removed from the resolved name.
-#. Then, for every segment in the import path, starting from the leftmost one:
-
-    - If the segment is ``.``, it is skipped.
-    - If the segment is ``..``, the last path segment with preceding slashes is removed from the resolved name.
-    - Otherwise, the segment (preceded by a single slash if the resolved name is not empty), is appended to the resolved name.
->>>>>>> english/develop
 
 删除前面有斜线的最后一个路径段，可以理解为工作原理如下：
 
