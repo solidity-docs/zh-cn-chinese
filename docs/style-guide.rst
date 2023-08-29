@@ -13,24 +13,13 @@
 
 许多项目会实施他们自己的编码风格指南。如遇冲突，应优先使用具体项目的风格指南。
 
-<<<<<<< HEAD
-本风格指南中的结构和许多建议是取自 python 的
+本风格指南中的结构和许多建议是取自 Python 的
 `pep8 风格指南 <https://peps.python.org/pep-0008/>`_ 。
 
 本指南并 *不是* 以指导正确或最佳的 solidity 编码方式为目的。
 本指南的目的是保持代码的 *一致性* 。
-来自 python 的参考文档 `pep8 <https://peps.python.org/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds>`_，
+来自 Python 的参考文档 `pep8 <https://peps.python.org/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds>`_，
 很好地阐述了这个概念。
-=======
-The structure and many of the recommendations within this style guide were
-taken from Python's
-`pep8 style guide <https://peps.python.org/pep-0008/>`_.
-
-The goal of this guide is *not* to be the right way or the best way to write
-Solidity code.  The goal of this guide is *consistency*.  A quote from Python's
-`pep8 <https://peps.python.org/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds>`_
-captures this concept well.
->>>>>>> english/develop
 
 .. note::
 
@@ -1278,20 +1267,19 @@ Import 语句应始终放在文件的顶部。
 
 当所需的名称与现有状态变量，函数，内置或其他保留关键字名称冲突时，建议使用此约定。
 
-Underscore Prefix for Non-external Functions and Variables
-==========================================================
+非外部函数和变量的下划线前缀
+============================
 
 * ``_singleLeadingUnderscore``
 
-This convention is suggested for non-external functions and state variables (``private`` or ``internal``). State variables without a specified visibility are ``internal`` by default.
+建议对非外部函数和状态变量（ ``private`` 或 ``internal``）使用此约定。默认情况下，没有指定可见性的状态变量是 ``internal``。
 
-When designing a smart contract, the public-facing API (functions that can be called by any account)
-is an important consideration.
-Leading underscores allow you to immediately recognize the intent of such functions,
-but more importantly, if you change a function from non-external to external (including ``public``)
-and rename it accordingly, this forces you to review every call site while renaming.
-This can be an important manual check against unintended external functions
-and a common source of security vulnerabilities (avoid find-replace-all tooling for this change).
+在设计智能合约时，面向公众的API（任何账户都可以调用的函数）是一个重要的考虑因素。
+前导下划线允许您立即识别此类函数的意图，
+但更重要的是，如果您将函数从非外部函数更改为外部函数（包括 ``public``）
+并相应地重命名，这将迫使您在重命名时审查每个调用栈。
+这可能是针对非预期外部函数的重要手动检查，
+也是安全漏洞的常见来源（避免使用查找-替换-全部工具来进行此更改）。
 
 .. _style_guide_natspec:
 
