@@ -537,7 +537,8 @@ JSON
   ``view`` （:ref:`指定为不修改区块链状态 <view-functions>`），
   ``nonpayable`` （函数不接受以太币 - 默认选项） 和 ``payable`` （函数可接收以太币）。
 
-Constructor，receive 和 fallback 函数没有 ``name`` 或 ``outputs`` 属性。Receive 和 fallback 函数也没有 ``inputs`` 属性。
+构造函数（constructor）， receive 函数 和 fallback 函数没有 ``name`` 或 ``outputs`` 属性。
+receive 函数 和 fallback 函数也没有 ``inputs`` 属性。
 
 .. note::
     向不接收以太币函数发送非零的以太币将使交易回滚。
