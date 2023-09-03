@@ -9,30 +9,35 @@ Solidity
   by the Solidity team and will always be the most accurate and most up-to-date one.
   When in doubt, please always refer to the `English (original) documentation <https://docs.soliditylang.org/en/latest/>`_.
 
-Solidity是一门为实现智能合约而创建的面向对象的高级编程语言。 智能合约是管理以太坊中账户行为的程序。
+Solidity是一门为实现智能合约而创建的面向对象的高级编程语言。
+智能合约是管理以太坊中账户行为的程序。
 
 Solidity 是一种面向以太坊虚拟机 (EVM) 的 `带花括号的语言 <https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Curly-bracket_languages>`_。
-它受 C++，Python 和 JavaScript 的影响。您可以在  :doc:`语言的影响因素 <language-influences>` 部分中找到更多有关 Solidity 受哪些语言启发的细节。
+它受 C++，Python， 和 JavaScript 的影响。
+您可以在 :doc:`语言的影响因素 <language-influences>` 部分中找到更多有关 Solidity 受哪些语言启发的细节。
 
 Solidity 是静态类型语言，支持继承，库和复杂的用户自定义的类型以及其他特性。
 
-下面您将会看到，使用 Solidity，您可以创建用于投票、众筹、秘密竞价（盲拍）以及多重签名钱包等用途的合约。
+使用 Solidity，您可以创建用于投票、众筹、秘密竞价（盲拍）以及多重签名钱包等用途的合约。
 
-当开发智能合约时，您应该使用最新版本的Solidity。除某些特殊情况之外，只有最新版本才会收到
+当开发智能合约时，您应该使用最新版本的 Solidity。
+除某些特殊情况之外，只有最新版本才会收到
 `安全修复 <https://github.com/ethereum/solidity/security/policy#supported-versions>`_。
-此外，重大的变化以及新功能会定期引入。
+此外，突破性的变化以及新功能会定期引入。
 目前，我们使用 0.y.z 版本号 `来表明这种快速的变化 <https://semver.org/#spec-item-4>`_。
 
 .. warning::
 
-  Solidity最近发布了0.8.x版本，该版本引入了许多重大更新。 清务必阅读 :doc:`完整列表 <080-breaking-changes>`。
+  Solidity 最近发布了 0.8.x 版本，该版本引入了许多重大更新。 
+  请务必阅读 :doc:`完整列表 <080-breaking-changes>`。
 
 始终欢迎改进 Solidity 或此文档的想法,
 请阅读我们的 :doc:`贡献者指南 <contributing>` 以了解更多细节。
 
 .. Hint::
 
-  您可以通过点击左下角的版本号弹出的菜单来选择首选的下载格式来下载该文档的 PDF，HTML 或 Epub 格式。
+  您可以通过点击左下角的版本号弹出的菜单来选择首选的下载格式
+  来下载该文档的 PDF，HTML 或 Epub 格式。
 
 
 入门指南
@@ -40,7 +45,7 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 
 **1. 了解智能合约基础知识**
 
-如果您是智能合约概念的新手，我们建议您从深入了解 "智能合约介绍" 部分开始，其中包括：
+如果您是智能合约概念的新手，我们建议您从深入了解 “智能合约介绍” 部分开始，包括以下内容：
 
 * 用 Solidity 编写的 :ref:`一个简单的智能合约例子 <simple-smart-contract>`。
 * :ref:`区块链基础知识 <blockchain-basics>`.
@@ -57,16 +62,17 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 只需选择您喜欢的选项，并按照 :ref:`安装页面 <installing-solidity>` 上提供的步骤操作即可。
 
 .. hint::
-  您可以通过 `Remix IDE <https://remix.ethereum.org>`_ 在浏览器中直接尝试代码示例。
+  您可以通过 `Remix IDE <https://remix.ethereum.org>`_ 
+  在浏览器中直接尝试代码示例。
   Remix 是一个基于网络浏览器的IDE，允许您编写，部署和管理Solidity智能合约，
   无需在本地安装 Solidity。
 
 .. warning::
-    由于人类编写的软件可能会存在 bug，
+    由于人类编写的软件可能会存在错误，
     因此在编写智能合约时应遵循软件开发的最佳实践。
     这包括代码审查，测试，审计和正确性证明。
     智能合约用户有时对代码的信心甚至超过了作者，
-    区块链和智能合约也存在独特的问题，
+    区块链和智能合约也有其独特的问题需要注意，
     因此在开始编写生产代码之前，请确保您已阅读
     :ref:`security_considerations` 部分。
 
@@ -76,8 +82,8 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 `以太坊开发者资源 <https://ethereum.org/en/developers/>`_ 可以为您提供有关以太坊的更多文档，
 以及各种教程、工具和开发框架。
 
-如果您有任何问题，可以在 `以太坊 StackExchange <https://ethereum.stackexchange.com/>`_ 上寻找答案，
-或者在我们的 `Gitter 频道 <https://gitter.im/ethereum/solidity/>`_。
+如果您有任何问题，可以在 `以太坊 StackExchange <https://ethereum.stackexchange.com/>`_ 上，
+或者在我们的 `Gitter 频道 <https://gitter.im/ethereum/solidity/>`_ 上搜索答案或提问。
 
 .. _translations:
 
@@ -117,8 +123,8 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
    :caption: 基础知识
 
    introduction-to-smart-contracts.rst
-   installing-solidity.rst
    solidity-by-example.rst
+   installing-solidity.rst
 
 .. toctree::
    :maxdepth: 2
@@ -157,21 +163,31 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 
 .. toctree::
    :maxdepth: 2
-   :caption: 补充材料
+   :caption: 建议内容
 
+   security-considerations.rst
+   bugs.rst
    050-breaking-changes.rst
    060-breaking-changes.rst
    070-breaking-changes.rst
    080-breaking-changes.rst
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 补充材料
+
    natspec-format.rst
-   security-considerations.rst
    smtchecker.rst
-   resources.rst
-   path-resolution.rst
    yul.rst
+   path-resolution.rst
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 资源
+
    style-guide.rst
    common-patterns.rst
-   bugs.rst
+   resources.rst
    contributing.rst
-   brand-guide.rst
    language-influences.rst
+   brand-guide.rst

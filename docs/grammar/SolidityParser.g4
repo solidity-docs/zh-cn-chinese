@@ -16,7 +16,7 @@ sourceUnit: (
 	| contractDefinition
 	| interfaceDefinition
 	| libraryDefinition
-	| functionDefinition
+	| freeFunctionDefinition
 	| constantVariableDeclaration
 	| structDefinition
 	| enumDefinition
@@ -85,7 +85,7 @@ inheritanceSpecifier: name=identifierPath arguments=callArgumentList?;
  */
 contractBodyElement:
 	constructorDefinition
-	| functionDefinition
+	| contractFunctionDefinition
 	| modifierDefinition
 	| fallbackFunctionDefinition
 	| receiveFunctionDefinition
@@ -155,12 +155,12 @@ overrideSpecifier: Override (LParen overrides+=identifierPath (Comma overrides+=
  * 根据定义函数的上下文，可能会有进一步的限制。
  * 例如，接口中的函数必须是未实现的，也就是说，不能包含主体块。
  */
-functionDefinition
+contractFunctionDefinition
 locals[
 	boolean visibilitySet = false,
 	boolean mutabilitySet = false,
 	boolean virtualSet = false,
-	boolean overrideSpecifierSet = false
+	boolean overrideSpecifierSet = false,
 ]
 :
 	Function (identifier | Fallback | Receive)
@@ -174,6 +174,17 @@ locals[
 	 )*
 	(Returns LParen returnParameters=parameterList RParen)?
 	(Semicolon | body=block);
+
+/**
+ * 自由函数的定义。
+ */
+ freeFunctionDefinition:
+ 	Function (identifier | Fallback | Receive)
+ 	LParen (arguments=parameterList)? RParen
+ 	stateMutability?
+ 	(Returns LParen returnParameters=parameterList RParen)?
+ 	(Semicolon | body=block);
+
 /**
  * 修改器的定义。
  * 注意，在修改器的主体块中，下划线不能作为标识符使用，
@@ -311,7 +322,7 @@ errorDefinition:
 	Semicolon;
 
 /**
- * 用户可以通过 `using for` 为某些类型实现的操作符。
+ * 允许用户使用 `using for` 为某些类型实现的运算符。
  */
 userDefinableOperator:
 	BitAnd
@@ -332,7 +343,7 @@ userDefinableOperator:
 
 /**
  * 使用指令将库函数和自由函数附加到类型上。
- * 可以在合同和库中以及文件层面中出现。
+ * 可以在合约和库中以及文件层面中出现。
  */
 usingDirective: Using (identifierPath | (LBrace identifierPath (As userDefinableOperator)? (Comma identifierPath (As userDefinableOperator)?)* RBrace)) For (Mul | typeName) Global? Semicolon;
 /**
@@ -366,7 +377,7 @@ dataLocation: Memory | Storage | Calldata;
  */
 expression:
 	expression LBrack index=expression? RBrack # IndexAccess
-	| expression LBrack start=expression? Colon end=expression? RBrack # IndexRangeAccess
+	| expression LBrack startIndex=expression? Colon endIndex=expression? RBrack # IndexRangeAccess
 	| expression Period (identifier | Address) # MemberAccess
 	| expression LBrace (namedArgument (Comma namedArgument)*)? RBrace # FunctionCallOptions
 	| expression callArgumentList # FunctionCall
@@ -387,12 +398,13 @@ expression:
 	| expression Or expression # OrOperation
 	|<assoc=right> expression Conditional expression Colon expression # Conditional
 	|<assoc=right> expression assignOp expression # Assignment
-	| New typeName # NewExpression
+	| New typeName # NewExpr
 	| tupleExpression # Tuple
 	| inlineArrayExpression # InlineArray
  	| (
 		identifier
 		| literal
+		| literalWithSubDenomination
 		| elementaryTypeName[false]
 	  ) # PrimaryExpression
 ;
@@ -411,6 +423,9 @@ inlineArrayExpression: LBrack (expression ( Comma expression)* ) RBrack;
 identifier: Identifier | From | Error | Revert | Global;
 
 literal: stringLiteral | numberLiteral | booleanLiteral | hexStringLiteral | unicodeStringLiteral;
+
+literalWithSubDenomination: numberLiteral SubDenomination;
+
 booleanLiteral: True | False;
 /**
  * 一个完整的字符串字面量由一个或几个连续的引号字符串组成。
@@ -428,7 +443,8 @@ unicodeStringLiteral: UnicodeStringLiteral+;
 /**
  * 数字字面量可以是带可选单位的十进制或十六进制数字。
  */
-numberLiteral: (DecimalNumber | HexNumber) NumberUnit?;
+numberLiteral: DecimalNumber | HexNumber;
+
 /**
  * 带花括号的语句块。可以打开自己的作用域。
  */

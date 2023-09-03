@@ -48,10 +48,10 @@
 .. warning::
 
   Solidity 中的整数被限制在一个特定的范围内。例如，对于 ``uint32``，这是 ``0`` 到 ``2**32 - 1``。
-  有两种模式在这些类型上进行算术。“包装” 或 “未检查” 模式和 “检查” 模式。
+  有两种模式在这些类型上进行算术。“包装” 或 “不检查” 模式和 “检查” 模式。
   默认情况下，算术总是 “检查” 模式的，这意味着如果一个操作的结果超出了该类型的值范围，
   调用将通过一个 :ref:`失败的断言 <assert-and-require>` 而被恢复。
-  您可以用 ``unchecked { ... }``。 更多的细节可以在关于 :ref:`未检查 <unchecked>` 的章节中找到。
+  您可以用 ``unchecked { ... }`` 切换到 “不检查” 模式。更多的细节可以在关于 :ref:`不检查 <unchecked>` 的章节中找到。
 
 比较运算
 ^^^^^^^^^^^
@@ -88,7 +88,7 @@
 
 加法、减法和乘法具有通常的语义，在上溢和下溢方面有两种不同的模式：
 
-默认情况下，所有的算术都会被检查是否有下溢或上溢，但这可以用 :ref:`未检查限制 <unchecked>` 来禁用。
+默认情况下，所有的算术都会被检查是否有下溢或上溢，但这可以用 :ref:`不检查限制 <unchecked>` 来禁用。
 这会导致包装的算术。更多细节可以在那一节中找到。
 
 表达式 ``-x`` 等同于 ``(T(0) - x)``，其中
@@ -177,7 +177,7 @@
 地址类型
 ---------
 
-地址类型有两种大致相同的形式：
+地址类型有两种基本相同的类型：
 
 - ``address``: 保存一个20字节的值（一个以太坊地址的大小）。
 - ``address payable``: 与 ``address`` 类型相同，但有额外的方法 ``transfer`` 和 ``send``。
@@ -251,7 +251,7 @@
 
 * ``send``
 
-Send是 ``transfer`` 的低级对应部分。如果执行失败，当前的合约不会因异常而停止，但 ``send`` 会返回 ``false``。
+``send`` 是 ``transfer`` 的低级对应部分。如果执行失败，当前的合约不会因异常而停止，但 ``send`` 会返回 ``false``。
 
 .. warning::
     使用 ``send`` 有一些危险：如果调用堆栈深度为1024，传输就会失败（这可以由调用者强制执行），
@@ -410,7 +410,7 @@ Send是 ``transfer`` 的低级对应部分。如果执行失败，当前的合�
 ``string``:
     变长 UTF-8 编码字符串类型，参见 :ref:`arrays`。并不是值类型！
 
-.. index:: address, literal;address
+.. index:: address, ! literal;address
 
 .. _address_literals:
 
@@ -425,7 +425,7 @@ Send是 ``transfer`` 的低级对应部分。如果执行失败，当前的合�
 .. note::
     混合大小写的地址校验和格式定义在 `EIP-55 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-55.md>`_。
 
-.. index:: literal, literal;rational
+.. index:: integer, rational number, ! literal;rational
 
 .. _rational_literals:
 
@@ -490,7 +490,7 @@ Send是 ``transfer`` 的低级对应部分。如果执行失败，当前的合�
     uint128 a = 1;
     uint128 b = 2.5 + a + 0.5;
 
-.. index:: literal, literal;string, string
+.. index:: ! literal;string, string
 .. _string_literals:
 
 字符串字面常数和类型
@@ -541,7 +541,9 @@ Send是 ``transfer`` 的低级对应部分。如果执行失败，当前的合�
 任何非换行的 Unicode 行结束符（即LF, VF, FF, CR, NEL, LS, PS）都被认为是字符串字面的结束。
 换行只在字符串字面内容前面没有 ``\`` 的情况下终止。
 
-Unicode 字面常数
+.. index:: ! literal;unicode
+
+Unicode 字面量
 ----------------
 
 普通字符串字面常数只能包含ASCII码，而 Unicode 字面常数 - 以关键字 ``unicode`` 为前缀 - 可以包含任何有效的UTF-8序列。
@@ -551,7 +553,7 @@ Unicode 字面常数
 
     string memory a = unicode"Hello 😃";
 
-.. index:: literal, bytes
+.. index:: ! literal;hexadecimal, bytes
 
 十六进制字面常数
 --------------------
@@ -564,7 +566,8 @@ Unicode 字面常数
 由空格分隔的多个十六进制字面常数被串联成一个字面常数：
 ``hex"00112233" hex"44556677"`` 相当于 ``hex"0011223344556677"``。
 
-十六进制字面常数的行为与 :ref:`字符串字面常数 <string_literals>` 类似，并有相同的可转换性限制。
+十六进制字面常数的行为与 :ref:`字符串字面常数 <string_literals>` 类似，
+但是不能隐式转换为 ``string`` 类型。
 
 .. index:: enum
 
@@ -633,7 +636,7 @@ Unicode 字面常数
 一个用户定义的值类型是用 ``type C is V`` 定义的，其中 ``C`` 是新引入的类型的名称，
 ``V`` 必须是一个内置的值类型（“底层类型”）。
 函数 ``C.wrap`` 被用来从底层类型转换到自定义类型。同样地，
-函数 ``C.unwrap`` 用于从自定义类型转换到底层类型。
+函数 ``C.unwrap`` 被用来从自定义类型转换到底层类型。
 
 类型 ``C`` 没有任何运算符或附加成员函数。特别是，甚至运算符 ``==`` 也没有定义。
 不允许对其他类型进行显式和隐式转换。

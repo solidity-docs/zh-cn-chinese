@@ -27,9 +27,9 @@
 
 如果您有问题或拉动请求要讨论，或有兴趣听听团队和贡献者正在做什么，您可以加入我们的公共团队电话会议：
 
-- 每周一和周三下午3点，欧洲中部/欧洲中部夏令时间。
+- 每周三下午3点，中欧标准时间/中欧夏令时间。
 
-这两个会议都在 `Jitsi <https://meet.soliditylang.org/>`_ 举行。
+会议在 `Jitsi <https://meet.soliditylang.org/>`_ 举行。
 
 如何报告问题
 ====================
@@ -150,7 +150,7 @@ Solidity包括不同类型的测试，其中大部分捆绑在
 - `run_test (-t) <https://www.boost.org/doc/libs/release/libs/test/doc/html/boost_test/utf_reference/rt_param_reference/run_test.html>`_ 来运行特定的测试案例，以及
 - `report-level (-r) <https://www.boost.org/doc/libs/release/libs/test/doc/html/boost_test/utf_reference/rt_param_reference/report_level.html>`_ 给出一个更详细的报告。
 
-..  note::
+.. note::
 
     那些在Windows环境下使用的人，想在没有libz3的情况下运行上述基本集，可以使用Git Bash，
     使用命令为： ``./build/test/Release/soltest.exe -- --no-smt``。
@@ -158,6 +158,9 @@ Solidity包括不同类型的测试，其中大部分捆绑在
 
 如果您想使用GDB进行调试，确保您的构建方式与 “通常” 不同。
 例如，您可以在您的 ``build`` 文件夹中运行以下命令：
+
+如果您想使用 GDB 进行调试，请确保您的构建方式与“通常”的构建方式不同。
+例如，您可以在 ``build`` 文件夹中运行以下命令：
 
 .. code-block:: bash
 
@@ -381,13 +384,12 @@ Whiskers 系统
 英语
 ----------------
 
-使用英语，除非使用项目或品牌名称，否则首选英式拼写。
-尽量减少使用当地的俚语和参考资料，尽量使您的语言对所有的读者都尽可能清晰。以下是一些参考资料，希望对大家有所帮助：
+使用国际英语，除非使用项目或品牌名称。
+尽量减少使用当地的俚语和参考文化，尽量使您的语言对所有的读者都尽可能清晰。
+以下是一些参考资料，希望对大家有所帮助：
 
 * `简化技术英语 <https://en.wikipedia.org/wiki/Simplified_Technical_English>`_
 * `国际英语 <https://en.wikipedia.org/wiki/International_English>`_
-* `英式英语拼写 <https://web.archive.org/web/20220324094038/https://www.lexico.com/grammar/british-and-spelling>`_
-
 
 .. note::
 

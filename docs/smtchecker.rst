@@ -62,7 +62,7 @@ SMT 检查器所报告的潜在警告是：
 溢出
 ========
 
-.. code-block:: Solidity
+.. code-block:: solidity
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.8.0;
@@ -110,7 +110,7 @@ SMT 检查器所报告的潜在警告是：
 如果我们添加了过滤掉溢出情况的 ``require`` 语句，
 SMT检查器就会证明没有溢出是可以达到的（会通过不报告警告表现出来）。
 
-.. code-block:: Solidity
+.. code-block:: solidity
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.8.0;
@@ -147,7 +147,7 @@ SMT检查器就会证明没有溢出是可以达到的（会通过不报告警�
 由于 ``f`` 确实是单调增长的，SMT检查器证明了我们的属性是正确的。
 我们鼓励您试试这个属性和函数定义，看看会有什么样的结果!
 
-.. code-block:: Solidity
+.. code-block:: solidity
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.8.0;
@@ -168,7 +168,7 @@ SMT检查器就会证明没有溢出是可以达到的（会通过不报告警�
 下面的代码搜索一个不受限制的数字数组的最大元素，
 并断言找到的元素必须大于或等于数组中的每个元素的属性。
 
-.. code-block:: Solidity
+.. code-block:: solidity
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.8.0;
@@ -200,7 +200,7 @@ SMT检查器就会证明没有溢出是可以达到的（会通过不报告警�
 所有的属性都被正确证明是安全的。
 可以随意改变属性和/或在数组上添加限制，以看到不同的结果。例如，将代码改为
 
-.. code-block:: Solidity
+.. code-block:: solidity
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.8.0;
@@ -250,7 +250,7 @@ SMT检查器就会证明没有溢出是可以达到的（会通过不报告警�
 让我们在位置（0，0）放置一个机器人。该机器人只能在对角线上移动，一次只能走一步，
 不能在网格外移动。机器人的状态机可以用下面的智能合约来表示。
 
-.. code-block:: Solidity
+.. code-block:: solidity
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.8.0;
@@ -298,7 +298,7 @@ SMT检查器设法证明，无论我们给机器人多少条命令，
 我们也可以欺骗SMT检查器，让它给我们提供一条通往某个我们认为可能是可访问的位置的路径。
 我们可以通过添加以下函数，来增加(2, 4)是 *不* 可访问的属性。
 
-.. code-block:: Solidity
+.. code-block:: solidity
 
     function reach_2_4() public view {
         assert(!(x == 2 && y == 4));
@@ -345,7 +345,7 @@ SMT检查器准确地告诉我们 *如何* 访问到(2, 4)。
 即使外部调用的代码可以做任何事情，包括重新进入调用者合约，
 这些属性仍然是真的。
 
-.. code-block:: Solidity
+.. code-block:: solidity
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.8.0;
@@ -424,7 +424,7 @@ SMT检查器使用了一个硬编码的资源限制（ ``rlimit`` ），
 这个选项大致转化为每个查询 “几秒钟超时”。
 当然，许多属性非常复杂，需要大量的时间来解决，而决定并不重要。
 如果SMT检查器不能用默认的 ``rlimit`` 选项处理合约属性，
-则可以通过CLI选项 ``--model-checker-timeout <time>`` 或
+则可以通过命令行界面（CLI）选项 ``--model-checker-timeout <time>`` 或
 JSON选项 ``settings.modelChecker.timeout=<time>`` 给出以毫秒为单位的超时。
 其中0表示不超时。
 
@@ -433,9 +433,9 @@ JSON选项 ``settings.modelChecker.timeout=<time>`` 给出以毫秒为单位的�
 验证目标
 ====================
 
-SMT检查器创建的验证目标的类型也可以通过CLI选项 ``--model-checker-target <targets>``
+SMT检查器创建的验证目标的类型也可以通过命令行界面选项 ``--model-checker-target <targets>``
 或JSON选项 ``settings.modelChecker.targets=<targets>`` 来定制。
-在CLI情况下， ``<targets>`` 是一个没有空格的逗号分隔的一个或多个验证目标的列表，
+在命令行界面情况下， ``<targets>`` 是一个没有空格的逗号分隔的一个或多个验证目标的列表，
 在JSON输入中是一个或多个作为字符串的目标数组。
 代表目标的关键词是：
 
@@ -447,7 +447,7 @@ SMT检查器创建的验证目标的类型也可以通过CLI选项 ``--model-che
 - 弹出一个空数组： ``popEmptyArray``。
 - 越界的数组/固定字节索引访问： ``outOfBounds``。
 - 转账资金不足： ``balance``。
-- 以上都是： ``default`` （仅适用CLI）。
+- 以上都是： ``default`` （仅适用命令行界面）。
 
 一个常见的目标子集可能是，例如： ``--model-checker-targets assert,overflow``。
 
@@ -456,13 +456,36 @@ SMT检查器创建的验证目标的类型也可以通过CLI选项 ``--model-che
 关于如何以及何时分割验证目标，没有精确的指导方法。
 但在处理大型合约时，它可能是有用的。
 
+验证的目标
+==============
+
+如果有任何已证明的目标，SMT检查器会向每个引擎发出一个警告，
+说明有多少目标已证明。如果用户希望查看所有已证明的具体目标，
+可使用命令行选项 ``--model-checker-show-proved`` 和 
+JSON 选项 ``settings.modelChecker.showProved = true``。
+
 未验证的目标
 ================
 
 如果有任何未验证的目标，SMT检查器会发出一个警告，
 说明有多少个未验证的目标。如果用户希望看到所有具体的未验证的目标，
-可以使用CLI选项 ``--model-checker-show-unproved``
+可以使用命令行界面选项 ``--model-checker-show-unproved``
 和JSON选项 ``settings.modelChecker.showUnproved = true``。
+
+不支持的语言功能
+=================
+
+SMT检查器应用的 SMT 编码不完全支持某些 Solidity 语言特性，
+例如汇编块。
+不支持的构造通过过度近似进行抽象以保持健全性，
+这意味着即使不支持该特性，任何报告为安全的属性也是安全的。
+但是，当目标属性依赖于不支持特征的精确行为时，这种抽象可能会导致误报。
+如果编码器遇到这种情况，默认情况下会报告一个通用警告，
+说明它看到了多少不支持的特性。
+如果用户希望查看所有特定的不支持特性，可以使用命令行界面选项
+``--model-checker-show-unsupported`` 和 JSON 选项 
+``settings.modelChecker.showUnsupported = true``，
+它们的默认值是 ``false``。
 
 已验证过的合约
 ==================
@@ -476,7 +499,7 @@ SMT检查器创建的验证目标的类型也可以通过CLI选项 ``--model-che
 这可以减少编码和生成查询的复杂性。
 请注意，抽象合约在默认情况下不会被SMT检查器分析为最终派生的合约。
 
-选择的合约可以通过CLI，用 <source>:<contract> 形式的键值对，以逗号分隔的列表（不允许有空格）给出：
+选择的合约可以通过命令行界面，用 <source>:<contract> 形式的键值对，以逗号分隔的列表（不允许有空格）给出：
 ``--model-checker-contracts "<source1.sol:contract1>,<source2.sol:contract2>,<source2.sol:contract3>"``，
 以及通过 :ref:`JSON 输入<compiler-api>` 中的对象 ``settings.modelChecker.contracts``，它有如下格式：
 
@@ -487,11 +510,11 @@ SMT检查器创建的验证目标的类型也可以通过CLI选项 ``--model-che
         "source2.sol": ["contract2", "contract3"]
     }
 
-可信任的外部调用
-======================
+可信的外部调用
+===============
 
-默认情况下，SMT检查器不假定编译时可用的代码与外部调用的运行时代码相同。
-以以下合约为例：
+默认情况下，SMT检查器不会假定编译时可用代码与外部调用的运行时代码相同。
+以下面的合约为例：
 
 .. code-block:: solidity
 
@@ -509,25 +532,25 @@ SMT检查器创建的验证目标的类型也可以通过CLI选项 ``--model-che
         }
     }
 
-当调用 ``MyContract.callExt`` 时，一个地址被作为参数给出。
-在部署时，我们不能确定地知道地址 ``_e`` 实际上是否包含了 ``Ext`` 合约的部署。
-因此，SMT检查器会警告上述断言可能被违反，
-这是真实的，如果 ``_e`` 包含了其他不是 ``Ext`` 的合约。
+当调用 ``MyContract.callExt`` 时，参数是一个地址。
+在部署时，我们无法确定地址 ``_e`` 是否确实包含合约 ``Ext`` 的部署。
+因此，如果 ``_e`` 包含除 ``Ext`` 以外的其他合约，
+SMT检查器就会发出警告，称上述断言可能被违反。
 
-然而，将这些外部调用视为可信是有用的，
-例如，测试不同接口的实现是否符合相同的属性。
-这意味着假设地址 ``_e`` 确实被作为 ``Ext`` 合约部署。
-这种模式可以通过 CLI 选项 ``--model-checker-ext-calls=trusted`` 
-或 JSON 字段 ``settings.modelChecker.extCalls: "trusted"`` 启用。
+不过，将这些外部调用视为可信调用可能很有用，例如，
+可以测试接口的不同实现是否符合约相同属性。
+这意味着假设地址 ``_e`` 确实是作为合约 ``Ext`` 部署的。
+这种模式可以通过命令行界面选项 ``--model-checker-ext-calls=trusted`` 
+或 JSON 字段 ``settings.modelChecker.extCalls： "trusted"`` 来启用。
 
-请注意，启用此模式可能会使SMT检查器分析的计算成本大大提高。
+请注意，启用该模式会使SMT检查器分析的计算成本大大增加。
 
-这种模式的一个重要部分是，它适用于合约类型和对合约的高级外部调用，
-而不适用于如 ``call`` 和 ``delegatecall`` 等低级调用。
-一个地址的存储是按合约类型存储的，
+该模式的一个重要部分是，它适用于合约类型和对合约的高级外部调用，
+而不是诸如 ``call`` 和 ``delegatecall`` 之类的低级调用。
+地址的存储是按合约类型存储的，
 SMT检查器假定外部调用的合约具有调用者表达式的类型。
-因此，将一个 ``address`` 或一个合约转换为不同的合约类型将产生不同的存储值，
-如果假设不一致，可能会产生不可靠的结果，如下例：
+因此，将 ``address`` 或合约转换为不同的合约类型会产生不同的存储值，
+如果假设不一致，可能会产生不正确的结果，例如下面的示例：
 
 .. code-block:: solidity
 
@@ -550,28 +573,29 @@ SMT检查器假定外部调用的合约具有调用者表达式的类型。
         function f() public {
             address d = address(new D(42));
 
-            // `d` 被部署为 `D`, 所以现在它的 `x` 应该是42。
-            assert(D(d).x() == 42); // 应该成功
-            assert(D(d).x() == 43); // 应该失败
+            // `d` 是被部署的合约 `D`，因此其 `x` 现在应为 42。
+            assert(D(d).x() == 42); // 应该成立
+            assert(D(d).x() == 43); // 应该不成立
 
-            // E 和 D 具有相同的接口，
-            // 所以以下的调用在运行时也会工作。
-            // 然而，对 `E(d)` 的更改并没有反映在 `D(d)` 上。
+            // 合约 E 和 合约 D 具有相同的接口，因此
+            // 下面的调用在运行时也会有效。
+            // 然而，`E(d)` 的变化并没有反映在 `D(d)` 中。
             E(d).setX(1024);
 
             // 现在从 `D(d)` 读取将显示旧值。
-            // 下面的断言在运行时应该失败，
-            // 但在这种模式的分析中却成功了（因此不可靠）。
+            // 下面的断言本应在运行时失败，
+            // 但在此模式的分析中却成功了（不健全）。
             assert(D(d).x() == 42);
             // 下面的断言在运行时应该成功，
-            // 但在这种模式的分析中却会失败（假阳性）。
+            // 但在此模式的分析中却失败了（假阳性）。
             assert(D(d).x() == 1024);
         }
     }
 
-由于以上原因，确保对某个 ``address`` 或 ``contract`` 类型的变量的可信外部调用总是具有相同的调用者表达式类型。
+由于上述原因，请确保对某个 ``address`` 或 ``contract`` 类型变量的
+可信外部调用始终具有相同的调用表达式类型。
 
-在继承的情况下，将被调用的合约的变量作为最终派生类型的类型进行转换也是有帮助的。
+在继承的情况下，将被调用合约的变量转换为最派生类型的类型也很有帮助。
 
    .. code-block:: solidity
 
@@ -617,18 +641,17 @@ SMT检查器假定外部调用的合约具有调用者表达式的类型。
         }
     }
 
-注意，在函数 ``property_transfer`` 中，外部调用是在变量 ``t`` 上执行的
+请注意，在函数 ``property_transfer`` 中，外部调用是对变量 ``t`` 执行的。
 
-这种模式的另一个注意事项是对合约类型的状态变量的调用在被分析的合约之外。
-在下面的代码中，即使合约 ``B`` 部署了合约 ``A``，
-也有可能在对 ``B`` 本身的交易之间， ``B.a`` 中存储的地址被任何人在外部调用。
-存储在 ``B.a`` 中的地址也可以被任何人在合约 ``B`` 之外和合约 ``B`` 本身的交易之间调用。
-为了反映对 ``B.a`` 的可能更改，编码允许对 ``B.a`` 进行无限次数的外部调用。
-编码将跟踪 ``B.a`` 的存储，因此断言（2）应该成立。
-然而，目前的编码允许这样的调用从概念上从合约 ``B`` 进行，因此断言（3）失败。
-逻辑上使编码更强大是信任模式的扩展，正在开发中。
-请注意，编码不跟踪 ``address`` 变量的存储，因此，
-如果 ``B.a`` 的类型是 ``address``，编码将假定其存储在对合约 ``B`` 的交易之间不会更改。
+这种模式的另一个注意事项是调用被分析合约之外的合约类型的状态变量。
+在下面的代码中，即使 ``B`` 部署了 ``A``，存储在 ``B.a`` 中的地址也有可能在事务之间
+被 ``B`` 以外的任何人调用到 ``B`` 本身。
+为了反映 ``B.a`` 可能发生的变化，编码允许从外部对 ``B.a`` 进行次数不限的调用。
+编码会跟踪 ``B.a`` 的存储情况，因此断言 (2) 应该成立。然而，
+目前的编码允许从概念上对 ``B`` 进行这种调用，因此断言 (3) 不成立。 
+使编码在逻辑上更强大是可信模式的扩展，目前正在开发中。
+请注意，编码并不跟踪 ``address`` 变量的存储，因此，
+如果 ``B.a`` 的类型是 ``address``，编码会假定它的存储在到 ``B`` 的事务之间不会改变。
 
    .. code-block:: solidity
 
@@ -650,20 +673,21 @@ SMT检查器假定外部调用的合约具有调用者表达式的类型。
         A a;
         constructor() {
             a = new A();
-            assert(a.x() == 0); // (1) 应该成功
+            assert(a.x() == 0); // (1) 应该成立
         }
         function g() public view {
-            assert(a.owner() == address(this)); // (2) 应该成功
-            assert(a.x() == 0); // (3) 应该成功，但是由于假阳性而失败
+            assert(a.owner() == address(this)); // (2) 应该成立
+            assert(a.x() == 0); // (3) 应该成立, 但失败了，由于假阳性
         }
     }
 
 报告推断的归纳变量
-======================================
+==================
 
-于那些被CHC引擎证明为安全的属性，
-SMT检查器可以检索由Horn求解器推断出的归纳不变性，作为证明的一部分。
-目前有两种类型的不变量可以报告给用户：
+对于用 CHC 引擎证明安全的属性，
+SMT检查器可以检索由 Horn 求解器推断出的归纳不变式，
+作为证明的一部分。
+目前只能向用户报告两种类型的不变式：
 
 - 合约不变量：这些是合约的状态变量的属性，在合约可能运行的每一个可能的事务之前和之后都是真的。
   例如， ``x >= y``，其中 ``x`` 和 ``y`` 是一个合约的状态变量。
@@ -672,7 +696,7 @@ SMT检查器可以检索由Horn求解器推断出的归纳不变性，作为证�
   其中外部调用可以自由地做任何事情，包括对分析的合约进行可重入调用。
   导数变量代表所述外部调用后的状态变量的值。例如： ``lock -> x = x'``。
 
-用户可以使用CLI选项 ``--model-checker-invariants "contract,reentrancy"`` 来选择要报告的不变量类型，
+用户可以使用命令行界面选项 ``--model-checker-invariants "contract,reentrancy"`` 来选择要报告的不变量类型，
 或者在 :ref:`JSON 输入<compiler-api>` 中的字段 ``settings.modelChecker.invariants`` 中作为数组。
 默认情况下，SMT检查器不报告不变量。
 
@@ -715,7 +739,7 @@ SMT检查器模块实现了两个不同的推理引擎，一个是有界模型�
 
 默认情况下，两个引擎都会被使用，其中首先运行CHC，
 每一个没有被证明的属性都被传递给BMC。
-您可以通过CLI选项 ``--model-checker-engine {all,bmc,chc,none}`` 或
+您可以通过命令行界面选项 ``--model-checker-engine {all,bmc,chc,none}`` 或
 JSON选项 ``settings.modelChecker.engine {all,bmc,chc,none}`` 来选择一个特定的引擎。
 
 有界模型检查器 （BMC）
@@ -751,7 +775,7 @@ BMC使用一个SMT求解器，而CHC使用一个Horn求解器。
 作为一个Horn求解器使用，而 `Eldarica <https://github.com/uuverifiers/eldarica>`_
 则同时做这两种工作。
 
-如果求解器可用的话，用户可以通过CLI选项 ``--model-checker-solvers {all,cvc4,eld,smtlib2,z3}``
+如果求解器可用的话，用户可以通过命令行界面选项 ``--model-checker-solvers {all,cvc4,eld,smtlib2,z3}``
 或JSON选项 ``settings.modelChecker.solvers=[smtlib2,z3]`` 来选择应该使用哪个求解器，
 其中：
 
@@ -763,9 +787,9 @@ BMC使用一个SMT求解器，而CHC使用一个Horn求解器。
   根据调用哪个求解器，BMC和CHC都可以使用此方法。
 - ``z3`` 是可用的情况
 
-  - 如果 ``solc`` 与它一起被编译的话。
-  - 如果Linux系统中安装了4.8.x及其以上版本的动态 ``z3`` 库（从Solidity 0.7.6开始）。
-  - 在 ``soljson.js`` （从Solidity 0.6.9开始）中静态的，也就是编译器的Javascript二进制。
+  - 如果 ``solc`` 与它一起被编译的话；
+  - 如果Linux系统中安装了4.8.x及其以上版本的动态 ``z3`` 库（从Solidity 0.7.6开始）；
+  - 在 ``soljson.js`` （从Solidity 0.6.9开始）中静态的，也就是编译器的JavaScript二进制。
 
 .. note::
   z3 4.8.16 版本破坏了与以前版本的 ABI 兼容性，

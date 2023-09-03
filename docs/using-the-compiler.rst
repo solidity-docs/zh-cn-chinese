@@ -15,9 +15,9 @@
 基本用法
 -----------
 
-``solc`` 是 Solidity 仓库的构建目标之一, 它是 solidity 命令行编译器。
+``solc`` 是 Solidity 仓库的构建目标之一, 它是 Solidity 命令行编译器。
 使用 ``solc --help`` 可以为您提供所有选项的解释。编译器可以产生各种输出，
-从简单的二进制文件和抽象语法树(解析树)上的汇编到气体使用量的估计。
+从简单的二进制文件和抽象语法树（解析树）上的汇编到gas使用量的估计。
 如果您只想编译一个文件，您可以运行 ``solc --bin sourceFile.sol`` 来生成二进制文件。
 如果您想通过 ``solc`` 获得一些更高级的输出信息，
 可以通过 ``solc -o outputDirectory --bin --ast-compact-json --asm sourceFile.sol`` 命令
@@ -171,8 +171,10 @@ EVM版本选项
 - ``london`` 
    - 区块的基本费用（ `EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ 和 `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_ ）
      可以通过全局的 ``block.basefee`` 或内联汇编中的 ``basefee()`` 访问。
-- ``paris`` （ **默认项** ）
+- ``paris`` 
    - 引入了 ``prevrandao()`` 和 ``block.prevrandao``，并改变了现在已经废弃的 ``block.difficulty`` 的语义，不允许在内联汇编中使用 ``difficulty()`` （见 `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）。
+- ``shanghai`` （ **默认项** ）
+  - 由于引入了 ``push0``，代码尺寸更小，并且节省了gas（参见 `EIP-3855 <https://eips.ethereum.org/EIPS/eip-3855>`_）。
 
 .. index:: ! standard JSON, ! --standard-json
 .. _compiler-api:
@@ -197,7 +199,7 @@ EVM版本选项
 .. code-block:: javascript
 
     {
-      // 必选：源代码语言。目前支持的是 “Solidity“ 和 “Yul“。
+      // 必选：源代码语言。目前支持的是 “Solidity“，“Yul“ 和 “SolidityAST” （实验性的）。
       "language": "Solidity",
       // 必选
       "sources":
@@ -221,6 +223,14 @@ EVM版本选项
             "/tmp/path/to/file.sol"
             // 如果使用文件，其目录应通过 `--allow-paths <path>` 添加到命令行中。
           ]
+          // 如果语言设置为 “SolidityAST”，则需要在 “ast” 字段下提供 AST。
+          // 请注意，ASTs 的导入是试验性的，尤其是：
+          // - 导入无效的 ASTs 会产生未定义的结果，并且
+          // - 对无效的 ASTs 不提供适当的错误报告。
+          // 此外，请注意 AST 导入只消耗编译器在 “stopAfter”（停止后）模式下生成的 AST 字段： 
+          // “parsing” 模式下生成的 AST 字段，然后重新执行分析，
+          // 因此 AST 中任何基于分析的注释在导入时都会被忽略。
+          "ast": { ... } // 格式化为 json ast 请求的 ``ast`` 输出选择。
         },
         "destructible":
         {
@@ -414,14 +424,18 @@ EVM版本选项
           "divModWithSlacks": false,
           // 选择要使用的模型检查器引擎：所有（默认）， bmc， chc， 无。
           "engine": "chc",
-          // 选择在被调用函数的代码在编译时可用的情况下，
-          // 是否应将外部调用视为可信。
-          // 有关详细信息，请参阅SMT检查器部分。
+          // 选择在编译时可获得被调用函数代码的情况下，
+          // 外部调用是否应被视为可信。
+          // 详情请参阅SMT检查器部分。
           "extCalls": "trusted",
           // 选择哪些类型的不变性应该报告给用户：合约，重入。
           "invariants": ["contract", "reentrancy"],
+          // 选择是否输出所有验证过的目标。默认为 `false`。
+          "showProved": true,
           // 选择是否输出所有未验证的目标。默认为 `false`。
           "showUnproved": true,
+          // 选择是否输出所有不支持的语言功能。默认为 `false`。
+          "showUnsupported": true,
           // 如果有的话，选择应该使用哪些求解器。
           // 关于求解器的描述，见形式验证部分。
           "solvers": ["cvc4", "smtlib2", "z3"],
@@ -609,6 +623,6 @@ EVM版本选项
 10. ``Exception``： 编译期间的未知失败 — 应将此报告为一个issue。
 11. ``CompilerError``： 编译器堆栈的无效使用 — 应将此报告为一个issue。
 12. ``FatalError``： 未正确处理致命错误 — 应将此报告为一个issue。
-13. ``YulException``： 在Yul代码生成过程中出现错误 - 这应该作为一个问题报告。
+13. ``YulException``： 在Yul代码生成过程中出现错误 - 这应该作为一个issue报告。
 14. ``Warning``： 警告，不会停止编译，但应尽可能处理。
 15. ``Info``： 编译器认为用户可能会在其中发现有用的信息，并不危险，也不一定需要处理。

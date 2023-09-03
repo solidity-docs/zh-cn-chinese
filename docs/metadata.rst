@@ -6,14 +6,18 @@
 
 .. index:: metadata, contract verification
 
-Solidity 编译器自动生成一个 JSON 文件，即合约元数据，
-其中包含有关已编译合约的信息。您可以使用此文件来查询编译器版本，使用的源码，ABI 和 NatSpec 文档，
-以便更安全地与合约交互并验证其源代码。
+Solidity 编译器自动生成一个 JSON 文件。
+该文件包含两种有关已编译合约的信息：
 
-编译器默认将元数据文件的IPFS哈希附加到每个合约的字节码末尾（详见下文），
-这样您就可以通过认证的方式来检索文件，而不必求助于中心化数据提供者。
-其他可用的选项是Swarm哈希值和不将元数据哈希值附加到字节码上。
-这些可以通过 :ref:`标准 JSON 接口 <compiler-api>` 来配置。
+- 如何与合约交互：ABI 和 NatSpec 文档。
+- 如何重现编译并验证已部署的合约：
+  编译器版本、编译器设置和使用的源文件。
+
+默认情况下，编译器会将元数据文件的 IPFS 哈希值附加到
+每个合约的运行时字节码（不一定是创建字节码）末尾，
+这样，如果发布了该文件，就可以通过验证的方式检索该文件，而无需求助于集中式数据提供者。
+其他可用选项包括 Swarm 哈希值和不在字节码中附加元数据哈希值。
+这些选项可通过 :ref:`标准 JSON 接口 <compiler-api>` 进行配置。
 
 您必须将元数据文件发布到IPFS，Swarm或其他服务，
 以便其他人可以访问它。您可以通过使用 ``solc --metadata`` 命令
@@ -24,106 +28,49 @@ Solidity 编译器自动生成一个 JSON 文件，即合约元数据，
 对于IPFS， ``ipfs add`` 返回的 CID 中包含的哈希值（不是文件的直接sha2-256哈希值）
 应与字节码中包含的哈希值相匹配。
 
-元数据文件有以下格式。下面的例子是以人类可读的方式呈现的。
-正确的元数据格式应该正确地使用引号，
-将空白减少到最低限度，并对所有对象的键进行排序，得出唯一的格式。
-注释是不被允许的，在此仅用于解释目的。
+元数据文件的格式如下。下面的示例是以人类可读的方式呈现的。
+正确格式化的元数据应正确使用引号，
+尽量减少空白，并按字母顺序对所有对象的键值进行排序，以形成规范格式。
+不允许使用注释，此处注释仅用于解释目的。
 
 .. code-block:: javascript
 
     {
-      // 必选：元数据格式的版本
-      "version": "1",
-      // 必选：源代码的编程语言，一般会选择规范的“子版本”
-      "language": "Solidity",
       // 必选：编译器的详情，内容视语言而定。
       "compiler": {
+        // 可选：生成此输出的编译器二进制文件的哈希值
+        "keccak256": "0x123...",
         // 对 Solidity 来说是必选的：编译器的版本
-        "version": "0.8.2+commit.661d1103",
-        // 可选： 生成此输出的编译器二进制文件的哈希值
-        "keccak256": "0x123..."
+        "version": "0.8.2+commit.661d1103"
       },
-      // 必选：编译的源文件／源单元，键值为文件路径
-      "sources":
-      {
-        "myDirectory/myFile.sol": {
-          // 必选：源文件的 keccak256 哈希值
-          "keccak256": "0x123...",
-          // 必选：（除非使用 “content”，见下文）：已排序的源文件的URL，
-          // 协议可以是任意的，
-          // 但建议使用 IPFS URL
-          "urls": [ "bzz-raw://7d7a...", "dweb:/ipfs/QmN..." ],
-          // 可选：源文件中给出的 SPDX 许可证标识符。
-          "license": "MIT"
-        },
-        "destructible": {
-          // 必选：源文件的 keccak256 哈希值
-          "keccak256": "0x234...",
-          // 必选（除非定义了“urls”）： 源文件的字面内容
-          "content": "contract destructible is owned { function destroy() { if (msg.sender == owner) selfdestruct(owner); } }"
-        }
-      },
-      // 必选：编译器的设置
-      "settings":
-      {
-        // 对 Solidity 来说是必选的：已排序的导入重映射列表
-        "remappings": [ ":g=/dir" ],
-        // 可选：优化器设置。“enabled” 和 "runs" 这两个字段已被废弃，
-        // 这里只是为了向后兼容而给出。
-        "optimizer": {
-          "enabled": true,
-          "runs": 500,
-          "details": {
-            // 默认值为 “true“
-            "peephole": true,
-            // 内联器默认值为 “true“
-            "inliner": true,
-            // 跳转目的地移除器默认为 “true“
-            "jumpdestRemover": true,
-            "orderLiterals": false,
-            "deduplicate": false,
-            "cse": false,
-            "constantOptimizer": false,
-            "yul": true,
-            // 可选：只在 “yul“ 为 “true“ 时出现
-            "yulDetails": {
-              "stackAllocation": false,
-              "optimizerSteps": "dhfoDgvulfnTUtnIf..."
-            }
-          }
-        },
-        "metadata": {
-          // 显示输入 json 中使用的设置，默认为 “true”
-          "appendCBOR": true,
-          // 显示输入 json 中使用的设置，默认为 “false”
-          "useLiteralContent": true,
-          // 显示输入json中使用的设置，默认为 “ipfs“
-          "bytecodeHash": "ipfs"
-        },
-        // 对 Solidity 来说是必选的：用以生成该元数据的文件路径和合约名或库名
-        "compilationTarget": {
-          "myDirectory/myFile.sol": "MyContract"
-        },
-        // 对 Solidity 来说是必须的：所使用的库合约的地址
-        "libraries": {
-          "MyLib": "0x123123..."
-        }
-      },
+      // 必选：源代码的编程语言，一般会选择规范的“子版本”
+      "language": "Solidity",
       // 必选：合约的生成信息
-      "output":
-      {
+      "output": {
         // 必选：合约的 ABI 定义，见 “合约 ABI 规范”
         "abi": [/* ... */],
-        // 必选：合约的开发者 NatSpec 文档
+        // 必选：合约的开发者 NatSpec 文档，详见 https://docs.soliditylang.org/en/latest/natspec-format.html
         "devdoc": {
-          "version": 1 // NatSpec 版本
-          "kind": "dev",
-          // 合约中 @author NatSpec 字段的内容
+          // 合约 @author NatSpec字段的内容
           "author": "John Doe",
-          // 合约中 @title NatSpec 字段的内容
-          "title": "MyERC20: an example ERC20"
           // 合约中 @dev NatSpec 字段的内容
           "details": "Interface of the ERC20 standard as defined in the EIP. See https://eips.ethereum.org/EIPS/eip-20 for details",
+          "errors": {
+            "MintToZeroAddress()" : {
+              "details": "Cannot mint to zero address"
+            }
+          },
+          "events": {
+            "Transfer(address,address,uint256)": {
+              "details": "Emitted when `value` tokens are moved from one account (`from`) toanother (`to`).",
+              "params": {
+                "from": "The sender address",
+                "to": "The receiver address",
+                "value": "The token amount"
+              }
+            }
+          },
+          "kind": "dev",
           "methods": {
             "transfer(address,uint256)": {
               // 方法的 @dev NatSpec 字段的内容
@@ -132,8 +79,8 @@ Solidity 编译器自动生成一个 JSON 文件，即合约元数据，
               "params": {
                 "_value": "The amount tokens to be transferred",
                 "_to": "The receiver address"
-              }
-              // 方法的 @return NatSpec 字段的内容
+              },
+              // @return NatSpec 字段的内容。
               "returns": {
                 // 如果存在，返回var名称（这里是 “success”）。如果返回的var是未命名的，“_0” 作为键。
                 "success": "a boolean value indicating whether the operation succeeded"
@@ -145,34 +92,101 @@ Solidity 编译器自动生成一个 JSON 文件，即合约元数据，
               // 状态变量的 @dev NatSpec 字段的内容
               "details": "Must be set during contract creation. Can then only be changed by the owner"
             }
-          }
-          "events": {
-             "Transfer(address,address,uint256)": {
-               "details": "Emitted when `value` tokens are moved from one account (`from`) toanother (`to`)."
-               "params": {
-                 "from": "The sender address"
-                 "to": "The receiver address"
-                 "value": "The token amount"
-               }
-             }
-          }
-        },
-        // 必选：合约的用户 NatSpec 文档
-        "userdoc": {
+          },
+          // 合约中 @title NatSpec 字段的内容
+          "title": "MyERC20: an example ERC20",
           "version": 1 // NatSpec 版本
+        },
+        // 必选：合约的用户 NatSpec 文档。请参阅“NatSpec 格式”
+        "userdoc": {
+          "errors": {
+            "ApprovalCallerNotOwnerNorApproved()": [
+              {
+                "notice": "The caller must own the token or be an approved operator."
+              }
+            ]
+          },
+          "events": {
+            "Transfer(address,address,uint256)": {
+              "notice": "`_value` tokens have been moved from `from` to `to`"
+            }
+          },
           "kind": "user",
           "methods": {
             "transfer(address,uint256)": {
               "notice": "Transfers `_value` tokens to address `_to`"
             }
           },
-          "events": {
-            "Transfer(address,address,uint256)": {
-              "notice": "`_value` tokens have been moved from `from` to `to`"
-            }
-          }
+          "version": 1 // NatSpec 版本
         }
-      }
+      },
+      // 必选： 编译器设置。反映编译时 JSON 输入的设置。
+      // 查看标准 JSON 输入的 “setting” 字段文档
+      "settings": {
+        // 对 Solidity 来说是必选的： 文件路径以及为其创建的合约或库的名称。
+        "compilationTarget": {
+          "myDirectory/myFile.sol": "MyContract"
+        },
+        // 对 Solidity 来说是必选的。
+        "evmVersion": "london",
+        // 对 Solidity 来说是必选的： 使用的库合约地址。
+        "libraries": {
+          "MyLib": "0x123123..."
+        },
+        "metadata": {
+          // 反映输入 json 中使用的设置，默认为“true”
+          "appendCBOR": true,
+          // 反映输入 json 中使用的设置，默认为“ipfs”
+          "bytecodeHash": "ipfs",
+          // 反映输入 json 中使用的设置，默认为“false”
+          "useLiteralContent": true
+        },
+        // 可选：优化设置。“enabled” 和 “runs” 字段已弃用，仅用于向后兼容。
+        "optimizer": {
+          "details": {
+            "constantOptimizer": false,
+            "cse": false,
+            "deduplicate": false,
+            // inliner 默认为“true”
+            "inliner": true,
+            // jumpdestRemover 默认为“true”
+            "jumpdestRemover": true,
+            "orderLiterals": false,
+            // peephole 默认为“true”
+            "peephole": true,
+            "yul": true,
+            // 可选：仅当 “yul” 为 “true” 时才出现
+            "yulDetails": {
+              "optimizerSteps": "dhfoDgvulfnTUtnIf...",
+              "stackAllocation": false
+            }
+          },
+          "enabled": true,
+          "runs": 500
+        },
+        // 对 Solidity 来说是必选的：导入重新映射的排序列表。
+        "remappings": [ ":g=/dir" ]
+      },
+      // 必选：编译源文件/源单元，键为文件路径
+      "sources": {
+        "destructible": {
+          // 必选（除非使用了 “url”）：源文件的字面内容
+          "content": "contract destructible is owned { function destroy() { if (msg.sender == owner) selfdestruct(owner); } }",
+          // 必选：源文件的 keccak256 哈希值
+          "keccak256": "0x234..."
+        },
+        "myDirectory/myFile.sol": {
+          // 必选：源文件的 keccak256 哈希值
+          "keccak256": "0x123...",
+          // 可选：源文件中给出的 SPDX 许可证标识符
+          "license": "MIT",
+          // 必选（除非使用了 “content”，见上文）：指向源文件的排序 URL，
+          // 协议可任意选择，但建议使用 IPFS URL
+          "urls": [ "bzz-raw://7d7a...", "dweb:/ipfs/QmN..." ]
+        }
+      },
+      // 必选：元数据格式的版本
+      "version": 1
     }
 
 .. warning::
@@ -190,22 +204,31 @@ Solidity 编译器自动生成一个 JSON 文件，即合约元数据，
 在字节码中对元数据哈希值进行编码
 =============================================
 
-因为我们将来可能会支持其他方式来检索元数据文件，
-所以映射 ``{"ipfs": <IPFS 哈希值>, "solc": <编译器版本>}`` 将以
-`CBOR <https://tools.ietf.org/html/rfc7049>`_-编码来存储。
-由于映射可能包含更多的键（见下文），而且该编码的开头不容易找到，
-所以添加两个字节来表述其长度，以大端方式编码。
-当前版本的 Solidity 编译器通常在部署的字节码的末尾添加以下内容
+编译器目前默认将规范元数据文件的 
+`IPFS 哈希（in CID v0） <https://docs.ipfs.tech/concepts/content-addressing/#version-0-v0>`_ 
+和编译器版本附加到字节码末尾。
+也可选择使用 Swarm 哈希值代替 IPFS，或使用实验标志。
+以下是所有可能的字段：
 
-.. code-block:: text
+.. code-block:: javascript
 
-    0xa2
-    0x64 'i' 'p' 'f' 's' 0x58 0x22 <34字节的IPFS哈希值>
-    0x64 's' 'o' 'l' 'c' 0x43 <3字节的版本编码>
-    0x00 0x33
+    {
+      "ipfs": "<metadata hash>",
+      // 如果编译器设置中的“bytecodeHash”为“bzzr1”，此处不是“ipfs”而是“bzzr1”
+      "bzzr1": "<metadata hash>",
+      // 以前的版本使用“bzzr0”而不是“bzzr1”
+      "bzzr0": "<metadata hash>",
+      // 如果使用任何影响代码生成的实验性功能
+      "experimental": true,
+      "solc": "<compiler version>"
+    }
 
-因此，为了检索数据，可以检查已部署字节码的末尾以匹配该模式，
-并且可以使用 IPFS 哈希值来检索文件（如果固定/发布）。
+因为我们将来可能会支持以其他方式检索元数据文件，
+因此这些信息被存储为 `CBOR <https://tools.ietf.org/html/rfc7049>`__ - 编码。
+字节码中的最后两个字节表示 CBOR 编码信息的长度。通过查看这个长度，
+可以用 CBOR 解码器对字节码的相关部分进行解码。
+
+请访问 `Metadata Playground <https://playground.sourcify.dev/>`_ 查看实际操作。
 
 SOLC的发布版本使用如上所示的3个字节的版本编码
 （主要、次要和补丁版本号各一个字节），
@@ -215,18 +238,10 @@ SOLC的发布版本使用如上所示的3个字节的版本编码
 同样地，标准JSON输入中的布尔字段 ``settings.metadata.appendCBOR`` 可以设置为false。
 
 .. note::
-  CBOR映射也可以包含其他的键，所以最好是完全解码，
-  而不是依靠它以 ``0xa264`` 开始。
-  例如，如果使用了任何影响代码生成的实验性功能，
-  映射也将包含 ``"experimental": true``。
-
-.. note::
-  编译器目前默认使用元数据的IPFS哈希值，
-  但将来也可能使用bzzr1哈希值或其他哈希值，
-  所以不要依赖这个序列以 ``0xa2 0x64 'i' 'p' 'f' 's'`` 开始。
-  我们还可能向这个CBOR结构添加额外的数据，
-  所以最好的选择是使用一个合适的CBOR解析器。
-
+  CBOR 映射也可能包含其他键，
+  因此最好通过查看字节码末尾的 CBOR 长度来完全解码数据，
+  并使用适当的 CBOR 分析器。不要依赖以 ``0xa264``
+  或 ``0xa2 0x64 'i' 'p' 'f' 's'`` 开头的数据。
 
 自动化接口生成和NatSpec 的使用方法
 ====================================================
@@ -238,20 +253,24 @@ SOLC的发布版本使用如上所示的3个字节的版本编码
 
 然后，该组件可以使用ABI为合约自动生成一个基本的用户界面。
 
-此外，钱包可以使用 NatSpec 用户文档，每当用户与合约交互时，
-就会向用户显示一条可读的确认信息，同时要求对交易签名进行授权。
+此外，钱包还可以使用 NatSpec 用户文档，在用户与合约进行交互时，
+向用户显示一条可读的确认信息，同时请求交易签名进行授权。
 
 有关其他信息，请阅读 :doc:`以太坊自然语言规范（NatSpec）格式 <natspec-format>`。
 
 源代码验证的用法
 ==================================
 
-为了验证编译，可以通过元数据文件中的链接从IPFS/Swarm检索源码。
-正确版本的编译器（应该为“官方”编译器之一）以指定的设置在该输入上被调用。
-产生的字节码与创建交易的数据或 ``CREATE`` 操作码数据进行比较。
-这将自动验证元数据，因为其哈希值是字节码的一部分。
-多余的数据对应于构造器的输入数据，应该根据接口进行解码并呈现给用户。
+如果已固定/发布，则可以从 IPFS/Swarm 获取合约的元数据。
+元数据文件还包含源文件的 URL 或 IPFS 哈希值，以及编译设置，
+即重现编译所需的一切信息。
 
-在资源库 `sourcify <https://github.com/ethereum/sourcify>`_
-(`npm package <https://www.npmjs.com/package/source-verify>`_)，
-您可以看到如何使用这一功能的示例代码。
+有了这些信息，就可以通过重现编译来验证合约的源代码，
+并将编译的字节码与已部署合约的字节码进行比较。
+
+由于元数据和源代码的哈希值都是字节码的一部分，因此可以自动验证元数据和源代码。
+文件或设置的任何更改都会导致不同的元数据哈希值。
+这里的元数据是整个编译过程的指纹。
+
+`Sourcify <https://sourcify.dev>`_ 利用这一特性进行 “完全/完美验证”，
+并将文件公开固定在 IPFS 上，以便使用元数据哈希值进行访问。

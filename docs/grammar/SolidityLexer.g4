@@ -62,7 +62,7 @@ New: 'new';
 /**
  * 数字的单位计价。
  */
-NumberUnit: 'wei' | 'gwei' | 'ether' | 'seconds' | 'minutes' | 'hours' | 'days' | 'weeks' | 'years';
+SubDenomination: 'wei' | 'gwei' | 'ether' | 'seconds' | 'minutes' | 'hours' | 'days' | 'weeks' | 'years';
 Override: 'override';
 Payable: 'payable';
 Pragma: 'pragma' -> pushMode(PragmaMode);
@@ -90,6 +90,7 @@ Try: 'try';
 Type: 'type';
 Ufixed: 'ufixed' | ('ufixed' [1-9][0-9]+ 'x' [1-9][0-9]+);
 Unchecked: 'unchecked';
+Unicode: 'unicode';
 /**
  * 无符号整数类型。
  * uint是uint256的一个别名。
@@ -198,9 +199,7 @@ fragment EscapeSequence:
 /**
  * 单引号字符串字面量，允许任意的unicode字符。
  */
-UnicodeStringLiteral:
-	'unicode"' DoubleQuotedUnicodeStringCharacter* '"'
-	| 'unicode\'' SingleQuotedUnicodeStringCharacter* '\'';
+UnicodeStringLiteral: 'unicode' (('"' DoubleQuotedUnicodeStringCharacter* '"') | ('\'' SingleQuotedUnicodeStringCharacter* '\''));
 //@doc:inline
 fragment DoubleQuotedUnicodeStringCharacter: ~["\r\n\\] | EscapeSequence;
 //@doc:inline
@@ -223,6 +222,14 @@ fragment EvenHexDigits: HexCharacter HexCharacter ('_'? HexCharacter HexCharacte
 fragment HexCharacter: [0-9A-Fa-f];
 
 /**
+ * 已扫描，但未被任何规则使用，即不允许。
+ * solc 解析器认为以'0'开头，后面没有紧跟'.'或'x'的数字为八进制数
+ * 即使存在非八进制数字'8'和'9'。
+ */
+OctalNumber: '0' DecimalDigits ('.' DecimalDigits)?;
+
+
+/**
  * 一个十进制数字的字面量由十进制数字组成，可以用下划线和一个可选的正负指数来分隔。
  * 如果这些数字包含一个小数点，则该数字具有定点类型。
  */
@@ -232,7 +239,14 @@ fragment DecimalDigits: [0-9] ('_'? [0-9])* ;
 
 
 /**
- * solidity中的标识符必须以字母，美元符号或下划线开头，并且可以在第一个符号之后再包含数字。
+ * 需要这样做是为了避免成功解析一个数字后面的字符串，而字符串之间没有空白。
+ */
+DecimalNumberFollowedByIdentifier: DecimalNumber Identifier;
+
+
+/**
+ * solidity中的标识符必须以字母，美元符号或下划线开头，
+ * 并且可以在第一个符号之后再包含数字。
  */
 Identifier: IdentifierStart IdentifierPart*;
 //@doc:inline
