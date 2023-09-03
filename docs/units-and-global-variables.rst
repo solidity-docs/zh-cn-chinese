@@ -1,21 +1,15 @@
-<<<<<<< HEAD
-*****************
-单位和全局变量
-*****************
-=======
 .. index:: ! denomination
 
-**************************************
-Units and Globally Available Variables
-**************************************
->>>>>>> english/develop
+******************
+单位和全局可用变量
+******************
 
 .. index:: ! wei, ! finney, ! szabo, ! gwei, ! ether, ! denomination;ether
 
-以太币（Ether） 单位
+以太坊（Ether） 单位
 ======================
 
-一个字面常数可以带一个后缀 ``wei``， ``gwei`` 或 ``ether`` 来指定一个以太币的数量，
+一个字面常数可以带一个后缀 ``wei``， ``gwei`` 或 ``ether`` 来指定一个以太坊的数量，
 其中没有后缀的以太数字被认为单位是wei。
 
 .. code-block:: solidity
@@ -275,7 +269,7 @@ ABI编码和解码函数
 
 .. warning::
     使用 ``send`` 有很多危险：如果调用栈深度已经达到 1024（这总是可以由调用者所强制指定），
-    转账会失败；并且如果接收者用光了 gas，转账同样会失败。为了保证以太币转账安全，
+    转账会失败；并且如果接收者用光了 gas，转账同样会失败。为了保证以太坊转账安全，
     总是检查 ``send`` 的返回值，使用 ``transfer`` 或者下面更好的方式： 用接收者提款的模式。
 
 .. warning::
@@ -306,22 +300,14 @@ ABI编码和解码函数
 
 .. index:: this, selfdestruct, super
 
-<<<<<<< HEAD
 合约相关
 ----------
 
 ``this`` （当前合约类型）
     当前合约，可以明确转换为 :ref:`address`
-=======
-Contract-related
-----------------
-
-``this`` (current contract's type)
-    The current contract, explicitly convertible to :ref:`address`
 
 ``super``
-    A contract one level higher in the inheritance hierarchy
->>>>>>> english/develop
+    继承层次结构中更高一级的合约
 
 ``selfdestruct(address payable recipient)``
     销毁当前合约，将其资金发送到给定的 :ref:`address` 并结束执行。
