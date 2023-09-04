@@ -23,8 +23,14 @@
 
 .. note::
 
+<<<<<<< HEAD
     风格指南是关于一致性的。重要的是与此风格指南保持一致，但项目中的一致性更重要。
     一个模块或功能内的一致性是最重要的。
+=======
+    A style guide is about consistency. Consistency with this style guide is important. Consistency within a project is more important. Consistency within one module or function is most important.
+
+    But most importantly: **know when to be inconsistent** -- sometimes the style guide just doesn't apply. When in doubt, use your best judgment. Look at other examples and decide what looks best. And do not hesitate to ask!
+>>>>>>> english/develop
 
     但最重要的是：**知道什么时候不一致** —— 有时风格指南不适用。如有疑问，请自行判断。
     看看其他例子，并决定什么看起来最好，并应毫不犹豫地询问他人！
@@ -446,7 +452,11 @@ Import 语句应始终放在文件的顶部。
     y            = 2;
     longVariable = 3;
 
+<<<<<<< HEAD
 在receive和fallback函数中不要包含空格：
+=======
+Do not include a whitespace in the receive and fallback functions:
+>>>>>>> english/develop
 
 正确写法：
 
