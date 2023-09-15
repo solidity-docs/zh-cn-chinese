@@ -54,11 +54,21 @@
 相对于使用 ``--base-path`` 和 ``--include-path`` 选项指定的目录（如果没有指定基本路径，则是当前工作目录）。
 此外，通过这些选项添加的路径部分将不会出现在合约元数据中。
 
+<<<<<<< HEAD
 出于安全考虑，编译器 :ref:`对它可以访问的目录有一些限制 <allowed-paths>`。
 在命令行中指定的源文件的目录和重映射的目标路径被自动允许被文件阅读器访问，
 但其他的都是默认为拒绝的。
 通过 ``--allow-paths /sample/path,/another/sample/path`` 语句可以允许额外的路径（和它们的子目录）。
 通过 ``--base-path`` 指定的路径内的所有内容都是允许的。
+=======
+For security reasons the compiler has :ref:`restrictions on what directories it can access <allowed-paths>`.
+Directories of source files specified on the command-line and target paths of
+remappings are automatically allowed to be accessed by the file reader, but everything
+else is rejected by default.
+Additional paths (and their subdirectories) can be allowed via the
+``--allow-paths /sample/path,/another/sample/path`` switch.
+Everything inside the path specified via ``--base-path`` is always allowed.
+>>>>>>> english/develop
 
 以上只是对编译器如何处理导入路径的一个简化。
 关于详细的解释，包括例子和边缘情况的讨论，请参考 :ref:`路径解析 <path-resolution>` 一节。
@@ -115,6 +125,7 @@
 将EVM版本设置为目标版本
 *********************************
 
+<<<<<<< HEAD
 当您编译您的合约代码时，您可以指定以太坊虚拟机版本来编译，以避免特定的功能或行为。
 
 .. warning::
@@ -123,6 +134,18 @@
    请确保，特别是在运行一个私有链的情况下，您使用匹配的EVM版本。
 
 在命令行中，您可以选择EVM的版本，如下所示：
+=======
+When you compile your contract code you can specify the Ethereum virtual machine
+version to compile for to avoid particular features or behaviors.
+
+.. warning::
+
+   Compiling for the wrong EVM version can result in wrong, strange and failing
+   behavior. Please ensure, especially if running a private chain, that you
+   use matching EVM versions.
+
+On the command-line, you can select the EVM version as follows:
+>>>>>>> english/develop
 
 .. code-block:: shell
 
@@ -221,7 +244,12 @@ EVM版本选项
             "bzzr://56ab...",
             "ipfs://Qma...",
             "/tmp/path/to/file.sol"
+<<<<<<< HEAD
             // 如果使用文件，其目录应通过 `--allow-paths <path>` 添加到命令行中。
+=======
+            // If files are used, their directories should be added to the command-line via
+            // `--allow-paths <path>`.
+>>>>>>> english/develop
           ]
           // 如果语言设置为 “SolidityAST”，则需要在 “ast” 字段下提供 AST。
           // 请注意，ASTs 的导入是试验性的，尤其是：
@@ -264,11 +292,19 @@ EVM版本选项
           "details": {
             // 如果没有给出 details，窥视孔优化器总是打开的，使用 details 来关闭它。
             "peephole": true,
+<<<<<<< HEAD
             // 如果没有给出 details，内联器总是打开的，
             // 使用 details来关闭它。
             "inliner": true,
             // 如果没有给出 details，未使用的跳板移除器总是打开的，
             // 使用 details来关闭它。
+=======
+            // The inliner is always off if no details are given,
+            // use details to switch it on.
+            "inliner": false,
+            // The unused jumpdest remover is always on if no details are given,
+            // use details to switch it off.
+>>>>>>> english/develop
             "jumpdestRemover": true,
             // 在换元运算中，有时会对字词重新排序。
             "orderLiterals": false,
@@ -287,6 +323,7 @@ EVM版本选项
               // 改善变量的堆栈槽的分配，可以提前释放堆栈槽。
               // 如果Yul优化器被激活，则默认激活。
               "stackAllocation": true,
+<<<<<<< HEAD
               // 选择要应用的优化步骤。
               // 也可以同时修改优化序列和清理序列。
               // 每个序列的指令用 “:” 分隔，该值以 优化-序列:清理-序列 的形式提供。
@@ -297,13 +334,34 @@ EVM版本选项
               // 那么优化和清理序列都不会被运行。
               // 如果设置为空值，则只使用默认的清理序列，
               // 不应用任何优化步骤。
+=======
+              // Select optimization steps to be applied. It is also possible to modify both the
+              // optimization sequence and the clean-up sequence. Instructions for each sequence
+              // are separated with the ":" delimiter and the values are provided in the form of
+              // optimization-sequence:clean-up-sequence. For more information see
+              // "The Optimizer > Selecting Optimizations".
+              // This field is optional, and if not provided, the default sequences for both
+              // optimization and clean-up are used. If only one of the sequences is provided
+              // the other will not be run.
+              // If only the delimiter ":" is provided then neither the optimization nor the clean-up
+              // sequence will be run.
+              // If set to an empty value, only the default clean-up sequence is used and
+              // no optimization steps are applied.
+>>>>>>> english/develop
               "optimizerSteps": "dhfoDgvulfnTUtnIf..."
             }
           }
         },
+<<<<<<< HEAD
         // 编译EVM的版本。
         // 影响到类型检查和代码生成。版本可以是 homestead,
         // tangerineWhistle, spuriousDragon, byzantium, constantinople, petersburg, istanbul, berlin, london or paris
+=======
+        // Version of the EVM to compile for.
+        // Affects type checking and code generation. Can be homestead,
+        // tangerineWhistle, spuriousDragon, byzantium, constantinople,
+        // petersburg, istanbul, berlin, london, paris or shanghai (default)
+>>>>>>> english/develop
         "evmVersion": "byzantium",
         // 可选：改变编译管道以通过Yul的中间表示法。
         // 这在默认情况下是假的。
@@ -344,9 +402,16 @@ EVM版本选项
         // 库的地址。如果这里没有给出所有的库，
         // 可能会导致未链接的对象，其输出数据是不同的。
         "libraries": {
+<<<<<<< HEAD
           // 顶层键是使用该库的源文件的名称。
           // 如果使用了重映射，这个源文件应该与应用重映射后的全局路径一致。
           // 如果这个键是一个空字符串，那就是指一个全局水平。
+=======
+          // The top level key is the name of the source file where the library is used.
+          // If remappings are used, this source file should match the global path
+          // after remappings were applied.
+          // If this key is an empty string, that refers to a global level.
+>>>>>>> english/develop
           "myFile.sol": {
             "MyLib": "0x123123..."
           }
@@ -368,6 +433,7 @@ EVM版本选项
         //
         // 合约级别（需要合约名称或 "*"）：
         //   abi - ABI
+<<<<<<< HEAD
         //   devdoc - 开发者文档（Natspec格式）
         //   userdoc - 用户文档（Natspec格式）
         //   metadata - 元数据
@@ -391,6 +457,31 @@ EVM版本选项
         //
         // 注意，使用 `evm`， `evm.bytecode`， `ewasm` 等将选择该输出的每个目标部分。
         // 此外，`*` 可以作为通配符来请求所有东西。
+=======
+        //   devdoc - Developer documentation (natspec)
+        //   userdoc - User documentation (natspec)
+        //   metadata - Metadata
+        //   ir - Yul intermediate representation of the code before optimization
+        //   irAst - AST of Yul intermediate representation of the code before optimization
+        //   irOptimized - Intermediate representation after optimization
+        //   irOptimizedAst - AST of intermediate representation after optimization
+        //   storageLayout - Slots, offsets and types of the contract's state variables.
+        //   evm.assembly - New assembly format
+        //   evm.legacyAssembly - Old-style assembly format in JSON
+        //   evm.bytecode.functionDebugData - Debugging information at function level
+        //   evm.bytecode.object - Bytecode object
+        //   evm.bytecode.opcodes - Opcodes list
+        //   evm.bytecode.sourceMap - Source mapping (useful for debugging)
+        //   evm.bytecode.linkReferences - Link references (if unlinked object)
+        //   evm.bytecode.generatedSources - Sources generated by the compiler
+        //   evm.deployedBytecode* - Deployed bytecode (has all the options that evm.bytecode has)
+        //   evm.deployedBytecode.immutableReferences - Map from AST ids to bytecode ranges that reference immutables
+        //   evm.methodIdentifiers - The list of function hashes
+        //   evm.gasEstimates - Function gas estimates
+        //
+        // Note that using `evm`, `evm.bytecode`, etc. will select every
+        // target part of that output. Additionally, `*` can be used as a wildcard to request everything.
+>>>>>>> english/develop
         //
         "outputSelection": {
           "*": {
@@ -479,7 +570,11 @@ EVM版本选项
           // 强制：错误类型，如 “TypeError“， “InternalCompilerError“， “Exception” 等等。
           // 完整的类型清单见下文。
           "type": "TypeError",
+<<<<<<< HEAD
           // 强制：发生错误的组件，例如“general”，“ewasm”等
+=======
+          // Mandatory: Component where the error originated, such as "general" etc.
+>>>>>>> english/develop
           "component": "general",
           // 强制：错误的严重级别（“error”，“warning” 或 “info”，但请注意，这可能在未来被扩展。）
           "severity": "error",
@@ -516,9 +611,21 @@ EVM版本选项
             "userdoc": {},
             // 开发人员文档（natspec）
             "devdoc": {},
+<<<<<<< HEAD
             // 中间表示形式 (string)
             "ir": "",
             // 请参阅 "存储布局" 文档。
+=======
+            // Intermediate representation before optimization (string)
+            "ir": "",
+            // AST of intermediate representation before optimization
+            "irAst":  {/* ... */},
+            // Intermediate representation after optimization (string)
+            "irOptimized": "",
+            // AST of intermediate representation after optimization
+            "irOptimizedAst": {/* ... */},
+            // See the Storage Layout documentation.
+>>>>>>> english/develop
             "storageLayout": {"storage": [/* ... */], "types": {/* ... */} },
             // EVM相关输出
             "evm": {
@@ -594,6 +701,7 @@ EVM版本选项
                   "heavyLifting()": "infinite"
                 }
               }
+<<<<<<< HEAD
             },
             // Ewasm相关的输出
             "ewasm": {
@@ -601,6 +709,8 @@ EVM版本选项
               "wast": "",
               // 二进制格式（十六进制字符串）
               "wasm": ""
+=======
+>>>>>>> english/develop
             }
           }
         }
@@ -611,6 +721,7 @@ EVM版本选项
 错误类型
 ~~~~~~~~~~~
 
+<<<<<<< HEAD
 1. ``JSONError``： JSON输入不符合所需格式，例如，输入不是JSON对象，不支持的语言等。
 2. ``IOError``： IO和导入处理错误，例如，在提供的源里包含无法解析的URL或哈希值不匹配。
 3. ``ParserError``： 源代码不符合语言规则。
@@ -626,3 +737,20 @@ EVM版本选项
 13. ``YulException``： 在Yul代码生成过程中出现错误 - 这应该作为一个issue报告。
 14. ``Warning``： 警告，不会停止编译，但应尽可能处理。
 15. ``Info``： 编译器认为用户可能会在其中发现有用的信息，并不危险，也不一定需要处理。
+=======
+1. ``JSONError``: JSON input doesn't conform to the required format, e.g. input is not a JSON object, the language is not supported, etc.
+2. ``IOError``: IO and import processing errors, such as unresolvable URL or hash mismatch in supplied sources.
+3. ``ParserError``: Source code doesn't conform to the language rules.
+4. ``DocstringParsingError``: The NatSpec tags in the comment block cannot be parsed.
+5. ``SyntaxError``: Syntactical error, such as ``continue`` is used outside of a ``for`` loop.
+6. ``DeclarationError``: Invalid, unresolvable or clashing identifier names. e.g. ``Identifier not found``
+7. ``TypeError``: Error within the type system, such as invalid type conversions, invalid assignments, etc.
+8. ``UnimplementedFeatureError``: Feature is not supported by the compiler, but is expected to be supported in future versions.
+9. ``InternalCompilerError``: Internal bug triggered in the compiler - this should be reported as an issue.
+10. ``Exception``: Unknown failure during compilation - this should be reported as an issue.
+11. ``CompilerError``: Invalid use of the compiler stack - this should be reported as an issue.
+12. ``FatalError``: Fatal error not processed correctly - this should be reported as an issue.
+13. ``YulException``: Error during Yul code generation - this should be reported as an issue.
+14. ``Warning``: A warning, which didn't stop the compilation, but should be addressed if possible.
+15. ``Info``: Information that the compiler thinks the user might find useful, but is not dangerous and does not necessarily need to be addressed.
+>>>>>>> english/develop
