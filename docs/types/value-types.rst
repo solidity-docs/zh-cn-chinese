@@ -135,8 +135,14 @@
 幂运算
 ^^^^^^
 
+<<<<<<< HEAD
 幂运算只适用于指数中的无符号类型。幂运算的结果类型总是等于基数的类型。
 请注意，它要足够大以容纳结果，并为潜在的断言失败或包装行为做好准备。
+=======
+Exponentiation is only available for unsigned types in the exponent. The resulting type
+of an exponentiation is always equal to the type of the base. Please take care that it is
+large enough to hold the result and prepare for potential assertion failures or wrapping behavior.
+>>>>>>> english/develop
 
 .. note::
   在检查模式下，幂运算只对小基数使用相对便宜的 ``exp`` 操作码。
@@ -254,10 +260,17 @@
 ``send`` 是 ``transfer`` 的低级对应部分。如果执行失败，当前的合约不会因异常而停止，但 ``send`` 会返回 ``false``。
 
 .. warning::
+<<<<<<< HEAD
     使用 ``send`` 有一些危险：如果调用堆栈深度为1024，传输就会失败（这可以由调用者强制执行），
     如果接收者的气体耗尽，也会失败。因此，为了安全地进行以太币转账，
     一定要检查 ``send`` 的返回值，或者使用 ``transfer``，甚至使用更好的方式：
     使用收款人提款的模式。
+=======
+    There are some dangers in using ``send``: The transfer fails if the call stack depth is at 1024
+    (this can always be forced by the caller) and it also fails if the recipient runs out of gas. So in order
+    to make safe Ether transfers, always check the return value of ``send``, use ``transfer`` or even better:
+    use a pattern where the recipient withdraws the Ether.
+>>>>>>> english/develop
 
 * ``call``, ``delegatecall`` 和 ``staticcall``
 

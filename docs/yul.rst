@@ -655,9 +655,16 @@ Yul中的作用域是与块联系在一起的（函数和for循环是例外，�
 EVM语言
 -----------
 
+<<<<<<< HEAD
 目前Yul的默认语言是当前选择的EVM版本的EVM语言，与EVM的一个版本。
 该语言中唯一可用的类型是 ``u256``，即Ethereum虚拟机的256位本地类型。
 因为它是该语言的默认类型，所以可以省略。
+=======
+The default dialect of Yul currently is the EVM dialect for the currently selected version of the EVM.
+The only type available in this dialect
+is ``u256``, the 256-bit native type of the Ethereum Virtual Machine.
+Since it is the default type of this dialect, it can be omitted.
+>>>>>>> english/develop
 
 下表列出了所有内置函数（取决于EVM版本），并提供了函数/操作码的语义的简短描述。
 本文件并不想成为以太坊虚拟机的完整描述。如果您对精确的语义感兴趣，请参考另一份文件。
@@ -867,9 +874,15 @@ EVM语言
   请注意，与在编译器中选择哪个EVM版本无关，指令的语义取决于最终的部署链。
 
 .. warning::
+<<<<<<< HEAD
     从0.8.18及更高版本开始，在 Solidity 和 Yul 中使用 ``selfdestruct`` 将触发弃用警告，
     因为 ``SELFDESTRUCT`` 操作码最终将经历 `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_ 
     中所述的行为的重大变化。
+=======
+    From version 0.8.18 and up, the use of ``selfdestruct`` in both Solidity and Yul will trigger a
+    deprecation warning, since the ``SELFDESTRUCT`` opcode will eventually undergo breaking changes in behavior
+    as stated in `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_.
+>>>>>>> english/develop
 
 在一些内部语言中，还有一些额外的函数：
 
@@ -895,11 +908,21 @@ setimmutable, loadimmutable
 
 linkersymbol
 ^^^^^^^^^^^^
+<<<<<<< HEAD
 函数 ``linkersymbol("library_id")`` 是一个占位符，用来表示被链接器替换的地址字头。
 它的第一个也是唯一的参数必须是一个字符串字面量，并且唯一地代表要插入的地址。
 标识符可以是任意的，但是当编译器从Solidity源产生Yul代码时，它使用一个库名，
 并以定义该库的源单元的名称作为限定。
 要用一个特定的库地址链接代码，必须在命令行上的 ``--libraries`` 选项中提供相同的标识符。
+=======
+The function ``linkersymbol("library_id")`` is a placeholder for an address literal to be substituted
+by the linker.
+Its first and only argument must be a string literal and uniquely represents the address to be inserted.
+Identifiers can be arbitrary but when the compiler produces Yul code from Solidity sources,
+it uses a library name qualified with the name of the source unit that defines that library.
+To link the code with a particular library address, the same identifier must be provided to the
+``--libraries`` option on the command-line.
+>>>>>>> english/develop
 
 例如，这段代码
 
@@ -964,6 +987,7 @@ verbatim
 与所有的操作码一样，参数被安排在堆栈中，最左边的参数在最上面，
 而返回值则被假定是以最右边的变量在栈顶的方式排列的。
 
+<<<<<<< HEAD
 由于 ``verbatim`` 可以用来生成任意的操作码，甚至是Solidity编译器不知道的操作码，
 在与优化器一起使用 ``verbatim`` 时，必须小心。
 即使优化器被关闭，代码生成器也必须确定堆栈布局，这意味着，例如，
@@ -971,6 +995,19 @@ verbatim
 
 下面是一个不完全的列表，列出了对逐字字节码的限制，
 这些限制不被编译器检查。违反这些限制会导致未定义的行为。
+=======
+Since ``verbatim`` can be used to generate arbitrary opcodes
+or even opcodes unknown to the Solidity compiler, care has to be taken
+when using ``verbatim`` together with the optimizer. Even when the
+optimizer is switched off, the code generator has to determine
+the stack layout, which means that e.g. using ``verbatim`` to modify
+the stack height can lead to undefined behavior.
+
+The following is a non-exhaustive list of restrictions on
+verbatim bytecode that are not checked by
+the compiler. Violations of these restrictions can result in
+undefined behavior.
+>>>>>>> english/develop
 
 - 控制流不应该跳入或跳出 verbatim 块，但它可以在同一个 verbatim 块内跳入。
 - 除了输入和输出参数外，堆栈内容不应该被访问。
@@ -1072,8 +1109,12 @@ Yul对象被用来分组命名代码和数据部分。
             // 当前执行的代码是构造函数代码）。
             size := datasize("Contract1_deployed")
             offset := allocate(size)
+<<<<<<< HEAD
             // 这将变成 Ewasm 的 内存->内存 复制
             // 和 EVM 的代码复制。
+=======
+            // This will turn into a codecopy for EVM
+>>>>>>> english/develop
             datacopy(offset, dataoffset("Contract1_deployed"), size)
             return(offset, size)
         }
