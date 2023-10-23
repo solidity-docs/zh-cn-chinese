@@ -6,8 +6,14 @@
 函数修饰器
 ******************
 
+<<<<<<< HEAD
 函数修饰器可以用来以声明的方式改变函数的行为。
 例如，您可以使用修饰器在执行函数之前自动检查一个条件。
+=======
+Modifiers can be used to change the behavior of functions in a declarative way.
+For example,
+you can use a modifier to automatically check a condition prior to executing the function.
+>>>>>>> english/develop
 
 修饰器是合约的可继承属性，可以被派生合约重载，
 但只有当它们被标记为 ``virtual`` 时，才能被重载。
@@ -118,7 +124,12 @@
 然而，修饰器可以选择完全不执行函数主体，在这种情况下，
 返回变量被设置为 :ref:`默认值 <default-value>`，就像函数有一个空主体一样。
 
+<<<<<<< HEAD
 ``_`` 符号可以在修饰器中多次出现。每次出现都会被替换成函数体。
+=======
+The ``_`` symbol can appear in the modifier multiple times. Each occurrence is replaced with
+the function body, and the function returns the return value of the final occurrence.
+>>>>>>> english/develop
 
 允许修饰器参数使用任意表达式，在这种情况下，所有从函数中可见的符号在修饰器中都是可见的。
 修饰器中引入的符号在函数中是不可见的（因为它们可能因重载而改变）。
