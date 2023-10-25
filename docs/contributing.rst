@@ -38,11 +38,19 @@
 `GitHub问题跟踪器 <https://github.com/ethereum/solidity/issues>`_。
 当报告问题时，请提及以下细节：
 
+<<<<<<< HEAD
 * Solidity版本。
 * 源代码（如果可以的话）。
 * 操作系统。
 * 重现该问题的步骤。
 * 实际行为与预期行为。
+=======
+* Solidity version.
+* Source code (if applicable).
+* Operating system.
+* Steps to reproduce the issue.
+* Actual vs. expected behavior.
+>>>>>>> english/develop
 
 将导致问题的源代码减少到最低限度总是非常有帮助的，有时甚至可以澄清一个误解。
 
@@ -82,10 +90,16 @@
 先决条件
 -------------
 
+<<<<<<< HEAD
 为了运行所有的编译器测试，您可能想选择性地安装一些依赖项
 （ `evmone <https://github.com/ethereum/evmone/releases>`_，
 `libz3 <https://github.com/Z3Prover/z3>`_， 和
 `libhera <https://github.com/ewasm/hera>`_）。
+=======
+For running all compiler tests you may want to optionally install a few
+dependencies (`evmone <https://github.com/ethereum/evmone/releases>`_,
+`libz3 <https://github.com/Z3Prover/z3>`_).
+>>>>>>> english/develop
 
 在 macOS 系统上，一些测试脚本需要安装 GNU 核心工具。
 可以使用 Homebrew 很简单地完成安装： ``brew install coreutils``。
@@ -103,9 +117,16 @@ Solidity包括不同类型的测试，其中大部分捆绑在
 `Boost C++测试框架 <https://www.boost.org/doc/libs/release/libs/test/doc/html/index.html>`_ 应用程序 ``soltest``。
 运行 ``build/test/soltest`` 或其包装器 ``scripts/soltest.sh`` 对大多数变化来说是足够的。
 
+<<<<<<< HEAD
 ``./scripts/tests.sh`` 脚本自动执行大多数Solidity测试，
 包括那些捆绑在 `Boost C++测试框架 <https://www.boost.org/doc/libs/release/libs/test/doc/html/index.html>`_ 应用程序 ``soltest``
 （或其包装器 ``scripts/soltest.sh``）中的测试，以及命令行测试和编译测试。
+=======
+The ``./scripts/tests.sh`` script executes most Solidity tests automatically,
+including those bundled into the `Boost C++ Test Framework <https://www.boost.org/doc/libs/release/libs/test/doc/html/index.html>`_
+application ``soltest`` (or its wrapper ``scripts/soltest.sh``), as well as command-line tests and
+compilation tests.
+>>>>>>> english/develop
 
 测试系统会自动尝试发现 `evmone <https://github.com/ethereum/evmone/releases>`_ 的位置，以运行语义测试。
 
@@ -116,12 +137,17 @@ Solidity包括不同类型的测试，其中大部分捆绑在
 ``evmone`` 主要用于运行语义和gas测试。
 如果您没有安装它，您可以通过向 ``scripts/soltest.sh`` 传递 ``--no-semantic-tests`` 标志来跳过这些测试。
 
+<<<<<<< HEAD
 运行Ewasm测试默认是禁用的，可以通过 ``./scripts/soltest.sh --ewasm`` 明确启用，
 要求 `hera <https://github.com/ewasm/hera>`_ 被 ``soltest`` 找到。
 定位 ``hera`` 库的机制与 ``evmone`` 相同，只是用于指定明确位置的变量被称为 ``ETH_HERA``。
 
 ``evmone`` 和 ``hera`` 库的文件名后缀都应该
 是Linux上的 ``.so``，Windows系统上的 ``.dll``，MacOS上的 ``.dylib``。
+=======
+The ``evmone`` library should both end with the file name
+extension ``.so`` on Linux, ``.dll`` on Windows systems and ``.dylib`` on macOS.
+>>>>>>> english/develop
 
 为了运行SMT测试， ``libz3`` 库必须被安装，并在编译器配置阶段被 ``cmake`` 可以找到。
 
@@ -231,10 +257,17 @@ CI运行额外的测试（包括 ``solc-js`` 和测试第三方Solidity框架）
 
 它为失败的测试提供了几种选择：
 
+<<<<<<< HEAD
 - ``edit``：  ``isoltest`` 试图在一个编辑器中打开合约，以便您可以调整它。它或者使用命令行上给出的编辑器（如 ``isoltest --editor /path/to/editor``），或者在环境变量 ``EDITOR`` 中，或者只是 ``/usr/bin/editor`` （按这个顺序）。
 - ``update``： 更新测试中的合约。这将会移除包含了不匹配异常的注解，或者增加缺失的预想结果。然后测试会重新开始。
 - ``skip``： 跳过这一特定测试的执行。
 - ``quit``： 退出 ``isoltest``。
+=======
+- ``edit``: ``isoltest`` tries to open the contract in an editor so you can adjust it. It either uses the editor given on the command-line (as ``isoltest --editor /path/to/editor``), in the environment variable ``EDITOR`` or just ``/usr/bin/editor`` (in that order).
+- ``update``: Updates the expectations for contract under test. This updates the annotations by removing unmet expectations and adding missing expectations. The test is then run again.
+- ``skip``: Skips the execution of this particular test.
+- ``quit``: Quits ``isoltest``.
+>>>>>>> english/develop
 
 所有这些选项都适用于当前的合约，除了 ``quit``，它可以停止整个测试过程。
 
@@ -261,6 +294,62 @@ CI运行额外的测试（包括 ``solc-js`` 和测试第三方Solidity框架）
     不要把一个以上的合约放在一个文件中，除非您在测试继承或跨合约的调用。
     每个文件应该测试您的新功能的一个方面。
 
+Command-line Tests
+------------------
+
+Our suite of end-to-end command-line tests checks the behaviour of the compiler binary as a whole
+in various scenarios.
+These tests are located in `test/cmdlineTests/ <https://github.com/ethereum/solidity/tree/develop/test/cmdlineTests>`_,
+one per subdirectory, and can be executed using the ``cmdlineTests.sh`` script.
+
+By default the script runs all available tests.
+You can also provide one or more `file name patterns <https://www.gnu.org/software/bash/manual/bash.html#Filename-Expansion>`_,
+in which case only the tests matching at least one pattern will be executed.
+It is also possible to exclude files matching a specific pattern by prefixing it with ``--exclude``.
+
+By default the script assumes that a ``solc`` binary is available inside the ``build/`` subdirectory
+inside the working copy.
+If you build the compiler outside of the source tree, you can use the ``SOLIDITY_BUILD_DIR`` environment
+variable to specify a different location for the build directory.
+
+Example:
+
+.. code-block:: bash
+
+    export SOLIDITY_BUILD_DIR=~/solidity/build/
+    test/cmdlineTests.sh "standard_*" "*_yul_*" --exclude "standard_yul_*"
+
+The commands above will run tests from directories starting with ``test/cmdlineTests/standard_`` and
+subdirectories of ``test/cmdlineTests/`` that have ``_yul_`` somewhere in the name,
+but no test whose name starts with ``standard_yul_`` will be executed.
+It will also assume that the file ``solidity/build/solc/solc`` inside your home directory is the
+compiler binary (unless you are on Windows -- then ``solidity/build/solc/Release/solc.exe``).
+
+There are several kinds of command-line tests:
+
+- *Standard JSON test*: contains at least an ``input.json`` file.
+  In general may contain:
+
+    - ``input.json``: input file to be passed to the ``--standard-json`` option on the command line.
+    - ``output.json``: expected Standard JSON output.
+    - ``args``: extra command-line arguments passed to ``solc``.
+
+- *CLI test*: contains at least an ``input.*`` file (other than ``input.json``).
+  In general may contain:
+
+    - ``input.*``: a single input file, whose name will be supplied to ``solc`` on the command line.
+      Usually ``input.sol`` or ``input.yul``.
+    - ``args``: extra command-line arguments passed to ``solc``.
+    - ``stdin``: content to be passed to ``solc`` via standard input.
+    - ``output``: expected content of the standard output.
+    - ``err``: expected content of the standard error output.
+    - ``exit``: expected exit code. If not provided, zero is expected.
+
+- *Script test*: contains a ``test.*`` file.
+  In general may contain:
+
+    - ``test.*``: a single script to run, usually ``test.sh`` or ``test.py``.
+      The script must be executable.
 
 通过 AFL 运行 Fuzzer
 ==========================
@@ -336,11 +425,19 @@ Fuzzing 是一种测试技术，它可以通过运行多少不等的随机输入
     # 从文件中摘录：
     path/to/solidity/scripts/isolate_tests.py path/to/solidity/docs
 
+<<<<<<< HEAD
 AFL 的文档指出，账册（初始的输入文件）不应该太大。
 每个文件本身不应该超过 1 kB，并且每个功能最多只能有一个输入文件；
 所以最好从少量的输入文件开始。
 此外还有一个叫做 ``afl-cmin`` 的工具，
 可以将输入文件整理为可以具有近似行为的二进制代码。
+=======
+The AFL documentation states that the corpus (the initial input files) should not be
+too large. The files themselves should not be larger than 1 kB and there should be
+at most one input file per functionality, so better start with a small number of.
+There is also a tool called ``afl-cmin`` that can trim input files
+that result in similar behavior of the binary.
+>>>>>>> english/develop
 
 现在运行 fuzzer（ ``-m`` 参数将使用的内存大小扩展为 60 MB）：
 
