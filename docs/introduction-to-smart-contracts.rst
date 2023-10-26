@@ -242,9 +242,16 @@ Solidity意义上的合约是代码（其 *函数*）和数据（其 *状态*）
 数据库的事务特性确保了如果从一个账户扣除金额，它总被添加到另一个账户。
 如果由于某些原因，无法添加金额到目标账户时，源账户也不会发生任何变化。
 
+<<<<<<< HEAD
 此外，交易总是由发送人（创建者）签名。
 这样，就可非常简单地为数据库的特定修改增加访问保护机制。
 在电子货币的例子中，一个简单的检查可以确保只有持有账户密钥的人才能从中转账。
+=======
+Furthermore, a transaction is always cryptographically signed by the sender (creator).
+This makes it straightforward to guard access to specific modifications of the
+database. In the example of the electronic currency, a simple check ensures that
+only the person holding the keys to the account can transfer some compensation, e.g. Ether, from it.
+>>>>>>> english/develop
 
 .. index:: ! block
 
@@ -469,9 +476,15 @@ EVM的指令集应尽量保持最小，以避免不正确或不一致的实现�
 因为如果有人向被删除的合约发送以太币，以太币就会永远丢失。
 
 .. warning::
+<<<<<<< HEAD
     从0.8.18及更高版本开始，在 Solidity 和 Yul 中使用 ``selfdestruct`` 将触发弃用警告，
     因为 ``SELFDESTRUCT`` 操作码最终将经历 `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_ 
     中所述的行为的重大变化。
+=======
+    From version 0.8.18 and up, the use of ``selfdestruct`` in both Solidity and Yul will trigger a
+    deprecation warning, since the ``SELFDESTRUCT`` opcode will eventually undergo breaking changes in behavior
+    as stated in `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_.
+>>>>>>> english/develop
 
 .. warning::
     即使一个合约通过 ``selfdestruct`` 删除，它仍然是区块链历史的一部分，
@@ -493,10 +506,19 @@ EVM的指令集应尽量保持最小，以避免不正确或不一致的实现�
 预编译合约
 =====================
 
+<<<<<<< HEAD
 有一小群合约地址是特殊的。 ``1`` 和（包括） ``8`` 之间的地址范围包含 “预编译合约“，
 可以像其他合约一样被调用，但它们的行为（和它们的gas消耗）
 不是由存储在该地址的EVM代码定义的（它们不包含代码），
 而是由EVM执行环境本身实现。
+=======
+There is a small set of contract addresses that are special:
+The address range between ``1`` and (including) ``8`` contains
+"precompiled contracts" that can be called as any other contract
+but their behavior (and their gas consumption) is not defined
+by EVM code stored at that address (they do not contain code)
+but instead is implemented in the EVM execution environment itself.
+>>>>>>> english/develop
 
 不同的EVM兼容链可能使用不同的预编译合约集。
 未来也有可能在以太坊主链上添加新的预编译合约，

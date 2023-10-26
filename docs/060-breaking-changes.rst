@@ -9,7 +9,12 @@ Solidity 0.6.0 版本突破性变化
 编译器可能不会发出警告的变化
 =========================================
 
+<<<<<<< HEAD
 本节列出了一些变化，在这些变化中，您的代码的行为可能会发生变化，而编译器不会告诉您。
+=======
+This section lists changes where the behavior of your code might
+change without the compiler telling you about it.
+>>>>>>> english/develop
 
 * 指数运算的结果类型是基数的类型。
   就像对称运算一样，它曾经是可以同时容纳基数类型和指数类型的最小类型。
@@ -90,25 +95,45 @@ Solidity 0.6.0 版本突破性变化
 接口变化
 =================
 
+<<<<<<< HEAD
 本节列出与语言本身无关但对编译器接口有影响的更改。
 这些可能会改变您在命令行上使用编译器的方式，例如，您如何使用它的可编程接口，
 或者您如何分析它产生的输出。
+=======
+This section lists changes that are unrelated to the language itself, but that have an effect on the interfaces of
+the compiler. These may change the way how you use the compiler on the command-line, how you use its programmable
+interface, or how you analyze the output produced by it.
+>>>>>>> english/develop
 
 新的错误报告器
 ~~~~~~~~~~~~~~~~~~
 
+<<<<<<< HEAD
 引入一个新的错误报告器，其目的是在命令行上产生更易访问的错误消息。
 它在默认情况下是启用的，但是通过 ``--old-reporter`` 可以返回到弃用的旧错误报告器。
+=======
+A new error reporter was introduced, which aims at producing more accessible error messages on the command-line.
+It is enabled by default, but passing ``--old-reporter`` falls back to the deprecated old error reporter.
+>>>>>>> english/develop
 
 元数据哈希选项
 ~~~~~~~~~~~~~~~~~~~~~
 
+<<<<<<< HEAD
 编译器现在默认将元数据文件的 `IPFS <https://ipfs.io/>`_ 哈希值附加到字节码的末尾
 （详见 :doc:`合约元数据 <metadata>` ） 文档。在0.6.0之前，
 编译器默认附加了 `Swarm <https://ethersphere.github.io/swarm-home/>`_ 哈希值，
 为了仍然支持这种行为，引入了新的命令行选项 ``--metadata-hash``。
 它允许您通过传递 ``--metadata-hash`` 命令行选项的 ``ipfs`` 或 ``swarm`` 值来选择要产生和附加的哈希。
 传递 ``none`` 则可以完全删除哈希。
+=======
+The compiler now appends the `IPFS <https://ipfs.io/>`_ hash of the metadata file to the end of the bytecode by default
+(for details, see documentation on :doc:`contract metadata <metadata>`). Before 0.6.0, the compiler appended the
+`Swarm <https://ethersphere.github.io/swarm-home/>`_ hash by default, and in order to still support this behavior,
+the new command-line option ``--metadata-hash`` was introduced. It allows you to select the hash to be produced and
+appended, by passing either ``ipfs`` or ``swarm`` as value to the ``--metadata-hash`` command-line option.
+Passing the value ``none`` completely removes the hash.
+>>>>>>> english/develop
 
 这些变化也可以通过 :ref:`标准JSON接口 <compiler-api>` 使用，并影响编译器生成的元数据JSON。
 
