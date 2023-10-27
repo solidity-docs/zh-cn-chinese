@@ -9,6 +9,7 @@
 版本
 ==========
 
+<<<<<<< HEAD
 Solidity 的版本遵循 `语义化版本原则 <https://semver.org>`_。此外，
 主版本（例如：0.x.y）的补丁级版本的发布不会包含重大更改。这意味着用 0.x.y 版本
 编译的代码可望用 0.x.z 版本编译，其中 z > y。
@@ -19,6 +20,20 @@ Solidity 的版本遵循 `语义化版本原则 <https://semver.org>`_。此外�
 并不保证总是有效的。尽管我们尽了最大努力，
 它们仍可能含有未记录的或重大的修改，这些修改不会成为实际发布版本的一部分。
 它们也不会用于生产。
+=======
+Solidity versions follow `Semantic Versioning <https://semver.org>`_. In
+addition, patch-level releases with major release 0 (i.e. 0.x.y) will not
+contain breaking changes. That means code that compiles with version 0.x.y
+can be expected to compile with 0.x.z where z > y.
+
+In addition to releases, we provide **nightly development builds** to make
+it easy for developers to try out upcoming features and
+provide early feedback. Note, however, that while the nightly builds are usually
+very stable, they contain bleeding-edge code from the development branch and are
+not guaranteed to be always working. Despite our best efforts, they might
+contain undocumented and/or broken changes that will not become a part of an
+actual release. They are not meant for production use.
+>>>>>>> english/develop
 
 当开发智能合约时，您应该使用最新版本的 Solidity。这是因为重大的改变，
 以及新的特性和错误修复是定期引入的。
@@ -29,6 +44,7 @@ Remix
 
 *我们推荐使用 Remix 来开发简单合约和快速学习 Solidity。*
 
+<<<<<<< HEAD
 `Remix 可以在线使用 <https://remix.ethereum.org/>`_，而无需安装任何东西。
 如果您想离线使用，可按 https://github.com/ethereum/remix-live/tree/gh-pages
 的页面说明下载 ``.zip`` 文件来使用。 Remix 也是一个方便的选择，
@@ -37,6 +53,17 @@ Remix
 本页的进一步选项详细说明了在您的计算机上安装 Solidity 命令行编译器。
 如果您刚好要处理大型合约，或者需要更多的编译选项，
 那么您应该选择使用一个命令行编译器。
+=======
+`Access Remix online <https://remix.ethereum.org/>`_, you do not need to install anything.
+If you want to use it without connection to the Internet, go to
+https://github.com/ethereum/remix-live/tree/gh-pages#readme and follow the instructions on that page.
+Remix is also a convenient option for testing nightly builds
+without installing multiple Solidity versions.
+
+Further options on this page detail installing command-line Solidity compiler software
+on your computer. Choose a command-line compiler if you are working on a larger contract
+or if you require more compilation options.
+>>>>>>> english/develop
 
 .. _solcjs:
 
@@ -52,6 +79,13 @@ npm / Node.js
 这意味着两者使用相同的编译器源代码。
 因此， `solc-js` 可以直接用于JavaScript项目（如 Remix） 具体介绍请参考 `solc-js` 代码库。
 
+<<<<<<< HEAD
+=======
+Note: The solc-js project is derived from the C++
+`solc` by using Emscripten, which means that both use the same compiler source code.
+`solc-js` can be used in JavaScript projects directly (such as Remix).
+Please refer to the solc-js repository for instructions.
+>>>>>>> english/develop
 
 .. code-block:: bash
 
@@ -59,42 +93,74 @@ npm / Node.js
 
 .. note::
 
+<<<<<<< HEAD
     在命令行中，可执行文件被命名为 ``solcjs``。
 
     ``solcjs`` 的命令行选项与 ``solc`` 和一些工具（如 ``geth``）是不兼容的，
     因此不要期望 ``solcjs`` 能像 ``solc`` 一样工作。
+=======
+    The command-line executable is named ``solcjs``.
+
+    The command-line options of ``solcjs`` are not compatible with ``solc`` and tools (such as ``geth``)
+    expecting the behavior of ``solc`` will not work with ``solcjs``.
+>>>>>>> english/develop
 
 Docker
 ======
 
+<<<<<<< HEAD
 Solidity构建的Docker镜像可以使用从 ``ethereum`` 组织获得的 ``solc`` 镜像。
 使用 ``stable`` 标签获取最新发布的版本，使用 ``nightly`` 标签获取开发分支中潜在的不稳定变更的版本。
 
 Docker镜像会运行编译器可执行文件，所以您可以把所有的编译器参数传给它。
 例如，下面的命令提取了稳定版的 ``solc`` 镜像（如果您还没有），
 并在一个新的容器中运行它，同时传递 ``--help`` 参数。
+=======
+Docker images of Solidity builds are available using the ``solc`` image from the ``ethereum`` organization.
+Use the ``stable`` tag for the latest released version, and ``nightly`` for potentially unstable changes in the develop branch.
+
+The Docker image runs the compiler executable so that you can pass all compiler arguments to it.
+For example, the command below pulls the stable version of the ``solc`` image (if you do not have it already),
+and runs it in a new container, passing the ``--help`` argument.
+>>>>>>> english/develop
 
 .. code-block:: bash
 
     docker run ethereum/solc:stable --help
 
+<<<<<<< HEAD
 您也可以在标签中指定发行的版本，例如，0.5.4版本。
+=======
+For example, You can specify release build versions in the tag for the 0.5.4 release.
+>>>>>>> english/develop
 
 .. code-block:: bash
 
     docker run ethereum/solc:0.5.4 --help
 
+<<<<<<< HEAD
 要使用 Docker 镜像来编译主机上的 Solidity 文件，请安装一个本地文件夹
 用于输入和输出，并指定要编译的合约。例如：
+=======
+To use the Docker image to compile Solidity files on the host machine, mount a
+local folder for input and output, and specify the contract to compile. For example.
+>>>>>>> english/develop
 
 .. code-block:: bash
 
     docker run -v /local/path:/sources ethereum/solc:stable -o /sources/output --abi --bin /sources/Contract.sol
 
+<<<<<<< HEAD
 您也可以使用标准的JSON接口（当使用工具化的编译器时建议使用这种方式）。
 当使用这个接口时，不需要装载任何目录，只要输入的 JSON 是自成一体的
 （即它没有引用任何外部文件，而这些文件必须要被
 :ref:`由导入回调 <initial-vfs-content-standard-json-with-import-callback>`)。
+=======
+You can also use the standard JSON interface (which is recommended when using the compiler with tooling).
+When using this interface, it is not necessary to mount any directories as long as the JSON input is
+self-contained (i.e. it does not refer to any external files that would have to be
+:ref:`loaded by the import callback <initial-vfs-content-standard-json-with-import-callback>`).
+>>>>>>> english/develop
 
 .. code-block:: bash
 
@@ -122,14 +188,23 @@ Solidity 的二进制安装包可在 `solidity/releases <https://github.com/ethe
     sudo apt-get update
     sudo apt-get install solc
 
+<<<<<<< HEAD
 此外，一些 Linux 发行版提供了他们自己的软件包。这些软件包不是由我们直接维护的，
 而通常由各自的软件包维护者保持最新。
 
 例如，Arch Linux 也有最新开发版本的软件包。
+=======
+Furthermore, some Linux distributions provide their own packages. These packages are not directly
+maintained by us but usually kept up-to-date by the respective package maintainers.
 
-.. code-block:: bash
+For example, Arch Linux has packages for the latest development version as AUR packages: `solidity <https://aur.archlinux.org/packages/solidity>`_
+and `solidity-bin <https://aur.archlinux.org/packages/solidity-bin>`_.
+>>>>>>> english/develop
 
-    pacman -S solidity
+.. note::
+
+    Please be aware that `AUR <https://wiki.archlinux.org/title/Arch_User_Repository>`_ packages
+    are user-produced content and unofficial packages. Exercise caution when using them.
 
 还有一个 `snap包 <https://snapcraft.io/solc>`_，然而，它 **目前没有维护** 。
 它可以安装在所有 `支持的Linux发行版 <https://snapcraft.io/docs/core/install>`_ 。通过以下命令，
@@ -196,6 +271,7 @@ macOS Packages
 该资源库不仅是一个快速且简单的方法，让终端用户获得可以开箱即用的二进制文件，
 而且它对第三方工具也很友好：
 
+<<<<<<< HEAD
 - 这些内容被镜像到 https://binaries.soliditylang.org，在那里可以很容易地通过 HTTPS 下载，
   没有任何认证、速率或需要使用git的限制。
 - 提供的内容具有正确的 `Content-Type` 请求头和宽松的 CORS 配置，
@@ -207,14 +283,35 @@ macOS Packages
 - 文件是通过 HTTP 和 HTTPS 提供的。只要您以安全的方式获得文件列表
   （通过 git、HTTPS、IPFS 或者只是在本地的缓存），并在下载后验证二进制文件的哈希值，
   您就不必通过HTTPS获得二进制文件。
+=======
+- The content is mirrored to https://binaries.soliditylang.org where it can be easily downloaded over
+  HTTPS without any authentication, rate limiting or the need to use git.
+- Content is served with correct `Content-Type` headers and lenient CORS configuration so that it
+  can be directly loaded by tools running in the browser.
+- Binaries do not require installation or unpacking (exception for older Windows builds
+  bundled with necessary DLLs).
+- We strive for a high level of backward-compatibility. Files, once added, are not removed or moved
+  without providing a symlink/redirect at the old location. They are also never modified
+  in place and should always match the original checksum. The only exception would be broken or
+  unusable files with the potential to cause more harm than good if left as is.
+- Files are served over both HTTP and HTTPS. As long as you obtain the file list in a secure way
+  (via git, HTTPS, IPFS or just have it cached locally) and verify hashes of the binaries
+  after downloading them, you do not have to use HTTPS for the binaries themselves.
+>>>>>>> english/develop
 
 在大多数情况下，同样的二进制文件可以在 `Github 上的 Solidity 发布页 <https://github.com/ethereum/solidity/releases>`_ 中找到。
 不同的是，我们一般不更新Github已发布的旧版本。这意味着如果命名规则改变，我们不会重新命名，
 也不会为发布时不支持的平台添加构建。这只发生在 ``solc-bin`` 资源库里。
 
+<<<<<<< HEAD
 ``solc-bin`` 资源库包含几个顶级目录，每个目录代表一个平台。
 每个目录都包含一个 ``list.json`` 文件，列出可用的二进制文件。
 例如，在 ``emscripten-wasm32/list.json`` 中您会发现以下关于 0.7.4 版本的信息。
+=======
+The ``solc-bin`` repository contains several top-level directories, each representing a single platform.
+Each one includes a ``list.json`` file listing the available binaries. For example in
+``emscripten-wasm32/list.json`` you will find the following information about version 0.7.4:
+>>>>>>> english/develop
 
 .. code-block:: json
 
@@ -235,6 +332,7 @@ macOS Packages
 
 - 您可以在同一目录下找到二进制文件，名称为
   `solc-emscripten-wasm32-v0.7.4+commit.3f05b770.js <https://github.com/ethereum/solc-bin/blob/gh-pages/emscripten-wasm32/solc-emscripten-wasm32-v0.7.4+commit.3f05b770.js>`_.
+<<<<<<< HEAD
   注意，该文件可能是一个软链接，如果您没有使用 git 下载，或者您的文件系统不支持软链接，您需要自己解决。
 - 该二进制文件也被镜像在 https://binaries.soliditylang.org/emscripten-wasm32/solc-emscripten-wasm32-v0.7.4+commit.3f05b770.js.
   在这种情况下，不需要 git，软链接的解决方式是显而易见的，要么提供一个文件的副本，要么返回一个 HTTP 重定向。
@@ -247,6 +345,21 @@ macOS Packages
   或在 JavaScript 中使用 `ethereumjs-util 的 keccak256() 函数。`
 - 您也可以通过比较二进制文件的sha256哈希值来验证它的完整性
   ``0x2b55ed5fec4d9625b6c7b3ab1abd2b7fb7dd2a9c68543bf0323db2c7e2d55af2``。
+=======
+  Note that the file might be a symlink, and you will need to resolve it yourself if you are not using
+  git to download it or your file system does not support symlinks.
+- The binary is also mirrored at https://binaries.soliditylang.org/emscripten-wasm32/solc-emscripten-wasm32-v0.7.4+commit.3f05b770.js.
+  In this case git is not necessary and symlinks are resolved transparently, either by serving a copy
+  of the file or returning a HTTP redirect.
+- The file is also available on IPFS at `QmTLs5MuLEWXQkths41HiACoXDiH8zxyqBHGFDRSzVE5CS`_.
+- The file might in future be available on Swarm at `16c5f09109c793db99fe35f037c6092b061bd39260ee7a677c8a97f18c955ab1`_.
+- You can verify the integrity of the binary by comparing its keccak256 hash to
+  ``0x300330ecd127756b824aa13e843cb1f43c473cb22eaf3750d5fb9c99279af8c3``.  The hash can be computed
+  on the command-line using ``keccak256sum`` utility provided by `sha3sum`_ or `keccak256() function
+  from ethereumjs-util`_ in JavaScript.
+- You can also verify the integrity of the binary by comparing its sha256 hash to
+  ``0x2b55ed5fec4d9625b6c7b3ab1abd2b7fb7dd2a9c68543bf0323db2c7e2d55af2``.
+>>>>>>> english/develop
 
 .. warning::
 
@@ -288,12 +401,17 @@ macOS Packages
 
 从源代码编译
 ====================
+<<<<<<< HEAD
 
 先决条件 - 所有操作系统
+=======
+Prerequisites - All Operating Systems
+>>>>>>> english/develop
 -------------------------------------
 
 以下是 Solidity 构建的所有依赖性：
 
+<<<<<<< HEAD
 
 +------------------------------------------+------------------------------+
 |                   软件                   |             备注             |
@@ -310,6 +428,23 @@ macOS Packages
 +------------------------------------------+------------------------------+
 | `cvc4`_ （可选）                         | 与SMT检查器一起使用。        |
 +------------------------------------------+------------------------------+
+=======
++-----------------------------------+-------------------------------------------------------+
+| Software                          | Notes                                                 |
++===================================+=======================================================+
+| `CMake`_ (version 3.21.3+ on      | Cross-platform build file generator.                  |
+| Windows, 3.13+ otherwise)         |                                                       |
++-----------------------------------+-------------------------------------------------------+
+| `Boost`_ (version 1.77+ on        | C++ libraries.                                        |
+| Windows, 1.65+ otherwise)         |                                                       |
++-----------------------------------+-------------------------------------------------------+
+| `Git`_                            | Command-line tool for retrieving source code.         |
++-----------------------------------+-------------------------------------------------------+
+| `z3`_ (version 4.8.16+, Optional) | For use with SMT checker.                             |
++-----------------------------------+-------------------------------------------------------+
+| `cvc4`_ (Optional)                | For use with SMT checker.                             |
++-----------------------------------+-------------------------------------------------------+
+>>>>>>> english/develop
 
 .. _cvc4: https://cvc4.cs.stanford.edu/web/
 .. _Git: https://git-scm.com/download
@@ -318,8 +453,14 @@ macOS Packages
 .. _z3: https://github.com/Z3Prover/z3
 
 .. note::
+<<<<<<< HEAD
     0.5.10 之前的 Solidity 版本可能无法与 Boost 1.70 以上版本正确链接。
     一个可能的解决方法是，在运行 cmake 命令配置 Solidity 之前，暂时重命名 ``<Boost install path>/lib/cmake/Boost-1.70.0``。
+=======
+    Solidity versions prior to 0.5.10 can fail to correctly link against Boost versions 1.70+.
+    A possible workaround is to temporarily rename ``<Boost install path>/lib/cmake/Boost-1.70.0``
+    prior to running the cmake command to configure Solidity.
+>>>>>>> english/develop
 
     从 0.5.10 开始，针对 Boost 1.70 以上版本的链接应该无需人工干预。
 
@@ -352,11 +493,22 @@ macOS Packages
 先决条件 - macOS
 ---------------------
 
+<<<<<<< HEAD
 对于 macOS 的构建，确保最新版本的 `Xcode 已安装 <https://developer.apple.com/xcode/download/>`_。
 这包含了 `Clang C++ 编译器 <https://en.wikipedia.org/wiki/Clang>`_，
 `Xcode IDE <https://en.wikipedia.org/wiki/Clang>`_ 和其他苹果公司的开发工具，
 这些工具是在 OS X 上构建 C++ 应用程序所必须的。
 如果您是第一次安装 Xcode，或者刚刚安装了一个新的版本，那么您在使用命令行构建前，需同意使用协议：
+=======
+For macOS builds, ensure that you have the latest version of
+`Xcode installed <https://developer.apple.com/xcode/resources/>`_.
+This contains the `Clang C++ compiler <https://en.wikipedia.org/wiki/Clang>`_, the
+`Xcode IDE <https://en.wikipedia.org/wiki/Xcode>`_ and other Apple development
+tools that are required for building C++ applications on OS X.
+If you are installing Xcode for the first time, or have just installed a new
+version then you will need to agree to the license before you can do
+command-line builds:
+>>>>>>> english/develop
 
 .. code-block:: bash
 
@@ -373,6 +525,7 @@ macOS Packages
 
 您需要为 Solidity 的 Windows 版本安装以下依赖软件包:
 
+<<<<<<< HEAD
 +-----------------------------------+------------------------+
 |               软件                |          备注          |
 +===================================+========================+
@@ -382,6 +535,17 @@ macOS Packages
 +-----------------------------------+------------------------+
 | `Boost`_ （1.77版本）             | C++ 库文件。           |
 +-----------------------------------+------------------------+
+=======
++-----------------------------------+-------------------------------------------------------+
+| Software                          | Notes                                                 |
++===================================+=======================================================+
+| `Visual Studio 2019 Build Tools`_ | C++ compiler                                          |
++-----------------------------------+-------------------------------------------------------+
+| `Visual Studio 2019`_  (Optional) | C++ compiler and dev environment.                     |
++-----------------------------------+-------------------------------------------------------+
+| `Boost`_ (version 1.77+)          | C++ libraries.                                        |
++-----------------------------------+-------------------------------------------------------+
+>>>>>>> english/develop
 
 如果您已经有一个 IDE 并且只需要编译器和库文件。您可以安装 Visual Studio 2019 构建工具。
 
@@ -418,16 +582,28 @@ Visual Studio 2019 同时提供IDE和必要的编译器和库。
     git clone --recursive https://github.com/ethereum/solidity.git
     cd solidity
 
+<<<<<<< HEAD
 如果您想帮助开发 Solidity，
 您可以分叉 Solidity，然后将您个人的分叉库作为第二远程源添加。
+=======
+If you want to help develop Solidity,
+you should fork Solidity and add your personal fork as a second remote:
+>>>>>>> english/develop
 
 .. code-block:: bash
 
     git remote add personal git@github.com:[username]/solidity.git
 
 .. note::
+<<<<<<< HEAD
     这种方法将导致一个预发布的构建，例如，在这种编译器产生的每个字节码中设置一个标志。
     如果您想重新构建一个已发布的 Solidity 编译器，那么请使用 github 发布页上的源压缩包：
+=======
+    This method will result in a pre-release build leading to e.g. a flag
+    being set in each bytecode produced by such a compiler.
+    If you want to re-build a released Solidity compiler, then
+    please use the source tarball on the github release page:
+>>>>>>> english/develop
 
     https://github.com/ethereum/solidity/releases/download/v0.X.Y/solidity_0.X.Y.tar.gz
 
@@ -540,6 +716,7 @@ Solidity 版本名包含四部分：
 
 示例:
 
+<<<<<<< HEAD
 1. 0.4.0 版本发布。
 2. 从现在开始，每晚构建一个 0.4.1 版本。
 3. 引入非重大变更 —— 不改变版本号。
@@ -547,3 +724,6 @@ Solidity 版本名包含四部分：
 5. 0.5.0 版本发布。
 
 该方式与 :ref:`version pragma <version_pragma>` 一起运行良好。
+=======
+This behavior works well with the  :ref:`version pragma <version_pragma>`.
+>>>>>>> english/develop
