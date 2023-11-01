@@ -45,7 +45,12 @@ Solidity支持多重继承，包括多态性。
     // 使用 `is` 从另一个合约派生。派生合约可以访问所有非私有成员，
     // 包括内部函数和状态变量，但无法通过 `this` 来外部访问。
     contract Destructible is Owned {
+<<<<<<< HEAD
         // 关键字 `virtual` 意味着该函数可以在派生类中改变其行为（"重载"）。
+=======
+        // The keyword `virtual` means that the function can change
+        // its behavior in derived classes ("overriding").
+>>>>>>> english/develop
         function destroy() virtual public {
             if (msg.sender == owner) selfdestruct(owner);
         }
@@ -98,8 +103,14 @@ Solidity支持多重继承，包括多态性。
             if (msg.sender == owner) info = newInfo;
         }
 
+<<<<<<< HEAD
         // 在这里，我们只指定了 `override` 而没有 `virtual`。
         // 这意味着从 `PriceFeed` 派生出来的合约不能再改变 `destroy` 的行为。
+=======
+        // Here, we only specify `override` and not `virtual`.
+        // This means that contracts deriving from `PriceFeed`
+        // cannot change the behavior of `destroy` anymore.
+>>>>>>> english/develop
         function destroy() public override(Destructible, Named) { Named.destroy(); }
         function get() public view returns(uint r) { return info; }
 
@@ -262,7 +273,12 @@ Solidity支持多重继承，包括多态性。
 它从所考虑的合约开始，到提到具有该签名的函数的合约结束，
 而该签名没有重载。
 
+<<<<<<< HEAD
 如果您不把一个重载的函数标记为 ``virtual``，派生合约就不能再改变该函数的行为。
+=======
+If you do not mark a function that overrides as ``virtual``, derived
+contracts can no longer change the behavior of that function.
+>>>>>>> english/develop
 
 .. note::
 
@@ -440,12 +456,25 @@ Solidity支持多重继承，包括多态性。
         constructor() Base(10 + 10) {}
     }
 
+<<<<<<< HEAD
 一种方式是直接在继承列表中给出（ ``is Base(7)`` ）。
 另一种是通过修改器作为派生构造函数的一部分被调用的方式（ ``Base(_y * _y)`` ）。
 如果构造函数参数是一个常量，并且定义了合约的行为或描述了它，那么第一种方式更方便。
 如果基类合约的构造函数参数依赖于派生合约的参数，则必须使用第二种方式。
 参数必须在继承列表中或在派生构造函数中以修饰器的形式给出。
 在两个地方都指定参数是一个错误。
+=======
+One way is directly in the inheritance list (``is Base(7)``).  The other is in
+the way a modifier is invoked as part of
+the derived constructor (``Base(y * y)``). The first way to
+do it is more convenient if the constructor argument is a
+constant and defines the behavior of the contract or
+describes it. The second way has to be used if the
+constructor arguments of the base depend on those of the
+derived contract. Arguments have to be given either in the
+inheritance list or in modifier-style in the derived constructor.
+Specifying arguments in both places is an error.
+>>>>>>> english/develop
 
 如果一个派生合约没有指定其所有基类合约的构造函数的参数，那么它必须被声明为 abstract 类型。在这种情况下，
 当另一个合约从它派生时，其他合约的继承列表或构造函数必须为所有没有指定参数的基类合约提供必要的参数
@@ -535,9 +564,20 @@ Solidity 借鉴了 Python 的方式并且使用 "`C3 线性化 <https://en.wikip
 继承有相同名字的不同类型成员
 ======================================================
 
+<<<<<<< HEAD
 由于继承的原因，当合约有以下任何一对具有相同的名称时，这是一个错误：
   - 函数和修饰器
   - 函数和事件
   - 事件和修饰器
 
 有一种例外情况，状态变量的 getter 可以重载一个外部函数。
+=======
+The only situations where, due to inheritance, a contract may contain multiple definitions sharing
+the same name are:
+
+- Overloading of functions.
+- Overriding of virtual functions.
+- Overriding of external virtual functions by state variable getters.
+- Overriding of virtual modifiers.
+- Overloading of events.
+>>>>>>> english/develop

@@ -20,7 +20,7 @@
 当您使用 :ref:`import 语句 <import>` 时，
 您指定了引用源单元名称的 *导入路径*。
 
-.. index:: ! import callback, ! Host Filesystem Loader
+.. index:: ! import callback, ! Host Filesystem Loader, ! --no-import-callback
 .. _import-callback:
 
 导入回调
@@ -34,6 +34,7 @@ VFS最初只填充了编译器收到的输入文件。
 一个导入回调可以自由地以任意方式解释源单元名称，而不仅仅是作为路径。
 如果在需要回调时没有可用的回调，或者无法找到源代码，编译就会失败。
 
+<<<<<<< HEAD
 命令行编译器提供了 *主机文件系统加载器* -- 一个基本的回调，
 它将源单元名称解释为本地文件系统中的一个路径。
 `JavaScript接口 <https://github.com/ethereum/solc-js>`_ 默认不提供任何接口，
@@ -42,6 +43,18 @@ VFS最初只填充了编译器收到的输入文件。
 （本地文件系统甚至可能无法访问，例如当编译器在浏览器中运行时）。
 例如， `Remix IDE <https://remix.ethereum.org/>`_ 提供了一个多功能的回调，
 让您 `从HTTP、IPFS和Swarm URL导入文件，或直接引用NPM注册表中的包 <https://remix-ide.readthedocs.io/en/latest/import.html>`_。
+=======
+By default, the command-line compiler provides the *Host Filesystem Loader* - a rudimentary callback
+that interprets a source unit name as a path in the local filesystem.
+This callback can be disabled using the ``--no-import-callback`` command-line option.
+The `JavaScript interface <https://github.com/ethereum/solc-js>`_ does not provide any by default,
+but one can be provided by the user.
+This mechanism can be used to obtain source code from locations other then the local filesystem
+(which may not even be accessible, e.g. when the compiler is running in a browser).
+For example the `Remix IDE <https://remix.ethereum.org/>`_ provides a versatile callback that
+lets you `import files from HTTP, IPFS and Swarm URLs or refer directly to packages in NPM registry
+<https://remix-ide.readthedocs.io/en/latest/import.html>`_.
+>>>>>>> english/develop
 
 .. note::
 
@@ -128,7 +141,12 @@ VFS的初始内容取决于您如何调用编译器：
 
 #. **标准输入**
 
+<<<<<<< HEAD
    在命令行中，也可以通过将源代码发送到编译器的标准输入来提供源代码:
+=======
+   On the command-line it is also possible to provide the source by sending it to compiler's
+   standard input:
+>>>>>>> english/develop
 
    .. code-block:: bash
 
@@ -312,12 +330,23 @@ VFS的初始内容取决于您如何调用编译器：
 CLI路径规范化和剥离
 ------------------------------------
 
+<<<<<<< HEAD
 在命令行中，编译器的行为就像您对其他程序的期望一样：
 它接受平台的本地格式的路径，相对路径是相对于当前工作目录的。
 然而，分配给在命令行上指定了路径的文件的源单元名称，不应该因为项目在不同的平台上被编译，
 或者因为编译器碰巧从不同的目录被调用而改变。
 为了达到这个目的，来自命令行的源文件的路径必须被转换为规范的形式，
 如果可能的话，应使其与基本路径或包含路径之一相对。
+=======
+On the command-line the compiler behaves just as you would expect from any other program:
+it accepts paths in a format native to the platform and relative paths are relative to the current
+working directory.
+The source unit names assigned to files whose paths are specified on the command-line, however,
+should not change just because the project is being compiled on a different platform or because the
+compiler happens to have been invoked from a different directory.
+To achieve this, paths to source files coming from the command-line must be converted to a canonical
+form, and, if possible, made relative to the base path or one of the include paths.
+>>>>>>> english/develop
 
 规范化规则如下：
 
@@ -365,8 +394,15 @@ CLI路径规范化和剥离
 
 .. note::
 
+<<<<<<< HEAD
     在0.8.8版本之前，CLI路径剥离不被执行，唯一应用的规范化是路径分隔符的转换。
     当使用旧版本的编译器时，建议从基本路径调用编译器，在命令行上只使用相对路径。
+=======
+    Prior to version 0.8.8, CLI path stripping was not performed and the only normalization applied
+    was the conversion of path separators.
+    When working with older versions of the compiler it is recommended to invoke the compiler from
+    the base path and to only use relative paths on the command-line.
+>>>>>>> english/develop
 
 .. index:: ! allowed paths, ! --allow-paths, remapping; target
 .. _allowed-paths:
@@ -378,10 +414,18 @@ CLI路径规范化和剥离
 
 - 标准JSON模式之外：
 
+<<<<<<< HEAD
   - 含有命令行上所列输入文件的目录。
   - 作为 :ref:`重映射 <import-remapping>` 目标使用的目录。
     如果目标不是一个目录（即不以 ``/``， ``/.`` 或 ``/.`` 结尾），则使用包含该目标的目录。
   - 基本路径和包含路径。
+=======
+  - The directories containing input files listed on the command-line.
+  - The directories used as :ref:`remapping <import-remapping>` targets.
+    If the target is not a directory (i.e does not end with ``/``, ``/.`` or ``/..``) the directory
+    containing the target is used instead.
+  - Base path and include paths.
+>>>>>>> english/develop
 
 - 在标准JSON模式下：
 
@@ -463,9 +507,15 @@ CLI路径规范化和剥离
 
     import "github.com/ethereum/dapp-bin/library/math.sol"; // 源单元名称： dapp-bin/library/math.sol
 
+<<<<<<< HEAD
 编译器将在VFS的 ``dapp bin/library/math.sol`` 下寻找该文件。
 如果那里没有该文件，源单元名称将被传递给主机文件系统加载器，
 然后它将在 ``/project/dapp-bin/library/iterable_mapping.sol`` 中寻找。
+=======
+The compiler will look for the file in the VFS under ``dapp-bin/library/math.sol``.
+If the file is not available there, the source unit name will be passed to the Host Filesystem
+Loader, which will then look in ``/project/dapp-bin/library/math.sol``.
+>>>>>>> english/develop
 
 .. warning::
 
@@ -495,7 +545,11 @@ CLI路径规范化和剥离
 
 这意味着 ``module2`` 的所有导入都指向旧版本，但 ``module1`` 的导入则指向新版本。
 
+<<<<<<< HEAD
 以下是关于重映射行为的详细规则：
+=======
+Here are the detailed rules governing the behavior of remappings:
+>>>>>>> english/develop
 
 #. **重新映射只影响导入路径和源单元名称之间的转换。**
 
