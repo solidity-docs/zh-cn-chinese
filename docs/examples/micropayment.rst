@@ -72,12 +72,21 @@ Alice可以通过在消息中包含合约的地址来防止这种攻击，
 组装参数
 ---------
 
+<<<<<<< HEAD
 既然我们已经确定了要在签名信息中包含哪些信息，
 我们准备把信息放在一起，进行哈希运算，然后签名。
 简单起见，我们把数据连接起来。
 `ethereumjs-abi <https://github.com/ethereumjs/ethereumjs-abi>`_ 库提供了一个名为 ``soliditySHA3`` 的函数，
 模仿Solidity的 ``keccak256`` 函数应用于使用 ``abi.encodePacked`` 编码的参数的行为。
 这里有一个JavaScript函数，为 ``ReceiverPays`` 的例子创建了适当的签名。
+=======
+Now that we have identified what information to include in the signed message,
+we are ready to put the message together, hash it, and sign it. For simplicity,
+we concatenate the data. The `ethereumjs-abi <https://github.com/ethereumjs/ethereumjs-abi>`_
+library provides a function called ``soliditySHA3`` that mimics the behavior of
+Solidity's ``keccak256`` function applied to arguments encoded using ``abi.encodePacked``.
+Here is a JavaScript function that creates the proper signature for the ``ReceiverPays`` example:
+>>>>>>> english/develop
 
 .. code-block:: javascript
 
