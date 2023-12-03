@@ -69,7 +69,7 @@ contract HelloWorld {
 
 Solidity 文档托管在 [阅读文档](https://docs.soliditylang.org) 。
 
-## 发展
+## 开发
 
 Solidity 仍在开发中。我们随时欢迎您的贡献!
 如果您想提供帮助，请遵循 [开发者指南](https://docs.soliditylang.org/en/latest/contributing.html)。
@@ -79,11 +79,11 @@ Solidity 仍在开发中。我们随时欢迎您的贡献!
 
 
 ## 维护者
-* [@axic](https://github.com/axic)
-* [@chriseth](https://github.com/chriseth)
+Solidity 编程语言和编译器是由核心团队管理的开源社区项目。
+核心团队由 [以太坊基金会](https://ethereum.foundation/) 赞助。
 
 ## 许可
-Solidity 有 [GNU 通用公共许可证 v3.0](LICENSE.txt) 的许可。
+Solidity 已获得 [GNU General Public License v3.0](LICENSE.txt) 的许可。
 
 一些第三方代码有其 [自己的许可条款](cmake/templates/license.h.in)。
 
