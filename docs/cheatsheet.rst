@@ -142,6 +142,7 @@ ABI 编码和解码函数
 修改器
 =========
 
+<<<<<<< HEAD
 - ``pure`` 修饰函数时：不允许修改或访问状态。
 - ``view`` 修饰函数时：不允许修改状态。
 - ``payable`` 修饰函数时：允许从调用中接收以太币。
@@ -151,4 +152,17 @@ ABI 编码和解码函数
 - ``indexed`` 修饰事件参数时：将参数作为 topic 存储。
 - ``virtual`` 修饰函数和修改时：允许在派生合约中改变函数或修改器的行为。
 - ``override`` 表示该函数、修改器或公共状态变量改变了基类合约中的函数或修改器的行为。
+=======
+- ``pure`` for functions: Disallows modification or access of state.
+- ``view`` for functions: Disallows modification of state.
+- ``payable`` for functions: Allows them to receive Ether together with a call.
+- ``constant`` for state variables: Disallows assignment (except initialisation), does not occupy storage slot.
+- ``immutable`` for state variables: Allows assignment at construction time and is constant when deployed. Is stored in code.
+- ``anonymous`` for events: Does not store event signature as topic.
+- ``indexed`` for event parameters: Stores the parameter as topic.
+- ``virtual`` for functions and modifiers: Allows the function's or modifier's
+  behavior to be changed in derived contracts.
+- ``override``: States that this function, modifier or public state variable changes
+  the behavior of a function or modifier in a base contract.
+>>>>>>> english/develop
 
