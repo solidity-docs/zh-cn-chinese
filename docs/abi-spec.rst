@@ -537,12 +537,8 @@ JSON
   ``view`` （:ref:`指定为不修改区块链状态 <view-functions>`），
   ``nonpayable`` （函数不接受以太币 - 默认选项） 和 ``payable`` （函数可接收以太币）。
 
-<<<<<<< HEAD
-构造函数（constructor）， receive 函数 和 fallback 函数从不有 ``name`` 或 ``outputs``。
-Receive 函数 和 fallback 函数也没有 ``inputs``。
-=======
-Constructor, receive, and fallback never have ``name`` or ``outputs``. Receive and fallback do not have ``inputs`` either.
->>>>>>> english/develop
+构造函数（constructor）， receive 函数 和 fallback 函数从没有 ``name`` 或 ``outputs`` 字段。
+receive 函数 和 fallback 函数也没有 ``inputs`` 字段。
 
 .. note::
     向不接收以太币函数发送非零的以太币将使交易回滚。
@@ -556,17 +552,10 @@ Constructor, receive, and fallback never have ``name`` or ``outputs``. Receive a
 - ``name``： 事件名称；
 - ``inputs``： 对象数组，每个数组对象会包含：
 
-<<<<<<< HEAD
   * ``name``： 参数名称。
   * ``type``： 参数的权威类型（相见下文）。
   * ``components``： 供元组（tuple） 类型使用（详见下文）
-  * ``indexed``： 如果此字段是日志的一个主题，则为 ``true``， 否则为 ``false``。
-=======
-  * ``name``: the name of the parameter.
-  * ``type``: the canonical type of the parameter (more below).
-  * ``components``: used for tuple types (more below).
-  * ``indexed``: ``true`` if the field is part of the log's topics, ``false`` if it is one of the log's data segments.
->>>>>>> english/develop
+  * ``indexed``： 如果字段是日志主题的一部分，则为 ``true``；如果字段是日志数据段的一部分，则为 ``false``。
 
 - ``anonymous``： 如果事件被声明为 ``anonymous``，则为 ``true``。
 
