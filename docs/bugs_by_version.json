@@ -1832,14 +1832,10 @@
         "released": "2023-02-01"
     },
     "0.8.19": {
-<<<<<<< HEAD
-        "bugs": [],
-=======
         "bugs": [
             "FullInlinerNonExpressionSplitArgumentEvaluationOrder",
             "MissingSideEffectsOnSelectorAccess"
         ],
->>>>>>> english/develop
         "released": "2023-02-22"
     },
     "0.8.2": {
