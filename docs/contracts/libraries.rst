@@ -138,7 +138,7 @@
                 }
             }
             if (carry > 0) {
-                // 太差了，我们需要增加一个 limb
+                // 糟糕，我们必须增加一个 limb
                 uint[] memory newLimbs = new uint[](r.limbs.length + 1);
                 uint i;
                 for (i = 0; i < r.limbs.length; ++i)
