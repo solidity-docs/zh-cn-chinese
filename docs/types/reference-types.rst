@@ -41,8 +41,13 @@ Calldata是一个不可修改的、非持久性的区域，用于存储函数参
 
 .. _data-location-assignment:
 
+<<<<<<< HEAD
 数据位置和分配行为
 ^^^^^^^^^^^^^^^^^^
+=======
+Data location and assignment behavior
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>>>>>> english/develop
 
 数据位置不仅与数据的持久性有关，而且也与分配的语义有关：
 
@@ -334,8 +339,15 @@ Solidity没有字符串操作函数，但有第三方的字符串库。
     您需要激活ABI coder v2。
 
 .. note::
+<<<<<<< HEAD
     在Byzantium之前的EVM版本中，不可能访问从函数调用返回的动态数组。
     如果您调用返回动态数组的函数，请确保使用设置为Byzantium模式的EVM。
+=======
+    In EVM versions before Byzantium, it was not possible to access
+    dynamic arrays returned from function calls. If you call functions
+    that return dynamic arrays, make sure to use an EVM that is set to
+    Byzantium mode.
+>>>>>>> english/develop
 
 .. code-block:: solidity
 
@@ -536,9 +548,17 @@ Solidity没有字符串操作函数，但有第三方的字符串库。
 为了安全起见，在一次赋值中最多只放大字节数组中的一个元素，
 不要在同一语句中同时对数组进行索引存取。
 
+<<<<<<< HEAD
 虽然上面描述了当前版本的编译器中悬空存储引用的行为，
 但任何带有悬空引用的代码都应被视为具有 *未定义行为*。
 特别的是，这意味着任何未来版本的编译器都可能改变涉及悬空引用的代码的行为。
+=======
+While the above describes the behavior of dangling storage references in the
+current version of the compiler, any code with dangling references should be
+considered to have *undefined behavior*. In particular, this means that
+any future version of the compiler may change the behavior of code that
+involves dangling references.
+>>>>>>> english/develop
 
 请确保避免在您的代码中出现悬空引用。
 
@@ -588,7 +608,11 @@ Solidity没有字符串操作函数，但有第三方的字符串库。
         /// 该调用在对地址参数进行基本验证后由客户端执行。
         function forward(bytes calldata payload) external {
             bytes4 sig = bytes4(payload[:4]);
+<<<<<<< HEAD
             // 由于截断行为，bytes4(payload)的表现是相同的。
+=======
+            // Due to truncating behavior, bytes4(payload) performs identically.
+>>>>>>> english/develop
             // bytes4 sig = bytes4(payload);
             if (sig == bytes4(keccak256("setOwner(address)"))) {
                 address owner = abi.decode(payload[4:], (address));
