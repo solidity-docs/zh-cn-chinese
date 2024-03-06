@@ -141,11 +141,20 @@ Solidity意义上的合约是代码（其 *函数*）和数据（其 *状态*）
 但它是一个更复杂的数据类型。
 :ref:`映射 <mapping-types>` 类型将地址映射到 :ref:`无符号整数 <integers>`。
 
+<<<<<<< HEAD
 映射可以被看作是 `哈希表 <https://en.wikipedia.org/wiki/Hash_table>`_，
 它实际上是被初始化的，因此每一个可能的键从一开始就存在，并被映射到一个值，其字节表示为全零的值。
 然而，它既不可能获得一个映射的所有键的列表，也不可能获得所有值的列表。
 因此，要么记住您添加到映射中的内容，要么在不需要的情况下使用它。
 甚至更好的是，保留一个列表，或者使用一个更合适的数据类型。
+=======
+Mappings can be seen as `hash tables <https://en.wikipedia.org/wiki/Hash_table>`_ which are
+virtually initialized such that every possible key exists from the start and is mapped to a
+value whose byte-representation is all zeros. However, it is neither possible to obtain a list of all keys of
+a mapping, nor a list of all values. Record what you
+added to the mapping, or use it in a context where this is not needed. Or
+even better, keep a list, or use a more suitable data type.
+>>>>>>> english/develop
 
 而由 ``public`` 关键字创建的 :ref:`getter 函数 <getter-functions>` 则是更复杂一些的情况，
 它大致如下所示：
@@ -242,9 +251,16 @@ Solidity意义上的合约是代码（其 *函数*）和数据（其 *状态*）
 数据库的事务特性确保了如果从一个账户扣除金额，它总被添加到另一个账户。
 如果由于某些原因，无法添加金额到目标账户时，源账户也不会发生任何变化。
 
+<<<<<<< HEAD
 此外，交易总是由发送人（创建者）签名。
 这样，就可非常简单地为数据库的特定修改增加访问保护机制。
 在电子货币的例子中，一个简单的检查可以确保只有持有账户密钥的人才能从中转账。
+=======
+Furthermore, a transaction is always cryptographically signed by the sender (creator).
+This makes it straightforward to guard access to specific modifications of the
+database. In the example of the electronic currency, a simple check ensures that
+only the person holding the keys to the account can transfer some compensation, e.g. Ether, from it.
+>>>>>>> english/develop
 
 .. index:: ! block
 
@@ -265,11 +281,19 @@ Solidity意义上的合约是代码（其 *函数*）和数据（其 *状态*）
 区块每隔一段时间就会被添加到链上，但这些时间间隔在未来可能会发生变化。
 如需了解最新信息，建议在 `Etherscan <https://etherscan.io/chart/blocktime>`_ 等网站上对网络进行监控。
 
+<<<<<<< HEAD
 作为 “顺序选择机制”（也就是所谓的“挖矿”）的一部分，
 可能有时会发生块（blocks）被回滚的情况，但仅在链的“末端”。
 末端增加的块越多，其发生回滚的概率越小。
 因此您的交易被回滚甚至从区块链中抹除，这是可能的，
 但等待的时间越长，这种情况发生的概率就越小。
+=======
+As part of the "order selection mechanism", which is called `attestation <https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/attestations/>`_, it may happen that
+blocks are reverted from time to time, but only at the "tip" of the chain. The more
+blocks are added on top of a particular block, the less likely this block will be reverted. So it might be that your transactions
+are reverted and even removed from the blockchain, but the longer you wait, the less
+likely it will be.
+>>>>>>> english/develop
 
 .. note::
     交易不保证被包括在下一个区块或任何特定的未来区块中，
@@ -469,9 +493,15 @@ EVM的指令集应尽量保持最小，以避免不正确或不一致的实现�
 因为如果有人向被删除的合约发送以太币，以太币就会永远丢失。
 
 .. warning::
+<<<<<<< HEAD
     从0.8.18及更高版本开始，在 Solidity 和 Yul 中使用 ``selfdestruct`` 将触发弃用警告，
     因为 ``SELFDESTRUCT`` 操作码最终将经历 `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_ 
     中所述的行为的重大变化。
+=======
+    From version 0.8.18 and up, the use of ``selfdestruct`` in both Solidity and Yul will trigger a
+    deprecation warning, since the ``SELFDESTRUCT`` opcode will eventually undergo breaking changes in behavior
+    as stated in `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_.
+>>>>>>> english/develop
 
 .. warning::
     即使一个合约通过 ``selfdestruct`` 删除，它仍然是区块链历史的一部分，
@@ -493,10 +523,19 @@ EVM的指令集应尽量保持最小，以避免不正确或不一致的实现�
 预编译合约
 =====================
 
+<<<<<<< HEAD
 有一小群合约地址是特殊的。 ``1`` 和（包括） ``8`` 之间的地址范围包含 “预编译合约“，
 可以像其他合约一样被调用，但它们的行为（和它们的gas消耗）
 不是由存储在该地址的EVM代码定义的（它们不包含代码），
 而是由EVM执行环境本身实现。
+=======
+There is a small set of contract addresses that are special:
+The address range between ``1`` and (including) ``8`` contains
+"precompiled contracts" that can be called as any other contract
+but their behavior (and their gas consumption) is not defined
+by EVM code stored at that address (they do not contain code)
+but instead is implemented in the EVM execution environment itself.
+>>>>>>> english/develop
 
 不同的EVM兼容链可能使用不同的预编译合约集。
 未来也有可能在以太坊主链上添加新的预编译合约，

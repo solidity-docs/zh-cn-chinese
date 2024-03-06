@@ -330,13 +330,24 @@ Solidity 内部允许元组 (tuple) 类型，也就是一个在编译时元素�
     现在这是不允许的，所以两边必须有相同数量的元素。
 
 .. warning::
+<<<<<<< HEAD
     当涉及到引用类型时，在同时向多个变量赋值时要小心，因为这可能导致意外的复制行为。
+=======
+    Be careful when assigning to multiple variables at the same time when
+    reference types are involved, because it could lead to unexpected
+    copying behavior.
+>>>>>>> english/develop
 
 数组和结构体的复杂情况
 ----------------------
 
+<<<<<<< HEAD
 对于像数组和结构体这样的非值类型，包括 ``bytes`` 和 ``string``，赋值的语义更为复杂，
 详见 :ref:`数据位置和赋值行为 <data-location-assignment>`。
+=======
+The semantics of assignments are more complicated for non-value types like arrays and structs,
+including ``bytes`` and ``string``, see :ref:`Data location and assignment behavior <data-location-assignment>` for details.
+>>>>>>> english/develop
 
 在下面的例子中，调用 ``g(x)`` 对 ``x`` 没有影响，
 因为它在内存中创建了一个独立的存储值的副本。然而， ``h(x)`` 成功地修改了 ``x``，
@@ -465,7 +476,11 @@ Solidity 中的作用域规则遵循了 C99（与其他很多语言一样）：
 从Solidity 0.8.0开始，在默认情况下所有的算术运算都会在上溢和下溢时还原，
 从而使这些库的使用变得没有必要。
 
+<<<<<<< HEAD
 为了获得以前的行为，可以使用一个 ``未检查（unchecked）`` 区块。
+=======
+To obtain the previous behavior, an ``unchecked`` block can be used:
+>>>>>>> english/develop
 
 .. code-block:: solidity
 
@@ -616,8 +631,14 @@ Assert应该只用于测试内部错误，以及检查不变量。
             require(msg.value % 2 == 0, "Even value required.");
             uint balanceBeforeTransfer = address(this).balance;
             addr.transfer(msg.value / 2);
+<<<<<<< HEAD
             // 由于转账失败后抛出异常并且不能在这里回调，
             // 因此我们应该没有办法仍然有一半的钱。
+=======
+            // Since transfer throws an exception on failure and
+            // cannot call back here, there should be no way for us to
+            // still have half of the Ether.
+>>>>>>> english/develop
             assert(address(this).balance == balanceBeforeTransfer - msg.value / 2);
             return address(this).balance;
         }
@@ -648,8 +669,13 @@ Assert应该只用于测试内部错误，以及检查不变量。
 
     revert CustomError(arg1, arg2);
 
+<<<<<<< HEAD
 出于向后兼容的原因，还有一个 ``revert()`` 函数，
 它使用圆括号并接受一个字符串：
+=======
+For backward-compatibility reasons, there is also the ``revert()`` function, which uses parentheses
+and accepts a string:
+>>>>>>> english/develop
 
     revert();
     revert("description");
