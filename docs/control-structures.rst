@@ -616,8 +616,8 @@ Assert应该只用于测试内部错误，以及检查不变量。
             require(msg.value % 2 == 0, "Even value required.");
             uint balanceBeforeTransfer = address(this).balance;
             addr.transfer(msg.value / 2);
-            // 由于转账失败后抛出异常并且不能在这里回调，
-            // 因此我们应该没有办法仍然有一半的钱。
+            // 由于转账失败后会抛出异常并且不能在这里回调，
+            // 因此我们应该没有办法仍然有一半的以太币。
             assert(address(this).balance == balanceBeforeTransfer - msg.value / 2);
             return address(this).balance;
         }
