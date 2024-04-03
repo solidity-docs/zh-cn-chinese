@@ -238,8 +238,27 @@ Solidity 支持上面介绍的除了元祖之外的所有同名类型。
     }
 
 
+<<<<<<< HEAD
 因此，对于我们的例子 ``Foo``，如果我们想用 ``69`` 和 ``true`` 做参数调用 ``baz``，
 我们总共需要传送 68 字节，可以分解为：
+=======
+Thus, for our ``Foo`` example, if we wanted to call ``bar`` with the argument ``["abc", "def"]``, we would pass 68 bytes total, broken down into:
+
+- ``0xfce353f6``: the Method ID. This is derived from the signature ``bar(bytes3[2])``.
+- ``0x6162630000000000000000000000000000000000000000000000000000000000``: the first part of the first
+  parameter, a ``bytes3`` value ``"abc"`` (left-aligned).
+- ``0x6465660000000000000000000000000000000000000000000000000000000000``: the second part of the first
+  parameter, a ``bytes3`` value ``"def"`` (left-aligned).
+
+In total:
+
+.. code-block:: none
+
+    0xfce353f661626300000000000000000000000000000000000000000000000000000000006465660000000000000000000000000000000000000000000000000000000000
+
+If we wanted to call ``baz`` with the parameters ``69`` and
+``true``, we would pass 68 bytes total, which can be broken down into:
+>>>>>>> english/develop
 
 - ``0xcdcd77c0``： 方法ID。这源自ASCII格式的 ``baz(uint32,bool)`` 签名的 Keccak 哈希的前 4 字节。
 - ``0x0000000000000000000000000000000000000000000000000000000000000045``： 第一个参数，
@@ -257,6 +276,7 @@ Solidity 支持上面介绍的除了元祖之外的所有同名类型。
 那么它的输出将是一个字节数组 ``0x0000000000000000000000000000000000000000000000000000000000000000``，
 一个 ``bool`` 值。
 
+<<<<<<< HEAD
 如果我们想用 ``["abc", "def"]`` 做参数调用 ``bar``，我们总共需要传送 68 字节，可以分解为：
 
 - ``0xfce353f6``： 方法ID。源自 ``bar(bytes3[2])`` 的签名。
@@ -273,6 +293,10 @@ Solidity 支持上面介绍的除了元祖之外的所有同名类型。
 
 如果我们想用 ``"dave"``， ``true`` 和 ``[1,2,3]`` 作为参数调用 ``sam``，
 我们总共需要传送 292 字节，可以分解为：
+=======
+If we wanted to call ``sam`` with the arguments ``"dave"``, ``true`` and ``[1,2,3]``, we would
+pass 292 bytes total, broken down into:
+>>>>>>> english/develop
 
 - ``0xa5643bf2``： 方法ID。这是从签名 ``sam(bytes,bool,uint256[])`` 中导出的。注意， ``uint`` 被替换为其典型代表 ``uint256``。
 - ``0x0000000000000000000000000000000000000000000000000000000000000060``： 第一个参数（动态类型）的数据部分的位置，即从参数编码块开始位置算起的字节数。在这里，是 ``0x60`` 。
@@ -537,8 +561,12 @@ JSON
   ``view`` （:ref:`指定为不修改区块链状态 <view-functions>`），
   ``nonpayable`` （函数不接受以太币 - 默认选项） 和 ``payable`` （函数可接收以太币）。
 
+<<<<<<< HEAD
 构造函数（constructor）， receive 函数 和 fallback 函数没有 ``name`` 或 ``outputs`` 属性。
 receive 函数 和 fallback 函数也没有 ``inputs`` 属性。
+=======
+Constructor, receive, and fallback never have ``name`` or ``outputs``. Receive and fallback do not have ``inputs`` either.
+>>>>>>> english/develop
 
 .. note::
     向不接收以太币函数发送非零的以太币将使交易回滚。
