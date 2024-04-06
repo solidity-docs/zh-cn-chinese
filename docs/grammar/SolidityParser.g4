@@ -151,15 +151,9 @@ stateMutability: Pure | View | Payable;
  */
 overrideSpecifier: Override (LParen overrides+=identifierPath (Comma overrides+=identifierPath)* RParen)?;
 /**
-<<<<<<< HEAD
- * 合约，库和接口功能的定义。
- * 根据定义函数的上下文，可能会有进一步的限制。
- * 例如，接口中的函数必须是未实现的，也就是说，不能包含主体块。
-=======
- * The definition of contract, library, interface or free functions.
- * Depending on the context in which the function is defined, further restrictions may apply,
- * e.g. functions in interfaces have to be unimplemented, i.e. may not contain a body block.
->>>>>>> english/develop
+ * 合约，库，接口或自由函数的定义。
+ * 根据函数定义的上下文，可能会有进一步的限制。
+ * 例如，接口中的函数必须是未实现的，也就是说，不能包含函数体块。
  */
 functionDefinition
 locals[
@@ -318,28 +312,7 @@ errorDefinition:
 	Semicolon;
 
 /**
-<<<<<<< HEAD
- * 用户可以通过 `using for` 为某些类型实现的操作符。
- */
-userDefinableOperator:
-	BitAnd
-	| BitNot
-	| BitOr
-	| BitXor
-	| Add
-	| Div
-	| Mod
-	| Mul
-	| Sub
-	| Equal
-	| GreaterThan
-	| GreaterThanOrEqual
-	| LessThan
-	| LessThanOrEqual
-	| NotEqual;
-
-=======
- * Operators that users are allowed to implement for some types with `using for`.
+ * 用户可以通过 `using for` 为某些类型实现的运算符。
  */
 userDefinableOperator:
 	BitAnd
@@ -359,11 +332,10 @@ userDefinableOperator:
 	| NotEqual;
 
 /**
- * Using directive to attach library functions and free functions to types.
- * Can occur within contracts and libraries and at the file level.
+ * 使用指令将库函数和自由函数附加到类型上。
+ * 可以在合约、库和文件级别中出现。
  */
 usingDirective: Using (identifierPath | (LBrace identifierPath (As userDefinableOperator)? (Comma identifierPath (As userDefinableOperator)?)* RBrace)) For (Mul | typeName) Global? Semicolon;
->>>>>>> english/develop
 /**
  * 使用指令将库函数和自由函数附加到类型上。
  * 可以在合同和库中以及文件层面中出现。
