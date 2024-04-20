@@ -24,13 +24,8 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 同样地，您可以使用 ``solc --strict-assembly --optimize`` 来产生一个独立的 Yul 模式。
 
 .. note::
-<<<<<<< HEAD
     `窥视孔（peephole）优化器 <https://en.wikipedia.org/wiki/Peephole_optimization>`_
-    和内联器总是默认启用的，只能通过 :ref:`标准 JSON 文件配置 <compiler-api>` 关闭。
-=======
-    The `peephole optimizer <https://en.wikipedia.org/wiki/Peephole_optimization>`_ is always
-    enabled by default and can only be turned off via the :ref:`Standard JSON <compiler-api>`.
->>>>>>> english/develop
+    总是默认启用的，只能通过 :ref:`标准 JSON 文件配置 <compiler-api>` 关闭。
 
 您可以在下面找到关于这两个优化器模块及其优化步骤的更多细节。
 
@@ -293,10 +288,6 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 ``L``        :ref:`load-resolver`
 ``M``        :ref:`loop-invariant-code-motion`
 ``r``        :ref:`redundant-assign-eliminator`
-<<<<<<< HEAD
-``R``        :ref:`reasoning-based-simplifier` - 高度实验性
-=======
->>>>>>> english/develop
 ``m``        :ref:`rematerialiser`
 ``V``        :ref:`SSA-reverser`
 ``a``        :ref:`SSA-transform`
@@ -310,12 +301,6 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 一些步骤依赖于 ``BlockFlattener``， ``FunctionGrouper``， ``ForLoopInitRewriter`` 所保证的属性。
 由于这个原因，Yul 优化器总是在应用用户提供的任何步骤之前应用它们。
 
-<<<<<<< HEAD
-基于推理的简化器（ReasoningBasedSimplifier）是一个优化器步骤，
-目前在默认步骤集中没有启用。它使用一个 SMT 求解器来简化算术表达式和布尔条件。
-此外，它还没有得到彻底的测试或验证，可能会产生不可复现的结果，所以请谨慎使用!
-=======
->>>>>>> english/develop
 
 选择优化方案
 -----------------------
@@ -547,14 +532,9 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 它不适用于循环迭代条件，因为循环控制流不允许在所有情况下 “概述” 内部表达式。
 我们可以通过应用 :ref:`for-loop-condition-into-body` 将迭代条件移动到循环体中，从而避开这个限制。
 
-<<<<<<< HEAD
-最后一个程序的形式应确保（循环条件除外）函数调用不会嵌套在表达式中，
-所有函数调用参数都必须是变量。
-=======
-The final program should be in an *expression-split form*, where (with the exception of loop conditions)
-function calls cannot appear nested inside expressions
-and all function call arguments have to be variables.
->>>>>>> english/develop
+最终的程序应该采用 *表达式分割形式*，在这种形式下（除了循环条件之外），
+函数调用不能嵌套在表达式中，
+并且所有函数调用的参数必须是变量。
 
 这种形式的好处是，更容易重新排列操作码序列，
 也更容易执行函数调用内联。此外，
@@ -767,20 +747,11 @@ AST被遍历了两次：分别在在信息收集步骤和实际删除步骤中�
 
 .. _expression-simplifier:
 
-<<<<<<< HEAD
 表达式简化器
 ^^^^^^^^^^^^^^^^^^^^^
 
 表达式简化器使用数据流分析器，
 并利用表达式的等价变换列表，如 ``X + 0 -> X`` 来简化代码。
-=======
-ExpressionSimplifier
-^^^^^^^^^^^^^^^^^^^^
-
-The ExpressionSimplifier uses the Dataflow Analyzer and makes use
-of a list of equivalence transforms on expressions like ``X + 0 -> X``
-to simplify the code.
->>>>>>> english/develop
 
 它试图在每个子表达式上匹配诸如 ``X + 0`` 的模式。
 在匹配过程中，它将变量解析为当前分配的表达式，
@@ -810,27 +781,7 @@ to simplify the code.
 
 先决条件：消歧器，循环初始重写器。
 
-<<<<<<< HEAD
-.. _reasoning-based-simplifier:
-
-基于推理的简化器
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-这个优化器使用SMT求解器来检查 ``if`` 条件是否为常数。
-
-- 如果 ``限制条件和条件`` 是不满足的（UNSAT），那么条件永远不会是真的，整个主体可以被删除。
-- 如果 ``限制条件和非限制条件`` 是不满足的（UNSAT），那么条件永远是真的，可以用 ``1`` 代替。
-
-只有在条件是可移动的情况下，上面的简化才能适用。
-
-它只对EVM语言有效，但在其他语言上使用是安全的。
-
-先决条件：消歧器，SSA转换。
-
-声明规模的简化
-=======
-Statement-Scale Simplifications
->>>>>>> english/develop
+语句级别简化
 -------------------------------
 
 .. _circular-reference-pruner:
@@ -1149,21 +1100,12 @@ Statement-Scale Simplifications
 完全内联
 ^^^^^^^^^^^
 
-<<<<<<< HEAD
-完全内联用函数的主体取代了某些函数的调用。
-这在大多数情况下是没有什么帮助的，因为它只是增加了代码的大小，但并没有什么好处。
-此外，代码通常是非常昂贵的，我们往往宁愿要更短的代码而不是更有效的代码。
-不过，在相同的情况下，内联一个函数可以对后续的优化步骤产生积极的影响。
-例如，如果一个函数参数是一个常数，就会出现这种情况。
-=======
-The FullInliner replaces certain calls of certain functions
-by the function's body. This is not very helpful in most cases, because
-it just increases the code size but does not have a benefit. Furthermore,
-code is usually very expensive and we would often rather have shorter
-code than more efficient code. In same cases, though, inlining a function
-can have positive effects on subsequent optimizer steps. This is the case
-if one of the function arguments is a constant, for example.
->>>>>>> english/develop
+完全内联通过函数体替换某些函数的特定调用。
+在大多数情况下，这并没有太多帮助，
+因为它只会增加代码大小而没有实际好处。此外，
+代码通常很昂贵，我们通常更喜欢更短的代码而不是更高效的代码。
+然而，在某些情况下，内联函数可能对后续的优化步骤产生积极影响，
+例如，如果其中一个函数参数是常量。
 
 在内联过程中，一个启发式方法被用来判断函数调用是否应该被内联。
 目前的启发式方法是不内联到 "大" 函数，除非被调用的函数很小。
@@ -1176,16 +1118,12 @@ if one of the function arguments is a constant, for example.
 之后，我们可以在这个专用函数上运行优化器。
 如果结果有很大的收益，那么这个专门化的函数就被保留下来，否则就用原来的函数代替。
 
-<<<<<<< HEAD
-清理
-=======
-FunctionHoister and ExpressionSplitter are recommended as prerequisites since they make the step
-more efficient, but are not required for correctness.
-In particular, function calls with other function calls as arguments are not inlined, but running
-ExpressionSplitter beforehand ensures that there are no such calls in the input.
+建议将函数提升器和表达式拆分器作为先决条件，因为它们可以使步骤更高效，
+但对于正确性来说并非必需。
+特别是，具有其他函数调用作为参数的函数调用不会进行内联，
+但在运行表达式拆分器之前可以确保输入中没有此类调用。
 
-Cleanup
->>>>>>> english/develop
+清理
 -------
 
 清理工作是在优化器运行结束时进行的。
@@ -1219,16 +1157,10 @@ SSA反转器
 这是一个微小的步骤，如果它与通用子表达式消除器和未使用过的处理器相结合，
 则有助于扭转SSA转换的影响。
 
-<<<<<<< HEAD
-我们生成的SSA形式对EVM和WebAssembly的代码生成是不利的，
-因为它生成了许多局部变量。最好的办法是用赋值重新使用现有的变量，
-而不是用新的变量声明。
-=======
-The SSA form we generate is detrimental to code generation
-because it produces many local variables. It would
-be better to just re-use existing variables with assignments instead of
-fresh variable declarations.
->>>>>>> english/develop
+我们生成的SSA形式对代码生成是不利的，
+因为它会产生许多局部变量。
+最好的做法是通过赋值来重复使用现有变量，
+而不是进行新的变量声明。
 
 SSA转换改写
 
@@ -1337,19 +1269,4 @@ SSA转换改变了这种形式的语句，只需将声明和赋值互换。
     ...
     }
 
-<<<<<<< HEAD
 字面意义上的再物质化器应在此步骤之前运行。
-
-
-特定的WebAssembly
---------------------
-
-主要功能
-^^^^^^^^^^^^
-
-将最上面的块改变为一个具有特定名称（“main”）的函数，它没有输入和输出。
-
-取决于函数分组器。
-=======
-The LiteralRematerialiser should be run before this step.
->>>>>>> english/develop
