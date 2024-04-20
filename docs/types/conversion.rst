@@ -37,10 +37,18 @@
 显式转换
 ---------
 
+<<<<<<< HEAD
 如果编译器不允许隐式转换，但您确信转换会成功，
 有时可以进行显式类型转换。
 这可能会导致意想不到的行为，并使您绕过编译器的一些安全特性，
 所以一定要测试结果是否是您想要的和期望的!
+=======
+If the compiler does not allow implicit conversion but you are confident a conversion will work,
+an explicit type conversion is sometimes possible. This may
+result in unexpected behavior and allows you to bypass some security
+features of the compiler, so be sure to test that the
+result is what you want and expect!
+>>>>>>> english/develop
 
 以下面的例子为例，将一个负的 ``int`` 转换为 ``uint``：
 
@@ -159,6 +167,7 @@
     bytes4 f = 0; // 可行
     bytes4 g = 0x0; // 可行
 
+<<<<<<< HEAD
 字符串和十六进制字符串字面常数可以被隐含地转换为固定大小的字节数组，
 如果它们的字符数与字节类型的大小相匹配：
 
@@ -170,6 +179,18 @@
     bytes2 d = hex"123"; // 不允许
     bytes2 e = "x"; // 不允许
     bytes2 f = "xyz"; // 不允许
+=======
+String literals and hex string literals can be implicitly converted to fixed-size byte arrays,
+if their number of characters is less than or equal to the size of the bytes type:
+
+.. code-block:: solidity
+
+    bytes2 a = hex"1234"; // fine
+    bytes2 b = "xy"; // fine
+    bytes2 c = hex"12"; // fine
+    bytes2 e = "x"; // fine
+    bytes2 f = "xyz"; // not allowed
+>>>>>>> english/develop
 
 .. index:: literal;address
 
@@ -184,5 +205,10 @@
 ``address a`` 可以通过 ``payable(a)`` 显式转换为 ``address payable``。
 
 .. note::
+<<<<<<< HEAD
     在 0.8.0 版本之前，可以显式地从任何整数类型（任何大小，有符号或无符号）转换为 ``address`` 或 ``address payable`` 类型。
     从 0.8.0 开始，只允许从 ``uint160`` 转换。
+=======
+    Prior to version 0.8.0, it was possible to explicitly convert from any integer type (of any size, signed or unsigned) to  ``address`` or ``address payable``.
+    Starting with 0.8.0 only conversion from ``uint160`` is allowed.
+>>>>>>> english/develop
