@@ -135,8 +135,14 @@
 幂运算
 ^^^^^^
 
+<<<<<<< HEAD
 幂运算只适用于指数中的无符号类型。幂运算的结果类型总是等于基数的类型。
 请注意，它要足够大以容纳结果，并为潜在的断言失败或包装行为做好准备。
+=======
+Exponentiation is only available for unsigned types in the exponent. The resulting type
+of an exponentiation is always equal to the type of the base. Please take care that it is
+large enough to hold the result and prepare for potential assertion failures or wrapping behavior.
+>>>>>>> english/develop
 
 .. note::
   在检查模式下，幂运算只对小基数使用相对便宜的 ``exp`` 操作码。
@@ -254,10 +260,17 @@
 ``send`` 是 ``transfer`` 的低级对应部分。如果执行失败，当前的合约不会因异常而停止，但 ``send`` 会返回 ``false``。
 
 .. warning::
+<<<<<<< HEAD
     使用 ``send`` 有一些危险：如果调用堆栈深度为1024，传输就会失败（这可以由调用者强制执行），
     如果接收者的气体耗尽，也会失败。因此，为了安全地进行以太币转账，
     一定要检查 ``send`` 的返回值，或者使用 ``transfer``，甚至使用更好的方式：
     使用收款人提款的模式。
+=======
+    There are some dangers in using ``send``: The transfer fails if the call stack depth is at 1024
+    (this can always be forced by the caller) and it also fails if the recipient runs out of gas. So in order
+    to make safe Ether transfers, always check the return value of ``send``, use ``transfer`` or even better:
+    use a pattern where the recipient withdraws the Ether.
+>>>>>>> english/develop
 
 * ``call``, ``delegatecall`` 和 ``staticcall``
 
@@ -402,6 +415,7 @@
 .. note::
     在 0.8.0 版本之前， ``byte`` 曾经是 ``bytes1`` 的别名。
 
+<<<<<<< HEAD
 变长字节数组
 ------------
 
@@ -410,6 +424,8 @@
 ``string``:
     变长 UTF-8 编码字符串类型，参见 :ref:`arrays`。并不是值类型！
 
+=======
+>>>>>>> english/develop
 .. index:: address, ! literal;address
 
 .. _address_literals:
@@ -767,9 +783,21 @@ Unicode 字面量
     调用者不能直接将其calldata传递给外部函数，总是ABI将参数编码到内存中。
     将参数标记为 ``calldata`` 只影响到外部函数的实现，在调用者一方的函数指针中是没有意义的。
 
+<<<<<<< HEAD
 库合约被排除在外，因为它们需要 ``delegatecall``，
 并且 :ref:`对它们的选择器使用不同的 ABI 约定 <library-selectors>`。
 接口中声明的函数没有定义，所以指向它们也没有意义。
+=======
+.. warning::
+    Comparison of internal function pointers can have unexpected results in the legacy pipeline with the optimizer enabled,
+    as it can collapse identical functions into one, which will then lead to said function pointers comparing as equal instead of not.
+    Such comparisons are not advised, and will lead to the compiler issuing a warning, until the next breaking release (0.9.0),
+    when the warning will be upgraded to an error, thereby making such comparisons disallowed.
+
+Libraries are excluded because they require a ``delegatecall`` and use :ref:`a different ABI
+convention for their selectors <library-selectors>`.
+Functions declared in interfaces do not have definitions so pointing at them does not make sense either.
+>>>>>>> english/develop
 
 成员：
 外部（或公共）函数有以下成员：
