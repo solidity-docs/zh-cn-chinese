@@ -8,18 +8,32 @@ Solidity v0.8.0 突破性变化
 语义的微小变化
 ===============================
 
+<<<<<<< HEAD
 本节列出了现有代码在编译器没有通知您的情况下改变其行为的更改。
 
 * 算术操作在下溢和溢出时都会恢复。您可以使用 ``unchecked { ... }`` 来使用以前的包装行为。
+=======
+This section lists changes where existing code changes its behavior without
+the compiler notifying you about it.
+
+* Arithmetic operations revert on underflow and overflow. You can use ``unchecked { ... }`` to use
+  the previous wrapping behavior.
+>>>>>>> english/develop
 
   溢出的检查是非常普遍的，所以我们把它作为默认的检查，
   以增加代码的可读性，即使它是以略微增加gas成本为代价的。
 
 * ABI编码器v2默认是激活的。
 
+<<<<<<< HEAD
   您可以使用 ``pragma abicoder v1;`` 来选择使用旧的行为。
   语句 ``pragma experimental ABIEncoderV2;`` 仍然有效，但它已被废弃，没有效果。
   如果您想显示使用，请使用 ``pragma abicoder v2;`` 代替。
+=======
+  You can choose to use the old behavior using ``pragma abicoder v1;``.
+  The pragma ``pragma experimental ABIEncoderV2;`` is still valid, but it is deprecated and has no effect.
+  If you want to be explicit, please use ``pragma abicoder v2;`` instead.
+>>>>>>> english/develop
 
   请注意，ABI coder v2比v1支持更多的类型，并对输入进行更多的合理性检查。
   ABI coder v2使一些函数调用更加昂贵，而且当合约中包含不符合参数类型的数据时，它还会使合约调用回退，
@@ -49,7 +63,12 @@ Solidity v0.8.0 突破性变化
 
 本节列出了可能导致现有合约不再编译的变化。
 
+<<<<<<< HEAD
 * 有一些与字面常量的显式转换有关的新限制。以前在以下情况下的行为可能是模糊的：
+=======
+* There are new restrictions related to explicit conversions of literals. The previous behavior in
+  the following cases was likely ambiguous:
+>>>>>>> english/develop
 
   1. 不允许从负数字段和大于 ``type(uint160).max`` 的字段显式转换为 ``address``。
   2. 只有当字面常量位于 ``type(T).min`` 和 ``type(T).max`` 之间时，
@@ -90,7 +109,11 @@ Solidity v0.8.0 突破性变化
 
 * 全局函数 ``log0``， ``log1``， ``log2``， ``log3`` 和 ``log4`` 已被删除。
 
+<<<<<<< HEAD
   这些都是低级别的函数，基本上没有被使用过。它们的行为可以通过内联汇编访问。
+=======
+  These are low-level functions that were largely unused. Their behavior can be accessed from inline assembly.
+>>>>>>> english/develop
 
 * ``enum`` 定义包含的成员不能超过256个。
 
