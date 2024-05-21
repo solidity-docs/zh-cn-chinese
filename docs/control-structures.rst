@@ -330,13 +330,24 @@ Solidity 内部允许元组 (tuple) 类型，也就是一个在编译时元素�
     现在这是不允许的，所以两边必须有相同数量的元素。
 
 .. warning::
+<<<<<<< HEAD
     当涉及到引用类型时，在同时向多个变量赋值时要小心，因为这可能导致意外的复制行为。
+=======
+    Be careful when assigning to multiple variables at the same time when
+    reference types are involved, because it could lead to unexpected
+    copying behavior.
+>>>>>>> english/develop
 
 数组和结构体的复杂情况
 ----------------------
 
+<<<<<<< HEAD
 对于像数组和结构体这样的非值类型，包括 ``bytes`` 和 ``string``，赋值的语义更为复杂，
 详见 :ref:`数据位置和赋值行为 <data-location-assignment>`。
+=======
+The semantics of assignments are more complicated for non-value types like arrays and structs,
+including ``bytes`` and ``string``, see :ref:`Data location and assignment behavior <data-location-assignment>` for details.
+>>>>>>> english/develop
 
 在下面的例子中，调用 ``g(x)`` 对 ``x`` 没有影响，
 因为它在内存中创建了一个独立的存储值的副本。然而， ``h(x)`` 成功地修改了 ``x``，
@@ -465,7 +476,11 @@ Solidity 中的作用域规则遵循了 C99（与其他很多语言一样）：
 从Solidity 0.8.0开始，在默认情况下所有的算术运算都会在上溢和下溢时还原，
 从而使这些库的使用变得没有必要。
 
+<<<<<<< HEAD
 为了获得以前的行为，可以使用一个 ``未检查（unchecked）`` 区块。
+=======
+To obtain the previous behavior, an ``unchecked`` block can be used:
+>>>>>>> english/develop
 
 .. code-block:: solidity
 
@@ -539,8 +554,15 @@ Solidity 使用状态恢复异常来处理错误。
 内置的错误 ``Error(string)`` 和 ``Panic(uint256)`` 被特殊函数使用，
 解释如下。 ``Error`` 用于 "常规" 错误条件，而 ``Panic`` 用于在无错误代码中不应该出现的错误。
 
+<<<<<<< HEAD
 通过 ``assert`` 引起Panic异常和通过 ``require`` 引起Error异常
 -------------------------------------------------------------
+=======
+.. _assert-and-require-statements:
+
+Panic via ``assert`` and Error via ``require``
+----------------------------------------------
+>>>>>>> english/develop
 
 快捷函数 ``assert`` 和 ``require`` 可以用来检查条件，如果不符合条件就抛出一个异常。
 
@@ -566,17 +588,38 @@ Assert应该只用于测试内部错误，以及检查不变量。
 #. 0x41： 如果您分配了太多的内存空间或创建了一个太大的数组。
 #. 0x51： 如果您调用一个零初始化的内部函数类型的变量。
 
+<<<<<<< HEAD
 ``require`` 函数要么创造一个没有任何数据的错误，
 要么创造一个 ``Error(string)`` 类型的错误。
 它应该被用来确保在执行之前无法检测到的有效条件。
 这包括对输入的条件或调用外部合约的返回值。
+=======
+The ``require`` function provides three overloads:
+
+1. ``require(bool)`` which will revert without any data (not even an error selector).
+2. ``require(bool, string)`` which will revert with an ``Error(string)``.
+3. ``require(bool, error)`` which will revert with the custom, user supplied error provided as the second argument.
+>>>>>>> english/develop
 
 .. note::
+    ``require`` arguments are evaluated unconditionally, so take special care to make sure that
+    they are not expressions with unexpected side-effects.
+    For example, in ``require(condition, CustomError(f()));`` and ``require(condition, f());``,
+    function ``f()`` will be called regardless of whether the supplied condition is ``true`` or ``false``.
 
+<<<<<<< HEAD
     目前不能将自定义错误与 ``require`` 结合使用。
     请使用 ``if (!condition) revert CustomError();`` 代替。
 
 在下列情况下，编译器会产生一个 ``Error(string)`` 异常（或者没有数据的异常）。
+=======
+.. note::
+    Using custom errors with ``require`` is only supported by the via IR pipeline, i.e. compilation via Yul.
+    For the legacy pipeline, please use ``if (!condition) revert CustomError();`` instead.
+
+An ``Error(string)`` exception (or an exception without data) is generated
+by the compiler in the following situations:
+>>>>>>> english/develop
 
 #. 调用 ``require(x)``，其中 ``x`` 的值为 ``false``。
 #. 如果您使用 ``revert()`` 或 ``revert("错误描述")``。
@@ -595,11 +638,19 @@ Assert应该只用于测试内部错误，以及检查不变量。
 #. 如果您使用 ``new`` 关键字创建一个合约，
    但合约创建 :ref:`没有正常完成 <creating-contracts>`。
 
+<<<<<<< HEAD
 您可以选择为 ``require`` 提供一个信息字符串，但不能为 ``assert`` 提供。
 
 .. note::
     如果您没有给 ``require`` 提供一个字符串参数，它将以空的错误数据进行还原，
     甚至不包括错误选择器。
+=======
+You can optionally provide a message string or a custom error to ``require``, but not to ``assert``.
+
+.. note::
+    If you do not provide a string or custom error argument to ``require``, it will revert
+    with empty error data, not even including the error selector.
+>>>>>>> english/develop
 
 
 下面的例子显示了如何使用 ``require`` 来检查输入的条件
@@ -616,8 +667,14 @@ Assert应该只用于测试内部错误，以及检查不变量。
             require(msg.value % 2 == 0, "Even value required.");
             uint balanceBeforeTransfer = address(this).balance;
             addr.transfer(msg.value / 2);
+<<<<<<< HEAD
             // 由于转账失败后抛出异常并且不能在这里回调，
             // 因此我们应该没有办法仍然有一半的钱。
+=======
+            // Since transfer throws an exception on failure and
+            // cannot call back here, there should be no way for us to
+            // still have half of the Ether.
+>>>>>>> english/develop
             assert(address(this).balance == balanceBeforeTransfer - msg.value / 2);
             return address(this).balance;
         }
@@ -648,8 +705,13 @@ Assert应该只用于测试内部错误，以及检查不变量。
 
     revert CustomError(arg1, arg2);
 
+<<<<<<< HEAD
 出于向后兼容的原因，还有一个 ``revert()`` 函数，
 它使用圆括号并接受一个字符串：
+=======
+For backward-compatibility reasons, there is also the ``revert()`` function, which uses parentheses
+and accepts a string:
+>>>>>>> english/develop
 
     revert();
     revert("description");
