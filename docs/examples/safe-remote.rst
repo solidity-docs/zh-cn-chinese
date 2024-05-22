@@ -4,6 +4,7 @@
 安全的远程购买
 ********************
 
+<<<<<<< HEAD
 目前，远程购买商品需要多方相互信任。最简单的关系涉及一个卖家和一个买家。
 买方希望从卖方那里收到一件物品，卖方希望得到金钱（或等价物）作为回报。
 这里面有问题的部分是的运输。没有办法确定物品是否到达买方手中。
@@ -13,6 +14,22 @@
 只要发生这种情况，钱就会一直锁在合同里面，直到买方确认收到物品。
 之后，买方会得到退回的资金（他们押金的一半），卖方得到三倍的资金（他们的押金加上物品的价值）。
 这背后的想法是，双方都有动力去解决这个问题，否则他们的钱就会被永远锁定。
+=======
+Purchasing goods remotely currently requires multiple parties that need to trust each other.
+The simplest configuration involves a seller and a buyer. The buyer would like to receive
+an item from the seller and the seller would like to get some compensation, e.g. Ether,
+in return. The problematic part is the shipment here: There is no way to determine for
+sure that the item arrived at the buyer.
+
+There are multiple ways to solve this problem, but all fall short in one or the other way.
+In the following example, both parties have to put twice the value of the item into the
+contract as escrow. As soon as this happened, the Ether will stay locked inside
+the contract until the buyer confirms that they received the item. After that,
+the buyer is returned the value (half of their deposit) and the seller gets three
+times the value (their deposit plus the value). The idea behind
+this is that both parties have an incentive to resolve the situation or otherwise
+their Ether is locked forever.
+>>>>>>> english/develop
 
 这个合约当然不能解决问题，但它概述了如何在合约内使用类似状态机的构造。
 
