@@ -655,23 +655,41 @@ Yul中的作用域是与块联系在一起的（函数和for循环是例外，�
 EVM语言
 -----------
 
+<<<<<<< HEAD
 目前Yul的默认语言是当前选择的EVM版本的EVM语言，与EVM的一个版本。
 该语言中唯一可用的类型是 ``u256``，即Ethereum虚拟机的256位本地类型。
 因为它是该语言的默认类型，所以可以省略。
+=======
+The default dialect of Yul currently is the EVM dialect for the currently selected version of the EVM.
+The only type available in this dialect
+is ``u256``, the 256-bit native type of the Ethereum Virtual Machine.
+Since it is the default type of this dialect, it can be omitted.
+>>>>>>> english/develop
 
 下表列出了所有内置函数（取决于EVM版本），并提供了函数/操作码的语义的简短描述。
 本文件并不想成为以太坊虚拟机的完整描述。如果您对精确的语义感兴趣，请参考另一份文件。
 
+<<<<<<< HEAD
 标有 ``-`` 的操作码不返回结果，所有其他操作码正好返回一个值。
 标有 ``F``， ``H``， ``B``， ``C``， ``I``， ``L``和 ``P`` 的操作码分别
 是从Frontier，Homestead，Byzantium，Constantinople，Istanbul，London 或 Paris 版本出现的。
 
 在下文中， ``mem[a...b)`` 表示从位置 ``a`` 开始到不包括位置 ``b`` 的内存字节，
 ``storage[p]`` 表示插槽 ``p`` 的存储内容。
+=======
+Opcodes marked with ``-`` do not return a result and all others return exactly one value.
+Opcodes marked with ``F``, ``H``, ``B``, ``C``, ``I``, ``L``, ``P`` and ``N`` are present since Frontier,
+Homestead, Byzantium, Constantinople, Istanbul, London, Paris or Cancun respectively.
+
+In the following, ``mem[a...b)`` signifies the bytes of memory starting at position ``a`` up to
+but not including position ``b``, ``storage[p]`` signifies the storage contents at slot ``p``, and
+similarly, ``transientStorage[p]`` signifies the transient storage contents at slot ``p``.
+>>>>>>> english/develop
 
 由于Yul管理着局部变量和控制流，所以不能使用干扰这些功能的操作码。
 这包括 ``dup`` 和 ``swap`` 指令，以及 ``jump`` 指令，标签和 ``push`` 指令。
 
+<<<<<<< HEAD
 +-------------------------+-----+-----+-----------------------------------------------------------------------------+
 |          指令           |     |     |                                    解释                                     |
 +=========================+=====+=====+=============================================================================+
@@ -846,6 +864,193 @@ EVM语言
 +-------------------------+-----+-----+-----------------------------------------------------------------------------+
 | gaslimit()              |     | F   | 当前区块的区块 gas 限制                                                     |
 +-------------------------+-----+-----+-----------------------------------------------------------------------------+
+=======
++-------------------------+-----+---+-----------------------------------------------------------------+
+| Instruction             |     |   | Explanation                                                     |
++=========================+=====+===+=================================================================+
+| stop()                  | `-` | F | stop execution, identical to return(0, 0)                       |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| add(x, y)               |     | F | x + y                                                           |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| sub(x, y)               |     | F | x - y                                                           |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| mul(x, y)               |     | F | x * y                                                           |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| div(x, y)               |     | F | x / y or 0 if y == 0                                            |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| sdiv(x, y)              |     | F | x / y, for signed numbers in two's complement, 0 if y == 0      |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| mod(x, y)               |     | F | x % y, 0 if y == 0                                              |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| smod(x, y)              |     | F | x % y, for signed numbers in two's complement, 0 if y == 0      |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| exp(x, y)               |     | F | x to the power of y                                             |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| not(x)                  |     | F | bitwise "not" of x (every bit of x is negated)                  |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| lt(x, y)                |     | F | 1 if x < y, 0 otherwise                                         |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| gt(x, y)                |     | F | 1 if x > y, 0 otherwise                                         |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| slt(x, y)               |     | F | 1 if x < y, 0 otherwise, for signed numbers in two's complement |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| sgt(x, y)               |     | F | 1 if x > y, 0 otherwise, for signed numbers in two's complement |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| eq(x, y)                |     | F | 1 if x == y, 0 otherwise                                        |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| iszero(x)               |     | F | 1 if x == 0, 0 otherwise                                        |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| and(x, y)               |     | F | bitwise "and" of x and y                                        |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| or(x, y)                |     | F | bitwise "or" of x and y                                         |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| xor(x, y)               |     | F | bitwise "xor" of x and y                                        |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| byte(n, x)              |     | F | nth byte of x, where the most significant byte is the 0th byte  |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| shl(x, y)               |     | C | logical shift left y by x bits                                  |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| shr(x, y)               |     | C | logical shift right y by x bits                                 |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| sar(x, y)               |     | C | signed arithmetic shift right y by x bits                       |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| addmod(x, y, m)         |     | F | (x + y) % m with arbitrary precision arithmetic, 0 if m == 0    |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| mulmod(x, y, m)         |     | F | (x * y) % m with arbitrary precision arithmetic, 0 if m == 0    |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| signextend(i, x)        |     | F | sign extend from (i*8+7)th bit counting from least significant  |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| keccak256(p, n)         |     | F | keccak(mem[p...(p+n)))                                          |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| pc()                    |     | F | current position in code                                        |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| pop(x)                  | `-` | F | discard value x                                                 |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| mload(p)                |     | F | mem[p...(p+32))                                                 |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| mstore(p, v)            | `-` | F | mem[p...(p+32)) := v                                            |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| mstore8(p, v)           | `-` | F | mem[p] := v & 0xff (only modifies a single byte)                |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| sload(p)                |     | F | storage[p]                                                      |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| sstore(p, v)            | `-` | F | storage[p] := v                                                 |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| tload(p)                |     | N | transientStorage[p]                                             |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| tstore(p, v)            | `-` | N | transientStorage[p] := v                                        |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| msize()                 |     | F | size of memory, i.e. largest accessed memory index              |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| gas()                   |     | F | gas still available to execution                                |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| address()               |     | F | address of the current contract / execution context             |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| balance(a)              |     | F | wei balance at address a                                        |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| selfbalance()           |     | I | equivalent to balance(address()), but cheaper                   |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| caller()                |     | F | call sender (excluding ``delegatecall``)                        |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| callvalue()             |     | F | wei sent together with the current call                         |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| calldataload(p)         |     | F | call data starting from position p (32 bytes)                   |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| calldatasize()          |     | F | size of call data in bytes                                      |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| calldatacopy(t, f, s)   | `-` | F | copy s bytes from calldata at position f to mem at position t   |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| codesize()              |     | F | size of the code of the current contract / execution context    |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| codecopy(t, f, s)       | `-` | F | copy s bytes from code at position f to mem at position t       |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| extcodesize(a)          |     | F | size of the code at address a                                   |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| extcodecopy(a, t, f, s) | `-` | F | like codecopy(t, f, s) but take code at address a               |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| returndatasize()        |     | B | size of the last returndata                                     |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| returndatacopy(t, f, s) | `-` | B | copy s bytes from returndata at position f to mem at position t |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| mcopy(t, f, s)          | `-` | N | copy s bytes from mem at position f to mem at position t        |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| extcodehash(a)          |     | C | code hash of address a                                          |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| create(v, p, n)         |     | F | create new contract with code mem[p...(p+n)) and send v wei     |
+|                         |     |   | and return the new address; returns 0 on error                  |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| create2(v, p, n, s)     |     | C | create new contract with code mem[p...(p+n)) at address         |
+|                         |     |   | keccak256(0xff . this . s . keccak256(mem[p...(p+n)))           |
+|                         |     |   | and send v wei and return the new address, where ``0xff`` is a  |
+|                         |     |   | 1 byte value, ``this`` is the current contract's address        |
+|                         |     |   | as a 20 byte value and ``s`` is a big-endian 256-bit value;     |
+|                         |     |   | returns 0 on error                                              |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| call(g, a, v, in,       |     | F | call contract at address a with input mem[in...(in+insize))     |
+| insize, out, outsize)   |     |   | providing g gas and v wei and output area                       |
+|                         |     |   | mem[out...(out+outsize)) returning 0 on error (eg. out of gas)  |
+|                         |     |   | and 1 on success                                                |
+|                         |     |   | :ref:`See more <yul-call-return-area>`                          |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| callcode(g, a, v, in,   |     | F | identical to ``call`` but only use the code from a and stay     |
+| insize, out, outsize)   |     |   | in the context of the current contract otherwise                |
+|                         |     |   | :ref:`See more <yul-call-return-area>`                          |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| delegatecall(g, a, in,  |     | H | identical to ``callcode`` but also keep ``caller``              |
+| insize, out, outsize)   |     |   | and ``callvalue``                                               |
+|                         |     |   | :ref:`See more <yul-call-return-area>`                          |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| staticcall(g, a, in,    |     | B | identical to ``call(g, a, 0, in, insize, out, outsize)`` but do |
+| insize, out, outsize)   |     |   | not allow state modifications                                   |
+|                         |     |   | :ref:`See more <yul-call-return-area>`                          |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| return(p, s)            | `-` | F | end execution, return data mem[p...(p+s))                       |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| revert(p, s)            | `-` | B | end execution, revert state changes, return data mem[p...(p+s)) |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| selfdestruct(a)         | `-` | F | end execution, destroy current contract and send funds to a     |
+|                         |     |   | (deprecated)                                                    |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| invalid()               | `-` | F | end execution with invalid instruction                          |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| log0(p, s)              | `-` | F | log data mem[p...(p+s))                                         |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| log1(p, s, t1)          | `-` | F | log data mem[p...(p+s)) with topic t1                           |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| log2(p, s, t1, t2)      | `-` | F | log data mem[p...(p+s)) with topics t1, t2                      |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| log3(p, s, t1, t2, t3)  | `-` | F | log data mem[p...(p+s)) with topics t1, t2, t3                  |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| log4(p, s, t1, t2, t3,  | `-` | F | log data mem[p...(p+s)) with topics t1, t2, t3, t4              |
+| t4)                     |     |   |                                                                 |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| chainid()               |     | I | ID of the executing chain (EIP-1344)                            |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| basefee()               |     | L | current block's base fee (EIP-3198 and EIP-1559)                |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| blobbasefee()           |     | N | current block's blob base fee (EIP-7516 and EIP-4844)           |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| origin()                |     | F | transaction sender                                              |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| gasprice()              |     | F | gas price of the transaction                                    |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| blockhash(b)            |     | F | hash of block nr b - only for last 256 blocks excluding current |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| blobhash(i)             |     | N | versioned hash of transaction's i-th blob                       |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| coinbase()              |     | F | current mining beneficiary                                      |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| timestamp()             |     | F | timestamp of the current block in seconds since the epoch       |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| number()                |     | F | current block number                                            |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| difficulty()            |     | F | difficulty of the current block (see note below)                |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| prevrandao()            |     | P | randomness provided by the beacon chain (see note below)        |
++-------------------------+-----+---+-----------------------------------------------------------------+
+| gaslimit()              |     | F | block gas limit of the current block                            |
++-------------------------+-----+---+-----------------------------------------------------------------+
+>>>>>>> english/develop
 
 .. _yul-call-return-area:
 
@@ -867,9 +1072,15 @@ EVM语言
   请注意，与在编译器中选择哪个EVM版本无关，指令的语义取决于最终的部署链。
 
 .. warning::
+<<<<<<< HEAD
     从0.8.18及更高版本开始，在 Solidity 和 Yul 中使用 ``selfdestruct`` 将触发弃用警告，
     因为 ``SELFDESTRUCT`` 操作码最终将经历 `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_ 
     中所述的行为的重大变化。
+=======
+    From version 0.8.18 and up, the use of ``selfdestruct`` in both Solidity and Yul will trigger a
+    deprecation warning, since the ``SELFDESTRUCT`` opcode will eventually undergo breaking changes in behavior
+    as stated in `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_.
+>>>>>>> english/develop
 
 在一些内部语言中，还有一些额外的函数：
 
@@ -895,11 +1106,21 @@ setimmutable, loadimmutable
 
 linkersymbol
 ^^^^^^^^^^^^
+<<<<<<< HEAD
 函数 ``linkersymbol("library_id")`` 是一个占位符，用来表示被链接器替换的地址字头。
 它的第一个也是唯一的参数必须是一个字符串字面量，并且唯一地代表要插入的地址。
 标识符可以是任意的，但是当编译器从Solidity源产生Yul代码时，它使用一个库名，
 并以定义该库的源单元的名称作为限定。
 要用一个特定的库地址链接代码，必须在命令行上的 ``--libraries`` 选项中提供相同的标识符。
+=======
+The function ``linkersymbol("library_id")`` is a placeholder for an address literal to be substituted
+by the linker.
+Its first and only argument must be a string literal and uniquely represents the address to be inserted.
+Identifiers can be arbitrary but when the compiler produces Yul code from Solidity sources,
+it uses a library name qualified with the name of the source unit that defines that library.
+To link the code with a particular library address, the same identifier must be provided to the
+``--libraries`` option on the command-line.
+>>>>>>> english/develop
 
 例如，这段代码
 
@@ -964,6 +1185,7 @@ verbatim
 与所有的操作码一样，参数被安排在堆栈中，最左边的参数在最上面，
 而返回值则被假定是以最右边的变量在栈顶的方式排列的。
 
+<<<<<<< HEAD
 由于 ``verbatim`` 可以用来生成任意的操作码，甚至是Solidity编译器不知道的操作码，
 在与优化器一起使用 ``verbatim`` 时，必须小心。
 即使优化器被关闭，代码生成器也必须确定堆栈布局，这意味着，例如，
@@ -971,6 +1193,19 @@ verbatim
 
 下面是一个不完全的列表，列出了对逐字字节码的限制，
 这些限制不被编译器检查。违反这些限制会导致未定义的行为。
+=======
+Since ``verbatim`` can be used to generate arbitrary opcodes
+or even opcodes unknown to the Solidity compiler, care has to be taken
+when using ``verbatim`` together with the optimizer. Even when the
+optimizer is switched off, the code generator has to determine
+the stack layout, which means that e.g. using ``verbatim`` to modify
+the stack height can lead to undefined behavior.
+
+The following is a non-exhaustive list of restrictions on
+verbatim bytecode that are not checked by
+the compiler. Violations of these restrictions can result in
+undefined behavior.
+>>>>>>> english/develop
 
 - 控制流不应该跳入或跳出 verbatim 块，但它可以在同一个 verbatim 块内跳入。
 - 除了输入和输出参数外，堆栈内容不应该被访问。
@@ -1072,8 +1307,12 @@ Yul对象被用来分组命名代码和数据部分。
             // 当前执行的代码是构造函数代码）。
             size := datasize("Contract1_deployed")
             offset := allocate(size)
+<<<<<<< HEAD
             // 这将变成 Ewasm 的 内存->内存 复制
             // 和 EVM 的代码复制。
+=======
+            // This will turn into a codecopy for EVM
+>>>>>>> english/develop
             datacopy(offset, dataoffset("Contract1_deployed"), size)
             return(offset, size)
         }
@@ -1134,7 +1373,12 @@ Yul优化器对Yul代码进行操作，并对输入、输出和中间状态使�
 优化步骤顺序
 --------------------------
 
+<<<<<<< HEAD
 有关优化顺序的详细信息以及缩写列表可在 :ref:`优化器文档 <optimizer-steps>` 中找到。
+=======
+Detailed information regarding the optimization sequence as well as a list of abbreviations is
+available in the :ref:`optimizer docs <optimizer-steps>`.
+>>>>>>> english/develop
 
 .. _erc20yul:
 

@@ -141,15 +141,26 @@ Solidity 编译器自动生成一个 JSON 文件。
           // 反映输入 json 中使用的设置，默认为“false”
           "useLiteralContent": true
         },
+<<<<<<< HEAD
         // 可选：优化设置。“enabled” 和 “runs” 字段已弃用，仅用于向后兼容。
+=======
+        // Optional: Optimizer settings. The fields "enabled" and "runs" are deprecated
+        // and are only given for backward-compatibility.
+>>>>>>> english/develop
         "optimizer": {
           "details": {
             "constantOptimizer": false,
             "cse": false,
             "deduplicate": false,
+<<<<<<< HEAD
             // inliner 默认为“true”
             "inliner": true,
             // jumpdestRemover 默认为“true”
+=======
+            // inliner defaults to "false"
+            "inliner": false,
+            // jumpdestRemover defaults to "true"
+>>>>>>> english/develop
             "jumpdestRemover": true,
             "orderLiterals": false,
             // peephole 默认为“true”
@@ -169,10 +180,17 @@ Solidity 编译器自动生成一个 JSON 文件。
       },
       // 必选：编译源文件/源单元，键为文件路径
       "sources": {
+<<<<<<< HEAD
         "destructible": {
           // 必选（除非使用了 “url”）：源文件的字面内容
           "content": "contract destructible is owned { function destroy() { if (msg.sender == owner) selfdestruct(owner); } }",
           // 必选：源文件的 keccak256 哈希值
+=======
+        "settable": {
+          // Required (unless "url" is used): literal contents of the source file
+          "content": "contract settable is owned { uint256 private x = 0; function set(uint256 _x) public { if (msg.sender == owner) x = _x; } }",
+          // Required: keccak256 hash of the source file
+>>>>>>> english/develop
           "keccak256": "0x234..."
         },
         "myDirectory/myFile.sol": {
@@ -230,9 +248,15 @@ Solidity 编译器自动生成一个 JSON 文件。
 
 请访问 `Metadata Playground <https://playground.sourcify.dev/>`_ 查看实际操作。
 
+<<<<<<< HEAD
 SOLC的发布版本使用如上所示的3个字节的版本编码
 （主要、次要和补丁版本号各一个字节），
 而预发布版本将使用一个完整的版本字符串，包括提交哈希和构建日期。
+=======
+Whereas release builds of solc use a 3 byte encoding of the version as shown
+above (one byte each for major, minor and patch version number), pre-release builds
+will instead use a complete version string including commit hash and build date.
+>>>>>>> english/develop
 
 命令行标志 ``--no-cbor-metadata`` 可以用来跳过元数据在部署的字节码末端的附加。
 同样地，标准JSON输入中的布尔字段 ``settings.metadata.appendCBOR`` 可以设置为false。
