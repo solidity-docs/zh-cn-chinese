@@ -434,10 +434,17 @@ Solidity ``mapping`` 类型（参见 :ref:`mapping-types`）是一个仅有存�
 请记住，您不能为此使用太多的 gas，
 所以可能需要通过链外计算的帮助。
 
+<<<<<<< HEAD
 如果自我检查失败，合约会自动切换到某种 “故障安全” 模式，
 例如，禁用大部分功能，
 将控制权移交给一个固定的，可信赖的第三方，
 或者只是将合约转换为一个简单的 “退回我的钱” 的合约。
+=======
+If the self-check fails, the contract automatically switches into some kind of "failsafe" mode,
+which, for example, disables most of the features,
+hands over control to a fixed and trusted third party
+or just converts the contract into a simple "give me back my Ether" contract.
+>>>>>>> english/develop
 
 请求同行评审
 ===================
