@@ -128,12 +128,7 @@ VFS的初始内容取决于您如何调用编译器：
 
 #. **标准输入**
 
-<<<<<<< HEAD
-   在命令行中，也可以通过将源代码发送到编译器的标准输入来提供源代码:
-=======
-   On the command-line it is also possible to provide the source by sending it to compiler's
-   standard input:
->>>>>>> english/develop
+   也可以通过命令行将源代码发送到编译器的标准输入端来提供源代码：
 
    .. code-block:: bash
 
@@ -235,22 +230,13 @@ VFS的初始内容取决于您如何调用编译器：
 
 编译器根据导入路径将导入解析为一个源单元名称，方法如下：
 
-<<<<<<< HEAD
 #. 我们从导入源单位的源单位名称开始。
 #. 最后一个带有斜线的路径段将从解析的名称中删除。
 #. 然后，对于导入路径中的每一段，从最左边的一段开始：
+
     - 如果该段是 ``.``，则跳过。
     - 如果该段是 ``..``，最后一个带有斜线的路径段将从解析的名称中删除。
-    - 否则，该段（如果解析的名称不是空的，前面有一个单斜线）被附加到解析的名称上。
-=======
-#. We start with the source unit name of the importing source unit.
-#. The last path segment with preceding slashes is removed from the resolved name.
-#. Then, for every segment in the import path, starting from the leftmost one:
-
-    - If the segment is ``.``, it is skipped.
-    - If the segment is ``..``, the last path segment with preceding slashes is removed from the resolved name.
-    - Otherwise, the segment (preceded by a single slash if the resolved name is not empty), is appended to the resolved name.
->>>>>>> english/develop
+    - 否则，该段（如果解析的名称不是空的，则在该名称前加一条斜线）被附加到解析的名称上。
 
 删除前面有斜线的最后一个路径段，可以理解为工作原理如下：
 
@@ -326,23 +312,12 @@ VFS的初始内容取决于您如何调用编译器：
 CLI路径规范化和剥离
 ------------------------------------
 
-<<<<<<< HEAD
 在命令行中，编译器的行为就像您对其他程序的期望一样：
 它接受平台的本地格式的路径，相对路径是相对于当前工作目录的。
 然而，分配给在命令行上指定了路径的文件的源单元名称，不应该因为项目在不同的平台上被编译，
 或者因为编译器碰巧从不同的目录被调用而改变。
 为了达到这个目的，来自命令行的源文件的路径必须被转换为规范的形式，
 如果可能的话，应使其与基本路径或包含路径之一相对。
-=======
-On the command-line the compiler behaves just as you would expect from any other program:
-it accepts paths in a format native to the platform and relative paths are relative to the current
-working directory.
-The source unit names assigned to files whose paths are specified on the command-line, however,
-should not change just because the project is being compiled on a different platform or because the
-compiler happens to have been invoked from a different directory.
-To achieve this, paths to source files coming from the command-line must be converted to a canonical
-form, and, if possible, made relative to the base path or one of the include paths.
->>>>>>> english/develop
 
 规范化规则如下：
 
@@ -390,15 +365,8 @@ form, and, if possible, made relative to the base path or one of the include pat
 
 .. note::
 
-<<<<<<< HEAD
-    在0.8.8版本之前，CLI路径剥离不被执行，唯一应用的规范化是路径分隔符的转换。
+    在0.8.8版本之前，CLI不执行路径剥离，唯一的规范化操作是转换路径分隔符。
     当使用旧版本的编译器时，建议从基本路径调用编译器，在命令行上只使用相对路径。
-=======
-    Prior to version 0.8.8, CLI path stripping was not performed and the only normalization applied
-    was the conversion of path separators.
-    When working with older versions of the compiler it is recommended to invoke the compiler from
-    the base path and to only use relative paths on the command-line.
->>>>>>> english/develop
 
 .. index:: ! allowed paths, ! --allow-paths, remapping; target
 .. _allowed-paths:
@@ -410,18 +378,10 @@ form, and, if possible, made relative to the base path or one of the include pat
 
 - 标准JSON模式之外：
 
-<<<<<<< HEAD
   - 含有命令行上所列输入文件的目录。
   - 作为 :ref:`重映射 <import-remapping>` 目标使用的目录。
-    如果目标不是一个目录（即不以 ``/``， ``/.`` 或 ``/.`` 结尾），则使用包含该目标的目录。
+    如果目标不是一个目录（即不以 ``/``， ``/.`` 或 ``/..`` 结尾），则使用包含该目标的目录。
   - 基本路径和包含路径。
-=======
-  - The directories containing input files listed on the command-line.
-  - The directories used as :ref:`remapping <import-remapping>` targets.
-    If the target is not a directory (i.e does not end with ``/``, ``/.`` or ``/..``) the directory
-    containing the target is used instead.
-  - Base path and include paths.
->>>>>>> english/develop
 
 - 在标准JSON模式下：
 
@@ -535,11 +495,7 @@ form, and, if possible, made relative to the base path or one of the include pat
 
 这意味着 ``module2`` 的所有导入都指向旧版本，但 ``module1`` 的导入则指向新版本。
 
-<<<<<<< HEAD
 以下是关于重映射行为的详细规则：
-=======
-Here are the detailed rules governing the behavior of remappings:
->>>>>>> english/develop
 
 #. **重新映射只影响导入路径和源单元名称之间的转换。**
 
