@@ -84,20 +84,12 @@ SMT 检查器所报告的潜在警告是：
         }
     }
 
-<<<<<<< HEAD
 上面的合约显示了一个溢出检查的例子。
 对于 Solidity >=0.8.7，SMT检查器默认不检查下溢和溢出，
 所以我们需要使用命令行选项 ``--model-checker-targets "underflow,overflow"``
 或者JSON选项 ``settings.modelChecker.targets = ["underflow", "overflow"]``。
-参见 :ref:`本节的目标配置 <smtchecker_targets>`。此处，它报告如下：
-=======
-The contract above shows an overflow check example.
-The SMTChecker does not check underflow and overflow by default for Solidity >=0.8.7,
-so we need to use the command-line option ``--model-checker-targets "underflow,overflow"``
-or the JSON option ``settings.modelChecker.targets = ["underflow", "overflow"]``.
-See :ref:`this section for targets configuration<smtchecker_targets>`.
-Here, it reports the following:
->>>>>>> english/develop
+参见 :ref:`本节的目标配置 <smtchecker_targets>`。
+此处，它报告如下：
 
 .. code-block:: text
 
@@ -396,14 +388,8 @@ SMT检查器准确地告诉我们 *如何* 访问到(2, 4)。
 解算器能够推断出，当 ``unknown.run()`` 被调用时，合约已经被 “锁定”，
 所以无论未知的调用代码做什么，都不可能改变 ``x`` 的值。
 
-<<<<<<< HEAD
 如果我们 “忘记” 在函数 ``set`` 上使用 ``mutex`` 修饰符，
-SMT检查器就能合成外部调用代码的行为，从而使断言失败。
-=======
-If we "forget" to use the ``mutex`` modifier on function ``set``, the
-SMTChecker is able to synthesize the behavior of the externally called code so
-that the assertion fails:
->>>>>>> english/develop
+SMT检查器就能合成外部调用代码的行为，从而使断言失败：
 
 .. code-block:: text
 
@@ -471,19 +457,15 @@ SMT检查器创建的验证目标的类型也可以通过CLI选项 ``--model-che
 关于如何以及何时分割验证目标，没有精确的指导方法。
 但在处理大型合约时，它可能是有用的。
 
-<<<<<<< HEAD
-未验证的目标
-=======
-Proved Targets
+已验证的目标
 ==============
 
-If there are any proved targets, the SMTChecker issues one warning per engine stating
-how many targets were proved. If the user wishes to see all the specific
-proved targets, the CLI option ``--model-checker-show-proved`` and
-the JSON option ``settings.modelChecker.showProved = true`` can be used.
+果有任何已证明的目标，SMTChecker 会向每个引擎发出一个警告，
+说明有多少目标已证明。如果用户希望查看所有已证明的具体目标，
+可使用CLI选项 ``--model-checker-show-proved`` 和
+JSON选项 ``settings.modelChecker.showProved = true``。
 
-Unproved Targets
->>>>>>> english/develop
+未验证的目标
 ================
 
 如果有任何未验证的目标，SMT检查器会发出一个警告，
@@ -491,28 +473,24 @@ Unproved Targets
 可以使用CLI选项 ``--model-checker-show-unproved``
 和JSON选项 ``settings.modelChecker.showUnproved = true``。
 
-<<<<<<< HEAD
-已验证过的合约
-=======
-Unsupported Language Features
+不支持的语言特性
 =============================
 
-Certain Solidity language features are not completely supported by the SMT
-encoding that the SMTChecker applies, for example assembly blocks.
-The unsupported construct is abstracted via overapproximation to preserve
-soundness, meaning any properties reported safe are safe even though this
-feature is unsupported.
-However such abstraction may cause false positives when the target properties
-depend on the precise behavior of the unsupported feature.
-If the encoder encounters such cases it will by default report a generic warning
-stating how many unsupported features it has seen.
-If the user wishes to see all the specific unsupported features, the CLI option
-``--model-checker-show-unsupported`` and the JSON option
-``settings.modelChecker.showUnsupported = true`` can be used, where their default
-value is ``false``.
+SMTChecker 应用的SMT编码不完全支持某些Solidity语言特性，
+例如汇编块。
+不支持的构造会通过过度逼近进行抽象，
+以保持稳健性，这意味着即使不支持该特性，
+任何报告为安全的属性也是安全的。
+然而，当目标属性依赖于不支持特征的精确行为时，
+这种抽象可能会导致误报。
+如果编码器遇到这种情况，默认情况下会报告一个通用警告，
+说明它看到了多少个不支持的特性。
+如果用户希望查看所有特定的不支持特性，可以使用CLI选项
+``--model-checker-show-unsupported`` 和
+JSON选项 ``settings.modelChecker.showUnsupported = true``，
+它们的默认值是 ``false``。
 
-Verified Contracts
->>>>>>> english/develop
+已验证过的合约
 ==================
 
 默认情况下，给定来源中的所有可部署合约都会被单独分析，正如将被部署的那一个合约一样。
@@ -535,20 +513,11 @@ Verified Contracts
         "source2.sol": ["contract2", "contract3"]
     }
 
-<<<<<<< HEAD
 可信任的外部调用
 ======================
 
 默认情况下，SMT检查器不假定编译时可用的代码与外部调用的运行时代码相同。
 以以下合约为例：
-=======
-Trusted External Calls
-======================
-
-By default, the SMTChecker does not assume that compile-time available code
-is the same as the runtime code for external calls. Take the following contracts
-as an example:
->>>>>>> english/develop
 
 .. code-block:: solidity
 
@@ -566,7 +535,6 @@ as an example:
         }
     }
 
-<<<<<<< HEAD
 当调用 ``MyContract.callExt`` 时，一个地址被作为参数给出。
 在部署时，我们不能确定地知道地址 ``_e`` 实际上是否包含了 ``Ext`` 合约的部署。
 因此，SMT检查器会警告上述断言可能被违反，
@@ -575,8 +543,8 @@ as an example:
 然而，将这些外部调用视为可信是有用的，
 例如，测试不同接口的实现是否符合相同的属性。
 这意味着假设地址 ``_e`` 确实被作为 ``Ext`` 合约部署。
-这种模式可以通过 CLI 选项 ``--model-checker-ext-calls=trusted`` 
-或 JSON 字段 ``settings.modelChecker.extCalls: "trusted"`` 启用。
+这种模式可以通过CLI选项 ``--model-checker-ext-calls=trusted`` 
+或JSON字段 ``settings.modelChecker.extCalls: "trusted"`` 启用。
 
 请注意，启用此模式可能会使SMT检查器分析的计算成本大大提高。
 
@@ -586,30 +554,6 @@ as an example:
 SMT检查器假定外部调用的合约具有调用者表达式的类型。
 因此，将一个 ``address`` 或一个合约转换为不同的合约类型将产生不同的存储值，
 如果假设不一致，可能会产生不可靠的结果，如下例：
-=======
-When ``MyContract.callExt`` is called, an address is given as the argument.
-At deployment time, we cannot know for sure that address ``_e`` actually
-contains a deployment of contract ``Ext``.
-Therefore, the SMTChecker will warn that the assertion above can be violated,
-which is true, if ``_e`` contains another contract than ``Ext``.
-
-However, it can be useful to treat these external calls as trusted, for example,
-to test that different implementations of an interface conform to the same property.
-This means assuming that address ``_e`` indeed was deployed as contract ``Ext``.
-This mode can be enabled via the CLI option ``--model-checker-ext-calls=trusted``
-or the JSON field ``settings.modelChecker.extCalls: "trusted"``.
-
-Please be aware that enabling this mode can make the SMTChecker analysis much more
-computationally costly.
-
-An important part of this mode is that it is applied to contract types and high
-level external calls to contracts, and not low level calls such as ``call`` and
-``delegatecall``. The storage of an address is stored per contract type, and
-the SMTChecker assumes that an externally called contract has the type of the
-caller expression.  Therefore, casting an ``address`` or a contract to
-different contract types will yield different storage values and can give
-unsound results if the assumptions are inconsistent, such as the example below:
->>>>>>> english/develop
 
 .. code-block:: solidity
 
@@ -632,7 +576,6 @@ unsound results if the assumptions are inconsistent, such as the example below:
         function f() public {
             address d = address(new D(42));
 
-<<<<<<< HEAD
             // `d` 被部署为 `D`, 所以现在它的 `x` 应该是42。
             assert(D(d).x() == 42); // 应该成功
             assert(D(d).x() == 43); // 应该失败
@@ -648,43 +591,16 @@ unsound results if the assumptions are inconsistent, such as the example below:
             assert(D(d).x() == 42);
             // 下面的断言在运行时应该成功，
             // 但在这种模式的分析中却会失败（假阳性）。
-=======
-            // `d` was deployed as `D`, so its `x` should be 42 now.
-            assert(D(d).x() == 42); // should hold
-            assert(D(d).x() == 43); // should fail
-
-            // E and D have the same interface, so the following
-            // call would also work at runtime.
-            // However, the change to `E(d)` is not reflected in `D(d)`.
-            E(d).setX(1024);
-
-            // Reading from `D(d)` now will show old values.
-            // The assertion below should fail at runtime,
-            // but succeeds in this mode's analysis (unsound).
-            assert(D(d).x() == 42);
-            // The assertion below should succeed at runtime,
-            // but fails in this mode's analysis (false positive).
->>>>>>> english/develop
             assert(D(d).x() == 1024);
         }
     }
 
-<<<<<<< HEAD
-由于以上原因，确保对某个 ``address`` 或 ``contract`` 类型的变量的可信外部调用总是具有相同的调用者表达式类型。
+由于以上原因，确保对某个 ``address`` 或 ``contract`` 
+类型的变量的可信外部调用总是具有相同的调用者表达式类型。
 
 在继承的情况下，将被调用的合约的变量作为最终派生类型的类型进行转换也是有帮助的。
 
-   .. code-block:: solidity
-=======
-Due to the above, make sure that the trusted external calls to a certain
-variable of ``address`` or ``contract`` type always have the same caller
-expression type.
-
-It is also helpful to cast the called contract's variable as the type of the
-most derived type in case of inheritance.
-
 .. code-block:: solidity
->>>>>>> english/develop
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.8.0;
@@ -728,12 +644,11 @@ most derived type in case of inheritance.
         }
     }
 
-<<<<<<< HEAD
-注意，在函数 ``property_transfer`` 中，外部调用是在变量 ``t`` 上执行的
+注意，在函数 ``property_transfer`` 中，
+外部调用是在变量 ``t`` 上执行的。
 
 这种模式的另一个注意事项是对合约类型的状态变量的调用在被分析的合约之外。
 在下面的代码中，即使合约 ``B`` 部署了合约 ``A``，
-也有可能在对 ``B`` 本身的交易之间， ``B.a`` 中存储的地址被任何人在外部调用。
 存储在 ``B.a`` 中的地址也可以被任何人在合约 ``B`` 之外和合约 ``B`` 本身的交易之间调用。
 为了反映对 ``B.a`` 的可能更改，编码允许对 ``B.a`` 进行无限次数的外部调用。
 编码将跟踪 ``B.a`` 的存储，因此断言（2）应该成立。
@@ -742,30 +657,9 @@ most derived type in case of inheritance.
 请注意，编码不跟踪 ``address`` 变量的存储，因此，
 如果 ``B.a`` 的类型是 ``address``，编码将假定其存储在对合约 ``B`` 的交易之间不会更改。
 
-   .. code-block:: solidity
-
-=======
-Note that in function ``property_transfer``, the external calls are
-performed on variable ``t``.
-
-Another caveat of this mode are calls to state variables of contract type
-outside the analyzed contract. In the code below, even though ``B`` deploys
-``A``, it is also possible for the address stored in ``B.a`` to be called by
-anyone outside of ``B`` in between transactions to ``B`` itself. To reflect the
-possible changes to ``B.a``, the encoding allows an unbounded number of calls
-to be made to ``B.a`` externally. The encoding will keep track of ``B.a``'s
-storage, therefore assertion (2) should hold. However, currently the encoding
-allows such calls to be made from ``B`` conceptually, therefore assertion (3)
-fails.  Making the encoding stronger logically is an extension of the trusted
-mode and is under development. Note that the encoding does not keep track of
-storage for ``address`` variables, therefore if ``B.a`` had type ``address``
-the encoding would assume that its storage does not change in between
-transactions to ``B``.
-
 .. code-block:: solidity
 
     // SPDX-License-Identifier: GPL-3.0
->>>>>>> english/develop
     pragma solidity >=0.8.0;
 
     contract A {
@@ -784,7 +678,6 @@ transactions to ``B``.
         A a;
         constructor() {
             a = new A();
-<<<<<<< HEAD
             assert(a.x() == 0); // (1) 应该成功
         }
         function g() public view {
@@ -796,26 +689,9 @@ transactions to ``B``.
 报告推断的归纳变量
 ======================================
 
-于那些被CHC引擎证明为安全的属性，
+对于那些被CHC引擎证明为安全的属性，
 SMT检查器可以检索由Horn求解器推断出的归纳不变性，作为证明的一部分。
 目前有两种类型的不变量可以报告给用户：
-=======
-            assert(a.x() == 0); // (1) should hold
-        }
-        function g() public view {
-            assert(a.owner() == address(this)); // (2) should hold
-            assert(a.x() == 0); // (3) should hold, but fails due to a false positive
-        }
-    }
-
-Reported Inferred Inductive Invariants
-======================================
-
-For properties that were proved safe with the CHC engine,
-the SMTChecker can retrieve inductive invariants that were inferred by the Horn
-solver as part of the proof.
-Currently only two types of invariants can be reported to the user:
->>>>>>> english/develop
 
 - 合约不变量：这些是合约的状态变量的属性，在合约可能运行的每一个可能的事务之前和之后都是真的。
   例如， ``x >= y``，其中 ``x`` 和 ``y`` 是一个合约的状态变量。
@@ -831,24 +707,14 @@ Currently only two types of invariants can be reported to the user:
 有松弛变量的除法和模数运算
 ========================================
 
-<<<<<<< HEAD
-Spacer是SMT检查器使用的默认Horn求解器，它通常不喜欢Horn规则中的除法和模数操作。
-正因为如此，默认情况下，Solidity的除法和模运算是用约束条件 ``a = b * d + m`` 来编码的，
+Spacer是SMT检查器使用的默认Horn求解器，
+它通常不喜欢Horn规则中的除法和模数操作。正因为如此，
+默认情况下，Solidity的除法和模运算是用约束条件 ``a = b * d + m`` 来编码的，
 其中 ``d = a / b`` 和 ``m = a % b``。
 然而，对于其他求解器，如Eldarica，更喜欢语法上的精确操作。
 命令行标志 ``--model-checker-div-mod-no-slacks`` 和
 JSON选项 ``settings.modelChecker.divModNoSlacks`` 可以用来切换编码，
 这取决于所用求解器的偏好。
-=======
-Spacer, the default Horn solver used by the SMTChecker, often dislikes division
-and modulo operations inside Horn rules. Because of that, by default the
-Solidity division and modulo operations are encoded using the constraint
-``a = b * d + m`` where ``d = a / b`` and ``m = a % b``.
-However, other solvers, such as Eldarica, prefer the syntactically precise operations.
-The command-line flag ``--model-checker-div-mod-no-slacks`` and the JSON option
-``settings.modelChecker.divModNoSlacks`` can be used to toggle the encoding
-depending on the used solver preferences.
->>>>>>> english/develop
 
 Natspec标签函数抽象化
 ============================
@@ -926,15 +792,9 @@ BMC使用一个SMT求解器，而CHC使用一个Horn求解器。
   根据调用哪个求解器，BMC和CHC都可以使用此方法。
 - ``z3`` 是可用的情况
 
-<<<<<<< HEAD
-  - 如果 ``solc`` 与它一起被编译的话。
-  - 如果Linux系统中安装了4.8.x及其以上版本的动态 ``z3`` 库（从Solidity 0.7.6开始）。
-  - 在 ``soljson.js`` （从Solidity 0.6.9开始）中静态的，也就是编译器的Javascript二进制。
-=======
-  - if ``solc`` is compiled with it;
-  - if a dynamic ``z3`` library of version >=4.8.x is installed in a Linux system (from Solidity 0.7.6);
-  - statically in ``soljson.js`` (from Solidity 0.6.9), that is, the JavaScript binary of the compiler.
->>>>>>> english/develop
+  - 如果 ``solc`` 与它一起被编译的话；
+  - 如果Linux系统中安装了4.8.x及其以上版本的动态 ``z3`` 库（从Solidity 0.7.6开始）；
+  - 在 ``soljson.js`` （从Solidity 0.6.9开始）中静态的，也就是编译器的JavaScript二进制。
 
 .. note::
   z3 4.8.16 版本破坏了与以前版本的 ABI 兼容性，
