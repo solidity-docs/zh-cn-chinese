@@ -60,7 +60,11 @@
 
 在接口合约和其他类似合约的结构中定义的类型可以从其他合约中访问： ``Token.TokenType`` 或 ``Token.Coin``。
 
+<<<<<<< HEAD
 .. 警告:
+=======
+.. warning::
+>>>>>>> english/develop
 
     接口合约从 :doc:`Solidity 0.5.0 <050-breaking-changes>` 开始支持 ``enum`` 类型，
     请确保pragma版本至少指定这个版本。
