@@ -114,13 +114,19 @@ Solidity v0.5.0 突破性变化
 * 在非payable函数中使用 ``msg.value`` （或通过修改器引入）是不允许的，因为这是一个安全特性。
   将该函数变成 ``payable``，或为程序逻辑创建一个新的内部函数，使用 ``msg.value``。
 
+<<<<<<< HEAD
 * 为了清晰起见，如果使用标准输入作为源，命令行界面现在需要 ``-``。
+=======
+* For clarity reasons, the command-line interface now requires ``-`` if the
+  standard input is used as source.
+>>>>>>> english/develop
 
 废弃的元素
 ===================
 
 这一节列出了废弃以前的功能或语法的变化。 请注意，其中许多变化已经在实验模式 ``v0.5.0`` 中启用。
 
+<<<<<<< HEAD
 命令行和JSON接口
 --------------------------------
 
@@ -130,6 +136,21 @@ Solidity v0.5.0 突破性变化
 * 由于中间语言 ``Julia`` 更名为 ``Yul``，命令行选项 ``--julia`` 被更名为 ``--yul``。
 
 * 删除了 ``--clone-bin`` 和 ``--combined-json clone-bin`` 命令行选项。
+=======
+Command-line and JSON Interfaces
+--------------------------------
+
+* The command-line option ``--formal`` (used to generate Why3 output for
+  further formal verification) was deprecated and is now removed.  A new
+  formal verification module, the SMTChecker, is enabled via ``pragma
+  experimental SMTChecker;``.
+
+* The command-line option ``--julia`` was renamed to ``--yul`` due to the
+  renaming of the intermediate language ``Julia`` to ``Yul``.
+
+* The ``--clone-bin`` and ``--combined-json clone-bin`` command-line options
+  were removed.
+>>>>>>> english/develop
 
 * 不允许使用空前缀的重映射。
 
