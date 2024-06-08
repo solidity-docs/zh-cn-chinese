@@ -13,38 +13,19 @@
 
 许多项目会实施他们自己的编码风格指南。如遇冲突，应优先使用具体项目的风格指南。
 
-<<<<<<< HEAD
-本风格指南中的结构和许多建议是取自 python 的
+本风格指南中的结构和许多建议是取自Python的
 `pep8 风格指南 <https://peps.python.org/pep-0008/>`_ 。
 
-本指南并 *不是* 以指导正确或最佳的 solidity 编码方式为目的。
-本指南的目的是保持代码的 *一致性* 。
-来自 python 的参考文档 `pep8 <https://peps.python.org/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds>`_，
+本指南并*不是*以指导正确或最佳的Solidity编码方式为目的。
+本指南的目的是保持代码的*一致性* 。
+来自Python的参考文档 `pep8 <https://peps.python.org/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds>`_，
 很好地阐述了这个概念。
 
 .. note::
 
-    风格指南是关于一致性的。重要的是与此风格指南保持一致，但项目中的一致性更重要。
-    一个模块或功能内的一致性是最重要的。
-=======
-The structure and many of the recommendations within this style guide were
-taken from Python's
-`pep8 style guide <https://peps.python.org/pep-0008/>`_.
+    风格指南讲究一致性。与本风格指南保持一致是重要的。项目内的一致性很重要。一个模块或功能内的一致性最为重要。
 
-The goal of this guide is *not* to be the right way or the best way to write
-Solidity code.  The goal of this guide is *consistency*.  A quote from Python's
-`pep8 <https://peps.python.org/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds>`_
-captures this concept well.
-
-.. note::
-
-    A style guide is about consistency. Consistency with this style guide is important. Consistency within a project is more important. Consistency within one module or function is most important.
-
-    But most importantly: **know when to be inconsistent** -- sometimes the style guide just doesn't apply. When in doubt, use your best judgment. Look at other examples and decide what looks best. And do not hesitate to ask!
->>>>>>> english/develop
-
-    但最重要的是：**知道什么时候不一致** —— 有时风格指南不适用。如有疑问，请自行判断。
-    看看其他例子，并决定什么看起来最好，并应毫不犹豫地询问他人！
+    但最重要的是 **知道什么时候应该前后不一致** -- 有时风格指南并不适用。有疑问时，请自行判断。看看其他例子，然后决定什么看起来最好。并应毫不犹豫地询问他人！
 
 ***********
 代码结构
@@ -463,11 +444,7 @@ Import 语句应始终放在文件的顶部。
     y            = 2;
     longVariable = 3;
 
-<<<<<<< HEAD
 在receive和fallback函数中不要包含空格：
-=======
-Do not include a whitespace in the receive and fallback functions:
->>>>>>> english/develop
 
 正确写法：
 
@@ -1302,20 +1279,20 @@ Do not include a whitespace in the receive and fallback functions:
 这应该是一个重要的手动检查，以防止出现非预期的外部函数
 和常见的安全漏洞（避免对这种变化使用全文查找替换工具）。
 
-Underscore Prefix for Non-external Functions and Variables
+非外部函数和变量的下划线前缀
 ==========================================================
 
 * ``_singleLeadingUnderscore``
 
-This convention is suggested for non-external functions and state variables (``private`` or ``internal``). State variables without a specified visibility are ``internal`` by default.
+非外部函数和状态变量（ ``private`` 或 ``internal``）建议使用此约定。没有指定可见性的状态变量默认为 ``internal``。
 
-When designing a smart contract, the public-facing API (functions that can be called by any account)
-is an important consideration.
-Leading underscores allow you to immediately recognize the intent of such functions,
-but more importantly, if you change a function from non-external to external (including ``public``)
-and rename it accordingly, this forces you to review every call site while renaming.
-This can be an important manual check against unintended external functions
-and a common source of security vulnerabilities (avoid find-replace-all tooling for this change).
+在设计智能合约时，面向公众的应用程序接口（可被任何账户调用的功能）
+是一个重要的考虑因素。
+前导下划线可让您立即识别此类函数的意图，
+但更重要的是，如果您将函数从非外部函数更改为外部函数（包括 ``public``）
+并对其进行相应重命名，这将迫使您在重命名时审查每个调用站点。
+这可能是针对非预期外部函数的重要手动检查，
+也是安全漏洞的常见来源（避免使用查找-替换-全部工具来进行此更改）。
 
 .. _style_guide_natspec:
 
