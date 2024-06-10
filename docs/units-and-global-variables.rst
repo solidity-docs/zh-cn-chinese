@@ -1,21 +1,15 @@
-<<<<<<< HEAD
-*****************
-单位和全局变量
-*****************
-=======
 .. index:: ! denomination
 
 **************************************
-Units and Globally Available Variables
+单位和全局可用变量
 **************************************
->>>>>>> english/develop
 
 .. index:: ! wei, ! finney, ! szabo, ! gwei, ! ether, ! denomination;ether
 
 以太币（Ether） 单位
 ======================
 
-一个字面常数可以带一个后缀 ``wei``， ``gwei`` 或 ``ether`` 来指定一个以太币的数量，
+一个字面常量可以带一个后缀 ``wei``， ``gwei`` 或 ``ether`` 来指定一个以太币的数量，
 其中没有后缀的以太数字被认为单位是wei。
 
 .. code-block:: solidity
@@ -36,7 +30,7 @@ Units and Globally Available Variables
 ==========
 
 诸如 ``seconds``， ``minutes``， ``hours``， ``days`` 和 ``weeks`` 等
-后缀在字面常数后面，可以用来指定时间单位，其中秒是基本单位，单位的考虑方式很直白：
+后缀在字面常量后面，可以用来指定时间单位，其中秒是基本单位，单位的考虑方式很直白：
 
 * ``1 == 1 seconds``
 * ``1 minutes == 60 seconds``
@@ -104,15 +98,9 @@ Units and Globally Available Variables
 .. note::
     不要依赖 ``block.timestamp`` 和 ``blockhash`` 产生随机数，除非您知道自己在做什么。
 
-<<<<<<< HEAD
     时间戳和区块哈希在一定程度上都可能受到挖矿矿工影响。
-    例如，挖矿社区中的恶意矿工可以用某个给定的哈希来运行赌场合约的 payout 函数，
-    而如果他们没收到钱，还可以用一个不同的哈希重新尝试。
-=======
-    Both the timestamp and the block hash can be influenced by miners to some degree.
-    Bad actors in the mining community can for example run a casino payout function on a chosen hash
-    and just retry a different hash if they did not receive any compensation, e.g. Ether.
->>>>>>> english/develop
+    例如，挖矿社区中的不良行为者可以在选定的哈希值上运行赌场赔付功能，
+    如果他们没有收到任何补偿（如以太币），则可以重试不同的哈希值。
 
     当前区块的时间戳必须严格大于最后一个区块的时间戳，
     但这里唯一能确保的只是它会是在权威链上的两个连续区块的时间戳之间的数值。
@@ -235,14 +223,9 @@ ABI编码和解码函数
     （见 `EIP-2 <https://eips.ethereum.org/EIPS/eip-2#specification>`_），
     但 ecrecover 函数仍然没有改变。
 
-<<<<<<< HEAD
     这通常不是一个问题，除非您要求签名是唯一的，或者用它们来识别个体。
     OpenZeppelin 有一个 `ECDSA 辅助库 <https://docs.openzeppelin.com/contracts/4.x/api/utils#ECDSA>`_，
     您可以用它作为 ``ecrecover`` 的包装，那样就没有这个问题。
-=======
-    This is usually not a problem unless you require signatures to be unique or use them to identify items.
-    OpenZeppelin has an `ECDSA helper library <https://docs.openzeppelin.com/contracts/4.x/api/utils#ECDSA>`_ that you can use as a wrapper for ``ecrecover`` without this issue.
->>>>>>> english/develop
 
 .. note::
 
@@ -285,16 +268,9 @@ ABI编码和解码函数
     您应该尽可能避免在执行另一个合约函数时使用 ``.call()``，因为它绕过了类型检查、函数存在性检查和参数打包。
 
 .. warning::
-<<<<<<< HEAD
     使用 ``send`` 有很多危险：如果调用栈深度已经达到 1024（这总是可以由调用者所强制指定），
-    转账会失败；并且如果接收者用光了 gas，转账同样会失败。为了保证以太币转账安全，
-    总是检查 ``send`` 的返回值，使用 ``transfer`` 或者下面更好的方式： 用接收者提款的模式。
-=======
-    There are some dangers in using ``send``: The transfer fails if the call stack depth is at 1024
-    (this can always be forced by the caller) and it also fails if the recipient runs out of gas. So in order
-    to make safe Ether transfers, always check the return value of ``send``, use ``transfer`` or even better:
-    Use a pattern where the recipient withdraws the Ether.
->>>>>>> english/develop
+    转账会失败；并且如果接收者用光了以太燃料，转账同样会失败。为了保证以太币转账安全，
+    总是检查 ``send`` 的返回值，使用 ``transfer`` 或者下面更好的方式： 使用接收者可以提取以太的模式。
 
 .. warning::
     由于 EVM 认为对一个不存在的合约的调用总是成功的，
@@ -324,22 +300,14 @@ ABI编码和解码函数
 
 .. index:: this, selfdestruct, super
 
-<<<<<<< HEAD
 合约相关
-----------
-
-``this`` （当前合约类型）
-    当前合约，可以明确转换为 :ref:`address`
-=======
-Contract-related
 ----------------
 
-``this`` (current contract's type)
-    The current contract, explicitly convertible to :ref:`address`
+``this`` （当前合约类型）
+    当前合约，可以显式转换为 :ref:`address`
 
 ``super``
-    A contract one level higher in the inheritance hierarchy
->>>>>>> english/develop
+     继承层次结构中上一级的合约
 
 ``selfdestruct(address payable recipient)``
     销毁当前合约，将其资金发送到给定的 :ref:`address` 并结束执行。
@@ -351,14 +319,8 @@ Contract-related
 此外，当前合约的所有函数都可以直接调用，包括当前函数。
 
 .. warning::
-<<<<<<< HEAD
     从 0.8.18 及以上版本开始，在 Solidity 和 Yul 中使用 ``selfdestruct`` 将触发一个已废弃警告，
     因为 ``SELFDESTRUCT`` 操作码最终会发生如 `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_ 中所述的行为上的重大变化。
-=======
-    From version 0.8.18 and up, the use of ``selfdestruct`` in both Solidity and Yul will trigger a
-    deprecation warning, since the ``SELFDESTRUCT`` opcode will eventually undergo breaking changes in behavior
-    as stated in `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_.
->>>>>>> english/develop
 
 .. note::
     在 0.5.0 版本之前，有一个叫做 ``suicide`` 的函数，其语义与 ``selfdestruct`` 相同。
@@ -394,16 +356,9 @@ Contract-related
 
 除了上述属性外，以下属性对接口类型 ``I`` 可用：
 
-<<<<<<< HEAD
-``type(I).interfaceId``:
+``type(I).interfaceId``
     一个 ``bytes4`` 值，是包含给定接口 ``I`` 的 `EIP-165 <https://eips.ethereum.org/EIPS/eip-165>`_ 接口标识符。
     这个标识符被定义为接口本身定义的所有函数选择器的 ``XOR``，不包括所有继承的函数。
-=======
-``type(I).interfaceId``
-    A ``bytes4`` value containing the `EIP-165 <https://eips.ethereum.org/EIPS/eip-165>`_
-    interface identifier of the given interface ``I``. This identifier is defined as the ``XOR`` of all
-    function selectors defined within the interface itself - excluding all inherited functions.
->>>>>>> english/develop
 
 以下属性可用于整数类型 ``T``：
 
