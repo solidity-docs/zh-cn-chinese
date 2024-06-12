@@ -7,8 +7,15 @@
 .. index:: ! assembly, ! asm, ! evmasm
 
 
+<<<<<<< HEAD
 您可以用接近Ethereum虚拟机的语言，将Solidity语句与内联汇编交错使用。
 这给了您更精细的控制，这在您通过编写库来增强语言时特别有用。
+=======
+You can interleave Solidity statements with inline assembly in a language close
+to the one of the Ethereum Virtual Machine. This gives you more fine-grained control,
+which is especially useful when you are enhancing the language by writing libraries or
+optimizing gas usage.
+>>>>>>> english/develop
 
 在 Solidity 中用于内联汇编的语言被称为 :ref:`Yul <yul>`，它在自己的章节中被记录。
 本节将只涉及内联汇编代码如何在 Solidity 代码内交互。
@@ -327,9 +334,15 @@ Solidity中内存数组中的元素总是占据32字节的倍数
 自动被认为是内存安全的，不需要被注释。
 
 .. warning::
+<<<<<<< HEAD
     确保汇编块程序实际满足内存模型是您的责任。
     如果您将一个汇编块注释为内存安全的，但却违反了其中一个内存假设，
     那么这 **将** 导致不正确的和未定义的行为，而这些行为不容易通过测试发现。
+=======
+    It is your responsibility to make sure that the assembly actually satisfies the memory model. If you annotate
+    an assembly block as memory-safe, but violate one of the memory assumptions, this **will** lead to incorrect and
+    undefined behavior that cannot easily be discovered by testing.
+>>>>>>> english/develop
 
 如果您正在开发一个要在多个 Solidity 版本之间兼容的库，
 您可以使用一个特殊的注释将一个汇编块注释为内存安全的：
@@ -341,5 +354,10 @@ Solidity中内存数组中的元素总是占据32字节的倍数
         ...
     }
 
+<<<<<<< HEAD
 请注意，我们将在未来的突破性版本中不允许通过注释的方式进行注解；
 因此，如果您不关心与旧编译器版本的向后兼容问题，最好使用这种写法的代码字符串形式。
+=======
+Note that we will disallow the annotation via comment in a future breaking release; so, if you are not concerned with
+backward-compatibility with older compiler versions, prefer using the dialect string.
+>>>>>>> english/develop
