@@ -15,8 +15,15 @@
 但这并不推荐,因为这会引入一个潜在的安全风险。
 您可能需要参考 :ref:`security_considerations` 来获取更多信息。
 
+<<<<<<< HEAD
 下面是一个合约中实际提款模式的例子，其目标是向合约发送最多的钱，
 以成为 “首富”，其灵感来自于 `King of the Ether <https://www.kingoftheether.com/>`_。
+=======
+The following is an example of the withdrawal pattern in practice in
+a contract where the goal is to send the most of some compensation, e.g. Ether, to the
+contract in order to become the "richest", inspired by
+`King of the Ether <https://www.kingoftheether.com/>`_.
+>>>>>>> english/develop
 
 在下面的合约中，如果您不再是最富有的人，您将收到取代您成为“最富有”的人发送到合约的资金。
 
