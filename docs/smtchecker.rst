@@ -425,7 +425,7 @@ SMT检查器使用了一个硬编码的资源限制（ ``rlimit`` ），
 这个选项大致转化为每个查询 “几秒钟超时”。
 当然，许多属性非常复杂，需要大量的时间来解决，而决定并不重要。
 如果SMT检查器不能用默认的 ``rlimit`` 选项处理合约属性，
-则可以通过CLI选项 ``--model-checker-timeout <time>`` 或
+则可以通过命令行界面（CLI）选项 ``--model-checker-timeout <time>`` 或
 JSON选项 ``settings.modelChecker.timeout=<time>`` 给出以毫秒为单位的超时。
 其中0表示不超时。
 
@@ -434,9 +434,9 @@ JSON选项 ``settings.modelChecker.timeout=<time>`` 给出以毫秒为单位的�
 验证目标
 ====================
 
-SMT检查器创建的验证目标的类型也可以通过CLI选项 ``--model-checker-target <targets>``
+SMT检查器创建的验证目标的类型也可以通过命令行界面选项 ``--model-checker-target <targets>``
 或JSON选项 ``settings.modelChecker.targets=<targets>`` 来定制。
-在CLI情况下， ``<targets>`` 是一个没有空格的逗号分隔的一个或多个验证目标的列表，
+在命令行界面情况下， ``<targets>`` 是一个没有空格的逗号分隔的一个或多个验证目标的列表，
 在JSON输入中是一个或多个作为字符串的目标数组。
 代表目标的关键词是：
 
@@ -448,7 +448,7 @@ SMT检查器创建的验证目标的类型也可以通过CLI选项 ``--model-che
 - 弹出一个空数组： ``popEmptyArray``。
 - 越界的数组/固定字节索引访问： ``outOfBounds``。
 - 转账资金不足： ``balance``。
-- 以上都是： ``default`` （仅适用CLI）。
+- 以上都是： ``default`` （仅适用命令行界面）。
 
 一个常见的目标子集可能是，例如： ``--model-checker-targets assert,overflow``。
 
@@ -460,9 +460,9 @@ SMT检查器创建的验证目标的类型也可以通过CLI选项 ``--model-che
 已验证的目标
 ==============
 
-果有任何已证明的目标，SMTChecker 会向每个引擎发出一个警告，
+果有任何已证明的目标，SMT检查器会向每个引擎发出一个警告，
 说明有多少目标已证明。如果用户希望查看所有已证明的具体目标，
-可使用CLI选项 ``--model-checker-show-proved`` 和
+可使用命令行选项 ``--model-checker-show-proved`` 和
 JSON选项 ``settings.modelChecker.showProved = true``。
 
 未验证的目标
@@ -470,13 +470,13 @@ JSON选项 ``settings.modelChecker.showProved = true``。
 
 如果有任何未验证的目标，SMT检查器会发出一个警告，
 说明有多少个未验证的目标。如果用户希望看到所有具体的未验证的目标，
-可以使用CLI选项 ``--model-checker-show-unproved``
+可以使用命令行界面选项 ``--model-checker-show-unproved``
 和JSON选项 ``settings.modelChecker.showUnproved = true``。
 
 不支持的语言特性
 =============================
 
-SMTChecker 应用的SMT编码不完全支持某些Solidity语言特性，
+SMT检查器应用的SMT编码不完全支持某些Solidity语言特性，
 例如汇编块。
 不支持的构造会通过过度逼近进行抽象，
 以保持稳健性，这意味着即使不支持该特性，
@@ -502,7 +502,7 @@ JSON选项 ``settings.modelChecker.showUnsupported = true``，
 这可以减少编码和生成查询的复杂性。
 请注意，抽象合约在默认情况下不会被SMT检查器分析为最终派生的合约。
 
-选择的合约可以通过CLI，用 <source>:<contract> 形式的键值对，以逗号分隔的列表（不允许有空格）给出：
+选择的合约可以通过命令行界面，用 <source>:<contract> 形式的键值对，以逗号分隔的列表（不允许有空格）给出：
 ``--model-checker-contracts "<source1.sol:contract1>,<source2.sol:contract2>,<source2.sol:contract3>"``，
 以及通过 :ref:`JSON 输入<compiler-api>` 中的对象 ``settings.modelChecker.contracts``，它有如下格式：
 
@@ -586,8 +586,8 @@ SMT检查器假定外部调用的合约具有调用者表达式的类型。
             E(d).setX(1024);
 
             // 现在从 `D(d)` 读取将显示旧值。
-            // 下面的断言在运行时应该失败，
-            // 但在这种模式的分析中却成功了（因此不可靠）。
+            // 下面的断言本应在运行时失败，
+            // 但在此模式的分析中却成功了（不健全）。
             assert(D(d).x() == 42);
             // 下面的断言在运行时应该成功，
             // 但在这种模式的分析中却会失败（假阳性）。
@@ -678,16 +678,16 @@ SMT检查器假定外部调用的合约具有调用者表达式的类型。
         A a;
         constructor() {
             a = new A();
-            assert(a.x() == 0); // (1) 应该成功
+            assert(a.x() == 0); // (1) 应该成立
         }
         function g() public view {
-            assert(a.owner() == address(this)); // (2) 应该成功
-            assert(a.x() == 0); // (3) 应该成功，但是由于假阳性而失败
+            assert(a.owner() == address(this)); // (2) 应该成立
+            assert(a.x() == 0); // (3) 应该成立, 但失败了，由于假阳性
         }
     }
 
 报告推断的归纳变量
-======================================
+==================
 
 对于那些被CHC引擎证明为安全的属性，
 SMT检查器可以检索由Horn求解器推断出的归纳不变性，作为证明的一部分。
@@ -700,7 +700,7 @@ SMT检查器可以检索由Horn求解器推断出的归纳不变性，作为证�
   其中外部调用可以自由地做任何事情，包括对分析的合约进行可重入调用。
   导数变量代表所述外部调用后的状态变量的值。例如： ``lock -> x = x'``。
 
-用户可以使用CLI选项 ``--model-checker-invariants "contract,reentrancy"`` 来选择要报告的不变量类型，
+用户可以使用命令行界面选项 ``--model-checker-invariants "contract,reentrancy"`` 来选择要报告的不变量类型，
 或者在 :ref:`JSON 输入<compiler-api>` 中的字段 ``settings.modelChecker.invariants`` 中作为数组。
 默认情况下，SMT检查器不报告不变量。
 
@@ -744,7 +744,7 @@ SMT检查器模块实现了两个不同的推理引擎，一个是有界模型�
 
 默认情况下，两个引擎都会被使用，其中首先运行CHC，
 每一个没有被证明的属性都被传递给BMC。
-您可以通过CLI选项 ``--model-checker-engine {all,bmc,chc,none}`` 或
+您可以通过命令行界面选项 ``--model-checker-engine {all,bmc,chc,none}`` 或
 JSON选项 ``settings.modelChecker.engine {all,bmc,chc,none}`` 来选择一个特定的引擎。
 
 有界模型检查器 （BMC）
@@ -780,7 +780,7 @@ BMC使用一个SMT求解器，而CHC使用一个Horn求解器。
 作为一个Horn求解器使用，而 `Eldarica <https://github.com/uuverifiers/eldarica>`_
 则同时做这两种工作。
 
-如果求解器可用的话，用户可以通过CLI选项 ``--model-checker-solvers {all,cvc4,eld,smtlib2,z3}``
+如果求解器可用的话，用户可以通过命令行界面选项 ``--model-checker-solvers {all,cvc4,eld,smtlib2,z3}``
 或JSON选项 ``settings.modelChecker.solvers=[smtlib2,z3]`` 来选择应该使用哪个求解器，
 其中：
 

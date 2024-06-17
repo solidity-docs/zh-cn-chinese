@@ -430,6 +430,8 @@ EVM版本选项
           "extCalls": "trusted",
           // 选择哪些类型的不变性应该报告给用户：合约，重入。
           "invariants": ["contract", "reentrancy"],
+          // 选择是否输出所有验证过的目标。默认为 `false`。
+          "showProved": true,
           // 选择是否输出所有未验证的目标。默认为 `false`。
           "showUnproved": true,
           // 选择是否输出所有不支持的语言功能。默认为 `false`。
@@ -620,6 +622,6 @@ EVM版本选项
 10. ``Exception``： 编译期间的未知失败 — 应将此报告为一个issue。
 11. ``CompilerError``： 编译器堆栈的无效使用 — 应将此报告为一个issue。
 12. ``FatalError``： 未正确处理致命错误 — 应将此报告为一个issue。
-13. ``YulException``： 在Yul代码生成过程中出现错误 - 这应该作为一个问题报告。
+13. ``YulException``： 在Yul代码生成过程中出现错误 - 这应该作为一个issue报告。
 14. ``Warning``： 警告，不会停止编译，但应尽可能处理。
 15. ``Info``： 编译器认为用户可能会在其中发现有用的信息，并不危险，也不一定需要处理。

@@ -338,7 +338,7 @@ userDefinableOperator:
 usingDirective: Using (identifierPath | (LBrace identifierPath (As userDefinableOperator)? (Comma identifierPath (As userDefinableOperator)?)* RBrace)) For (Mul | typeName) Global? Semicolon;
 /**
  * 使用指令将库函数和自由函数附加到类型上。
- * 可以在合同和库中以及文件层面中出现。
+ * 可以在合约和库中以及文件层面中出现。
  */
 usingDirective: Using (identifierPath | (LBrace identifierPath (As userDefinableOperator)? (Comma identifierPath (As userDefinableOperator)?)* RBrace)) For (Mul | typeName) Global? Semicolon;
 /**

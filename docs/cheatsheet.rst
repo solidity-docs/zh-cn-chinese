@@ -11,15 +11,15 @@
 
 .. index:: abi;decode, abi;encode, abi;encodePacked, abi;encodeWithSelector, abi;encodeCall, abi;encodeWithSignature
 
-ABI 编码和解码方法
+ABI 编码和解码函数
 ===================================
 
 - ``abi.decode(bytes memory encodedData, (...)) returns (...)``： :ref:`ABI <ABI>` - 对提供的数据进行解码。类型在括号中作为第二个参数给出。
   示例： ``(uint a, uint[2] memory b, bytes memory c) = abi.decode(data, (uint, uint[2], bytes))``
-- ``abi.encode(...) returns (bytes memory)``： :ref:`ABI <ABI>`- 对给定的参数进行编码。
+- ``abi.encode(...) returns (bytes memory)``： :ref:`ABI <ABI>` - 对给定的参数进行编码。
 - ``abi.encodePacked(...) returns (bytes memory)``： 对给定的参数执行 :ref:`紧密打包 <abi_packed_mode>`。
   请注意，这种编码可能是不明确的!
-- ``abi.encodeWithSelector(bytes4 selector, ...) returns (bytes memory)``： :ref:`ABI <ABI>`- 对给定参数进行编码，
+- ``abi.encodeWithSelector(bytes4 selector, ...) returns (bytes memory)``： :ref:`ABI <ABI>` - 对给定参数进行编码，
   并以给定的函数选择器作为起始的 4 字节数据一起返回
 - ``abi.encodeCall(function functionPointer, (...)) returns (bytes memory)``： 对 ``functionPointer`` 的调用进行ABI编码，
   参数在元组中找到。执行全面的类型检查，确保类型与函数签名相符。结果等于 ``abi.encodeWithSelector(functionPointer.selector(..))``。

@@ -6,7 +6,7 @@
 
 .. index:: ! wei, ! finney, ! szabo, ! gwei, ! ether, ! denomination;ether
 
-以太币（Ether） 单位
+以太坊（Ether） 单位
 ======================
 
 一个字面常量可以带一个后缀 ``wei``， ``gwei`` 或 ``ether`` 来指定一个以太币的数量，

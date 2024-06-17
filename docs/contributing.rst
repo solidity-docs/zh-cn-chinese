@@ -27,9 +27,9 @@
 
 如果您有问题或拉动请求要讨论，或有兴趣听听团队和贡献者正在做什么，您可以加入我们的公开团队电话会议：
 
-- 每周三，中欧时间下午3点。
+- 每周三下午3点，中欧标准时间/中欧夏令时间。
 
-这两个会议都在 `Jitsi <https://meet.soliditylang.org/>`_ 举行。
+会议在 `Jitsi <https://meet.soliditylang.org/>`_ 举行。
 
 如何报告问题
 ====================
@@ -438,7 +438,6 @@ Whiskers 系统
 
 * `简化技术英语 <https://en.wikipedia.org/wiki/Simplified_Technical_English>`_
 * `国际英语 <https://en.wikipedia.org/wiki/International_English>`_
-
 
 .. note::
 

@@ -14,16 +14,16 @@ Solidity是一门为实现智能合约而创建的面向对象的高级编程语
 
 Solidity 是一种面向以太坊虚拟机 (EVM) 的 `带花括号的语言 <https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Curly-bracket_languages>`_。
 它受 C++，Python 和 JavaScript 的影响。
-您可以在  :doc:`语言的影响因素 <language-influences>` 部分中找到更多有关 Solidity 受哪些语言启发的细节。
+您可以在 :doc:`语言的影响因素 <language-influences>` 部分中找到更多有关 Solidity 受哪些语言启发的细节。
 
 Solidity 是静态类型语言，支持继承，库和复杂的用户自定义的类型以及其他特性。
 
-下面您将会看到，使用 Solidity，您可以创建用于投票、众筹、秘密竞价（盲拍）以及多重签名钱包等用途的合约。
+使用 Solidity，您可以创建用于投票、众筹、秘密竞价（盲拍）以及多重签名钱包等用途的合约。
 
 当开发智能合约时，您应该使用最新版本的Solidity。
 除某些特殊情况之外，只有最新版本才会收到
 `安全修复 <https://github.com/ethereum/solidity/security/policy#supported-versions>`_。
-此外，重大的变化以及新功能会定期引入。
+此外，突破性的变化以及新功能会定期引入。
 目前，我们使用 0.y.z 版本号 `来表明这种快速的变化 <https://semver.org/#spec-item-4>`_。
 
 .. warning::
@@ -44,7 +44,7 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 
 **1. 了解智能合约基础知识**
 
-如果您是智能合约概念的新手，我们建议您从深入了解 “智能合约介绍” 部分开始，其中包括：
+如果您是智能合约概念的新手，我们建议您从深入了解“智能合约介绍”部分开始，其中包括：
 
 * 用 Solidity 编写的 :ref:`一个简单的智能合约例子 <simple-smart-contract>`。
 * :ref:`区块链基础知识 <blockchain-basics>`.
@@ -70,7 +70,7 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
     因此在编写智能合约时应遵循软件开发的最佳实践。
     这包括代码审查，测试，审计和正确性证明。
     智能合约用户有时对代码的信心甚至超过了作者，
-    区块链和智能合约也存在独特的问题，
+    区块链和智能合约也有其独特的问题需要注意，
     因此在开始编写生产代码之前，请确保您已阅读
     :ref:`security_considerations` 部分。
 
@@ -80,8 +80,8 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 `以太坊开发者资源 <https://ethereum.org/en/developers/>`_ 可以为您提供有关以太坊的更多文档，
 以及各种教程、工具和开发框架。
 
-如果您有任何问题，可以在 `以太坊 StackExchange <https://ethereum.stackexchange.com/>`_ 上寻找答案，
-或者在我们的 `Gitter 频道 <https://gitter.im/ethereum/solidity/>`_。
+如果您有任何问题，可以在 `以太坊 StackExchange <https://ethereum.stackexchange.com/>`_ 上，
+或者在我们的 `Gitter 频道 <https://gitter.im/ethereum/solidity/>`_ 上搜索答案或提问。
 
 .. _translations:
 

@@ -16,8 +16,8 @@
 本风格指南中的结构和许多建议是取自Python的
 `pep8 风格指南 <https://peps.python.org/pep-0008/>`_ 。
 
-本指南并*不是*以指导正确或最佳的Solidity编码方式为目的。
-本指南的目的是保持代码的*一致性* 。
+本指南并 *不是* 以指导正确或最佳的Solidity编码方式为目的。
+本指南的目的是保持代码的 *一致性* 。
 来自Python的参考文档 `pep8 <https://peps.python.org/pep-0008/#a-foolish-consistency-is-the-hobgoblin-of-little-minds>`_，
 很好地阐述了这个概念。
 

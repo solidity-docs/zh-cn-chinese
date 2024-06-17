@@ -73,7 +73,7 @@ Yul在其纯粹的形式下没有任何内置的操作，函数或类型。
         }
     }
 
-也可以用for-loop而不是递归来实现同样的函数。
+也可以用for循环而不是递归来实现同样的函数。
 这里， ``lt(a, b)`` 计算 ``a`` 是否小于 ``b``。
 
 .. code-block:: yul
@@ -143,7 +143,7 @@ Yul可以指定由代码，数据和子对象组成的 “对象”。
 - 赋值，例如： ``x := add(y, 3)``
 - 局部变量的作用域所在的代码块，例如 ``{ let x := 3 { let y := add(x, 1) } }``
 - if 语句，例如 ``if lt(a, b) { sstore(0, 1) }``
-- switch语句，例如 ``switch mload(0) case 0 { revert() } default { mstore(0, 1) }``
+- switch 语句，例如 ``switch mload(0) case 0 { revert() } default { mstore(0, 1) }``
 - for 循环，例如 ``for { let i := 0} lt(i, 10) { i := add(i, 1) } { mstore(i, 7) }``
 - 函数的定义，例如 ``function f(a, b) -> c { c := add(a, b) }``
 

@@ -24,7 +24,7 @@
 编译器的一些公开的，与安全有关的bug列表可以在 :ref:`已知错误列表 <known_bugs>` 中找到，
 它也是机器可读的。
 请注意，有一个 `Bug 赏金计划 <https://ethereum.org/en/bug-bounty/>`_
-涉及 Solidity 编译器的代码生成器。
+涉及Solidity编译器的代码生成器。
 
 像往常一样，对于开源文档，
 请帮助我们扩展这部分内容（尤其是，一些例子不会有什么影响）！
@@ -59,7 +59,7 @@
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.6.0 <0.9.0;
 
-    // 此合约包含一个漏洞 - 请勿使用
+    // 此合约包含一个错误 - 请勿使用
     contract Fund {
         /// @dev 合约的以太币份额的映射。
         mapping(address => uint) shares;
@@ -83,7 +83,7 @@
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.6.2 <0.9.0;
 
-    //此合约包含一个漏洞 - 请勿使用
+    //此合约包含一个错误 - 请勿使用
     contract Fund {
         /// @dev 合约的以太币份额的映射。
         mapping(address => uint) shares;
@@ -174,7 +174,7 @@ gas 限制和循环
      更好的办法是，使用接收者可以提取以太币的模式来编写您的合约。
   3. 发送以太也可能失败，因为接收合约的执行需要超过分配的 gas 值
      （确切地说，是使用了 :ref:`require <assert-and-require>`， :ref:`assert <assert-and-require>`，
-     :ref:`revert <assert-and-require>` 或者因为操作太昂贵）- 它 “耗尽了 gas“（OOG）。
+     :ref:`revert <assert-and-require>` 或者因为操作太昂贵）- 它 “耗尽了 gas”（OOG）。
      如果您使用 ``transfer`` 或 ``send``，并带有返回值检查，这可能为接收者提供一种手段来阻止发送合约的进展。
      同样，这里的最佳做法是使用 :ref:`"提款" 模式而不是 "发送"模式 <withdrawal_pattern>`。
 
@@ -236,7 +236,7 @@ tx.origin
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.7.0 <0.9.0;
-    // 本合约包含一个漏洞 - 请勿使用
+    // 本合约包含一个错误 - 请勿使用
     contract TxUserWallet {
         address owner;
 
@@ -245,7 +245,7 @@ tx.origin
         }
 
         function transferTo(address payable dest, uint amount) public {
-            // 漏洞就在这里，您必须使用 msg.sender 而不是 tx.origin。
+            // 错误就在这里，您必须使用 msg.sender 而不是 tx.origin。
             require(tx.origin == owner);
             dest.transfer(amount);
         }
@@ -307,7 +307,7 @@ Solidity 有两种模式来处理这些溢出。检查和不检查或 “包装�
 一般来说，请阅读关于二进制补码表示法的限制，它甚至对有符号的数字有一些更特殊的边缘情况。
 
 尝试使用 ``require`` 将输入的大小限制在一个合理的范围内，
-并使用:ref:`SMT 检查器 <smt_checker>` 来发现潜在的溢出。
+并使用 :ref:`SMT 检查器 <smt_checker>` 来发现潜在的溢出。
 
 .. _clearing-mappings:
 

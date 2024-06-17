@@ -92,7 +92,7 @@ Solidity编译器会自动生成一个JSON文件。该文件包含关于编译�
           },
           // 合约中 @title NatSpec字段的内容
           "title": "MyERC20: an example ERC20",
-          "version": 1 // NatSpec version
+          "version": 1 // NatSpec 版本
         },
         // 必选：合约的NatSpec用户文档。请参阅”NatSpec格式“
         "userdoc": {
