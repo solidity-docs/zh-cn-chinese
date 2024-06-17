@@ -537,8 +537,8 @@ JSON
   ``view`` （:ref:`指定为不修改区块链状态 <view-functions>`），
   ``nonpayable`` （函数不接受以太币 - 默认选项） 和 ``payable`` （函数可接收以太币）。
 
-构造函数（constructor）， receive 函数 和 fallback 函数没有 ``name`` 或 ``outputs`` 属性。
-receive 函数 和 fallback 函数也没有 ``inputs`` 属性。
+构造函数（constructor）， receive 函数 和 fallback 函数从没有 ``name`` 或 ``outputs`` 字段。
+receive 函数 和 fallback 函数也没有 ``inputs`` 字段。
 
 .. note::
     向不接收以太币函数发送非零的以太币将使交易回滚。
@@ -555,7 +555,7 @@ receive 函数 和 fallback 函数也没有 ``inputs`` 属性。
   * ``name``： 参数名称。
   * ``type``： 参数的规范类型（详见下文）。
   * ``components``： 供元组（tuple） 类型使用（详见下文）
-  * ``indexed``： 如果该字段是日志主题的一部分，则为 ``true``，如果它是日志数据段之一，则为 ``false``。
+  * ``indexed``： 如果字段是日志主题的一部分，则为 ``true``；如果它是日志数据段的一部分，则为 ``false``。
 
 - ``anonymous``： 如果事件被声明为 ``anonymous``，则为 ``true``。
 

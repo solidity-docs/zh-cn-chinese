@@ -45,7 +45,7 @@ Solidity支持多重继承，包括多态性。
     // 使用 `is` 从另一个合约派生。派生合约可以访问所有非私有成员，
     // 包括内部函数和状态变量，但无法通过 `this` 来外部访问。
     contract Destructible is Owned {
-        // 关键字 `virtual` 意味着该函数可以在派生类中改变其行为（"重载"）。
+        // 关键字 `virtual` 意味着该函数可以在派生类中改变其行为（“重载”）。
         function destroy() virtual public {
             if (msg.sender == owner) selfdestruct(owner);
         }
@@ -98,7 +98,7 @@ Solidity支持多重继承，包括多态性。
             if (msg.sender == owner) info = newInfo;
         }
 
-        // 在这里，我们只指定了 `override` 而没有 `virtual`。
+        // 在这里，我们只指定为 `override` 而没用 `virtual`。
         // 这意味着从 `PriceFeed` 派生出来的合约不能再改变 `destroy` 的行为。
         function destroy() public override(Destructible, Named) { Named.destroy(); }
         function get() public view returns(uint r) { return info; }
@@ -441,7 +441,7 @@ Solidity支持多重继承，包括多态性。
     }
 
 一种方式是直接在继承列表中给出（ ``is Base(7)`` ）。
-另一种是通过修改器作为派生构造函数的一部分被调用的方式（ ``Base(_y * _y)`` ）。
+另一种是通过修改器作为派生构造函数的一部分被调用的方式（ ``Base(y * y)`` ）。
 如果构造函数参数是一个常量，并且定义了合约的行为或描述了它，那么第一种方式更方便。
 如果基类合约的构造函数参数依赖于派生合约的参数，则必须使用第二种方式。
 参数必须在继承列表中或在派生构造函数中以修饰器的形式给出。

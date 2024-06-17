@@ -71,7 +71,7 @@
 
 * Visual Studio Code (VS Code)
 
-    * `以太坊 Remix 的 Visual Studio 代码扩展包 <https://marketplace.visualstudio.com/items?itemName=RemixProject.ethereum-remix>`_
+    * `以太坊 Remix 的 Visual Studio 代码扩展包 <https://github.com/ethereum/remix-vscode>`_
         VS Code 的以太坊 Remix 扩展包
 
     * `Juan Blanco 的 Solidity Visual Studio 代码扩展包 <https://juan.blanco.ws/solidity-contracts-in-visual-studio-code/>`_
@@ -112,9 +112,6 @@ Solidity 工具
 
 * `leafleth <https://github.com/clemlak/leafleth>`_
     Solidity智能合约的文档生成器。
-
-* `PIET <https://piet.slock.it/>`_
-    一个通过简单图形界面开发，审计和使用Solidity智能合约的工具。
 
 * `Scaffold-ETH <https://github.com/scaffold-eth/scaffold-eth>`_
     专注于产品快速迭代的可分叉的以太坊开发堆栈。

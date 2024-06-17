@@ -25,7 +25,7 @@
 团队电话会议
 ============
 
-如果您有问题或拉动请求要讨论，或有兴趣听听团队和贡献者正在做什么，您可以加入我们的公共团队电话会议：
+如果您有问题或拉动请求要讨论，或有兴趣听听团队和贡献者正在做什么，您可以加入我们的公开团队电话会议：
 
 - 每周三下午3点，中欧标准时间/中欧夏令时间。
 
@@ -38,7 +38,7 @@
 `GitHub问题跟踪器 <https://github.com/ethereum/solidity/issues>`_。
 当报告问题时，请提及以下细节：
 
-* Solidity版本。
+* Solidity 版本。
 * 源代码（如果可以的话）。
 * 操作系统。
 * 重现该问题的步骤。
@@ -84,8 +84,7 @@
 
 为了运行所有的编译器测试，您可能想选择性地安装一些依赖项
 （ `evmone <https://github.com/ethereum/evmone/releases>`_，
-`libz3 <https://github.com/Z3Prover/z3>`_， 和
-`libhera <https://github.com/ewasm/hera>`_）。
+`libz3 <https://github.com/Z3Prover/z3>`_。
 
 在 macOS 系统上，一些测试脚本需要安装 GNU 核心工具。
 可以使用 Homebrew 很简单地完成安装： ``brew install coreutils``。
@@ -103,8 +102,8 @@ Solidity包括不同类型的测试，其中大部分捆绑在
 `Boost C++测试框架 <https://www.boost.org/doc/libs/release/libs/test/doc/html/index.html>`_ 应用程序 ``soltest``。
 运行 ``build/test/soltest`` 或其包装器 ``scripts/soltest.sh`` 对大多数变化来说是足够的。
 
-``./scripts/tests.sh`` 脚本自动执行大多数Solidity测试，
-包括那些捆绑在 `Boost C++测试框架 <https://www.boost.org/doc/libs/release/libs/test/doc/html/index.html>`_ 应用程序 ``soltest``
+``./scripts/tests.sh`` 脚本自动执行大多数 Solidity 测试，
+包括那些捆绑在 `Boost C++ 测试框架 <https://www.boost.org/doc/libs/release/libs/test/doc/html/index.html>`_ 应用程序 ``soltest``
 （或其包装器 ``scripts/soltest.sh``）中的测试，以及命令行测试和编译测试。
 
 测试系统会自动尝试发现 `evmone <https://github.com/ethereum/evmone/releases>`_ 的位置，以运行语义测试。
@@ -116,12 +115,8 @@ Solidity包括不同类型的测试，其中大部分捆绑在
 ``evmone`` 主要用于运行语义和gas测试。
 如果您没有安装它，您可以通过向 ``scripts/soltest.sh`` 传递 ``--no-semantic-tests`` 标志来跳过这些测试。
 
-运行Ewasm测试默认是禁用的，可以通过 ``./scripts/soltest.sh --ewasm`` 明确启用，
-要求 `hera <https://github.com/ewasm/hera>`_ 被 ``soltest`` 找到。
-定位 ``hera`` 库的机制与 ``evmone`` 相同，只是用于指定明确位置的变量被称为 ``ETH_HERA``。
-
-``evmone`` 和 ``hera`` 库的文件名后缀都应该
-是Linux上的 ``.so``，Windows系统上的 ``.dll``，MacOS上的 ``.dylib``。
+``evmone`` 库的文件名扩展名在Linux系统上应为 ``.so``，在Windows系统上，
+应为 ``.dll``，而在macOS上，应为 ``.dylib``。
 
 为了运行SMT测试， ``libz3`` 库必须被安装，并在编译器配置阶段被 ``cmake`` 可以找到。
 
@@ -159,7 +154,7 @@ Solidity包括不同类型的测试，其中大部分捆绑在
 如果您想使用GDB进行调试，确保您的构建方式与 “通常” 不同。
 例如，您可以在您的 ``build`` 文件夹中运行以下命令：
 
-如果您想使用 GDB 进行调试，请确保您的构建方式与“通常”的构建方式不同。
+如果您想使用GDB进行调试，请确保以与“通常”的构建方式不同的方式进行构建。
 例如，您可以在 ``build`` 文件夹中运行以下命令：
 
 .. code-block:: bash
@@ -261,6 +256,60 @@ CI运行额外的测试（包括 ``solc-js`` 和测试第三方Solidity框架）
     不要把一个以上的合约放在一个文件中，除非您在测试继承或跨合约的调用。
     每个文件应该测试您的新功能的一个方面。
 
+命令行测试
+------------------
+
+我们的端到端命令行测试套件检查编译器二进制文件在各种场景下的行为。
+这些测试位于 `test/cmdlineTests/ <https://github.com/ethereum/solidity/tree/develop/test/cmdlineTests>`_ 目录下，
+每个子目录中有一个测试，并可以使用 ``cmdlineTests.sh`` 脚本来执行这些测试。
+
+默认情况下，该脚本会运行所有可用的测试。
+您还可以提供一个或多个 `文件名模式 <https://www.gnu.org/software/bash/manual/bash.html#Filename-Expansion>`_，
+在这种情况下，只会执行与至少一个模式匹配的测试。
+还可以通过在模式前加上 ``--exclude`` 来排除与特定模式匹配的文件。
+
+默认情况下，脚本假设在工作副本内的 ``build/`` 子目录中存在一个 ``solc`` 二进制文件。
+如果您在源代码树之外构建编译器，您可以使用 ``SOLIDITY_BUILD_DIR`` 环境变量
+来指定构建目录的不同位置。
+
+示例：
+
+.. code-block:: bash
+
+    export SOLIDITY_BUILD_DIR=~/solidity/build/
+    test/cmdlineTests.sh "standard_*" "*_yul_*" --exclude "standard_yul_*"
+
+上述命令将运行以 ``test/cmdlineTests/standard_`` 开头的目录中的测试，
+以及名称中包含 ``_yul_`` 的 ``test/cmdlineTests/`` 的子目录中的测试，
+但不会执行名称以 ``standard_yul_`` 开头的测试。
+它还假设您的主目录中的文件 ``solidity/build/solc/solc`` 是编译器二进制文件
+（除非您使用的是Windows系统 -- 那么将是 ``solidity/build/solc/Release/solc.exe``）。
+
+有几种类型的命令行测试：
+
+- *标准 JSON 测试*：至少包含一个 ``input.json`` 文件。
+  一般情况下可能包含以下内容：
+
+    - ``input.json``： 要传递给命令行上的 ``--standard-json`` 选项的输入文件。
+    - ``output.json``： 预期的标准 JSON 输出。
+    - ``args``： 传递给 ``solc`` 的额外命令行参数。
+
+- *CLI 测试*：至少包含一个 ``input.*`` 文件（不包括 ``input.json``）。
+  一般情况下可能包含以下内容：
+
+    - ``input.*``：  一个单独的输入文件，其名称将在命令行上提供给 ``solc``。
+      通常是 ``input.sol`` 或 ``input.yul``。
+    - ``args``： 传递给 ``solc`` 的额外命令行参数。
+    - ``stdin``： 要通过标准输入传递给 ``solc`` 的内容。
+    - ``output``： 预期的标准输出内容。
+    - ``err``： 预期的标准错误输出内容。
+    - ``exit``： 预期的退出代码。如果未提供，则期望为零。
+
+- *脚本测试*：包含一个 ``test.*`` 文件。
+  一般情况下可能包含以下内容：
+
+    - ``test.*``: 一个要运行的单个脚本，通常是 ``test.sh`` 或 ``test.py``。
+      该脚本必须是可执行的。
 
 通过 AFL 运行 Fuzzer
 ==========================
@@ -336,11 +385,11 @@ Fuzzing 是一种测试技术，它可以通过运行多少不等的随机输入
     # 从文件中摘录：
     path/to/solidity/scripts/isolate_tests.py path/to/solidity/docs
 
-AFL 的文档指出，账册（初始的输入文件）不应该太大。
-每个文件本身不应该超过 1 kB，并且每个功能最多只能有一个输入文件；
+AFL 的文档指出，语料库（初始的输入文件）不应该太大。
+每个文件本身不应该超过 1 kB，并且每个功能最多只能有一个输入文件，
 所以最好从少量的输入文件开始。
 此外还有一个叫做 ``afl-cmin`` 的工具，
-可以将输入文件整理为可以具有近似行为的二进制代码。
+可以修剪导致二进制文件行为相似的输入文件。
 
 现在运行 fuzzer（ ``-m`` 参数将使用的内存大小扩展为 60 MB）：
 
@@ -384,9 +433,8 @@ Whiskers 系统
 英语
 ----------------
 
-使用国际英语，除非使用项目或品牌名称。
-尽量减少使用当地的俚语和参考文化，尽量使您的语言对所有的读者都尽可能清晰。
-以下是一些参考资料，希望对大家有所帮助：
+请使用国际英语，除非使用项目或品牌名称。
+尽量减少使用当地的俚语和参考，尽量使您的语言对所有的读者都尽可能清晰。以下是一些参考资料，希望对大家有所帮助：
 
 * `简化技术英语 <https://en.wikipedia.org/wiki/Simplified_Technical_English>`_
 * `国际英语 <https://en.wikipedia.org/wiki/International_English>`_

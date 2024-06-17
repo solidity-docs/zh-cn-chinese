@@ -16,7 +16,7 @@ sourceUnit: (
 	| contractDefinition
 	| interfaceDefinition
 	| libraryDefinition
-	| freeFunctionDefinition
+	| functionDefinition
 	| constantVariableDeclaration
 	| structDefinition
 	| enumDefinition
@@ -85,7 +85,7 @@ inheritanceSpecifier: name=identifierPath arguments=callArgumentList?;
  */
 contractBodyElement:
 	constructorDefinition
-	| contractFunctionDefinition
+	| functionDefinition
 	| modifierDefinition
 	| fallbackFunctionDefinition
 	| receiveFunctionDefinition
@@ -151,11 +151,11 @@ stateMutability: Pure | View | Payable;
  */
 overrideSpecifier: Override (LParen overrides+=identifierPath (Comma overrides+=identifierPath)* RParen)?;
 /**
- * 合约，库和接口功能的定义。
- * 根据定义函数的上下文，可能会有进一步的限制。
- * 例如，接口中的函数必须是未实现的，也就是说，不能包含主体块。
+ * 合约，库，接口或自由函数的定义。
+ * 根据函数定义的上下文，可能会有进一步的限制。
+ * 例如，接口中的函数必须是未实现的，也就是说，不能包含函数体块。
  */
-contractFunctionDefinition
+functionDefinition
 locals[
 	boolean visibilitySet = false,
 	boolean mutabilitySet = false,
@@ -174,16 +174,6 @@ locals[
 	 )*
 	(Returns LParen returnParameters=parameterList RParen)?
 	(Semicolon | body=block);
-
-/**
- * 自由函数的定义。
- */
- freeFunctionDefinition:
- 	Function (identifier | Fallback | Receive)
- 	LParen (arguments=parameterList)? RParen
- 	stateMutability?
- 	(Returns LParen returnParameters=parameterList RParen)?
- 	(Semicolon | body=block);
 
 /**
  * 修改器的定义。
@@ -322,7 +312,7 @@ errorDefinition:
 	Semicolon;
 
 /**
- * 允许用户使用 `using for` 为某些类型实现的运算符。
+ * 用户可以通过 `using for` 为某些类型实现的运算符。
  */
 userDefinableOperator:
 	BitAnd
@@ -341,6 +331,11 @@ userDefinableOperator:
 	| LessThanOrEqual
 	| NotEqual;
 
+/**
+ * 使用指令将库函数和自由函数附加到类型上。
+ * 可以在合约、库和文件级别中出现。
+ */
+usingDirective: Using (identifierPath | (LBrace identifierPath (As userDefinableOperator)? (Comma identifierPath (As userDefinableOperator)?)* RBrace)) For (Mul | typeName) Global? Semicolon;
 /**
  * 使用指令将库函数和自由函数附加到类型上。
  * 可以在合约和库中以及文件层面中出现。

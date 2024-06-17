@@ -9,16 +9,16 @@
 版本
 ==========
 
-Solidity 的版本遵循 `语义化版本原则 <https://semver.org>`_。此外，
-主版本（例如：0.x.y）的补丁级版本的发布不会包含重大更改。这意味着用 0.x.y 版本
-编译的代码可望用 0.x.z 版本编译，其中 z > y。
+Solidity 的版本遵循 `语义化版本原则 <https://semver.org>`_。
+此外，主版本（例如：0.x.y）的补丁级版本的发布不会包含重大更改。
+这意味着用 0.x.y 版本编译的代码可望用 0.x.z 版本编译，其中 z > y。
 
-除了发行版本外，我们还提供 **每日开发构建版本 （nightly development builds）** ，
-目的是使开发人员能够轻松地试用即将推出的功能并提供早期反馈。然而，请注意，
-虽然每日开发构建版本通常是很稳定的，但它们包含了来自开发分支的前沿代码，
+除了正式发行版本外，我们还提供 **每日开发构建版本 （nightly development builds）** ，
+以方便开发人员尝试即将推出的功能并提供早期反馈。然而，请注意，
+虽然每日开发构建版本通常是很稳定的，但它们包含了来自开发分支的最新代码，
 并不保证总是有效的。尽管我们尽了最大努力，
 它们仍可能含有未记录的或重大的修改，这些修改不会成为实际发布版本的一部分。
-它们也不会用于生产。
+它们不适用于生产环境的使用。
 
 当开发智能合约时，您应该使用最新版本的 Solidity。这是因为重大的改变，
 以及新的特性和错误修复是定期引入的。
@@ -30,9 +30,9 @@ Remix
 *我们推荐使用 Remix 来开发简单合约和快速学习 Solidity。*
 
 `Remix 可以在线使用 <https://remix.ethereum.org/>`_，而无需安装任何东西。
-如果您想离线使用，可按 https://github.com/ethereum/remix-live/tree/gh-pages
-的页面说明下载 ``.zip`` 文件来使用。 Remix 也是一个方便的选择，
-可以在不安装多个 Solidity 版本的情况下测试每日开发构建版本。
+如果您想离线使用，可访问 https://github.com/ethereum/remix-live/tree/gh-pages#readme，
+并按照该页面上的说明进行操作。 
+Remix 也是一个方便的选择，可以在不安装多个 Solidity 版本的情况下测试每日开发构建版本。
 
 本页的进一步选项详细说明了在您的计算机上安装 Solidity 命令行编译器。
 如果您刚好要处理大型合约，或者需要更多的编译选项，
@@ -48,9 +48,10 @@ npm / Node.js
 在 :ref:`commandline-compiler` 一章中，我们假定您使用的是全功能的编译器: ``solc``。
 ``solcjs`` 的用法在它自己的 `代码仓库 <https://github.com/ethereum/solc-js>`_ 中记录。
 
-注意: `solc-js` 项目是通过使用 Emscripten 从 C++ 版的 `solc` 衍生出来的，
+注意: solc-js项目是通过使用Emscripten从C++版的 `solc` 衍生出来的，
 这意味着两者使用相同的编译器源代码。
-因此， `solc-js` 可以直接用于JavaScript项目（如 Remix） 具体介绍请参考 `solc-js` 代码库。
+因此， `solc-js` 可以直接用于JavaScript项目（如 Remix）。
+具体介绍请参考solc-js代码库。
 
 
 .. code-block:: bash
@@ -59,10 +60,10 @@ npm / Node.js
 
 .. note::
 
-    在命令行中，可执行文件被命名为 ``solcjs``。
+    命令行可执行文件的名称是 ``solcjs``。
 
-    ``solcjs`` 的命令行选项与 ``solc`` 和一些工具（如 ``geth``）是不兼容的，
-    因此不要期望 ``solcjs`` 能像 ``solc`` 一样工作。
+    ``solcjs`` 的命令行选项与 ``solc`` 是不兼容的，
+    因此期望使用 ``solc`` 行为的工具（如 ``geth``）将无法使用 ``solcjs``。
 
 Docker
 ======
@@ -70,7 +71,7 @@ Docker
 Solidity构建的Docker镜像可以使用从 ``ethereum`` 组织获得的 ``solc`` 镜像。
 使用 ``stable`` 标签获取最新发布的版本，使用 ``nightly`` 标签获取开发分支中潜在的不稳定变更的版本。
 
-Docker镜像会运行编译器可执行文件，所以您可以把所有的编译器参数传给它。
+Docker镜像会运行编译器可执行文件，以便您可以将所有编译器参数传递给它。
 例如，下面的命令提取了稳定版的 ``solc`` 镜像（如果您还没有），
 并在一个新的容器中运行它，同时传递 ``--help`` 参数。
 
@@ -78,7 +79,7 @@ Docker镜像会运行编译器可执行文件，所以您可以把所有的编�
 
     docker run ethereum/solc:stable --help
 
-您也可以在标签中指定发行的版本，例如，0.5.4版本。
+例如，您可以在 0.5.4 版本的标签中指定发布版本。
 
 .. code-block:: bash
 
@@ -92,7 +93,7 @@ Docker镜像会运行编译器可执行文件，所以您可以把所有的编�
     docker run -v /local/path:/sources ethereum/solc:stable -o /sources/output --abi --bin /sources/Contract.sol
 
 您也可以使用标准的JSON接口（当使用工具化的编译器时建议使用这种方式）。
-当使用这个接口时，不需要装载任何目录，只要输入的 JSON 是自成一体的
+当使用这个接口时，不需要装载任何目录，只要输入的JSON是自成一体的
 （即它没有引用任何外部文件，而这些文件必须要被
 :ref:`由导入回调 <initial-vfs-content-standard-json-with-import-callback>`)。
 
@@ -123,13 +124,14 @@ Solidity 的二进制安装包可在 `solidity/releases <https://github.com/ethe
     sudo apt-get install solc
 
 此外，一些 Linux 发行版提供了他们自己的软件包。这些软件包不是由我们直接维护的，
-而通常由各自的软件包维护者保持最新。
+但通常由各自的软件包维护者保持最新。
 
 例如，Arch Linux 也有最新开发版本的软件包。
 
-.. code-block:: bash
+.. note::
 
-    pacman -S solidity
+    Please be aware that `AUR <https://wiki.archlinux.org/title/Arch_User_Repository>`_ packages
+    are user-produced content and unofficial packages. Exercise caution when using them.
 
 还有一个 `snap包 <https://snapcraft.io/solc>`_，然而，它 **目前没有维护** 。
 它可以安装在所有 `支持的Linux发行版 <https://snapcraft.io/docs/core/install>`_ 。通过以下命令，
@@ -200,7 +202,7 @@ macOS Packages
   没有任何认证、速率或需要使用git的限制。
 - 提供的内容具有正确的 `Content-Type` 请求头和宽松的 CORS 配置，
   因此它可以被运行在浏览器中的工具直接加载。
-- 二进制文件不需要安装或解包（与必要的 DLLs 捆绑在一起的旧版 Windows 除外）。
+- 二进制文件不需要安装或解压（对于附带所需DLLs的旧版Windows构建除外）。
 - 我们努力争取高水平的向后兼容性。文件一旦被添加，在没有提供旧位置的链接/重定向的情况下，不会被删除或移动。
   它们也不会被修改，而且应始终与原始校验相匹配。唯一的例外是破损或无法使用的文件，
   如果保持原样，有可能造成更大的伤害。
@@ -288,7 +290,6 @@ macOS Packages
 
 从源代码编译
 ====================
-
 先决条件 - 所有操作系统
 -------------------------------------
 
@@ -352,11 +353,12 @@ macOS Packages
 先决条件 - macOS
 ---------------------
 
-对于 macOS 的构建，确保最新版本的 `Xcode 已安装 <https://developer.apple.com/xcode/download/>`_。
+对于 macOS 的构建，确保最新版本的 `Xcode 已安装 <https://developer.apple.com/xcode/resources/>`_。
 这包含了 `Clang C++ 编译器 <https://en.wikipedia.org/wiki/Clang>`_，
-`Xcode IDE <https://en.wikipedia.org/wiki/Clang>`_ 和其他苹果公司的开发工具，
+`Xcode IDE <https://en.wikipedia.org/wiki/Xcode>`_ 和其他苹果公司的开发工具，
 这些工具是在 OS X 上构建 C++ 应用程序所必须的。
-如果您是第一次安装 Xcode，或者刚刚安装了一个新的版本，那么您在使用命令行构建前，需同意使用协议：
+如果您是第一次安装 Xcode，或者刚刚安装了一个新的版本，
+那么您在使用命令行构建前，需同意使用协议：
 
 .. code-block:: bash
 
@@ -426,7 +428,7 @@ Visual Studio 2019 同时提供IDE和必要的编译器和库。
     git remote add personal git@github.com:[username]/solidity.git
 
 .. note::
-    这种方法将导致一个预发布的构建，例如，在这种编译器产生的每个字节码中设置一个标志。
+    这种方法将导致一个预发布版本的构建，例如，每个由这种编译器生成的字节码中都会设置一个标志。
     如果您想重新构建一个已发布的 Solidity 编译器，那么请使用 github 发布页上的源压缩包：
 
     https://github.com/ethereum/solidity/releases/download/v0.X.Y/solidity_0.X.Y.tar.gz
@@ -546,4 +548,4 @@ Solidity 版本名包含四部分：
 4. 引入重大变更 —— 版本号提升到 0.5.0。
 5. 0.5.0 版本发布。
 
-该方式与 :ref:`version pragma <version_pragma>` 一起运行良好。
+该方式与 :ref:`版本编译指示 <version_pragma>` 配合得很好。

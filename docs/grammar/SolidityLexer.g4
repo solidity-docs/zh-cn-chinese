@@ -222,8 +222,13 @@ fragment EvenHexDigits: HexCharacter HexCharacter ('_'? HexCharacter HexCharacte
 fragment HexCharacter: [0-9A-Fa-f];
 
 /**
+<<<<<<< HEAD
+ * 已扫描但未被任何规则使用，即被禁止。
+ * solc 解析器将以'0'开头但紧随其后不是'.'或'x'的数字视为八进制，
+=======
  * 已扫描，但未被任何规则使用，即不允许。
  * solc 解析器认为以'0'开头，后面没有紧跟'.'或'x'的数字为八进制数
+>>>>>>> origin/develop
  * 即使存在非八进制数字'8'和'9'。
  */
 OctalNumber: '0' DecimalDigits ('.' DecimalDigits)?;
@@ -239,14 +244,13 @@ fragment DecimalDigits: [0-9] ('_'? [0-9])* ;
 
 
 /**
- * 需要这样做是为了避免成功解析一个数字后面的字符串，而字符串之间没有空白。
+ * 这是为了避免成功解析一个数字后紧跟着没有空格的字符串。
  */
 DecimalNumberFollowedByIdentifier: DecimalNumber Identifier;
 
 
 /**
- * solidity中的标识符必须以字母，美元符号或下划线开头，
- * 并且可以在第一个符号之后再包含数字。
+ * solidity中的标识符必须以字母，美元符号或下划线开头，并且可以在第一个符号之后再包含数字。
  */
 Identifier: IdentifierStart IdentifierPart*;
 //@doc:inline

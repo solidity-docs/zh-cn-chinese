@@ -152,4 +152,5 @@ Solidity v0.8.0 突破性变化
   或者使用 ``address payable`` 类型的存储变量。
 - 将 ``x**y**z`` 改为 ``(x**y)**z``。
 - Use inline assembly as a replacement for ``log0``, ..., ``log4``.
-- 将无符号整数取反的方法是从该类型的最大值中减去该整数，并加上1（例如， ``type(uint256).max - x + 1``，同时确保 `x` 不为零）
+- 使用内联汇编作为 ``log0``， ...， ``log4`` 的替代。
+- 将无符号整数取反的方法是从该类型的最大值中减去该整数，并加上1（例如， ``type(uint256).max - x + 1``，同时确保 `x` 不为零）。

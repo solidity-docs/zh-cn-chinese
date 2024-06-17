@@ -26,20 +26,24 @@ Constant 和 Immutable 状态变量
 .. code-block:: solidity
 
     // SPDX-License-Identifier: GPL-3.0
-    pragma solidity >=0.7.4;
+    pragma solidity ^0.8.21;
 
     uint constant X = 32**22 + 8;
 
     contract C {
         string constant TEXT = "abc";
         bytes32 constant MY_HASH = keccak256("abc");
-        uint immutable decimals;
+        uint immutable decimals = 18;
         uint immutable maxBalance;
         address immutable owner = msg.sender;
 
         constructor(uint decimals_, address ref) {
-            decimals = decimals_;
-            // 对不可变量的赋值甚至可以访问一些全局属性。
+            if (decimals_ != 0)
+                // immutable 变量只有在部署时才是不可变的。
+                // 在构建时，它们可以被分配任意次数。
+                decimals = decimals_;
+
+            // 对immutable 变量的赋值甚至可以访问环境变量。
             maxBalance = ref.balance;
         }
 
@@ -66,17 +70,28 @@ Constant
 Immutable
 =========
 
-声明为 ``immutable`` 的变量比声明为 ``constant`` 的变量受到的限制要少一些。
-不可变的变量可以在合约的构造函数中或在声明时被分配一个任意的值。
-它们只能被分配一次，并且从那时起，即使在构造时间内也可以被读取。
+声明为 ``immutable`` 的变量比声明为 ``constant`` 的变量受到的限制要少一些：
+不可变（immutable）变量可以在构造时赋值。
+在部署之前，可以随时更改该值，然后它就会变成永久值。
+
+一个额外的限制是，不可变变量只能被赋值给
+表达式的内部变量。这就排除了所有修饰器定义和构造函数以外的函数。
+
+读取不可变变量没有任何限制。读取甚至可以在变量第一次被写入之前进行，
+因为 Solidity 中的变量总是有一个定义明确的初始值。
+因此，我们也不允许为不可变变量明确赋值。
+
+.. warning::
+    在构造时访问不可变变量时，请牢记 :ref:`初始化顺序 <state-variable-initialization-order>` 的规定。
+    即使您提供了显式初始化器，某些表达式可能最终会在初始化器之前被求值，
+    尤其是当它们处于继承层次结构的不同层级时。
+
+.. note::
+    在 Solidity 0.8.21 之前，不可变变量的初始化限制较多。 
+    这些变量必须在构造时精确初始化一次，而且在此之前不能被读取。
 
 编译器生成的合约创建代码将在其返回之前修改合约的运行时代码，
 用分配给它们的值替换所有对不可变量的引用。
 当您将编译器生成的运行时代码与实际存储在区块链中的代码进行比较时，这一点很重要。
-
-.. note::
-  在声明时被分配的不可变量只有在合约的构造函数执行时才会被视为初始化。
-  这意味着您不能在内联中用一个依赖于另一个不可变量的值来初始化不可变量。
-  然而，您可以在合约的构造函数中这样做。
-
-  这是对状态变量初始化和构造函数执行顺序的不同解释的一种保障，特别是在继承方面。
+编译器会在 :ref:`编译器 JSON 标准输出 <compiler-api>` 的 ``imutableReferences`` 字段中
+输出这些不可变变量在已部署字节码中的位置。
