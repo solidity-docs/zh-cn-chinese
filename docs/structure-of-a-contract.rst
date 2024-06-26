@@ -106,11 +106,16 @@
 .. code-block:: solidity
 
     // SPDX-License-Identifier: GPL-3.0
-    pragma solidity >=0.4.21 <0.9.0;
+    pragma solidity ^0.8.22;
+
+    event HighestBidIncreased(address bidder, uint amount); // Event
 
     contract SimpleAuction {
+<<<<<<< HEAD
         event HighestBidIncreased(address bidder, uint amount); // 事件
 
+=======
+>>>>>>> english/develop
         function bid() public payable {
             // ...
             emit HighestBidIncreased(msg.sender, msg.value); // 触发事件
