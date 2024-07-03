@@ -63,7 +63,7 @@ function buildHeader() {
   const skipToContent = document.createElement("a");
   skipToContent.classList.add("skip-to-content");
   skipToContent.href = "#content";
-  skipToContent.innerText = "{ skip to content }";
+  skipToContent.innerText = "{skip to content}";
   innerHeader.appendChild(skipToContent);
 
   const navBar = document.createElement("nav");
@@ -143,23 +143,20 @@ const updateActiveNavLink = () => {
 
 document.addEventListener("locationchange", updateActiveNavLink);
 
-function initialize() {
-  // Preload fonts
-  const fonts = [
-    "overpass-regular.otf",
-    "overpass-bold.otf",
-    "overpass-mono-regular.otf",
-    "overpass-mono-bold.otf",
-  ];
-  fonts.forEach((filename) => {
-    const link = document.createElement("link");
-    link.rel = "preload";
-    link.as = "font";
-    link.href = `https://solidity-docs-dev.readthedocs.io/en/latest/_static/fonts/${filename}`;
-    link.crossOrigin = "";
-    document.head.appendChild(link);
-  });
+function updateGitHubEditPath() {
+  // Replaces the version number in the GitHub edit path with "develop"
+  const gitHubEditAnchor = document.querySelector(".wy-breadcrumbs-aside > a");
+  const url = new URL(gitHubEditAnchor.href);
+  const split = url.pathname.split("/");
+  const versionIndex = split.indexOf("blob") + 1;
+  split[versionIndex] = "develop";
+  url.pathname = split.join("/");
+  gitHubEditAnchor.setAttribute("href", url.toString());
+  gitHubEditAnchor.setAttribute("target", "_blank");
+  gitHubEditAnchor.setAttribute("rel", "noopener noreferrer");
+}
 
+function initialize() {
   // Rearrange DOM elements for styling
   rearrangeDom();
 
@@ -214,6 +211,9 @@ function initialize() {
 
   // Update active nav link
   updateActiveNavLink();
+
+  // Update GitHub edit path to direct to `develop` branch
+  updateGitHubEditPath();
 }
 
 document.addEventListener("DOMContentLoaded", initialize);
