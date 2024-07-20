@@ -334,8 +334,15 @@ Solidity没有字符串操作函数，但有第三方的字符串库。
     您需要激活ABI coder v2。
 
 .. note::
+<<<<<<< HEAD
     在Byzantium之前的EVM版本中，不可能访问从函数调用返回的动态数组。
     如果您调用返回动态数组的函数，请确保使用设置为Byzantium模式的EVM。
+=======
+    In EVM versions before Byzantium, it was not possible to access
+    dynamic arrays returned from function calls. If you call functions
+    that return dynamic arrays, make sure to use an EVM that is set to
+    Byzantium mode.
+>>>>>>> english/develop
 
 .. code-block:: solidity
 
@@ -353,7 +360,11 @@ Solidity没有字符串操作函数，但有第三方的字符串库。
         // 所有状态变量的数据位置都是存储。
         bool[2][] pairsOfFlags;
 
+<<<<<<< HEAD
         // newPairs被存储在memory中--这是公开合约函数参数的唯一可能性。
+=======
+        // newPairs is stored in memory
+>>>>>>> english/develop
         function setAllFlagPairs(bool[2][] memory newPairs) public {
             // 赋值到一个存储数组会执行 ``newPairs`` 的拷贝，
             // 并替换完整的数组 ``pairsOfFlags``。
