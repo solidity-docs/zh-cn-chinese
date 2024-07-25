@@ -229,7 +229,7 @@
         bytes32[] options
     );
 
-    LongAndLotsOfArgs(
+    emit LongAndLotsOfArgs(
         sender,
         recipient,
         publicKey,
@@ -247,7 +247,7 @@
                             uint256 amount,
                             bytes32[] options);
 
-    LongAndLotsOfArgs(sender,
+    emit LongAndLotsOfArgs(sender,
                       recipient,
                       publicKey,
                       amount,
@@ -651,11 +651,16 @@ Import 语句应始终放在文件的顶部。
         return balanceOf[from];
     }
 
-    function shutdown() public onlyOwner {
-        selfdestruct(owner);
+    function increment(uint x) public pure onlyOwner returns (uint) {
+        return x + 1;
     }
 
+<<<<<<< HEAD
 错误写法:
+=======
+
+No:
+>>>>>>> english/develop
 
 .. code-block:: solidity
 
@@ -663,8 +668,8 @@ Import 语句应始终放在文件的顶部。
         return balanceOf[from];
     }
 
-    function shutdown() onlyOwner public {
-        selfdestruct(owner);
+    function increment(uint x) onlyOwner public pure returns (uint) {
+        return x + 1;
     }
 
 对于长的函数声明，建议将每个参数放在自己的行中，与函数主体的缩进程度相同。
@@ -1026,6 +1031,7 @@ Import 语句应始终放在文件的顶部。
 布局顺序
 ***************
 
+<<<<<<< HEAD
 按以下顺序布置合约的元素：
 
 1. Pragma 语句
@@ -1033,6 +1039,17 @@ Import 语句应始终放在文件的顶部。
 3. 接口
 4. 库
 5. 合约
+=======
+Contract elements should be laid out in the following order:
+
+1. Pragma statements
+2. Import statements
+3. Events
+4. Errors
+5. Interfaces
+6. Libraries
+7. Contracts
+>>>>>>> english/develop
 
 在每个合约，库或接口内，使用以下顺序：
 
