@@ -14,6 +14,7 @@
 ABI 编码和解码函数
 ===================================
 
+<<<<<<< HEAD
 - ``abi.decode(bytes memory encodedData, (...)) returns (...)``： :ref:`ABI <ABI>` - 对提供的数据进行解码。类型在括号中作为第二个参数给出。
   示例： ``(uint a, uint[2] memory b, bytes memory c) = abi.decode(data, (uint, uint[2], bytes))``
 - ``abi.encode(...) returns (bytes memory)``： :ref:`ABI <ABI>` - 对给定的参数进行编码。
@@ -25,6 +26,20 @@ ABI 编码和解码函数
   参数在元组中找到。执行全面的类型检查，确保类型与函数签名相符。结果等于 ``abi.encodeWithSelector(functionPointer.selector(..))``。
 - ``abi.encodeWithSignature(string memory signature, ...) returns (bytes memory)``： 等价于
   ``abi.encodeWithSelector(bytes4(keccak256(bytes(signature))), ...)``
+=======
+- ``abi.decode(bytes memory encodedData, (...)) returns (...)``: :ref:`ABI <ABI>`-decodes
+  the provided data. The types are given in parentheses as second argument.
+  Example: ``(uint a, uint[2] memory b, bytes memory c) = abi.decode(data, (uint, uint[2], bytes))``
+- ``abi.encode(...) returns (bytes memory)``: :ref:`ABI <ABI>`-encodes the given arguments
+- ``abi.encodePacked(...) returns (bytes memory)``: Performs :ref:`packed encoding <abi_packed_mode>` of
+  the given arguments. Note that this encoding can be ambiguous!
+- ``abi.encodeWithSelector(bytes4 selector, ...) returns (bytes memory)``: :ref:`ABI <ABI>`-encodes
+  the given arguments starting from the second and prepends the given four-byte selector
+- ``abi.encodeCall(function functionPointer, (...)) returns (bytes memory)``: ABI-encodes a call to ``functionPointer`` with the arguments found in the
+  tuple. Performs a full type-check, ensuring the types match the function signature. Result equals ``abi.encodeWithSelector(functionPointer.selector, ...)``
+- ``abi.encodeWithSignature(string memory signature, ...) returns (bytes memory)``: Equivalent
+  to ``abi.encodeWithSelector(bytes4(keccak256(bytes(signature))), ...)``
+>>>>>>> english/develop
 
 .. index:: bytes;concat, string;concat
 
@@ -41,18 +56,34 @@ ABI 编码和解码函数
 ``address`` 的成员方法
 ======================
 
+<<<<<<< HEAD
 - ``<address>.balance`` (``uint256``)： :ref:`address` 的余额，以 Wei 为单位
 - ``<address>.code`` (``bytes memory``)： 在 :ref:`address` 的代码（可以是空的）。
 - ``<address>.codehash`` (``bytes32``)： :ref:`address` 的代码哈希值。
 - ``<address payable>.send(uint256 amount) returns (bool)``： 向 :ref:`address` 发送给定数量的 Wei，失败时返回 ``false``
 - ``<address payable>.transfer(uint256 amount)``： 向 :ref:`address` 发送给定数量的 Wei，失败时会把错误抛出（throw）
+=======
+- ``<address>.balance`` (``uint256``): balance of the :ref:`address` in Wei
+- ``<address>.code`` (``bytes memory``): code at the :ref:`address` (can be empty)
+- ``<address>.codehash`` (``bytes32``): the codehash of the :ref:`address`
+- ``<address>.call(bytes memory) returns (bool, bytes memory)``: issue low-level ``CALL`` with the given payload,
+  returns success condition and return data
+- ``<address>.delegatecall(bytes memory) returns (bool, bytes memory)``: issue low-level ``DELEGATECALL`` with the given payload,
+  returns success condition and return data
+- ``<address>.staticcall(bytes memory) returns (bool, bytes memory)``: issue low-level ``STATICCALL`` with the given payload,
+  returns success condition and return data
+- ``<address payable>.send(uint256 amount) returns (bool)``: send given amount of Wei to :ref:`address`,
+  returns ``false`` on failure
+- ``<address payable>.transfer(uint256 amount)``: send given amount of Wei to :ref:`address`, throws on failure
+>>>>>>> english/develop
 
-.. index:: blockhash, block, block;basefree, block;chainid, block;coinbase, block;difficulty, block;gaslimit, block;number, block;prevrandao, block;timestamp
+.. index:: blockhash, blobhash, block, block;basefee, block;blobbasefee, block;chainid, block;coinbase, block;difficulty, block;gaslimit, block;number, block;prevrandao, block;timestamp
 .. index:: gasleft, msg;data, msg;sender, msg;sig, msg;value, tx;gasprice, tx;origin
 
 区块和交易属性
 ================================
 
+<<<<<<< HEAD
 - ``blockhash(uint blockNumber) returns (bytes32)``： 给定区块的哈希值 - 只对最近的256个区块有效
 - ``block.basefee`` (``uint``)： 当前区块的基本费用 （ `EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ 和 `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_ ）
 - ``block.chainid`` (``uint``)： 当前链的ID
@@ -69,6 +100,28 @@ ABI 编码和解码函数
 - ``msg.value`` (``uint``)： 随消息发送的 wei 的数量
 - ``tx.gasprice`` (``uint``)： 交易的 gas 价格
 - ``tx.origin`` (``address``)： 交易发送方（完整调用链上的原始发送方）
+=======
+- ``blockhash(uint blockNumber) returns (bytes32)``: hash of the given block - only works for 256 most recent blocks
+- ``blobhash(uint index) returns (bytes32)``: versioned hash of the ``index``-th blob associated with the current transaction.
+  A versioned hash consists of a single byte representing the version (currently ``0x01``), followed by the last 31 bytes
+  of the SHA256 hash of the KZG commitment (`EIP-4844 <https://eips.ethereum.org/EIPS/eip-4844>`_).
+- ``block.basefee`` (``uint``): current block's base fee (`EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ and `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_)
+- ``block.blobbasefee`` (``uint``): current block's blob base fee (`EIP-7516 <https://eips.ethereum.org/EIPS/eip-7516>`_ and `EIP-4844 <https://eips.ethereum.org/EIPS/eip-4844>`_)
+- ``block.chainid`` (``uint``): current chain id
+- ``block.coinbase`` (``address payable``): current block miner's address
+- ``block.difficulty`` (``uint``): current block difficulty (``EVM < Paris``). For other EVM versions it behaves as a deprecated alias for ``block.prevrandao`` that will be removed in the next breaking release
+- ``block.gaslimit`` (``uint``): current block gaslimit
+- ``block.number`` (``uint``): current block number
+- ``block.prevrandao`` (``uint``): random number provided by the beacon chain (``EVM >= Paris``) (see `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ )
+- ``block.timestamp`` (``uint``): current block timestamp in seconds since Unix epoch
+- ``gasleft() returns (uint256)``: remaining gas
+- ``msg.data`` (``bytes``): complete calldata
+- ``msg.sender`` (``address``): sender of the message (current call)
+- ``msg.sig`` (``bytes4``): first four bytes of the calldata (i.e. function identifier)
+- ``msg.value`` (``uint``): number of wei sent with the message
+- ``tx.gasprice`` (``uint``): gas price of the transaction
+- ``tx.origin`` (``address``): sender of the transaction (full call chain)
+>>>>>>> english/develop
 
 .. index:: assert, require, revert
 
@@ -100,10 +153,17 @@ ABI 编码和解码函数
 合约相关方法
 ================
 
+<<<<<<< HEAD
 - ``this`` （当前合约的类型）： 当前合约，可明确转换为 ``address`` 或 ``address payable``。
 - ``super``： 继承层次中高一级的合约
 - ``selfdestruct(address payable recipient)``： 销毁当前合约，将其资金发送到给定的地址。
   
+=======
+- ``this`` (current contract's type): the current contract, explicitly convertible to ``address`` or ``address payable``
+- ``super``: a contract one level higher in the inheritance hierarchy
+- ``selfdestruct(address payable recipient)``: send all funds to the given address and (only on EVMs before Cancun or when invoked within the transaction creating the contract) destroy the contract.
+
+>>>>>>> english/develop
 .. index:: type;name, type;creationCode, type;runtimeCode, type;interfaceId, type;min, type;max
 
 类型相关信息
@@ -140,6 +200,7 @@ ABI 编码和解码函数
 修饰器
 =========
 
+<<<<<<< HEAD
 - ``pure`` 修饰函数时：不允许修改或访问状态。
 - ``view`` 修饰函数时：不允许修改状态。
 - ``payable`` 修饰函数时：允许从调用中接收以太币。
@@ -149,4 +210,17 @@ ABI 编码和解码函数
 - ``indexed`` 修饰事件参数时：将参数作为 topic 存储。
 - ``virtual`` 修饰函数和修饰器时：允许在派生合约中改变函数或修饰器的行为。
 - ``override`` 表示该函数、修饰器或公共状态变量改变了基类合约中的函数或修饰器的行为。
+=======
+- ``pure`` for functions: Disallows modification or access of state.
+- ``view`` for functions: Disallows modification of state.
+- ``payable`` for functions: Allows them to receive Ether together with a call.
+- ``constant`` for state variables: Disallows assignment (except initialization), does not occupy storage slot.
+- ``immutable`` for state variables: Allows assignment at construction time and is constant when deployed. Is stored in code.
+- ``anonymous`` for events: Does not store event signature as topic.
+- ``indexed`` for event parameters: Stores the parameter as topic.
+- ``virtual`` for functions and modifiers: Allows the function's or modifier's
+  behavior to be changed in derived contracts.
+- ``override``: States that this function, modifier or public state variable changes
+  the behavior of a function or modifier in a base contract.
+>>>>>>> english/develop
 
