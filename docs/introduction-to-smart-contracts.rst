@@ -242,16 +242,9 @@ Solidity意义上的合约是代码（其 *函数*）和数据（其 *状态*）
 数据库的事务特性确保了如果从一个账户扣除金额，它总被添加到另一个账户。
 如果由于某些原因，无法添加金额到目标账户时，源账户也不会发生任何变化。
 
-<<<<<<< HEAD
 此外，交易总是由发送人（创建者）签名。
 这样，就可非常简单地为数据库的特定修改增加访问保护机制。
-在电子货币的例子中，一个简单的检查可以确保只有持有账户密钥的人才能从中转账。
-=======
-Furthermore, a transaction is always cryptographically signed by the sender (creator).
-This makes it straightforward to guard access to specific modifications of the
-database. In the example of the electronic currency, a simple check ensures that
-only the person holding the keys to the account can transfer some compensation, e.g. Ether, from it.
->>>>>>> english/develop
+在电子货币的例子中，一个简单的检查可以确保只有持有账户密钥的人才能从中转移资产，例如以太币。
 
 .. index:: ! block
 
@@ -261,10 +254,10 @@ only the person holding the keys to the account can transfer some compensation, 
 要克服的一个主要障碍是（用比特币的术语）所谓的 “双花攻击 (double-spend attack)”：
 如果网络中存在两个交易，都想清空一个账户，会发生什么？
 只有其中一个交易是有效的，通常是最先被接受的那个。
-问题是，在点对点的网络中，"第一" 不是一个客观的术语。
+问题是，在点对点的网络中，“第一” 不是一个客观的术语。
 
 对此，抽象的答案是，您不必在意。一个全球公认的交易顺序将为您选择，
-解决这样的冲突。这些交易将被捆绑成所谓的 "区块"，
+解决这样的冲突。这些交易将被捆绑成所谓的 “区块”，
 然后它们将在所有参与节点中执行和分发。
 如果两个交易相互矛盾，最终排在第二位的那个交易将被拒绝，不会成为区块的一部分。
 
@@ -313,7 +306,7 @@ only the person holding the keys to the account can transfer some compensation, 
 
 外部账户的地址是由公钥确定的，
 而合约的地址是在合约创建时确定的
-（它是由创建者地址和从该地址发出的交易数量得出的，即所谓的 "nonce"）。
+（它是由创建者地址和从该地址发出的交易数量得出的，即所谓的 “nonce”）。
 
 无论账户是否存储代码，这两种类型都被EVM平等对待。
 
@@ -347,27 +340,27 @@ only the person holding the keys to the account can transfer some compensation, 
 
 .. index:: ! gas, ! gas price
 
-Gas
-===
+燃料（Gas）
+===========
 
-一经创建，每笔交易都会被收取一定数量的 **gas**，
-这些 gas 必须由交易的发起人 （ ``tx.origin``）支付。
-在 EVM 执行交易时，gas 根据特定规则逐渐耗尽。
-如果 gas 在某一点被用完（即它会为负），
-将触发一个 gas 耗尽异常，
+一经创建，每笔交易都会被收取一定数量的 **燃料**，
+这些燃料必须由交易的发起人 （ ``tx.origin``）支付。
+在EVM执行交易时，燃料根据特定规则逐渐耗尽。
+如果燃料在某一点被用完（即它会为负），
+将触发一个燃料耗尽异常，
 这将结束执行并撤销当前调用栈中对状态所做的所有修改。
 
-此机制激励了对 EVM 执行时间的经济利用，
-并为 EVM 执行器（即矿工/持币者）的工作提供补偿。
-由于每个区块都有最大 gas 量，因此还限制了验证块所需的工作量。
+此机制激励了对EVM执行时间的经济利用，
+并为EVM执行器（即矿工/持币者）的工作提供补偿。
+由于每个区块都有最大燃料量，因此还限制了验证块所需的工作量。
 
-**gas price** 是交易发起人设定的值，
-他必须提前向 EVM 执行器支付 ``gas_price * gas``。
-如果执行后还剩下一些 gas，则退还给交易发起人。
-如果发生撤销更改的异常，已经使用的 gas 不会退还。
+**燃料价格（gas price）** 是交易发起人设定的值，
+他必须提前向EVM执行器支付 ``燃料单价 * 燃料数量``。
+如果执行后还剩下一些燃料，则退还给交易发起人。
+如果发生撤销更改的异常，已经使用的燃料不会退还。
 
-由于 EVM 执行器可以选择包含一笔交易，
-因此交易发送者无法通过设置低 gas 价格滥用系统。
+由于EVM执行器可以选择包含一笔交易，
+因此交易发送者无法通过设置低燃料价格滥用系统。
 
 .. index:: ! storage, ! memory, ! stack
 
@@ -385,7 +378,7 @@ Gas
 第二个数据区被称为 **内存**，合约在每次消息调用时都会获得一个新清除的实例。
 内存是线性的，可以在字节级寻址，但读的宽度限制在256位，
 而写的宽度可以是8位或256位。当访问（无论是读还是写）一个先前未触及的内存字（即一个字内的任何偏移）时，
-内存被扩展一个字（256位）。在扩展的时候，必须支付gas成本。
+内存被扩展一个字（256位）。在扩展的时候，必须支付燃料成本。
 内存越大，成本就越高（它以平方级别扩展）。
 
 EVM 不是基于寄存器的，而是基于栈的，因此所有的计算都在一个被称为 **栈（stack）** 的区域执行。
@@ -413,14 +406,14 @@ EVM的指令集应尽量保持最小，以避免不正确或不一致的实现�
 =============
 
 合约可以通过消息调用的方式来调用其它合约或者发送以太币到非合约账户。
-消息调用和交易非常类似，它们都有一个源，目标，数据，以太币，gas和返回数据。
+消息调用和交易非常类似，它们都有一个源，目标，数据，以太币，燃料和返回数据。
 事实上每个交易都由一个顶层消息调用组成，这个消息调用又可创建更多的消息调用。
 
-合约可以决定它剩余的 **gas** 有多少应该随内部消息调用一起发送，有多少它想保留。
+合约可以决定它剩余的 **燃料** 有多少应该随内部消息调用一起发送，有多少它想保留。
 如果在内部调用中发生了out-of-gas的异常（或任何其他异常），这将由一个被压入栈顶的错误值来表示。
-在这种情况下，只有与调用一起发送的gas被用完。
+在这种情况下，只有与调用一起发送的燃料被用完。
 在Solidity中，在这种情况下，发起调用的合约默认会引起一个手动异常，
-所以异常会在调用栈上 "冒泡出来"。
+所以异常会在调用栈上“冒泡出来”。
 
 如前文所述，被调用的合约（可以与调用者是同一个合约）将收到一个新清空的内存实例，
 并可以访问调用的有效负载-由被称为 **calldata** 的独立区域所提供的数据。
@@ -428,7 +421,7 @@ EVM的指令集应尽量保持最小，以避免不正确或不一致的实现�
 所有这样的调用都是完全同步的。
 
 调用被 **限制** 在1024的深度，这意味着对于更复杂的操作，循环应优先于递归调用。
-此外，在一个消息调用中，只有63/64的gas可以被转发，这导致在实践中，深度限制略低于1000。
+此外，在一个消息调用中，只有63/64的燃料可以被转发，这导致在实践中，深度限制略低于1000。
 
 .. index:: delegatecall, library
 
@@ -476,15 +469,9 @@ EVM的指令集应尽量保持最小，以避免不正确或不一致的实现�
 因为如果有人向被删除的合约发送以太币，以太币就会永远丢失。
 
 .. warning::
-<<<<<<< HEAD
     从0.8.18及更高版本开始，在 Solidity 和 Yul 中使用 ``selfdestruct`` 将触发弃用警告，
     因为 ``SELFDESTRUCT`` 操作码最终将经历 `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_ 
     中所述的行为的重大变化。
-=======
-    From version 0.8.18 and up, the use of ``selfdestruct`` in both Solidity and Yul will trigger a
-    deprecation warning, since the ``SELFDESTRUCT`` opcode will eventually undergo breaking changes in behavior
-    as stated in `EIP-6049 <https://eips.ethereum.org/EIPS/eip-6049>`_.
->>>>>>> english/develop
 
 .. warning::
     即使一个合约通过 ``selfdestruct`` 删除，它仍然是区块链历史的一部分，
@@ -506,19 +493,10 @@ EVM的指令集应尽量保持最小，以避免不正确或不一致的实现�
 预编译合约
 =====================
 
-<<<<<<< HEAD
 有一小群合约地址是特殊的。 ``1`` 和（包括） ``8`` 之间的地址范围包含 “预编译合约“，
-可以像其他合约一样被调用，但它们的行为（和它们的gas消耗）
+可以像其他合约一样被调用，但它们的行为（和它们的燃料消耗）
 不是由存储在该地址的EVM代码定义的（它们不包含代码），
 而是由EVM执行环境本身实现。
-=======
-There is a small set of contract addresses that are special:
-The address range between ``1`` and (including) ``8`` contains
-"precompiled contracts" that can be called as any other contract
-but their behavior (and their gas consumption) is not defined
-by EVM code stored at that address (they do not contain code)
-but instead is implemented in the EVM execution environment itself.
->>>>>>> english/develop
 
 不同的EVM兼容链可能使用不同的预编译合约集。
 未来也有可能在以太坊主链上添加新的预编译合约，
