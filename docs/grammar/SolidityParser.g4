@@ -152,15 +152,9 @@ stateMutability: Pure | View | Payable;
  */
 overrideSpecifier: Override (LParen overrides+=identifierPath (Comma overrides+=identifierPath)* RParen)?;
 /**
-<<<<<<< HEAD
- * 合约，库和接口功能的定义。
+ * 合约，库，接口或自由函数的定义。
  * 根据定义函数的上下文，可能会有进一步的限制。
  * 例如，接口中的函数必须是未实现的，也就是说，不能包含主体块。
-=======
- * The definition of contract, library, interface or free functions.
- * Depending on the context in which the function is defined, further restrictions may apply,
- * e.g. functions in interfaces have to be unimplemented, i.e. may not contain a body block.
->>>>>>> english/develop
  */
 functionDefinition
 locals[
@@ -183,25 +177,9 @@ locals[
 	(Semicolon | body=block);
 
 /**
-<<<<<<< HEAD
- * 自由函数的定义。
- */
- freeFunctionDefinition:
- 	Function (identifier | Fallback | Receive)
- 	LParen (arguments=parameterList)? RParen
- 	stateMutability?
- 	(Returns LParen returnParameters=parameterList RParen)?
- 	(Semicolon | body=block);
-
-/**
- * 修改器的定义。
- * 注意，在修改器的主体块中，下划线不能作为标识符使用，
- * 而是作为占位符语句，用于修改器所应用的函数主体。
-=======
- * The definition of a modifier.
- * Note that within the body block of a modifier, the underscore cannot be used as identifier,
- * but is used as placeholder statement for the body of a function to which the modifier is applied.
->>>>>>> english/develop
+ * 修饰器的定义。
+ * 注意，在修饰器的主体块中，下划线不能作为标识符使用，
+ * 而是作为占位符语句，用于修饰器所应用的函数主体。
  */
 modifierDefinition
 locals[
