@@ -49,7 +49,7 @@ Alice不需要与以太坊网络交互来签署交易，这个过程是完全离
 签署内容
 ------------
 
-对于履行付款的合同，签署的信息必须包括：
+对于履行付款的合约，签署的信息必须包括：
 
     1. 收件人的钱包地址。
     2. 要转移的金额。
@@ -72,21 +72,12 @@ Alice可以通过在消息中包含合约的地址来防止这种攻击，
 组装参数
 ---------
 
-<<<<<<< HEAD
 既然我们已经确定了要在签名信息中包含哪些信息，
 我们准备把信息放在一起，进行哈希运算，然后签名。
 简单起见，我们把数据连接起来。
 `ethereumjs-abi <https://github.com/ethereumjs/ethereumjs-abi>`_ 库提供了一个名为 ``soliditySHA3`` 的函数，
 模仿Solidity的 ``keccak256`` 函数应用于使用 ``abi.encodePacked`` 编码的参数的行为。
 这里有一个JavaScript函数，为 ``ReceiverPays`` 的例子创建了适当的签名。
-=======
-Now that we have identified what information to include in the signed message,
-we are ready to put the message together, hash it, and sign it. For simplicity,
-we concatenate the data. The `ethereumjs-abi <https://github.com/ethereumjs/ethereumjs-abi>`_
-library provides a function called ``soliditySHA3`` that mimics the behavior of
-Solidity's ``keccak256`` function applied to arguments encoded using ``abi.encodePacked``.
-Here is a JavaScript function that creates the proper signature for the ``ReceiverPays`` example:
->>>>>>> english/develop
 
 .. code-block:: javascript
 
@@ -237,7 +228,7 @@ Bob保证会收到他的资金，因为智能合约托管了以太币，
 
 为了开通支付通道，Alice部署了智能合约，
 添加了要托管的以太币，并指定了预期接收者和通道存在的最长时间。
-这就是本节末尾合同中的函数 ``SimplePaymentChannel``。
+这就是本节末尾合约中的函数 ``SimplePaymentChannel``。
 
 进行支付
 ---------------
@@ -279,7 +270,7 @@ Alice通过向Bob发送签名信息进行支付。
         );
     }
 
-    // contractAddress， 是用来防止跨合同的重放攻击。
+    // contractAddress， 是用来防止跨合约的重放攻击。
     // amount，单位是wei，指定了应该发送多少以太。
 
     function signPayment(contractAddress, amount, callback) {
@@ -316,7 +307,7 @@ Solidity函数 ``isValidSignature`` 和 ``recoverSigner`` 的工作方式
 --------
 
 Bob可以在任何时候关闭支付通道，但如果他们没有这样做，
-Alice需要一个方法来收回她的托管资金。在合同部署的时候，设置了一个 *到期时间*。
+Alice需要一个方法来收回她的托管资金。在合约部署的时候，设置了一个 *到期时间*。
 一旦达到这个时间，Alice可以调用 ``claimTimeout`` 来收回她的资金。
 您可以在完整的合约中看到 ``claimTimeout`` 函数。
 
