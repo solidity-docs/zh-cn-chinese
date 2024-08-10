@@ -14,37 +14,22 @@ Solidity 可以通过两种不同的方式生成 EVM 字节码：
 引入基于 IR 的代码生成器的目的是，不仅使代码生成更加透明和可审计，
 而且能够实现更强大的跨函数的优化通道。
 
-<<<<<<< HEAD
 您可以在命令行中使用 ``--via-ir``
 或在 standard-json 中使用 ``{"viaIR": true}`` 选项来启用它，
 我们鼓励大家尝试一下！
 
-由于一些原因，旧的和基于 IR 的代码生成器之间存在着微小的语义差异，
+由于一些原因，旧的和基于IR的代码生成器之间存在着微小的语义差异，
 主要是在那些我们无论如何也不会期望人们依赖这种行为的领域。
 本节强调了旧的和基于IR的代码生成器之间的主要区别。
-=======
-You can enable it on the command-line using ``--via-ir``
-or with the option ``{"viaIR": true}`` in standard-json and we
-encourage everyone to try it out!
-
-For several reasons, there are tiny semantic differences between the old
-and the IR-based code generator, mostly in areas where we would not
-expect people to rely on this behavior anyway.
-This section highlights the main differences between the old and the IR-based codegen.
->>>>>>> english/develop
 
 仅有语义上的变化
 =====================
 
 本节列出了仅有语义的变化，从而有可能在现有的代码中隐藏新的和不同的行为。
 
-<<<<<<< HEAD
-- 在继承的情况下，状态变量初始化的顺序已经改变。
-=======
 .. _state-variable-initialization-order:
 
-- The order of state variable initialization has changed in case of inheritance.
->>>>>>> english/develop
+- 在继承的情况下，状态变量初始化的顺序已经改变。
 
   以前的顺序是：
 
@@ -253,8 +238,8 @@ This section highlights the main differences between the old and the IR-based co
 
   函数 ``f()`` 的作用如下：
 
-  - 旧的代码生成器：在大内存分配后对数组内容进行清零时耗尽了gas
-  - 新的代码生成器：由于自由内存指针溢出而还原（不会耗尽gas）。
+  - 旧的代码生成器：在大内存分配后对数组内容进行清零时耗尽了燃料
+  - 新的代码生成器：由于自由内存指针溢出而还原（不会耗尽燃料）。
 
 
 内部结构
