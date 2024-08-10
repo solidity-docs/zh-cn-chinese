@@ -5,7 +5,7 @@
 优化器
 *************
 
-Solidity编译器使用两种不同的优化器模块。在操作码水平上操作的 "旧" 优化器
+Solidity编译器使用两种不同的优化器模块。在操作码水平上操作的 “旧” 优化器
 和在 Yul IR 代码上操作的 “新” 优化器。
 
 基于操作码的优化器对操作码应用一套 `简化规则 <https://github.com/ethereum/solidity/blob/develop/libevmasm/RuleList.h>`_。
@@ -24,13 +24,8 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 同样地，您可以使用 ``solc --strict-assembly --optimize`` 来产生一个独立的 Yul 模式。
 
 .. note::
-<<<<<<< HEAD
     `窥视孔（peephole）优化器 <https://en.wikipedia.org/wiki/Peephole_optimization>`_
-    和内联器总是默认启用的，只能通过 :ref:`标准 JSON 文件配置 <compiler-api>` 关闭。
-=======
-    The `peephole optimizer <https://en.wikipedia.org/wiki/Peephole_optimization>`_ is always
-    enabled by default and can only be turned off via the :ref:`Standard JSON <compiler-api>`.
->>>>>>> english/develop
+    总是默认启用的，只能通过 :ref:`标准 JSON 文件配置 <compiler-api>` 关闭。
 
 您可以在下面找到关于这两个优化器模块及其优化步骤的更多细节。
 
@@ -47,7 +42,7 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 
 一般来说，最明显的区别是常量表达式在编译时被评估。
 当涉及到ASM输出时，人们也可以注意到等价或重复的代码块的减少（比较 ``--asm`` 和 ``--asm --optimize`` 标志的输出）。
-然而，当涉及到Yul/中间代表时，可能会有明显的差异，
+然而，当涉及到 Yul/中间代表 时，可能会有明显的差异，
 例如，函数可能被内联，合并或重写以消除冗余等等（比较带有 ``--ir`` 和 ``--optimize --ir-optimized`` 标志的输出）。
 
 .. _optimizer-parameter-runs:
@@ -174,7 +169,7 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 从Solidity 0.8.2版本开始，有另一个优化步骤，
 它用这些指令的拷贝来替换某些包含以 “跳转” 结束的 “简单” 指令的块的跳转。
 这相当于对简单的、小的Solidity或Yul函数进行内联。特别是，
-``PUSHTAG(tag) JUMP`` 序列可以被替换，只要 ``JUMP`` 被标记为 "进入" 一个函数的跳转，
+``PUSHTAG(tag) JUMP`` 序列可以被替换，只要 ``JUMP`` 被标记为 “进入” 一个函数的跳转，
 并且在 ``tag`` 后面有一个基本块（如上面描述的 “通用子表达式消除器”），
 它以另一个 ``JUMP`` 结束，被标记为 “离开” 一个函数的跳转。
 
@@ -231,7 +226,7 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 
 因此，对函数 ``f`` 的调用是内联的，可以删除 ``f`` 的原始定义。
 
-无论何时，只要启发式算法表明，在合同的生命周期内，内联比不内联更便宜，就会尝试这样的内联。
+无论何时，只要启发式算法表明，在合约的生命周期内，内联比不内联更便宜，就会尝试这样的内联。
 这种启发式方法取决于函数体的大小、对其标记的其他引用的数量（近似于函数调用的数量）
 以及合约的预期执行次数（全局优化器参数 "runs"）。
 
@@ -293,10 +288,6 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 ``L``        :ref:`load-resolver`
 ``M``        :ref:`loop-invariant-code-motion`
 ``r``        :ref:`redundant-assign-eliminator`
-<<<<<<< HEAD
-``R``        :ref:`reasoning-based-simplifier` - 高度实验性
-=======
->>>>>>> english/develop
 ``m``        :ref:`rematerialiser`
 ``V``        :ref:`SSA-reverser`
 ``a``        :ref:`SSA-transform`
@@ -307,15 +298,9 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 ``d``        :ref:`var-decl-initializer`
 ============ ===============================
 
-一些步骤依赖于 ``BlockFlattener``， ``FunctionGrouper``， ``ForLoopInitRewriter`` 所保证的属性。
+一些步骤依赖于 ``块展平器``， ``函数分组器``， ``循环初始重写器`` 所保证的属性。
 由于这个原因，Yul 优化器总是在应用用户提供的任何步骤之前应用它们。
 
-<<<<<<< HEAD
-基于推理的简化器（ReasoningBasedSimplifier）是一个优化器步骤，
-目前在默认步骤集中没有启用。它使用一个 SMT 求解器来简化算术表达式和布尔条件。
-此外，它还没有得到彻底的测试或验证，可能会产生不可复现的结果，所以请谨慎使用!
-=======
->>>>>>> english/develop
 
 选择优化方案
 -----------------------
@@ -461,7 +446,7 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 这个组件的目的是让程序变成一个较长的形式，
 以便其他组件能够更容易地与之配合。
 最终的表现形式将类似于静态单一赋值（SSA）的形式，不同的是，
-它不使用明确的 "phi" 函数来合并来自控制流不同分支的值，
+它不使用明确的“phi”函数来合并来自控制流不同分支的值，
 因为Yul语言中不存在这样的功能。相反，当控制流合并时，
 如果一个变量在其中一个分支中被重新赋值，就会声明一个新的SSA变量来保持它的当前值，
 这样，下面的表达式仍然只需要引用SSA变量。
@@ -544,21 +529,16 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 
 请注意，这种转换并不改变操作码或函数调用的顺序。
 
-它不适用于循环迭代条件，因为循环控制流不允许在所有情况下 “概述” 内部表达式。
+它不适用于循环迭代条件，因为循环控制流不允许在所有情况下“概述”内部表达式。
 我们可以通过应用 :ref:`for-loop-condition-into-body` 将迭代条件移动到循环体中，从而避开这个限制。
 
-<<<<<<< HEAD
-最后一个程序的形式应确保（循环条件除外）函数调用不会嵌套在表达式中，
+最终程序应该采用 *表达式分割形式*，其中（循环条件除外）
+函数调用不会嵌套在表达式中，
 所有函数调用参数都必须是变量。
-=======
-The final program should be in an *expression-split form*, where (with the exception of loop conditions)
-function calls cannot appear nested inside expressions
-and all function call arguments have to be variables.
->>>>>>> english/develop
 
 这种形式的好处是，更容易重新排列操作码序列，
 也更容易执行函数调用内联。此外，
-也更简单地替换表达式的各个部分或重新组织 “表达式树”。
+也更简单地替换表达式的各个部分或重新组织“表达式树”。
 缺点是这样的代码对我们来说更难阅读。
 
 .. _SSA-transform:
@@ -702,12 +682,12 @@ AST被遍历了两次：分别在在信息收集步骤和实际删除步骤中�
 
 总之，最多运行两次循环就足够了，因为只有三种不同的状态。
 
-对于有 "默认" 情况的switch语句，没有跳过switch的控制流部分。
+对于有 “默认”情况的switch语句，没有跳过switch的控制流部分。
 
-当一个变量超出范围时，所有仍处于 "未决定" 状态的语句都被改为 "未使用"，
-除非该变量是一个函数的返回参数--如何是这样，状态变为 "已使用"。
+当一个变量超出范围时，所有仍处于“未决定”状态的语句都被改为“未使用”，
+除非该变量是一个函数的返回参数--如何是这样，状态变为“已使用”。
 
-在第二次遍历中，所有处于 "未使用" 状态的赋值都被删除。
+在第二次遍历中，所有处于“未使用”状态的赋值都被删除。
 
 这一步通常是在SSA转换之后立即运行，以完成伪SSA的生成。
 
@@ -785,7 +765,7 @@ AST被遍历了两次：分别在在信息收集步骤和实际删除步骤中�
 
 .. _literal-rematerialiser:
 
-字面意义上的再物质化器（LiteralRematerialiser）
+文本重组器（LiteralRematerialiser）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 有待记录。
@@ -801,27 +781,7 @@ AST被遍历了两次：分别在在信息收集步骤和实际删除步骤中�
 
 先决条件：消歧器，循环初始重写器。
 
-<<<<<<< HEAD
-.. _reasoning-based-simplifier:
-
-基于推理的简化器
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-这个优化器使用SMT求解器来检查 ``if`` 条件是否为常数。
-
-- 如果 ``限制条件和条件`` 是不满足的（UNSAT），那么条件永远不会是真的，整个主体可以被删除。
-- 如果 ``限制条件和非限制条件`` 是不满足的（UNSAT），那么条件永远是真的，可以用 ``1`` 代替。
-
-只有在条件是可移动的情况下，上面的简化才能适用。
-
-它只对EVM语言有效，但在其他语言上使用是安全的。
-
-先决条件：消歧器，SSA转换。
-
 声明规模的简化
-=======
-Statement-Scale Simplifications
->>>>>>> english/develop
 -------------------------------
 
 .. _circular-reference-pruner:
@@ -850,7 +810,7 @@ Statement-Scale Simplifications
 
 未来的特性：
 
-- 允许用 "1" 替换
+- 允许用“1”替换
 - 考虑到用户定义的终止函数
 
 如果之前已经运行过死代码的删除，那么使用SSA表单效果最好。
@@ -1126,7 +1086,7 @@ Statement-Scale Simplifications
 
 - 参数是可移动的。
 - 该参数在函数体中被引用不到两次，或者该参数相当便宜
-  （ "成本" 最多为1，就像一个0xff以下的常数）。
+  （ “成本”最多为1，就像一个0xff以下的常数）。
 
 例如：要被内联的函数的形式是： ``function f(...) -> r { r := E }``
 其中 ``E`` 是一个不引用 ``r`` 的表达式，函数调用中的所有参数都是可移动表达式。
@@ -1140,24 +1100,14 @@ Statement-Scale Simplifications
 完全内联
 ^^^^^^^^^^^
 
-<<<<<<< HEAD
 完全内联用函数的主体取代了某些函数的调用。
 这在大多数情况下是没有什么帮助的，因为它只是增加了代码的大小，但并没有什么好处。
 此外，代码通常是非常昂贵的，我们往往宁愿要更短的代码而不是更有效的代码。
 不过，在相同的情况下，内联一个函数可以对后续的优化步骤产生积极的影响。
 例如，如果一个函数参数是一个常数，就会出现这种情况。
-=======
-The FullInliner replaces certain calls of certain functions
-by the function's body. This is not very helpful in most cases, because
-it just increases the code size but does not have a benefit. Furthermore,
-code is usually very expensive and we would often rather have shorter
-code than more efficient code. In same cases, though, inlining a function
-can have positive effects on subsequent optimizer steps. This is the case
-if one of the function arguments is a constant, for example.
->>>>>>> english/develop
 
 在内联过程中，一个启发式方法被用来判断函数调用是否应该被内联。
-目前的启发式方法是不内联到 "大" 函数，除非被调用的函数很小。
+目前的启发式方法是不内联到“大”函数，除非被调用的函数很小。
 只使用一次的函数以及中等大小的函数被内联，而带有常数参数的函数调用允许稍大的函数。
 
 
@@ -1167,21 +1117,17 @@ if one of the function arguments is a constant, for example.
 之后，我们可以在这个专用函数上运行优化器。
 如果结果有很大的收益，那么这个专门化的函数就被保留下来，否则就用原来的函数代替。
 
-<<<<<<< HEAD
-清理
-=======
-FunctionHoister and ExpressionSplitter are recommended as prerequisites since they make the step
-more efficient, but are not required for correctness.
-In particular, function calls with other function calls as arguments are not inlined, but running
-ExpressionSplitter beforehand ensures that there are no such calls in the input.
+建议作为先决条件使用函数提升器和表达式拆分器，因为它们使步骤更加高效，
+但不是必需的正确性。
+特别是，具有其他函数调用作为参数的函数调用不会内联，
+但在运行表达式拆分器之前可以确保输入中不存在这种调用。
 
-Cleanup
->>>>>>> english/develop
+清理
 -------
 
 清理工作是在优化器运行结束时进行的。
 它试图将分割的表达式再次组合成深度嵌套的表达式，
-并且通过尽可能地消除变量来提高堆栈机的 "可编译性"。
+并且通过尽可能地消除变量来提高堆栈机的“可编译性”。
 
 .. _expression-joiner:
 
@@ -1210,16 +1156,9 @@ SSA反转器
 这是一个微小的步骤，如果它与通用子表达式消除器和未使用过的处理器相结合，
 则有助于扭转SSA转换的影响。
 
-<<<<<<< HEAD
-我们生成的SSA形式对EVM和WebAssembly的代码生成是不利的，
+我们生成的SSA形式对代码生成是不利的，
 因为它生成了许多局部变量。最好的办法是用赋值重新使用现有的变量，
 而不是用新的变量声明。
-=======
-The SSA form we generate is detrimental to code generation
-because it produces many local variables. It would
-be better to just re-use existing variables with assignments instead of
-fresh variable declarations.
->>>>>>> english/develop
 
 SSA转换改写
 
@@ -1328,19 +1267,4 @@ SSA转换改变了这种形式的语句，只需将声明和赋值互换。
     ...
     }
 
-<<<<<<< HEAD
-字面意义上的再物质化器应在此步骤之前运行。
-
-
-特定的WebAssembly
---------------------
-
-主要功能
-^^^^^^^^^^^^
-
-将最上面的块改变为一个具有特定名称（“main”）的函数，它没有输入和输出。
-
-取决于函数分组器。
-=======
-The LiteralRematerialiser should be run before this step.
->>>>>>> english/develop
+这一步骤之前应该运行文本重组器。
