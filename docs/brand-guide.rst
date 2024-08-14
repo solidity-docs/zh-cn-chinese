@@ -56,7 +56,7 @@ Solidity标志是在
 Solidity标志指南
 ========================
 
-.. image:: logo.svg
+.. image:: solidity_logo.svg
   :width: 256
 
 *（右键点击标识即可下载。）*
