@@ -69,12 +69,21 @@
 库链接
 ---------------
 
+<<<<<<< HEAD
 如果您的合约使用 :ref:`库合约 <libraries>`，
 您会注意到字节码中含有 ``__$53aea86b7d70b31448b230b20ae141a537$__`` 形式的字符串。
 这些是实际库的地址的占位符。此占位符是完全限定库名的keccak256散列的十六进制编码的34个字符前缀。
 字节码文件也将包含形式为 ``// <placeholder> -> <fq library name>`` 的代码行，以帮助识别占位符代表的库。
 注意，完全限定的库名是其源文件的路径和用 ``:`` 分隔的库名。
 您可以使用 ``solc`` 作为链接器，意味着您将在这些地方插入库的地址：
+=======
+If your contracts use :ref:`libraries <libraries>`, you will notice that the bytecode contains substrings of the form ``__$53aea86b7d70b31448b230b20ae141a537$__`` `(format was different <v0.5.0) <https://docs.soliditylang.org/en/v0.4.26/contracts.html#libraries>`_. These are placeholders for the actual library addresses.
+The placeholder is a 34 character prefix of the hex encoding of the keccak256 hash of the fully qualified library name.
+The bytecode file will also contain lines of the form ``// <placeholder> -> <fq library name>`` at the end to help
+identify which libraries the placeholders represent. Note that the fully qualified library name
+is the path of its source file and the library name separated by ``:``.
+You can use ``solc`` as a linker meaning that it will insert the library addresses for you at those points:
+>>>>>>> english/develop
 
 要么在您的命令中加入
 ``--libraries "file.sol:Math=0x1234567890123456789012345678901234567890 file.sol:Heap=0xabCD567890123456789012345678901234567890"``，
@@ -146,6 +155,7 @@ EVM版本选项
 以下是一个EVM版本的列表，以及每个版本中引入的编译器相关变化。
 每个版本之间不保证向后兼容。
 
+<<<<<<< HEAD
 - ``homestead``
    - （最老的版本）
 - ``tangerineWhistle``
@@ -158,6 +168,20 @@ EVM版本选项
    - ``staticcall`` 操作码在调用非库合约 view 或 pure 函数时使用，它可以防止函数在EVM级别修改状态，也就是说，甚至适用于您使用无效的类型转换时。
    - 可以访问从函数调用返回的动态数据。
    - 引入了 ``revert`` 操作码，这意味着 ``revert`` 将不会浪费gas。
+=======
+- ``homestead`` (*support deprecated*)
+   - (oldest version)
+- ``tangerineWhistle`` (*support deprecated*)
+   - Gas cost for access to other accounts increased, relevant for gas estimation and the optimizer.
+   - All gas sent by default for external calls, previously a certain amount had to be retained.
+- ``spuriousDragon`` (*support deprecated*)
+   - Gas cost for the ``exp`` opcode increased, relevant for gas estimation and the optimizer.
+- ``byzantium`` (*support deprecated*)
+   - Opcodes ``returndatacopy``, ``returndatasize`` and ``staticcall`` are available in assembly.
+   - The ``staticcall`` opcode is used when calling non-library view or pure functions, which prevents the functions from modifying state at the EVM level, i.e., even applies when you use invalid type conversions.
+   - It is possible to access dynamic data returned from function calls.
+   - ``revert`` opcode introduced, which means that ``revert()`` will not waste gas.
+>>>>>>> english/develop
 - ``constantinople``
    - 在汇编中可使用操作码 ``create2``, ``extcodehash``, ``shl``, ``shr`` 和 ``sar``。
    - 移位运算符使用移位运算码，因此需要的以太燃料较少。
@@ -172,10 +196,22 @@ EVM版本选项
    - 区块的基本费用（ `EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ 和 `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_ ）
      可以通过全局的 ``block.basefee`` 或内联汇编中的 ``basefee()`` 访问。
 - ``paris``
+<<<<<<< HEAD
    - 引入了 ``prevrandao()`` 和 ``block.prevrandao``，并改变了现在已经废弃的 ``block.difficulty`` 的语义，不允许在内联汇编中使用 ``difficulty()`` （见 `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）。
 - ``shanghai`` （ **默认项** ）
   - Smaller code size and gas savings due to the introduction of ``push0`` (see `EIP-3855 <https://eips.ethereum.org/EIPS/eip-3855>`_). 
   - 由于引入了 ``push0`` （参见 `EIP-3855 <https://eips.ethereum.org/EIPS/eip-3855>`_），代码体积更小，以太燃料消耗更少。
+=======
+   - Introduces ``prevrandao()`` and ``block.prevrandao``, and changes the semantics of the now deprecated ``block.difficulty``, disallowing ``difficulty()`` in inline assembly (see `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_).
+- ``shanghai``
+   - Smaller code size and gas savings due to the introduction of ``push0`` (see `EIP-3855 <https://eips.ethereum.org/EIPS/eip-3855>`_).
+- ``cancun`` (**default**)
+   - The block's blob base fee (`EIP-7516 <https://eips.ethereum.org/EIPS/eip-7516>`_ and `EIP-4844 <https://eips.ethereum.org/EIPS/eip-4844>`_) can be accessed via the global ``block.blobbasefee`` or ``blobbasefee()`` in inline assembly.
+   - Introduces ``blobhash()`` in inline assembly and a corresponding global function to retrieve versioned hashes of blobs associated with the transaction (see `EIP-4844 <https://eips.ethereum.org/EIPS/eip-4844>`_).
+   - Opcode ``mcopy`` is available in assembly (see `EIP-5656 <https://eips.ethereum.org/EIPS/eip-5656>`_).
+   - Opcodes ``tstore`` and ``tload`` are available in assembly (see `EIP-1153 <https://eips.ethereum.org/EIPS/eip-1153>`_).
+- ``prague`` (**experimental**)
+>>>>>>> english/develop
 
 .. index:: ! standard JSON, ! --standard-json
 .. _compiler-api:
@@ -200,7 +236,11 @@ EVM版本选项
 .. code-block:: javascript
 
     {
+<<<<<<< HEAD
       // 必选：源代码语言。目前支持 “Solidity”， “Yul” 和 “SolidityAST”（试验性）。
+=======
+      // Required: Source code language. Currently supported are "Solidity", "Yul", "SolidityAST" (experimental), "EVMAssembly" (experimental).
+>>>>>>> english/develop
       "language": "Solidity",
       // 必选
       "sources":
@@ -224,6 +264,7 @@ EVM版本选项
             "/tmp/path/to/file.sol"
             // 如果使用文件，其目录应通过 `--allow-paths <path>` 添加到命令行中。
           ]
+<<<<<<< HEAD
           // 如果语言设置为 “SolididityAST”，则需要在“ast”键下提供AST。
           // 请注意，AST的导入是试验性的，尤其是：
           // - 导入无效的AST可能会产生未定义的结果，
@@ -232,13 +273,49 @@ EVM版本选项
           // “解析” 模式下生成的AST字段，然后重新执行分析，
           // 因此AST中任何基于分析的注释在导入时都会被忽略。
           "ast": { ... } // 格式化为json ast请求的“ast”输出选择。
+=======
         },
-        "destructible":
+        "settable":
         {
+          // Optional: keccak256 hash of the source file
+          "keccak256": "0x234...",
+          // Required (unless "urls" is used): literal contents of the source file
+          "content": "contract settable is owned { uint256 private x = 0; function set(uint256 _x) public { if (msg.sender == owner) x = _x; } }"
+        },
+        "myFile.sol_json.ast":
+        {
+          // If language is set to "SolidityAST", an AST needs to be supplied under the "ast" key
+          // and there can be only one source file present.
+          // The format is the same as used by the `ast` output.
+          // Note that importing ASTs is experimental and in particular that:
+          // - importing invalid ASTs can produce undefined results and
+          // - no proper error reporting is available on invalid ASTs.
+          // Furthermore, note that the AST import only consumes the fields of the AST as
+          // produced by the compiler in "stopAfter": "parsing" mode and then re-performs
+          // analysis, so any analysis-based annotations of the AST are ignored upon import.
+          "ast": { ... }
+>>>>>>> english/develop
+        },
+        "myFile_evm.json":
+        {
+<<<<<<< HEAD
           // 可选：源文件的keccak256哈希值
           "keccak256": "0x234...",
           // 必选：（除非使用 “urls“）：源文件的字面内容
           "content": "contract destructible is owned { function shutdown() { if (msg.sender == owner) selfdestruct(owner); } }"
+=======
+          // If language is set to "EVMAssembly", an EVM Assembly JSON object needs to be supplied
+          // under the "assemblyJson" key and there can be only one source file present.
+          // The format is the same as used by the `evm.legacyAssembly` output or `--asm-json`
+          // output on the command line.
+          // Note that importing EVM assembly is experimental.
+          "assemblyJson":
+          {
+            ".code": [ ... ],
+            ".data": { ... }, // optional
+            "sourceList": [ ... ] // optional (if no `source` node was defined in any `.code` object)
+          }
+>>>>>>> english/develop
         }
       },
       // 可选
@@ -279,9 +356,20 @@ EVM版本选项
             "cse": false,
             // 优化代码中字面数字和字符串的表示。
             "constantOptimizer": false,
+<<<<<<< HEAD
             // 新的Yul优化器。主要在ABI coder v2 和 内联汇编的代码上运行。
             // 它与全局优化器设置一起被激活，并且可以在这里停用。
             // 在 Solidity 0.6.0 之前，它必须通过这个开关激活。
+=======
+            // Use unchecked arithmetic when incrementing the counter of for loops
+            // under certain circumstances. It is always on if no details are given.
+            "simpleCounterForLoopUncheckedIncrement": true,
+            // The new Yul optimizer. Mostly operates on the code of ABI coder v2
+            // and inline assembly.
+            // It is activated together with the global optimizer setting
+            // and can be deactivated here.
+            // Before Solidity 0.6.0 it had to be activated through this switch.
+>>>>>>> english/develop
             "yul": false,
             // Yul优化器的调优选项。
             "yulDetails": {
@@ -302,6 +390,7 @@ EVM版本选项
             }
           }
         },
+<<<<<<< HEAD
         // 编译EVM的版本。
         // 影响到类型检查和代码生成。版本可以是 homestead,
         // tangerineWhistle，spuriousDragon，byzantium，constantinople，
@@ -309,6 +398,15 @@ EVM版本选项
         "evmVersion": "byzantium",
         // 可选：改变编译管道以通过Yul的中间表示法。
         // 这在默认情况下是假的。
+=======
+        // Version of the EVM to compile for.
+        // Affects type checking and code generation. Can be homestead,
+        // tangerineWhistle, spuriousDragon, byzantium, constantinople,
+        // petersburg, istanbul, berlin, london, paris, shanghai, cancun (default) or prague.
+        "evmVersion": "cancun",
+        // Optional: Change compilation pipeline to go through the Yul intermediate representation.
+        // This is false by default.
+>>>>>>> english/develop
         "viaIR": true,
         // 可选： 调试设置
         "debug": {
@@ -346,13 +444,21 @@ EVM版本选项
         // 库的地址。如果这里没有给出所有的库，
         // 可能会导致未链接的对象，其输出数据是不同的。
         "libraries": {
+<<<<<<< HEAD
           // 顶层键是使用该库的源文件的名称。
           // 如果使用了重映射，这个源文件应该与应用重映射后的全局路径一致。
           // 如果这个键是一个空字符串，那就是指一个全局水平。
+=======
+          // The top level key is the name of the source file where the library is used.
+          // If remappings are used, this source file should match the global path
+          // after remappings were applied.
+          // If this key is an empty string, that refers to a global level.
+>>>>>>> english/develop
           "myFile.sol": {
             "MyLib": "0x123123..."
           }
         },
+<<<<<<< HEAD
         // 以下可用于根据文件和合约名称选择所需的输出。
         // 如果这个字段被省略，那么编译器就会加载并进行类型检查，但除了错误之外不会产生任何输出。
         // 第一层键是文件名，第二层键是合约名。
@@ -362,6 +468,21 @@ EVM版本选项
         // 要选择编译器可能产生的所有输出，
         // 使用 "outputSelection"。{ "*": { "*": [ "*" ], "": [ "*" ] } }"，
         // 但要注意，这可能会不必要地减慢编译过程。
+=======
+        // The following can be used to select desired outputs based
+        // on file and contract names.
+        // If this field is omitted, then the compiler loads and does type checking,
+        // but will not generate any outputs apart from errors.
+        // The first level key is the file name and the second level key is the contract name.
+        // An empty contract name is used for outputs that are not tied to a contract
+        // but to the whole source file like the AST.
+        // A star as contract name refers to all contracts in the file.
+        // Similarly, a star as a file name matches all files.
+        // To select all outputs the compiler can possibly generate, with the exclusion of
+        // Yul intermediate representation outputs, use
+        // "outputSelection: { "*": { "*": [ "*" ], "": [ "*" ] } }"
+        // but note that this might slow down the compilation process needlessly.
+>>>>>>> english/develop
         //
         // 可用的输出类型如下：
         //
@@ -370,6 +491,7 @@ EVM版本选项
         //
         // 合约级别（需要合约名称或 "*"）：
         //   abi - ABI
+<<<<<<< HEAD
         //   devdoc - 开发者文档（Natspec格式）
         //   userdoc - 用户文档（Natspec格式）
         //   metadata - 元数据
@@ -391,6 +513,32 @@ EVM版本选项
         //
         // 注意，使用 `evm`， `evm.bytecode` 等将选择该输出的每个目标部分。
         // 此外， `*` 可以作为通配符来请求所有东西。
+=======
+        //   devdoc - Developer documentation (natspec)
+        //   userdoc - User documentation (natspec)
+        //   metadata - Metadata
+        //   ir - Yul intermediate representation of the code before optimization
+        //   irAst - AST of Yul intermediate representation of the code before optimization
+        //   irOptimized - Intermediate representation after optimization
+        //   irOptimizedAst - AST of intermediate representation after optimization
+        //   storageLayout - Slots, offsets and types of the contract's state variables in storage.
+        //   transientStorageLayout - Slots, offsets and types of the contract's state variables in transient storage.
+        //   evm.assembly - New assembly format
+        //   evm.legacyAssembly - Old-style assembly format in JSON
+        //   evm.bytecode.functionDebugData - Debugging information at function level
+        //   evm.bytecode.object - Bytecode object
+        //   evm.bytecode.opcodes - Opcodes list
+        //   evm.bytecode.sourceMap - Source mapping (useful for debugging)
+        //   evm.bytecode.linkReferences - Link references (if unlinked object)
+        //   evm.bytecode.generatedSources - Sources generated by the compiler
+        //   evm.deployedBytecode* - Deployed bytecode (has all the options that evm.bytecode has)
+        //   evm.deployedBytecode.immutableReferences - Map from AST ids to bytecode ranges that reference immutables
+        //   evm.methodIdentifiers - The list of function hashes
+        //   evm.gasEstimates - Function gas estimates
+        //
+        // Note that using `evm`, `evm.bytecode`, etc. will select every
+        // target part of that output. Additionally, `*` can be used as a wildcard to request everything.
+>>>>>>> english/develop
         //
         "outputSelection": {
           "*": {
@@ -436,12 +584,23 @@ EVM版本选项
           "showUnproved": true,
           // 选择是否输出所有不支持的语言功能。默认为 `false`。
           "showUnsupported": true,
+<<<<<<< HEAD
           // 如果有的话，选择应该使用哪些求解器。
           // 关于求解器的描述，见形式验证部分。
           "solvers": ["cvc4", "smtlib2", "z3"],
           // 选择哪些目标应该被检查：常数条件，下溢，溢出，除以零，余额，断言，弹出空数组，界外。
           // 如果没有给出该选项，所有目标都被默认检查，除了 Solidity >=0.8.7 的下溢/溢出。
           // 目标描述见形式化验证部分。
+=======
+          // Choose which solvers should be used, if available.
+          // See the Formal Verification section for the solvers description.
+          "solvers": ["cvc5", "smtlib2", "z3"],
+          // Choose which targets should be checked: constantCondition,
+          // underflow, overflow, divByZero, balance, assert, popEmptyArray, outOfBounds.
+          // If the option is not given all targets are checked by default,
+          // except underflow/overflow for Solidity >=0.8.7.
+          // See the Formal Verification section for the targets description.
+>>>>>>> english/develop
           "targets": ["underflow", "overflow", "assert"],
           // 每个SMT查询的超时时间，以毫秒为单位。
           // 如果没有给出这个选项，SMTChecker将默认使用确定性的资源限制。
@@ -526,7 +685,13 @@ EVM版本选项
             "irOptimizedAst": {/* ... */},
             // 请参阅存储布局文档。
             "storageLayout": {"storage": [/* ... */], "types": {/* ... */} },
+<<<<<<< HEAD
             // EVM相关输出
+=======
+            // See the Storage Layout documentation.
+            "transientStorageLayout": {"storage": [/* ... */], "types": {/* ... */} },
+            // EVM-related outputs
+>>>>>>> english/develop
             "evm": {
               // 汇编 (string)
               "assembly": "",
