@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13.0)
 
-set(ETH_CMAKE_DIR   "${CMAKE_CURRENT_LIST_DIR}/cmake"   CACHE PATH "The the path to the cmake directory")
+set(ETH_CMAKE_DIR   "${CMAKE_CURRENT_LIST_DIR}/cmake"   CACHE PATH "The path to the cmake directory")
 list(APPEND CMAKE_MODULE_PATH ${ETH_CMAKE_DIR})
 
 # Set the build type, if none was specified.
@@ -21,7 +21,7 @@ include(EthPolicy)
 eth_policy()
 
 # project name and version should be set after cmake_policy CMP0048
-set(PROJECT_VERSION "0.8.21")
+set(PROJECT_VERSION "0.8.27")
 # OSX target needed in order to support std::visit
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.14")
 project(solidity VERSION ${PROJECT_VERSION} LANGUAGES C CXX)
@@ -37,16 +37,23 @@ option(SOLC_STATIC_STDLIBS "Link solc against static versions of libgcc and libs
 option(STRICT_Z3_VERSION "Use the latest version of Z3" ON)
 option(PEDANTIC "Enable extra warnings and pedantic build flags. Treat all warnings as errors." ON)
 option(PROFILE_OPTIMIZER_STEPS "Output performance metrics for the optimiser steps." OFF)
+option(USE_SYSTEM_LIBRARIES "Use system libraries" OFF)
+option(ONLY_BUILD_SOLIDITY_LIBRARIES "Only build solidity libraries" OFF)
+option(STRICT_NLOHMANN_JSON_VERSION "Strictly check installed nlohmann json version" ON)
+mark_as_advanced(USE_SYSTEM_LIBRARIES)
+mark_as_advanced(ONLY_BUILD_SOLIDITY_LIBRARIES)
+mark_as_advanced(STRICT_NLOHMANN_JSON_VERSION)
 
 # Setup cccache.
 include(EthCcache)
 
 # Let's find our dependencies
 include(EthDependencies)
-include(fmtlib)
-include(jsoncpp)
-include(range-v3)
-include_directories(SYSTEM ${JSONCPP_INCLUDE_DIR})
+if (NOT USE_SYSTEM_LIBRARIES)
+  include(fmtlib)
+  include(nlohmann-json)
+  include(range-v3)
+endif()
 
 find_package(Threads)
 
@@ -56,6 +63,10 @@ endif()
 
 if (PROFILE_OPTIMIZER_STEPS)
     add_definitions(-DPROFILE_OPTIMIZER_STEPS)
+endif()
+
+if (STRICT_NLOHMANN_JSON_VERSION)
+	add_definitions(-DSTRICT_NLOHMANN_JSON_VERSION_CHECK)
 endif()
 
 # Figure out what compiler and system are we using
@@ -122,15 +133,11 @@ elseif (${Z3_FOUND})
   message("Z3 SMT solver found. This enables optional SMT checking with Z3.")
 endif()
 
-find_package(CVC4 QUIET)
-if (${CVC4_FOUND})
-  add_definitions(-DHAVE_CVC4)
-  message("CVC4 SMT solver found. This enables optional SMT checking with CVC4.")
-endif()
+find_program(CVC5_PATH cvc5)
 
-if (NOT (${Z3_FOUND} OR ${CVC4_FOUND}))
+if (NOT (${Z3_FOUND} OR CVC5_PATH))
   message("No SMT solver found (or it has been forcefully disabled). Optional SMT checking will not be available.\
-  \nPlease install Z3 or CVC4 or remove the option disabling them (USE_Z3, USE_CVC4).")
+  \nPlease install Z3 or cvc5 or remove the option disabling them (USE_Z3).")
 endif()
 
 add_subdirectory(libsolutil)
@@ -141,12 +148,15 @@ add_subdirectory(libyul)
 add_subdirectory(libsolidity)
 add_subdirectory(libsolc)
 add_subdirectory(libstdlib)
-add_subdirectory(tools)
 
-if (NOT EMSCRIPTEN)
-	add_subdirectory(solc)
-endif()
+if (NOT ONLY_BUILD_SOLIDITY_LIBRARIES)
+	add_subdirectory(tools)
 
-if (TESTS AND NOT EMSCRIPTEN)
-	add_subdirectory(test)
+	if (NOT EMSCRIPTEN)
+		add_subdirectory(solc)
+	endif()
+
+	if (TESTS AND NOT EMSCRIPTEN)
+		add_subdirectory(test)
+	endif()
 endif()
