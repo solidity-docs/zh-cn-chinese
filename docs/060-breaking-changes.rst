@@ -97,8 +97,13 @@ Solidity 0.6.0 版本突破性变化
 新的错误报告器
 ~~~~~~~~~~~~~~~~~~
 
+<<<<<<< HEAD
 引入一个新的错误报告器，其目的是在命令行上产生更易访问的错误消息。
 它在默认情况下是启用的，但是通过 ``--old-reporter`` 可以返回到弃用的旧错误报告器。
+=======
+A new error reporter was introduced, which aims at producing more accessible error messages on the command-line.
+It is enabled by default, but passing ``--old-reporter`` falls back to the deprecated old error reporter.
+>>>>>>> english/develop
 
 元数据哈希选项
 ~~~~~~~~~~~~~~~~~~~~~

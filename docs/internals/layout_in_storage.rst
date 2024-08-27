@@ -1,5 +1,6 @@
-.. index:: storage, state variable, mapping
+.. index:: storage, state variable, mapping, transient storage
 
+<<<<<<< HEAD
 ************************************
 存储中的状态变量储存结构
 ************************************
@@ -13,6 +14,28 @@
 它被存储在槽 ``0`` 中。对于每个变量，
 根据它的类型确定一个字节的大小。如果可能的话，需要少于32字节的多个连续项目被打包到一个存储槽中，
 根据以下规则：
+=======
+**********************************************************
+Layout of State Variables in Storage and Transient Storage
+**********************************************************
+
+.. _storage-inplace-encoding:
+
+.. note::
+    The rules described in this section apply for both storage and transient storage data locations.
+    The layouts are completely independent and don't interfere with each other's variable locations.
+    Thus storage and transient storage state variables can be safely interleaved without any side effects.
+    Only value types are supported for transient storage.
+
+State variables of contracts are stored in storage in a compact way such
+that multiple values sometimes use the same storage slot.
+Except for dynamically-sized arrays and mappings (see below), data is stored
+contiguously item after item starting with the first state variable,
+which is stored in slot ``0``. For each variable,
+a size in bytes is determined according to its type.
+Multiple, contiguous items that need less than 32 bytes are packed into a single
+storage slot if possible, according to the following rules:
+>>>>>>> english/develop
 
 - 存储插槽的第一项会以低位对齐（即右对齐）的方式储存。
 - 值类型只使用存储它们所需的字节数。
