@@ -7,8 +7,15 @@
 .. index:: ! assembly, ! asm, ! evmasm
 
 
+<<<<<<< HEAD
 您可以用接近Ethereum虚拟机的语言，将Solidity语句与内联汇编交错使用。
 这给了您更精细的控制，这在您通过编写库来增强语言时特别有用。
+=======
+You can interleave Solidity statements with inline assembly in a language close
+to the one of the Ethereum Virtual Machine. This gives you more fine-grained control,
+which is especially useful when you are enhancing the language by writing libraries or
+optimizing gas usage.
+>>>>>>> english/develop
 
 在 Solidity 中用于内联汇编的语言被称为 :ref:`Yul <yul>`，它在自己的章节中被记录。
 本节将只涉及内联汇编代码如何在 Solidity 代码内交互。
