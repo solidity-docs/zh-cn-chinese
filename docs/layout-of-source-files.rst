@@ -34,7 +34,12 @@ Solidity 遵循 `npm 的推荐 <https://docs.npmjs.com/cli/v7/configuring-npm/pa
 编译器可以在文件的任何位置识别该注释，
 但建议把它放在文件的顶部。
 
+<<<<<<< HEAD
 关于如何使用 SPDX 许可证标识的更多信息可以在 `SPDX 网站 <https://spdx.org/ids-how>`_ 中找到。
+=======
+More information about how to use SPDX license identifiers
+can be found at the `SPDX website <https://spdx.dev/learn/handling-license-info/#how>`_.
+>>>>>>> english/develop
 
 
 .. index:: ! pragma
