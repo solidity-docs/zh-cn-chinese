@@ -135,14 +135,8 @@
 幂运算
 ^^^^^^
 
-<<<<<<< HEAD
 幂运算只适用于指数中的无符号类型。幂运算的结果类型总是等于基数的类型。
-请注意，它要足够大以容纳结果，并为潜在的断言失败或包装行为做好准备。
-=======
-Exponentiation is only available for unsigned types in the exponent. The resulting type
-of an exponentiation is always equal to the type of the base. Please take care that it is
-large enough to hold the result and prepare for potential assertion failures or wrapping behavior.
->>>>>>> english/develop
+请注意，它足够大以容纳结果，并为潜在的断言失败或包装行为做好准备。
 
 .. note::
   在检查模式下，幂运算只对小基数使用相对便宜的 ``exp`` 操作码。
@@ -260,17 +254,10 @@ large enough to hold the result and prepare for potential assertion failures or 
 ``send`` 是 ``transfer`` 的低级对应部分。如果执行失败，当前的合约不会因异常而停止，但 ``send`` 会返回 ``false``。
 
 .. warning::
-<<<<<<< HEAD
     使用 ``send`` 有一些危险：如果调用堆栈深度为1024，传输就会失败（这可以由调用者强制执行），
-    如果接收者的气体耗尽，也会失败。因此，为了安全地进行以太币转账，
+    如果接收者的燃料耗尽，也会失败。因此，为了安全地进行以太币转账，
     一定要检查 ``send`` 的返回值，或者使用 ``transfer``，甚至使用更好的方式：
-    使用收款人提款的模式。
-=======
-    There are some dangers in using ``send``: The transfer fails if the call stack depth is at 1024
-    (this can always be forced by the caller) and it also fails if the recipient runs out of gas. So in order
-    to make safe Ether transfers, always check the return value of ``send``, use ``transfer`` or even better:
-    use a pattern where the recipient withdraws the Ether.
->>>>>>> english/develop
+    使用收款人提取以太币的模式。
 
 * ``call``, ``delegatecall`` 和 ``staticcall``
 
@@ -448,7 +435,7 @@ large enough to hold the result and prepare for potential assertion failures or 
 整数字面常数由范围在 0-9 的一串数字组成，表现成十进制。
 例如， ``69`` 表示十进制数字 69。 Solidity 中是没有八进制的，因此前置 0 是无效的。
 
-小数字面常数由 ``.`` 和小数点后的至少一个数字组成。例如， ``.1`` 和 ``1.3``（但不是 ``1.``）。
+小数字面常数由 ``.`` 和小数点后的至少一个数字组成。例如， ``.1`` 和 ``1.3`` （但不是 ``1.``）。
 
 也支持 ``2e10`` 形式的科学符号，其中尾数可以是小数，但指数必须是一个整数。
 字面的 ``MeE`` 相当于 ``M * 10**E``。
