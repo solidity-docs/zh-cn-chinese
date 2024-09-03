@@ -7,8 +7,15 @@
 .. index:: ! assembly, ! asm, ! evmasm
 
 
+<<<<<<< HEAD
 您可以用接近Ethereum虚拟机的语言，将Solidity语句与内联汇编交错使用。
 这给了您更精细的控制，这在您通过编写库来增强语言时特别有用。
+=======
+You can interleave Solidity statements with inline assembly in a language close
+to the one of the Ethereum Virtual Machine. This gives you more fine-grained control,
+which is especially useful when you are enhancing the language by writing libraries or
+optimizing gas usage.
+>>>>>>> english/develop
 
 在 Solidity 中用于内联汇编的语言被称为 :ref:`Yul <yul>`，它在自己的章节中被记录。
 本节将只涉及内联汇编代码如何在 Solidity 代码内交互。
@@ -341,5 +348,31 @@ Solidity中内存数组中的元素总是占据32字节的倍数
         ...
     }
 
+<<<<<<< HEAD
 请注意，我们将在未来的突破性版本中禁止通过注释进行注解；
 因此，如果您不关心与旧编译器版本的向后兼容问题，最好使用这种写法的代码字符串形式。
+=======
+Note that we will disallow the annotation via comment in a future breaking release; so, if you are not concerned with
+backward-compatibility with older compiler versions, prefer using the dialect string.
+
+Advanced Safe Use of Memory
+---------------------------
+
+Beyond the strict definition of memory-safety given above, there are cases in which you may want to use more than 64 bytes
+of scratch space starting at memory offset ``0``. If you are careful, it can be admissible to use memory up to (and not
+including) offset ``0x80`` and still safely declare the assembly block as ``memory-safe``.
+This is admissible under either of the following conditions:
+
+- By the end of the assembly block, the free memory pointer at offset ``0x40`` is restored to a sane value (i.e. it is either
+  restored to its original value or an increment of it due to a manual memory allocation), and the memory word at offset ``0x60``
+  is restored to a value of zero.
+
+- The assembly block terminates, i.e. execution can never return to high-level Solidity code. This is the case, for example,
+  if your assembly block unconditionally ends in calling the ``revert`` opcode.
+
+Furthermore, you need to be aware that the default-value of dynamic arrays in Solidity point to memory offset ``0x60``, so
+for the duration of temporarily changing the value at memory offset ``0x60``, you can no longer rely on getting accurate
+length values when reading dynamic arrays, until you restore the zero value at ``0x60``. To be more precise, we only guarantee
+safety when overwriting the zero pointer, if the remainder of the assembly snippet does not interact with the memory of
+high-level Solidity objects (including by reading from offsets previously stored in variables).
+>>>>>>> english/develop
