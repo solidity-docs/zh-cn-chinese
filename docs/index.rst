@@ -81,7 +81,7 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 以及各种教程、工具和开发框架。
 
 如果您有任何问题，可以在 `以太坊 StackExchange <https://ethereum.stackexchange.com/>`_ 上，
-或者在我们的 `Gitter 频道 <https://gitter.im/ethereum/solidity/>`_ 上搜索答案或提问。
+或者在我们的 `Gitter 频道 <https://gitter.im/ethereum/solidity>`_ 上搜索答案或提问。
 
 .. _translations:
 

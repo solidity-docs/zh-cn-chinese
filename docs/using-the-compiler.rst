@@ -146,26 +146,40 @@ EVM版本选项
 以下是一个EVM版本的列表，以及每个版本中引入的编译器相关变化。
 每个版本之间不保证向后兼容。
 
-- ``homestead``
+- ``homestead`` （*支持已弃用*）
    - （最老的版本）
-- ``tangerineWhistle``
-   - 访问其他账户的gas成本增加，与gas估算和优化器有关。
-   - 对于外部调用，所有gas都是默认发送的，以前必须保留一定的数量。
-- ``spuriousDragon``
-   - ``exp`` 操作码的gas成本增加，与gas估计和优化器有关。
-- ``byzantium``
+- ``tangerineWhistle`` （*支持已弃用*）
+   - 访问其他账户的燃料成本增加，与燃料估算和优化器有关。
+   - 对于外部调用，所有燃料都是默认发送的，以前必须保留一定的数量。
+- ``spuriousDragon`` （*支持已弃用*）
+   - ``exp`` 操作码的燃料成本增加，与燃料估算和优化器有关。
+- ``byzantium`` （*支持已弃用*）
    - 在汇编中可使用操作码 ``returndatacopy``， ``returndatasize`` 和 ``staticcall``。
    - ``staticcall`` 操作码在调用非库合约 view 或 pure 函数时使用，它可以防止函数在EVM级别修改状态，也就是说，甚至适用于您使用无效的类型转换时。
    - 可以访问从函数调用返回的动态数据。
-   - 引入了 ``revert`` 操作码，这意味着 ``revert`` 将不会浪费gas。
+   - 引入了 ``revert`` 操作码，这意味着 ``revert()`` 将不会浪费燃料。
 - ``constantinople``
    - 在汇编中可使用操作码 ``create2``, ``extcodehash``, ``shl``, ``shr`` 和 ``sar``。
+<<<<<<< HEAD
+   - 移位运算符使用移位运算码，因此需要的燃料较少。
+=======
    - 移位运算符使用移位运算码，因此需要的以太燃料较少。
+>>>>>>> develop
 - ``petersburg``
    - 编译器的行为与 constantinople 版本的行为相同。
 - ``istanbul``
    - 在汇编中可使用操作码 ``chainid`` 和 ``selfbalance``。
 - ``berlin``
+<<<<<<< HEAD
+   - ``SLOAD``， ``*CALL``， ``BALANCE``， ``EXT*`` 和 ``SELFDESTRUCT`` 的燃料成本增加。
+     编译器假设这类操作的燃料成本是固定的。这与燃料估算和优化器有关。
+- ``london`` 
+   - 区块的基本费用（ `EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ 和 `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_ ）可以通过全局的 ``block.basefee`` 或内联汇编中的 ``basefee()`` 访问。
+- ``paris`` 
+   - 引入了 ``prevrandao()`` 和 ``block.prevrandao``，并改变了现在已经废弃的 ``block.difficulty`` 的语义，不允许在内联汇编中使用 ``difficulty()`` （见 `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）。
+- ``shanghai`` （ **默认项** ）
+   - 由于引入了 ``push0``，代码量更小，并且节省了燃料（参见 `EIP-3855 <https://eips.ethereum.org/EIPS/eip-3855>`_）。
+=======
    - ``SLOAD``， ``*CALL``， ``BALANCE``， ``EXT*`` 和 ``SELFDESTRUCT`` 的以太燃料成本增加。
      编译器假设这类操作的以太燃料成本是固定的。这与以太燃料估计和优化器有关。
 - ``london`` 
@@ -176,6 +190,7 @@ EVM版本选项
 - ``shanghai`` （ **默认项** ）
   - Smaller code size and gas savings due to the introduction of ``push0`` (see `EIP-3855 <https://eips.ethereum.org/EIPS/eip-3855>`_). 
   - 由于引入了 ``push0`` （参见 `EIP-3855 <https://eips.ethereum.org/EIPS/eip-3855>`_），代码体积更小，以太燃料消耗更少。
+>>>>>>> develop
 
 .. index:: ! standard JSON, ! --standard-json
 .. _compiler-api:
@@ -263,13 +278,21 @@ EVM版本选项
           // 上面的 “enabled“ 开关提供了两个默认值，
           // 可以在这里进行调整。如果给出了 “details“，“enabled“ 可以省略。
           "details": {
-            // 如果没有给出 details，窥视孔优化器总是打开的，使用 details 来关闭它。
+            // 如果没有给出details字段，窥视孔优化器总是打开的，使用details字段来关闭它。
             "peephole": true,
+<<<<<<< HEAD
+            // 如果没有给出details字段，内联器总是关闭的，
+            // 使用 details来打开它。
+            "inliner": false,
+            // 如果没有给出details字段，未使用的jumpdest remover选项总是打开的，
+            // 使用details字段来关闭它。
+=======
             // 如果没有提供 details，内联器总是关闭的，
             // 使用details来打开它。
             "inliner": false,
             // 如果没有给出 details，未使用的jumpdestRemover总是打开的，
             // 使用details来关闭它。
+>>>>>>> develop
             "jumpdestRemover": true,
             // 在换元运算中，有时会对字词重新排序。
             "orderLiterals": false,
@@ -279,7 +302,10 @@ EVM版本选项
             "cse": false,
             // 优化代码中字面数字和字符串的表示。
             "constantOptimizer": false,
-            // 新的Yul优化器。主要在ABI coder v2 和 内联汇编的代码上运行。
+            // 在某些情况下递增for循环的计数器时，使用未校验的算术运算。
+            // 如果没有details字段，则始终开启。
+            "simpleCounterForLoopUncheckedIncrement": true,
+            // 新的Yul优化器。主要在ABI coder v2 和内联汇编的代码上运行。
             // 它与全局优化器设置一起被激活，并且可以在这里停用。
             // 在 Solidity 0.6.0 之前，它必须通过这个开关激活。
             "yul": false,
@@ -290,7 +316,11 @@ EVM版本选项
               "stackAllocation": true,
               // 选择要应用的优化步骤。
               // 也可以同时修改优化序列和清理序列。
+<<<<<<< HEAD
+              // 每个序列的指令用 “:” 分隔，该值以优化序列:清理序列的形式提供。
+=======
               // 每个序列的指令用“:”分隔，该值以 优化序列:清理序列 的形式提供。
+>>>>>>> develop
               // 更多信息见 “优化器 > 选择优化”。
               // 这个字段是可选的，如果不提供，优化和清理的默认序列都会使用。
               // 如果只提供其中一个序列，另一个将不会被运行。
@@ -304,9 +334,15 @@ EVM版本选项
         },
         // 编译EVM的版本。
         // 影响到类型检查和代码生成。版本可以是 homestead,
+<<<<<<< HEAD
+        // tangerineWhistle, spuriousDragon, byzantium, constantinople,
+        // petersburg, istanbul, berlin, london， paris 或 shanghai（默认）。
+        "evmVersion": "shanghai",
+=======
         // tangerineWhistle，spuriousDragon，byzantium，constantinople，
         // petersburg，istanbul，berlin，london，paris 或者 shanghai（默认）
         "evmVersion": "byzantium",
+>>>>>>> develop
         // 可选：改变编译管道以通过Yul的中间表示法。
         // 这在默认情况下是假的。
         "viaIR": true,
@@ -389,8 +425,13 @@ EVM版本选项
         //   evm.methodIdentifiers - 函数哈希值的列表
         //   evm.gasEstimates - 函数以太燃料估计
         //
+<<<<<<< HEAD
+        // 注意，使用 `evm`， `evm.bytecode`， `ewasm` 等将选择该输出的每个目标部分。
+        // 此外，`*` 可以作为通配符来请求所有东西。
+=======
         // 注意，使用 `evm`， `evm.bytecode` 等将选择该输出的每个目标部分。
         // 此外， `*` 可以作为通配符来请求所有东西。
+>>>>>>> develop
         //
         "outputSelection": {
           "*": {
@@ -476,16 +517,20 @@ EVM版本选项
               "message": "Other declaration is here:"
             }
           ],
-          // 强制：错误类型，如 “TypeError“， “InternalCompilerError“， “Exception” 等等。
+          // 必填：错误类型，如 “TypeError“， “InternalCompilerError“， “Exception” 等等。
           // 完整的类型清单见下文。
           "type": "TypeError",
+<<<<<<< HEAD
+          // 必填：发生错误的组件，例如“general”等。
+=======
           // 强制：发生错误的组件，例如“general” 等。
+>>>>>>> develop
           "component": "general",
-          // 强制：错误的严重级别（“error”，“warning” 或 “info”，但请注意，这可能在未来被扩展。）
+          // 必填：错误的严重级别（“error”，“warning” 或 “info”，但请注意，这可能在未来被扩展。）
           "severity": "error",
           // 可选：错误原因的唯一代码
           "errorCode": "3141",
-          // 强制
+          // 必填
           "message": "Invalid keyword",
           // 可选：带错误源位置的格式化消息
           "formattedMessage": "sourceFile.sol:100: Invalid keyword"
@@ -624,4 +669,8 @@ EVM版本选项
 12. ``FatalError``： 未正确处理致命错误 — 应将此报告为一个issue。
 13. ``YulException``： 在Yul代码生成过程中出现错误 - 这应该作为一个issue报告。
 14. ``Warning``： 警告，不会停止编译，但应尽可能处理。
+<<<<<<< HEAD
+15. ``Info``： 编译器认为用户可能会在其中发现有用的信息，但并不危险，且也不一定需要处理。
+=======
 15. ``Info``： 编译器认为用户可能会在其中发现有用的信息，并不危险，也不一定需要处理。
+>>>>>>> develop

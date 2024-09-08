@@ -20,7 +20,7 @@
 当您使用 :ref:`import 语句 <import>` 时，
 您指定了引用源单元名称的 *导入路径*。
 
-.. index:: ! import callback, ! Host Filesystem Loader
+.. index:: ! import callback, ! Host Filesystem Loader, ! --no-import-callback
 .. _import-callback:
 
 导入回调
@@ -34,14 +34,15 @@ VFS最初只填充了编译器收到的输入文件。
 一个导入回调可以自由地以任意方式解释源单元名称，而不仅仅是作为路径。
 如果在需要回调时没有可用的回调，或者无法找到源代码，编译就会失败。
 
-命令行编译器提供了 *主机文件系统加载器* -- 一个基本的回调，
+默认情况下，命令行编译器提供了 *主机文件系统加载器* -- 一个基本的回调，
 它将源单元名称解释为本地文件系统中的一个路径。
+可以使用 ``--no-import-callback`` 命令行选项禁用此回调。
 `JavaScript接口 <https://github.com/ethereum/solc-js>`_ 默认不提供任何接口，
 但可以由用户提供一个。
 这个机制可以用来从本地文件系统以外的地方获得源代码
 （本地文件系统甚至可能无法访问，例如当编译器在浏览器中运行时）。
 例如， `Remix IDE <https://remix.ethereum.org/>`_ 提供了一个多功能的回调，
-让您 `从HTTP、IPFS和Swarm URL导入文件，或直接引用NPM注册表中的包 <https://remix-ide.readthedocs.io/en/latest/import.html>`_。
+让您 `从HTTP、IPFS和Swarm URLs导入文件，或直接引用NPM注册表中的包 <https://remix-ide.readthedocs.io/en/latest/import.html>`_。
 
 .. note::
 
@@ -128,7 +129,7 @@ VFS的初始内容取决于您如何调用编译器：
 
 #. **标准输入**
 
-   也可以通过命令行将源代码发送到编译器的标准输入端来提供源代码：
+   在命令行中，也可以通过将源代码发送到编译器的标准输入来提供源代码:
 
    .. code-block:: bash
 
@@ -365,7 +366,7 @@ CLI路径规范化和剥离
 
 .. note::
 
-    在0.8.8版本之前，CLI不执行路径剥离，唯一的规范化操作是转换路径分隔符。
+    在0.8.8版本之前，CLI路径剥离不被执行，唯一应用的规范化是路径分隔符的转换。
     当使用旧版本的编译器时，建议从基本路径调用编译器，在命令行上只使用相对路径。
 
 .. index:: ! allowed paths, ! --allow-paths, remapping; target
@@ -463,9 +464,9 @@ CLI路径规范化和剥离
 
     import "github.com/ethereum/dapp-bin/library/math.sol"; // 源单元名称： dapp-bin/library/math.sol
 
-编译器将在VFS的 ``dapp bin/library/math.sol`` 下寻找该文件。
+编译器将在VFS的 ``dapp-bin/library/math.sol`` 下寻找该文件。
 如果那里没有该文件，源单元名称将被传递给主机文件系统加载器，
-然后它将在 ``/project/dapp-bin/library/iterable_mapping.sol`` 中寻找。
+然后它将在 ``/project/dapp-bin/library/math.sol`` 中寻找。
 
 .. warning::
 
@@ -495,7 +496,7 @@ CLI路径规范化和剥离
 
 这意味着 ``module2`` 的所有导入都指向旧版本，但 ``module1`` 的导入则指向新版本。
 
-以下是关于重映射行为的详细规则：
+以下是管理重映射行为的详细规则：
 
 #. **重新映射只影响导入路径和源单元名称之间的转换。**
 

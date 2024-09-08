@@ -22,6 +22,7 @@ sourceUnit: (
 	| enumDefinition
 	| userDefinedValueTypeDefinition
 	| errorDefinition
+	| eventDefinition
 )* EOF;
 
 //@doc: inline
@@ -152,8 +153,8 @@ stateMutability: Pure | View | Payable;
 overrideSpecifier: Override (LParen overrides+=identifierPath (Comma overrides+=identifierPath)* RParen)?;
 /**
  * 合约，库，接口或自由函数的定义。
- * 根据函数定义的上下文，可能会有进一步的限制。
- * 例如，接口中的函数必须是未实现的，也就是说，不能包含函数体块。
+ * 根据定义函数的上下文，可能会有进一步的限制。
+ * 例如，接口中的函数必须是未实现的，也就是说，不能包含函数主体块。
  */
 functionDefinition
 locals[
@@ -176,9 +177,9 @@ locals[
 	(Semicolon | body=block);
 
 /**
- * 修改器的定义。
- * 注意，在修改器的主体块中，下划线不能作为标识符使用，
- * 而是作为占位符语句，用于修改器所应用的函数主体。
+ * 修饰器的定义。
+ * 注意，在修饰器的主体块中，下划线不能作为标识符使用，
+ * 而是作为占位符语句，用于修饰器所应用的函数主体。
  */
 modifierDefinition
 locals[

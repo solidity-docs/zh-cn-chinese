@@ -88,8 +88,7 @@ SMT 检查器所报告的潜在警告是：
 对于 Solidity >=0.8.7，SMT检查器默认不检查下溢和溢出，
 所以我们需要使用命令行选项 ``--model-checker-targets "underflow,overflow"``
 或者JSON选项 ``settings.modelChecker.targets = ["underflow", "overflow"]``。
-参见 :ref:`本节的目标配置 <smtchecker_targets>`。
-此处，它报告如下：
+参见 :ref:`本节的目标配置 <smtchecker_targets>`。此处，它报告如下：
 
 .. code-block:: text
 
@@ -388,7 +387,7 @@ SMT检查器准确地告诉我们 *如何* 访问到(2, 4)。
 解算器能够推断出，当 ``unknown.run()`` 被调用时，合约已经被 “锁定”，
 所以无论未知的调用代码做什么，都不可能改变 ``x`` 的值。
 
-如果我们 “忘记” 在函数 ``set`` 上使用 ``mutex`` 修饰符，
+如果我们“忘记”在函数 ``set`` 上使用 ``mutex`` 修饰符，
 SMT检查器就能合成外部调用代码的行为，从而使断言失败：
 
 .. code-block:: text
@@ -707,9 +706,8 @@ SMT检查器可以检索由Horn求解器推断出的归纳不变性，作为证�
 有松弛变量的除法和模数运算
 ========================================
 
-Spacer是SMT检查器使用的默认Horn求解器，
-它通常不喜欢Horn规则中的除法和模数操作。正因为如此，
-默认情况下，Solidity的除法和模运算是用约束条件 ``a = b * d + m`` 来编码的，
+Spacer是SMT检查器使用的默认Horn求解器，它通常不喜欢Horn规则中的除法和模数操作。
+正因为如此，默认情况下，Solidity的除法和模运算是用约束条件 ``a = b * d + m`` 来编码的，
 其中 ``d = a / b`` 和 ``m = a % b``。
 然而，对于其他求解器，如Eldarica，更喜欢语法上的精确操作。
 命令行标志 ``--model-checker-div-mod-no-slacks`` 和

@@ -222,13 +222,8 @@ fragment EvenHexDigits: HexCharacter HexCharacter ('_'? HexCharacter HexCharacte
 fragment HexCharacter: [0-9A-Fa-f];
 
 /**
-<<<<<<< HEAD
  * 已扫描但未被任何规则使用，即被禁止。
  * solc 解析器将以'0'开头但紧随其后不是'.'或'x'的数字视为八进制，
-=======
- * 已扫描，但未被任何规则使用，即不允许。
- * solc 解析器认为以'0'开头，后面没有紧跟'.'或'x'的数字为八进制数
->>>>>>> origin/develop
  * 即使存在非八进制数字'8'和'9'。
  */
 OctalNumber: '0' DecimalDigits ('.' DecimalDigits)?;

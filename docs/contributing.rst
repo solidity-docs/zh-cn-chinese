@@ -38,7 +38,7 @@
 `GitHub问题跟踪器 <https://github.com/ethereum/solidity/issues>`_。
 当报告问题时，请提及以下细节：
 
-* Solidity 版本。
+* Solidity版本。
 * 源代码（如果可以的话）。
 * 操作系统。
 * 重现该问题的步骤。
@@ -83,8 +83,8 @@
 -------------
 
 为了运行所有的编译器测试，您可能想选择性地安装一些依赖项
-（ `evmone <https://github.com/ethereum/evmone/releases>`_，
-`libz3 <https://github.com/Z3Prover/z3>`_。
+( `evmone <https://github.com/ethereum/evmone/releases>`_，
+`libz3 <https://github.com/Z3Prover/z3>`_)。
 
 在 macOS 系统上，一些测试脚本需要安装 GNU 核心工具。
 可以使用 Homebrew 很简单地完成安装： ``brew install coreutils``。
@@ -102,8 +102,8 @@ Solidity包括不同类型的测试，其中大部分捆绑在
 `Boost C++测试框架 <https://www.boost.org/doc/libs/release/libs/test/doc/html/index.html>`_ 应用程序 ``soltest``。
 运行 ``build/test/soltest`` 或其包装器 ``scripts/soltest.sh`` 对大多数变化来说是足够的。
 
-``./scripts/tests.sh`` 脚本自动执行大多数 Solidity 测试，
-包括那些捆绑在 `Boost C++ 测试框架 <https://www.boost.org/doc/libs/release/libs/test/doc/html/index.html>`_ 应用程序 ``soltest``
+``./scripts/tests.sh`` 脚本自动执行大多数Solidity测试，
+包括那些捆绑在 `Boost C++测试框架 <https://www.boost.org/doc/libs/release/libs/test/doc/html/index.html>`_ 应用程序 ``soltest``
 （或其包装器 ``scripts/soltest.sh``）中的测试，以及命令行测试和编译测试。
 
 测试系统会自动尝试发现 `evmone <https://github.com/ethereum/evmone/releases>`_ 的位置，以运行语义测试。
@@ -115,8 +115,8 @@ Solidity包括不同类型的测试，其中大部分捆绑在
 ``evmone`` 主要用于运行语义和gas测试。
 如果您没有安装它，您可以通过向 ``scripts/soltest.sh`` 传递 ``--no-semantic-tests`` 标志来跳过这些测试。
 
-``evmone`` 库的文件名扩展名在Linux系统上应为 ``.so``，在Windows系统上，
-应为 ``.dll``，而在macOS上，应为 ``.dylib``。
+``evmone`` 库的文件名后缀应该
+是Linux上的 ``.so``，Windows系统上的 ``.dll``，MacOS上的 ``.dylib``。
 
 为了运行SMT测试， ``libz3`` 库必须被安装，并在编译器配置阶段被 ``cmake`` 可以找到。
 
@@ -259,18 +259,18 @@ CI运行额外的测试（包括 ``solc-js`` 和测试第三方Solidity框架）
 命令行测试
 ------------------
 
-我们的端到端命令行测试套件检查编译器二进制文件在各种场景下的行为。
-这些测试位于 `test/cmdlineTests/ <https://github.com/ethereum/solidity/tree/develop/test/cmdlineTests>`_ 目录下，
-每个子目录中有一个测试，并可以使用 ``cmdlineTests.sh`` 脚本来执行这些测试。
+我们的端到端命令行测试套件可检查编译器二进制文件在各种情况下的整体行为。
+这些测试位于 `test/cmdlineTests/ <https://github.com/ethereum/solidity/tree/develop/test/cmdlineTests>`_
+的每个子目录一个，可使用 ``cmdlineTests.sh`` 脚本执行。
 
-默认情况下，该脚本会运行所有可用的测试。
-您还可以提供一个或多个 `文件名模式 <https://www.gnu.org/software/bash/manual/bash.html#Filename-Expansion>`_，
-在这种情况下，只会执行与至少一个模式匹配的测试。
-还可以通过在模式前加上 ``--exclude`` 来排除与特定模式匹配的文件。
+默认情况下，脚本会运行所有可用的测试。
+您也可以提供一个或多个 `文件名模式 <https://www.gnu.org/software/bash/manual/bash.html#Filename-Expansion>`_，
+在这种情况下，只有至少与一个模式匹配的测试才会被执行。
+还可以通过在前缀中添加 ``--exclude`` 来排除与特定模式匹配的文件。
 
-默认情况下，脚本假设在工作副本内的 ``build/`` 子目录中存在一个 ``solc`` 二进制文件。
-如果您在源代码树之外构建编译器，您可以使用 ``SOLIDITY_BUILD_DIR`` 环境变量
-来指定构建目录的不同位置。
+默认情况下，脚本假定工作副本中的 ``build/`` 子目录下有一个 ``solc`` 二进制文件。
+如果在源代码树之外编译编译器，可以使用 ``SOLIDITY_BUILD_DIR`` 环境变量
+来指定一个不同的编译目录位置。
 
 示例：
 
@@ -280,36 +280,36 @@ CI运行额外的测试（包括 ``solc-js`` 和测试第三方Solidity框架）
     test/cmdlineTests.sh "standard_*" "*_yul_*" --exclude "standard_yul_*"
 
 上述命令将运行以 ``test/cmdlineTests/standard_`` 开头的目录中的测试，
-以及名称中包含 ``_yul_`` 的 ``test/cmdlineTests/`` 的子目录中的测试，
-但不会执行名称以 ``standard_yul_`` 开头的测试。
-它还假设您的主目录中的文件 ``solidity/build/solc/solc`` 是编译器二进制文件
-（除非您使用的是Windows系统 -- 那么将是 ``solidity/build/solc/Release/solc.exe``）。
+以及 ``test/cmdlineTests/`` 中包含 ``_yul_`` 的子目录，
+但不会执行以 ``standard_yul_`` 开头的测试。
+它还会假定您的主目录中的 ``solidity/build/solc/solc`` 文件是
+编译器二进制文件（除非您使用的是 Windows 操作系统，则为 ``solidity/build/solc/Release/solc.exe``）。
 
-有几种类型的命令行测试：
+有几种命令行测试：
 
-- *标准 JSON 测试*：至少包含一个 ``input.json`` 文件。
-  一般情况下可能包含以下内容：
+- *标准JSON测试*：至少包含一个 ``input.json`` 文件。
+  一般可能包含：
 
-    - ``input.json``： 要传递给命令行上的 ``--standard-json`` 选项的输入文件。
-    - ``output.json``： 预期的标准 JSON 输出。
+    - ``input.json``： 通过命令行上的 ``--standard-json`` 选项传入的输入文件。
+    - ``output.json``： 预期标准JSON输出。
     - ``args``： 传递给 ``solc`` 的额外命令行参数。
 
-- *CLI 测试*：至少包含一个 ``input.*`` 文件（不包括 ``input.json``）。
-  一般情况下可能包含以下内容：
+- *CLI测试*：至少包含一个 ``input.*``  文件（  ``input.json`` 除外）。
+  一般可能包含：
 
-    - ``input.*``：  一个单独的输入文件，其名称将在命令行上提供给 ``solc``。
+    - ``input.*``：单个输入文件，其名称将在命令行中传递给 ``solc``。
       通常是 ``input.sol`` 或 ``input.yul``。
     - ``args``： 传递给 ``solc`` 的额外命令行参数。
-    - ``stdin``： 要通过标准输入传递给 ``solc`` 的内容。
+    - ``stdin``： 通过标准输入传递给 ``solc`` 的内容。
     - ``output``： 预期的标准输出内容。
-    - ``err``： 预期的标准错误输出内容。
-    - ``exit``： 预期的退出代码。如果未提供，则期望为零。
+    - ``err``： 标准错误输出的预期内容。
+    - ``exit``： 预期退出代码。如果没有提供，则预期值为0。
 
-- *脚本测试*：包含一个 ``test.*`` 文件。
-  一般情况下可能包含以下内容：
+- *脚本测试*： 包含一个 ``test.*`` 文件。
+  一般可能包含：
 
-    - ``test.*``: 一个要运行的单个脚本，通常是 ``test.sh`` 或 ``test.py``。
-      该脚本必须是可执行的。
+    - ``test.*``：运行的单个脚本，通常是 ``test.sh`` 或 ``test.py``。
+      脚本必须是可执行的。
 
 通过 AFL 运行 Fuzzer
 ==========================

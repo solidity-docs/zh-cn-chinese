@@ -98,7 +98,7 @@ Solidity支持多重继承，包括多态性。
             if (msg.sender == owner) info = newInfo;
         }
 
-        // 在这里，我们只指定为 `override` 而没用 `virtual`。
+        // 在这里，我们只指定了 `override` 而没有 `virtual`。
         // 这意味着从 `PriceFeed` 派生出来的合约不能再改变 `destroy` 的行为。
         function destroy() public override(Destructible, Named) { Named.destroy(); }
         function get() public view returns(uint r) { return info; }
@@ -535,9 +535,10 @@ Solidity 借鉴了 Python 的方式并且使用 "`C3 线性化 <https://en.wikip
 继承有相同名字的不同类型成员
 ======================================================
 
-由于继承的原因，当合约有以下任何一对具有相同的名称时，这是一个错误：
-  - 函数和修饰器
-  - 函数和事件
-  - 事件和修饰器
+由于继承的关系，一个合约可能包含多个共享相同名称的定义，这种情况只有一种：
 
-有一种例外情况，状态变量的 getter 可以重载一个外部函数。
+- 函数重载。
+- 重载virtual函数
+- 通过状态变量获取器重写外部virtual函数。
+- 重载virtual修饰符。
+- 事件重载。

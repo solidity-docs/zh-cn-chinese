@@ -19,7 +19,7 @@ Solidity v0.8.0 突破性变化
 
   您可以使用 ``pragma abicoder v1;`` 来选择使用旧的行为。
   语句 ``pragma experimental ABIEncoderV2;`` 仍然有效，但它已被废弃，没有效果。
-  如果您想显示使用，请使用 ``pragma abicoder v2;`` 代替。
+  如果您想显式使用，请使用 ``pragma abicoder v2;`` 代替。
 
   请注意，ABI coder v2比v1支持更多的类型，并对输入进行更多的合理性检查。
   ABI coder v2使一些函数调用更加昂贵，而且当合约中包含不符合参数类型的数据时，它还会使合约调用回退，

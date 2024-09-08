@@ -12,7 +12,7 @@
 :ref:`structure-errors`， :ref:`structure-struct-types`
 和 :ref:`structure-enum-types` 的声明，且合约可以从其他合约继承。
 
-还有一些特殊种类的合同，叫做 :ref:`库合约 <libraries>` 和 :ref:`接口合约 <interfaces>`。
+还有一些特殊种类的合约，叫做 :ref:`库合约 <libraries>` 和 :ref:`接口合约 <interfaces>`。
 
 在关于 :ref:`合约 <contracts>` 的部分包含比本节更多的细节，它的作用是提供一个快速的概述。
 
@@ -106,11 +106,11 @@
 .. code-block:: solidity
 
     // SPDX-License-Identifier: GPL-3.0
-    pragma solidity >=0.4.21 <0.9.0;
+    pragma solidity ^0.8.22;
+
+    event HighestBidIncreased(address bidder, uint amount); // 事件
 
     contract SimpleAuction {
-        event HighestBidIncreased(address bidder, uint amount); // 事件
-
         function bid() public payable {
             // ...
             emit HighestBidIncreased(msg.sender, msg.value); // 触发事件

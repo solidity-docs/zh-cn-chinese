@@ -334,7 +334,7 @@ Solidity没有字符串操作函数，但有第三方的字符串库。
     您需要激活ABI coder v2。
 
 .. note::
-    在Byzantium之前的EVM版本中，不可能访问从函数调用返回的动态数组。
+    在Byzantium之前的EVM版本中，不能访问从函数调用返回的动态数组。
     如果您调用返回动态数组的函数，请确保使用设置为Byzantium模式的EVM。
 
 .. code-block:: solidity

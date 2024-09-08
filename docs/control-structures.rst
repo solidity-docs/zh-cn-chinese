@@ -465,7 +465,7 @@ Solidity 中的作用域规则遵循了 C99（与其他很多语言一样）：
 从Solidity 0.8.0开始，在默认情况下所有的算术运算都会在上溢和下溢时还原，
 从而使这些库的使用变得没有必要。
 
-为了获得以前的行为，可以使用一个 ``未检查（unchecked）`` 区块。
+为了获得以前的行为，可以使用一个 ``unchecked`` 区块：
 
 .. code-block:: solidity
 
@@ -518,7 +518,7 @@ Solidity 中的作用域规则遵循了 C99（与其他很多语言一样）：
 
 .. _assert-and-require:
 
-错误处理：Assert, Require, Revert and Exceptions
+错误处理：Assert, Require, Revert 和其余异常
 ======================================================
 
 Solidity 使用状态恢复异常来处理错误。
@@ -616,8 +616,8 @@ Assert应该只用于测试内部错误，以及检查不变量。
             require(msg.value % 2 == 0, "Even value required.");
             uint balanceBeforeTransfer = address(this).balance;
             addr.transfer(msg.value / 2);
-            // 由于转账失败后会抛出异常并且不能在这里回调，
-            // 因此我们应该没有办法仍然有一半的以太币。
+            // 由于转账失败后抛出异常并且不能在这里回调，
+            // 因此我们应该没有办法仍然有一半的以太坊。
             assert(address(this).balance == balanceBeforeTransfer - msg.value / 2);
             return address(this).balance;
         }

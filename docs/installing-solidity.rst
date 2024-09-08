@@ -9,16 +9,16 @@
 版本
 ==========
 
-Solidity 的版本遵循 `语义化版本原则 <https://semver.org>`_。
-此外，主版本（例如：0.x.y）的补丁级版本的发布不会包含重大更改。
-这意味着用 0.x.y 版本编译的代码可望用 0.x.z 版本编译，其中 z > y。
+Solidity 的版本遵循 `语义化版本原则 <https://semver.org>`_。此外，
+主版本0（例如：0.x.y）的补丁级版本的发布不会包含重大更改。这意味着用 0.x.y 版本
+编译的代码可望用 0.x.z 版本编译，其中 z > y。
 
-除了正式发行版本外，我们还提供 **每日开发构建版本 （nightly development builds）** ，
-以方便开发人员尝试即将推出的功能并提供早期反馈。然而，请注意，
-虽然每日开发构建版本通常是很稳定的，但它们包含了来自开发分支的最新代码，
+除了发行版本外，我们还提供 **每日开发构建版本 （nightly development builds）** ，
+目的是使开发人员能够轻松地试用即将推出的功能并提供早期反馈。然而，请注意，
+虽然每日开发构建版本通常是很稳定的，但它们包含了来自开发分支的前沿代码，
 并不保证总是有效的。尽管我们尽了最大努力，
-它们仍可能含有未记录的或重大的修改，这些修改不会成为实际发布版本的一部分。
-它们不适用于生产环境的使用。
+它们仍可能含有未记录的和/或重大的修改，这些修改不会成为实际发布版本的一部分。
+它们也不会用于生产。
 
 当开发智能合约时，您应该使用最新版本的 Solidity。这是因为重大的改变，
 以及新的特性和错误修复是定期引入的。
@@ -30,9 +30,10 @@ Remix
 *我们推荐使用 Remix 来开发简单合约和快速学习 Solidity。*
 
 `Remix 可以在线使用 <https://remix.ethereum.org/>`_，而无需安装任何东西。
-如果您想离线使用，可访问 https://github.com/ethereum/remix-live/tree/gh-pages#readme，
-并按照该页面上的说明进行操作。 
-Remix 也是一个方便的选择，可以在不安装多个 Solidity 版本的情况下测试每日开发构建版本。
+如果您想离线使用，请访问 https://github.com/ethereum/remix-live/tree/gh-pages#readme
+并按照页面上的说明操作。
+Remix 也是一个方便的选择，
+可以在不安装多个Solidity版本的情况下测试每日开发构建版本。
 
 本页的进一步选项详细说明了在您的计算机上安装 Solidity 命令行编译器。
 如果您刚好要处理大型合约，或者需要更多的编译选项，
@@ -60,10 +61,10 @@ npm / Node.js
 
 .. note::
 
-    命令行可执行文件的名称是 ``solcjs``。
+    在命令行中，可执行文件被命名为 ``solcjs``。
 
-    ``solcjs`` 的命令行选项与 ``solc`` 是不兼容的，
-    因此期望使用 ``solc`` 行为的工具（如 ``geth``）将无法使用 ``solcjs``。
+    ``solcjs`` 的命令行选项与 ``solc`` 和一些工具（如 ``geth``）是不兼容的，
+    因此不要期望 ``solcjs`` 能像 ``solc`` 一样工作。
 
 Docker
 ======
@@ -79,7 +80,7 @@ Docker镜像会运行编译器可执行文件，以便您可以将所有编译�
 
     docker run ethereum/solc:stable --help
 
-例如，您可以在 0.5.4 版本的标签中指定发布版本。
+例如，您可以在0.5.4版本的标签中指定发布的构建版本。
 
 .. code-block:: bash
 
@@ -95,7 +96,7 @@ Docker镜像会运行编译器可执行文件，以便您可以将所有编译�
 您也可以使用标准的JSON接口（当使用工具化的编译器时建议使用这种方式）。
 当使用这个接口时，不需要装载任何目录，只要输入的JSON是自成一体的
 （即它没有引用任何外部文件，而这些文件必须要被
-:ref:`由导入回调 <initial-vfs-content-standard-json-with-import-callback>`)。
+:ref:`由导入回调 <initial-vfs-content-standard-json-with-import-callback>`）。
 
 .. code-block:: bash
 
@@ -126,12 +127,13 @@ Solidity 的二进制安装包可在 `solidity/releases <https://github.com/ethe
 此外，一些 Linux 发行版提供了他们自己的软件包。这些软件包不是由我们直接维护的，
 但通常由各自的软件包维护者保持最新。
 
-例如，Arch Linux 也有最新开发版本的软件包。
+例如，Arch Linux 将最新开发版本的软件包作为AUR软件包： `solidity <https://aur.archlinux.org/packages/solidity>`_
+和 `solidity-bin <https://aur.archlinux.org/packages/solidity-bin>`_。
 
 .. note::
 
-    Please be aware that `AUR <https://wiki.archlinux.org/title/Arch_User_Repository>`_ packages
-    are user-produced content and unofficial packages. Exercise caution when using them.
+    请注意， `AUR <https://wiki.archlinux.org/title/Arch_User_Repository>`_ 包
+    是用户生成的内容且是非官方包。使用它们时请务必小心。
 
 还有一个 `snap包 <https://snapcraft.io/solc>`_，然而，它 **目前没有维护** 。
 它可以安装在所有 `支持的Linux发行版 <https://snapcraft.io/docs/core/install>`_ 。通过以下命令，
@@ -153,10 +155,10 @@ Solidity 的二进制安装包可在 `solidity/releases <https://github.com/ethe
     但它也有一些限制，比如只能访问 ``/home`` 和 ``/media`` 目录下的文件。
     欲了解更多信息，请访问 `Demystifying Snap Confinement <https://snapcraft.io/blog/demystifying-snap-confinement>`_。
 
-macOS Packages
+macOS 软件包
 ==============
 
-我们通过 Homebrew 作为从源头建立的版本, 发布 Solidity 编译器，。目前不支持预构建。
+我们通过 Homebrew 作为从源头建立的版本, 发布 Solidity 编译器，目前不支持预构建。
 
 .. code-block:: bash
 
@@ -198,8 +200,8 @@ macOS Packages
 该资源库不仅是一个快速且简单的方法，让终端用户获得可以开箱即用的二进制文件，
 而且它对第三方工具也很友好：
 
-- 这些内容被镜像到 https://binaries.soliditylang.org，在那里可以很容易地通过 HTTPS 下载，
-  没有任何认证、速率或需要使用git的限制。
+- 这些内容被镜像到 https://binaries.soliditylang.org，在那里可以很容易地通过HTTPS下载，
+  而没有任何认证、速率或需要使用git的限制。
 - 提供的内容具有正确的 `Content-Type` 请求头和宽松的 CORS 配置，
   因此它可以被运行在浏览器中的工具直接加载。
 - 二进制文件不需要安装或解压（对于附带所需DLLs的旧版Windows构建除外）。
@@ -216,7 +218,7 @@ macOS Packages
 
 ``solc-bin`` 资源库包含几个顶级目录，每个目录代表一个平台。
 每个目录都包含一个 ``list.json`` 文件，列出可用的二进制文件。
-例如，在 ``emscripten-wasm32/list.json`` 中您会发现以下关于 0.7.4 版本的信息。
+例如，在 ``emscripten-wasm32/list.json`` 中您会发现以下关于 0.7.4 版本的信息：
 
 .. code-block:: json
 
@@ -246,7 +248,7 @@ macOS Packages
 - 您可以通过比较其keccak256哈希值来验证二进制文件的完整性
   ``0x300330ecd127756b824aa13e843cb1f43c473cb22eaf3750d5fb9c99279af8c3``。哈希值可以在命令行上
   使用 `sha3sum`_ 提供的 ``keccak256sum`` 工具
-  或在 JavaScript 中使用 `ethereumjs-util 的 keccak256() 函数。`
+  或在 JavaScript 中使用 `ethereumjs-util 的 keccak256() 函数`_
 - 您也可以通过比较二进制文件的sha256哈希值来验证它的完整性
   ``0x2b55ed5fec4d9625b6c7b3ab1abd2b7fb7dd2a9c68543bf0323db2c7e2d55af2``。
 
@@ -255,7 +257,7 @@ macOS Packages
    由于高度的向后兼容性要求，版本库包含一些遗留元素，但您在编写新工具时应避免使用它们：
 
    - 如果您想获得最佳的性能，请使用 ``emscripten-wasm32/`` （有回退功能的 ``emscripten-asmjs/``）而不是 ``bin/``。
-     在 0.6.1 版本之前，我们只提供 asm.js 二进制文件。从 0.6.2 开始，我们改用 `WebAssembly builds`_，性能好得多。
+     在 0.6.1 版本之前，我们只提供 asm.js 二进制文件。从 0.6.2 开始，我们改用 `WebAssembly 构建`_，性能好得多。
      我们已经为wasm重建了旧版本，但原来的asm.js文件仍然在 ``bin/`` 下。
      新的文件必须放在一个单独的目录中，以避免名称冲突。
    - 如果您想确定下载的是 wasm 还是 asm.js 二进制文件，请使用 ``emscripten-asmjs/`` 和 ``emscripten-wasm32/``
@@ -281,8 +283,8 @@ macOS Packages
 .. _solc-bin: https://github.com/ethereum/solc-bin/
 .. _Solidity release page on github: https://github.com/ethereum/solidity/releases
 .. _sha3sum: https://github.com/maandree/sha3sum
-.. _keccak256() function from ethereumjs-util: https://github.com/ethereumjs/ethereumjs-util/blob/master/docs/modules/_hash_.md#const-keccak256
-.. _WebAssembly builds: https://emscripten.org/docs/compiling/WebAssembly.html
+.. _ethereumjs-util 的 keccak256() 函数: https://github.com/ethereumjs/ethereumjs-util/blob/master/docs/modules/_hash_.md#const-keccak256
+.. _WebAssembly 构建: https://emscripten.org/docs/compiling/WebAssembly.html
 .. _QmTLs5MuLEWXQkths41HiACoXDiH8zxyqBHGFDRSzVE5CS: https://gateway.ipfs.io/ipfs/QmTLs5MuLEWXQkths41HiACoXDiH8zxyqBHGFDRSzVE5CS
 .. _16c5f09109c793db99fe35f037c6092b061bd39260ee7a677c8a97f18c955ab1: https://swarm-gateways.net/bzz:/16c5f09109c793db99fe35f037c6092b061bd39260ee7a677c8a97f18c955ab1/
 
@@ -302,12 +304,12 @@ macOS Packages
 | `CMake`_ （在Windows上为3.21.3以上版本， | 跨平台构建文件生成器。       |
 | 其他为3.13以上版）                       |                              |
 +------------------------------------------+------------------------------+
-| `Boost`_ （Windows系统为 1.77 版本，     | C++ 库。                     |
+| `Boost`_ （Windows系统为1.77以上版本，   | C++ 库。                     |
 | 其他系统1.65以上版）                     |                              |
 +------------------------------------------+------------------------------+
 | `Git`_                                   | 用于获取源代码的命令行工具。 |
 +------------------------------------------+------------------------------+
-| `z3`_ （4.8.16 以上版本, 可选）          | 与SMT检查器一起使用。        |
+| `z3`_ （4.8.16以上版本, 可选）           | 与SMT检查器一起使用。        |
 +------------------------------------------+------------------------------+
 | `cvc4`_ （可选）                         | 与SMT检查器一起使用。        |
 +------------------------------------------+------------------------------+
@@ -382,7 +384,7 @@ macOS Packages
 +-----------------------------------+------------------------+
 | `Visual Studio 2019`_  （可选）   | C++ 编译器和开发环境。 |
 +-----------------------------------+------------------------+
-| `Boost`_ （1.77版本）             | C++ 库文件。           |
+| `Boost`_ （1.77以上版本）         | C++ 库文件。           |
 +-----------------------------------+------------------------+
 
 如果您已经有一个 IDE 并且只需要编译器和库文件。您可以安装 Visual Studio 2019 构建工具。
@@ -421,19 +423,19 @@ Visual Studio 2019 同时提供IDE和必要的编译器和库。
     cd solidity
 
 如果您想帮助开发 Solidity，
-您可以分叉 Solidity，然后将您个人的分叉库作为第二远程源添加。
+您可以分叉（fork） Solidity，然后将您个人的分叉库作为第二远程源添加。
 
 .. code-block:: bash
 
     git remote add personal git@github.com:[username]/solidity.git
 
-.. note::
-    这种方法将导致一个预发布版本的构建，例如，每个由这种编译器生成的字节码中都会设置一个标志。
+.. note:: 
+    这种方法将导致一个预发布版本的构建，例如，在这种编译器产生的每个字节码中设置一个标志。
     如果您想重新构建一个已发布的 Solidity 编译器，那么请使用 github 发布页上的源压缩包：
 
     https://github.com/ethereum/solidity/releases/download/v0.X.Y/solidity_0.X.Y.tar.gz
 
-    (而不是由 github 提供的 "源代码")。
+    （而不是由Github提供的 “源代码”）。
 
 命令行构建
 ------------------

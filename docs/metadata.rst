@@ -138,7 +138,7 @@ Solidity编译器会自动生成一个JSON文件。该文件包含关于编译�
           // 反映了输入JSON中使用的设置，默认为“false”
           "useLiteralContent": true
         },
-        // 可选：优化器设置。字段“enabled”和“runs”已被弃用，仅提供向后兼容性。
+        // 可选：优化器设置。字段“enabled”和“runs”已被弃用，仅用于向后兼容。
         "optimizer": {
           "details": {
             "constantOptimizer": false,
@@ -227,9 +227,9 @@ IPFS 哈希值（在 CID v0 中）<https://docs.ipfs.tech/concepts/content-addre
 
 请查看 `元数据游乐场（Metadata Playground） <https://playground.sourcify.dev/>`_ 以了解其运行情况。
 
-如上图所示，solc 的发布版本使用3个字节的版本编码
-（主版本号，次版本号和补丁版本号各一个字节），
-而预发布版本则使用完整的版本字符串，包括提交哈希值和构建日期。
+solc的发布版本使用如上所示的3个字节的版本编码
+（主要、次要和补丁版本号各一个字节），
+而预发布版本将使用一个完整的版本字符串，包括提交哈希和构建日期。
 
 命令行标志 ``--no-cbor-metadata`` 可以用来跳过元数据在部署的字节码末端的附加。
 同样地，标准JSON输入中的布尔字段 ``settings.metadata.appendCBOR`` 可以设置为false。

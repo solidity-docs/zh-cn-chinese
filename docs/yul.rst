@@ -655,7 +655,7 @@ Yul中的作用域是与块联系在一起的（函数和for循环是例外，�
 EVM语言
 -----------
 
-目前Yul的默认语言是当前选择的EVM版本的EVM语言，与EVM的一个版本。
+目前Yul的默认语言是当前选择的EVM版本的EVM语言。
 该语言中唯一可用的类型是 ``u256``，即Ethereum虚拟机的256位本地类型。
 因为它是该语言的默认类型，所以可以省略。
 
@@ -896,7 +896,7 @@ setimmutable, loadimmutable
 linkersymbol
 ^^^^^^^^^^^^
 函数 ``linkersymbol("library_id")`` 是一个占位符，用来表示被链接器替换的地址字头。
-它的第一个也是唯一的参数必须是一个字符串字面量，并且唯一地代表要插入的地址。
+它的第一个也是唯一的参数必须是一个字符串变量，并且唯一地代表要插入的地址。
 标识符可以是任意的，但是当编译器从Solidity源产生Yul代码时，它使用一个库名，
 并以定义该库的源单元的名称作为限定。
 要用一个特定的库地址链接代码，必须在命令行上的 ``--libraries`` 选项中提供相同的标识符。
@@ -1072,7 +1072,7 @@ Yul对象被用来分组命名代码和数据部分。
             // 当前执行的代码是构造函数代码）。
             size := datasize("Contract1_deployed")
             offset := allocate(size)
-            // 这将变成EVM的代码副本
+            // 这将变成EVM的代码拷贝。
             datacopy(offset, dataoffset("Contract1_deployed"), size)
             return(offset, size)
         }
