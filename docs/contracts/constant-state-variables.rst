@@ -39,11 +39,11 @@
 
         constructor(uint decimals_, address ref) {
             if (decimals_ != 0)
-                // 不可变变量只有在部署时才是不可变的。
-                // 在构建时，它们可以被分配任意次。
+                // immutable变量只有在部署时才是不可变的。
+                // 在构建时，它们可以被分配任意次数。
                 decimals = decimals_;
 
-            // 对不可变变量的赋值甚至可以访问变量环境。
+            // 对immutable变量的赋值甚至可以访问环境变量。
             maxBalance = ref.balance;
         }
 
@@ -71,7 +71,7 @@ Immutable
 =========
 
 声明为 ``immutable`` 的变量比声明为 ``constant`` 的变量受到的限制要少一些：
-不可变变量可以在构造时赋值。
+不可变（immutable）变量可以在构造时赋值。
 该值在部署前的任何时候都可以更改，然后成为永久值。
 
 另外一个限制是，不可变变量只能分配给创建后不可能被执行的表达式内部。

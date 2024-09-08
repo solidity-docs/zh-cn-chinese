@@ -77,8 +77,8 @@
                 revert ValueNotEven();
         }
 
-        /// 终止购买并收回 ether。
-        /// 只能由卖方在合约锁定前能调用。
+        /// 终止购买并收回以太币。
+        /// 只能由卖方在合约被锁定前调用。
         function abort()
             external
             onlySeller
@@ -94,7 +94,7 @@
         }
 
         /// 买方确认购买。
-        /// 交易必须包括 `2 * value` ether。
+        /// 交易必须包括 `2 * value` 以太币。
         /// Ether 将被锁住，直到调用 confirmReceived。
         function confirmPurchase()
             external
@@ -108,7 +108,7 @@
         }
 
         /// 确认您（买方）已经收到了该物品。
-        /// 这将释放锁定的 ether。
+        /// 这将释放锁定的以太币。
         function confirmReceived()
             external
             onlyBuyer

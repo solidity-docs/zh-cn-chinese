@@ -13,14 +13,14 @@ Solidity是一门为实现智能合约而创建的面向对象的高级编程语
 智能合约是管理以太坊中账户行为的程序。
 
 Solidity 是一种面向以太坊虚拟机 (EVM) 的 `带花括号的语言 <https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Curly-bracket_languages>`_。
-它受 C++，Python， 和 JavaScript 的影响。
+它受 C++，Python 和 JavaScript 的影响。
 您可以在 :doc:`语言的影响因素 <language-influences>` 部分中找到更多有关 Solidity 受哪些语言启发的细节。
 
 Solidity 是静态类型语言，支持继承，库和复杂的用户自定义的类型以及其他特性。
 
 使用 Solidity，您可以创建用于投票、众筹、秘密竞价（盲拍）以及多重签名钱包等用途的合约。
 
-当开发智能合约时，您应该使用最新版本的 Solidity。
+当开发智能合约时，您应该使用最新版本的Solidity。
 除某些特殊情况之外，只有最新版本才会收到
 `安全修复 <https://github.com/ethereum/solidity/security/policy#supported-versions>`_。
 此外，突破性的变化以及新功能会定期引入。
@@ -28,7 +28,7 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 
 .. warning::
 
-  Solidity 最近发布了 0.8.x 版本，该版本引入了许多重大更新。 
+  Solidity最近发布了0.8.x版本，该版本引入了许多重大更新。 
   请务必阅读 :doc:`完整列表 <080-breaking-changes>`。
 
 始终欢迎改进 Solidity 或此文档的想法,
@@ -36,8 +36,7 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 
 .. Hint::
 
-  您可以通过点击左下角的版本号弹出的菜单来选择首选的下载格式
-  来下载该文档的 PDF，HTML 或 Epub 格式。
+  您可以通过点击左下角的版本号弹出的菜单来选择首选的下载格式来下载该文档的 PDF，HTML 或 Epub 格式。
 
 
 入门指南
@@ -45,7 +44,7 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 
 **1. 了解智能合约基础知识**
 
-如果您是智能合约概念的新手，我们建议您从深入了解 “智能合约介绍” 部分开始，包括以下内容：
+如果您是智能合约概念的新手，我们建议您从深入了解“智能合约介绍”部分开始，其中包括：
 
 * 用 Solidity 编写的 :ref:`一个简单的智能合约例子 <simple-smart-contract>`。
 * :ref:`区块链基础知识 <blockchain-basics>`.
@@ -62,8 +61,7 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 只需选择您喜欢的选项，并按照 :ref:`安装页面 <installing-solidity>` 上提供的步骤操作即可。
 
 .. hint::
-  您可以通过 `Remix IDE <https://remix.ethereum.org>`_ 
-  在浏览器中直接尝试代码示例。
+  您可以通过 `Remix IDE <https://remix.ethereum.org>`_ 在浏览器中直接尝试代码示例。
   Remix 是一个基于网络浏览器的IDE，允许您编写，部署和管理Solidity智能合约，
   无需在本地安装 Solidity。
 
@@ -163,7 +161,7 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 
 .. toctree::
    :maxdepth: 2
-   :caption: 建议内容
+   :caption: 推荐内容
 
    security-considerations.rst
    bugs.rst
@@ -174,7 +172,7 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 
 .. toctree::
    :maxdepth: 2
-   :caption: 补充材料
+   :caption: 附加资料
 
    natspec-format.rst
    smtchecker.rst

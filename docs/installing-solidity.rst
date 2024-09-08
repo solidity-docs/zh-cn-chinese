@@ -49,10 +49,11 @@ npm / Node.js
 在 :ref:`commandline-compiler` 一章中，我们假定您使用的是全功能的编译器: ``solc``。
 ``solcjs`` 的用法在它自己的 `代码仓库 <https://github.com/ethereum/solc-js>`_ 中记录。
 
-注意：solc-js项目是通过使用 Emscripten 从 C++ `solc` 派生而来的，
+注意: solc-js项目是通过使用Emscripten从C++版的 `solc` 衍生出来的，
 这意味着两者使用相同的编译器源代码。
-因此 `solc-js` 可以直接用于 JavaScript 项目（如Remix）。
-有关说明请参阅 solc-js 软件源。
+因此， `solc-js` 可以直接用于JavaScript项目（如 Remix）。
+具体介绍请参考solc-js代码库。
+
 
 .. code-block:: bash
 
@@ -71,7 +72,7 @@ Docker
 Solidity构建的Docker镜像可以使用从 ``ethereum`` 组织获得的 ``solc`` 镜像。
 使用 ``stable`` 标签获取最新发布的版本，使用 ``nightly`` 标签获取开发分支中潜在的不稳定变更的版本。
 
-Docker镜像会运行编译器可执行文件，所以您可以把所有的编译器参数传给它。
+Docker镜像会运行编译器可执行文件，以便您可以将所有编译器参数传递给它。
 例如，下面的命令提取了稳定版的 ``solc`` 镜像（如果您还没有），
 并在一个新的容器中运行它，同时传递 ``--help`` 参数。
 
@@ -93,7 +94,7 @@ Docker镜像会运行编译器可执行文件，所以您可以把所有的编�
     docker run -v /local/path:/sources ethereum/solc:stable -o /sources/output --abi --bin /sources/Contract.sol
 
 您也可以使用标准的JSON接口（当使用工具化的编译器时建议使用这种方式）。
-当使用这个接口时，不需要装载任何目录，只要输入的 JSON 是自成一体的
+当使用这个接口时，不需要装载任何目录，只要输入的JSON是自成一体的
 （即它没有引用任何外部文件，而这些文件必须要被
 :ref:`由导入回调 <initial-vfs-content-standard-json-with-import-callback>`）。
 
@@ -124,7 +125,7 @@ Solidity 的二进制安装包可在 `solidity/releases <https://github.com/ethe
     sudo apt-get install solc
 
 此外，一些 Linux 发行版提供了他们自己的软件包。这些软件包不是由我们直接维护的，
-而通常由各自的软件包维护者保持最新。
+但通常由各自的软件包维护者保持最新。
 
 例如，Arch Linux 将最新开发版本的软件包作为AUR软件包： `solidity <https://aur.archlinux.org/packages/solidity>`_
 和 `solidity-bin <https://aur.archlinux.org/packages/solidity-bin>`_。
@@ -203,7 +204,7 @@ macOS 软件包
   而没有任何认证、速率或需要使用git的限制。
 - 提供的内容具有正确的 `Content-Type` 请求头和宽松的 CORS 配置，
   因此它可以被运行在浏览器中的工具直接加载。
-- 二进制文件不需要安装或解包（与必要的 DLLs 捆绑在一起的旧版 Windows 除外）。
+- 二进制文件不需要安装或解压（对于附带所需DLLs的旧版Windows构建除外）。
 - 我们努力争取高水平的向后兼容性。文件一旦被添加，在没有提供旧位置的链接/重定向的情况下，不会被删除或移动。
   它们也不会被修改，而且应始终与原始校验相匹配。唯一的例外是破损或无法使用的文件，
   如果保持原样，有可能造成更大的伤害。
@@ -429,7 +430,7 @@ Visual Studio 2019 同时提供IDE和必要的编译器和库。
     git remote add personal git@github.com:[username]/solidity.git
 
 .. note:: 
-    这种方法将导致一个预发布的构建，例如，在这种编译器产生的每个字节码中设置一个标志。
+    这种方法将导致一个预发布版本的构建，例如，在这种编译器产生的每个字节码中设置一个标志。
     如果您想重新构建一个已发布的 Solidity 编译器，那么请使用 github 发布页上的源压缩包：
 
     https://github.com/ethereum/solidity/releases/download/v0.X.Y/solidity_0.X.Y.tar.gz
@@ -549,4 +550,4 @@ Solidity 版本名包含四部分：
 4. 引入重大变更 —— 版本号提升到 0.5.0。
 5. 0.5.0 版本发布。
 
-该方式与 :ref:`version pragma <version_pragma>` 一起运行良好。
+该方式与 :ref:`版本编译指示 <version_pragma>` 配合得很好。

@@ -15,9 +15,9 @@
 基本用法
 -----------
 
-``solc`` 是 Solidity 仓库的构建目标之一, 它是 Solidity 命令行编译器。
+``solc`` 是Solidity仓库的构建目标之一, 它是Solidity命令行编译器。
 使用 ``solc --help`` 可以为您提供所有选项的解释。编译器可以产生各种输出，
-从简单的二进制文件和抽象语法树（解析树）上的汇编到gas使用量的估计。
+从简单的二进制文件和抽象语法树(解析树)上的汇编到以太燃料使用量的估计。
 如果您只想编译一个文件，您可以运行 ``solc --bin sourceFile.sol`` 来生成二进制文件。
 如果您想通过 ``solc`` 获得一些更高级的输出信息，
 可以通过 ``solc -o outputDirectory --bin --ast-compact-json --asm sourceFile.sol`` 命令
@@ -55,7 +55,7 @@
 此外，通过这些选项添加的路径部分将不会出现在合约元数据中。
 
 出于安全考虑，编译器 :ref:`对它可以访问的目录有一些限制 <allowed-paths>`。
-在命令行中指定的源文件的目录和重映射的目标路径被自动允许被文件阅读器访问，
+文件阅读器自动允许访问命令行中指定的源文件目录和重映射的目标路径，
 但其他的都是默认为拒绝的。
 通过 ``--allow-paths /sample/path,/another/sample/path`` 语句可以允许额外的路径（和它们的子目录）。
 通过 ``--base-path`` 指定的路径内的所有内容都是允许的。
@@ -119,7 +119,7 @@
 
 .. warning::
 
-   在错误的EVM版本进行编译会导致错误，奇怪和失败的行为。
+   在错误的EVM版本进行编译会导致错误的，奇怪的和失败的行为。
    请确保，特别是在运行一个私有链的情况下，您使用匹配的EVM版本。
 
 在命令行中，您可以选择EVM的版本，如下所示：
@@ -160,12 +160,17 @@ EVM版本选项
    - 引入了 ``revert`` 操作码，这意味着 ``revert()`` 将不会浪费燃料。
 - ``constantinople``
    - 在汇编中可使用操作码 ``create2``, ``extcodehash``, ``shl``, ``shr`` 和 ``sar``。
+<<<<<<< HEAD
    - 移位运算符使用移位运算码，因此需要的燃料较少。
+=======
+   - 移位运算符使用移位运算码，因此需要的以太燃料较少。
+>>>>>>> develop
 - ``petersburg``
    - 编译器的行为与 constantinople 版本的行为相同。
 - ``istanbul``
    - 在汇编中可使用操作码 ``chainid`` 和 ``selfbalance``。
 - ``berlin``
+<<<<<<< HEAD
    - ``SLOAD``， ``*CALL``， ``BALANCE``， ``EXT*`` 和 ``SELFDESTRUCT`` 的燃料成本增加。
      编译器假设这类操作的燃料成本是固定的。这与燃料估算和优化器有关。
 - ``london`` 
@@ -174,6 +179,18 @@ EVM版本选项
    - 引入了 ``prevrandao()`` 和 ``block.prevrandao``，并改变了现在已经废弃的 ``block.difficulty`` 的语义，不允许在内联汇编中使用 ``difficulty()`` （见 `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）。
 - ``shanghai`` （ **默认项** ）
    - 由于引入了 ``push0``，代码量更小，并且节省了燃料（参见 `EIP-3855 <https://eips.ethereum.org/EIPS/eip-3855>`_）。
+=======
+   - ``SLOAD``， ``*CALL``， ``BALANCE``， ``EXT*`` 和 ``SELFDESTRUCT`` 的以太燃料成本增加。
+     编译器假设这类操作的以太燃料成本是固定的。这与以太燃料估计和优化器有关。
+- ``london`` 
+   - 区块的基本费用（ `EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ 和 `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_ ）
+     可以通过全局的 ``block.basefee`` 或内联汇编中的 ``basefee()`` 访问。
+- ``paris``
+   - 引入了 ``prevrandao()`` 和 ``block.prevrandao``，并改变了现在已经废弃的 ``block.difficulty`` 的语义，不允许在内联汇编中使用 ``difficulty()`` （见 `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）。
+- ``shanghai`` （ **默认项** ）
+  - Smaller code size and gas savings due to the introduction of ``push0`` (see `EIP-3855 <https://eips.ethereum.org/EIPS/eip-3855>`_). 
+  - 由于引入了 ``push0`` （参见 `EIP-3855 <https://eips.ethereum.org/EIPS/eip-3855>`_），代码体积更小，以太燃料消耗更少。
+>>>>>>> develop
 
 .. index:: ! standard JSON, ! --standard-json
 .. _compiler-api:
@@ -198,7 +215,7 @@ EVM版本选项
 .. code-block:: javascript
 
     {
-      // 必选：源代码语言。目前支持的是 “Solidity“，“Yul“ 和 “SolidityAST” （实验性的）。
+      // 必选：源代码语言。目前支持 “Solidity”， “Yul” 和 “SolidityAST”（试验性）。
       "language": "Solidity",
       // 必选
       "sources":
@@ -222,14 +239,14 @@ EVM版本选项
             "/tmp/path/to/file.sol"
             // 如果使用文件，其目录应通过 `--allow-paths <path>` 添加到命令行中。
           ]
-          // 如果语言设置为 “SolidityAST”，则需要在 “ast” 字段下提供 AST。
-          // 请注意，ASTs 的导入是试验性的，尤其是：
-          // - 导入无效的 ASTs 会产生未定义的结果，并且
-          // - 对无效的 ASTs 不提供适当的错误报告。
-          // 此外，请注意 AST 导入只消耗编译器在 “stopAfter”（停止后）模式下生成的 AST 字段： 
-          // “parsing” 模式下生成的 AST 字段，然后重新执行分析，
-          // 因此 AST 中任何基于分析的注释在导入时都会被忽略。
-          "ast": { ... } // 格式化为 json ast 请求的 ``ast`` 输出选择。
+          // 如果语言设置为 “SolididityAST”，则需要在“ast”键下提供AST。
+          // 请注意，AST的导入是试验性的，尤其是：
+          // - 导入无效的AST可能会产生未定义的结果，
+          // - 而且无效的AST无法提供适当的错误报告。
+          // 此外，请注意AST导入只消耗编译器在 “stopAfter”（停止后）模式下生成的AST字段：
+          // “解析” 模式下生成的AST字段，然后重新执行分析，
+          // 因此AST中任何基于分析的注释在导入时都会被忽略。
+          "ast": { ... } // 格式化为json ast请求的“ast”输出选择。
         },
         "destructible":
         {
@@ -263,11 +280,19 @@ EVM版本选项
           "details": {
             // 如果没有给出details字段，窥视孔优化器总是打开的，使用details字段来关闭它。
             "peephole": true,
+<<<<<<< HEAD
             // 如果没有给出details字段，内联器总是关闭的，
             // 使用 details来打开它。
             "inliner": false,
             // 如果没有给出details字段，未使用的jumpdest remover选项总是打开的，
             // 使用details字段来关闭它。
+=======
+            // 如果没有提供 details，内联器总是关闭的，
+            // 使用details来打开它。
+            "inliner": false,
+            // 如果没有给出 details，未使用的jumpdestRemover总是打开的，
+            // 使用details来关闭它。
+>>>>>>> develop
             "jumpdestRemover": true,
             // 在换元运算中，有时会对字词重新排序。
             "orderLiterals": false,
@@ -291,10 +316,14 @@ EVM版本选项
               "stackAllocation": true,
               // 选择要应用的优化步骤。
               // 也可以同时修改优化序列和清理序列。
+<<<<<<< HEAD
               // 每个序列的指令用 “:” 分隔，该值以优化序列:清理序列的形式提供。
+=======
+              // 每个序列的指令用“:”分隔，该值以 优化序列:清理序列 的形式提供。
+>>>>>>> develop
               // 更多信息见 “优化器 > 选择优化”。
               // 这个字段是可选的，如果不提供，优化和清理的默认序列都会使用。
-              // 如果只提供了其中一个选项，另一个将不会被运行。
+              // 如果只提供其中一个序列，另一个将不会被运行。
               // 如果只提供分隔符 “:”，
               // 那么优化和清理序列都不会被运行。
               // 如果设置为空值，则只使用默认的清理序列，
@@ -305,9 +334,15 @@ EVM版本选项
         },
         // 编译EVM的版本。
         // 影响到类型检查和代码生成。版本可以是 homestead,
+<<<<<<< HEAD
         // tangerineWhistle, spuriousDragon, byzantium, constantinople,
         // petersburg, istanbul, berlin, london， paris 或 shanghai（默认）。
         "evmVersion": "shanghai",
+=======
+        // tangerineWhistle，spuriousDragon，byzantium，constantinople，
+        // petersburg，istanbul，berlin，london，paris 或者 shanghai（默认）
+        "evmVersion": "byzantium",
+>>>>>>> develop
         // 可选：改变编译管道以通过Yul的中间表示法。
         // 这在默认情况下是假的。
         "viaIR": true,
@@ -388,12 +423,15 @@ EVM版本选项
         //   evm.deployedBytecode* - 部署的字节码（拥有evm.bytecode的所有选项）。
         //   evm.deployedBytecode.immutableReferences - 从AST id到引用不可变的字节码范围的映射
         //   evm.methodIdentifiers - 函数哈希值的列表
-        //   evm.gasEstimates - 函数gas估计
-        //   ewasm.wast - WebAssembly S-expressions格式的Ewasm
-        //   ewasm.wasm - WebAssembly二进制格式的Ewasm
+        //   evm.gasEstimates - 函数以太燃料估计
         //
+<<<<<<< HEAD
         // 注意，使用 `evm`， `evm.bytecode`， `ewasm` 等将选择该输出的每个目标部分。
         // 此外，`*` 可以作为通配符来请求所有东西。
+=======
+        // 注意，使用 `evm`， `evm.bytecode` 等将选择该输出的每个目标部分。
+        // 此外， `*` 可以作为通配符来请求所有东西。
+>>>>>>> develop
         //
         "outputSelection": {
           "*": {
@@ -427,9 +465,9 @@ EVM版本选项
           "divModWithSlacks": false,
           // 选择要使用的模型检查器引擎：所有（默认）， bmc， chc， 无。
           "engine": "chc",
-          // 选择在编译时可获得被调用函数代码的情况下，
-          // 外部调用是否应被视为可信。
-          // 详情请参阅SMT检查器部分。
+          // 选择在被调用函数的代码在编译时可用的情况下，
+          // 是否应将外部调用视为可信。
+          // 有关详细信息，请参阅SMT检查器部分。
           "extCalls": "trusted",
           // 选择哪些类型的不变性应该报告给用户：合约，重入。
           "invariants": ["contract", "reentrancy"],
@@ -482,7 +520,11 @@ EVM版本选项
           // 必填：错误类型，如 “TypeError“， “InternalCompilerError“， “Exception” 等等。
           // 完整的类型清单见下文。
           "type": "TypeError",
+<<<<<<< HEAD
           // 必填：发生错误的组件，例如“general”等。
+=======
+          // 强制：发生错误的组件，例如“general” 等。
+>>>>>>> develop
           "component": "general",
           // 必填：错误的严重级别（“error”，“warning” 或 “info”，但请注意，这可能在未来被扩展。）
           "severity": "error",
@@ -589,7 +631,7 @@ EVM版本选项
               "methodIdentifiers": {
                 "delegate(address)": "5c19a95c"
               },
-              // 函数gas估计
+              // 函数以太燃料估计
               "gasEstimates": {
                 "creation": {
                   "codeDepositCost": "420000",
@@ -627,4 +669,8 @@ EVM版本选项
 12. ``FatalError``： 未正确处理致命错误 — 应将此报告为一个issue。
 13. ``YulException``： 在Yul代码生成过程中出现错误 - 这应该作为一个issue报告。
 14. ``Warning``： 警告，不会停止编译，但应尽可能处理。
+<<<<<<< HEAD
 15. ``Info``： 编译器认为用户可能会在其中发现有用的信息，但并不危险，且也不一定需要处理。
+=======
+15. ``Info``： 编译器认为用户可能会在其中发现有用的信息，并不危险，也不一定需要处理。
+>>>>>>> develop
