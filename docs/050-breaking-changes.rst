@@ -446,7 +446,7 @@ Old version:
             // 如果该函数需要一个您想发送资金的'address'类型，
             // 您可以通过'uint160'将其转换为'address payable'类型。
             // 注意：不建议这样做，应尽可能使用明确的'address payable'类型。
-            // 为了提高明确性，我们建议使用一个库来进行转换（在这个例子中的合同后面提供）。
+            // 为了提高明确性，我们建议使用一个库合约来进行转换（已在这个示例合约的后面提供）。
             address payable addr = unknownContract.makePayable();
             require(addr.send(1 ether));
 
