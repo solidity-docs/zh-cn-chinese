@@ -160,17 +160,12 @@ EVM版本选项
    - 引入了 ``revert`` 操作码，这意味着 ``revert()`` 将不会浪费燃料。
 - ``constantinople``
    - 在汇编中可使用操作码 ``create2``, ``extcodehash``, ``shl``, ``shr`` 和 ``sar``。
-<<<<<<< HEAD
    - 移位运算符使用移位运算码，因此需要的燃料较少。
-=======
-   - 移位运算符使用移位运算码，因此需要的以太燃料较少。
->>>>>>> develop
 - ``petersburg``
    - 编译器的行为与 constantinople 版本的行为相同。
 - ``istanbul``
    - 在汇编中可使用操作码 ``chainid`` 和 ``selfbalance``。
 - ``berlin``
-<<<<<<< HEAD
    - ``SLOAD``， ``*CALL``， ``BALANCE``， ``EXT*`` 和 ``SELFDESTRUCT`` 的燃料成本增加。
      编译器假设这类操作的燃料成本是固定的。这与燃料估算和优化器有关。
 - ``london`` 
@@ -179,18 +174,6 @@ EVM版本选项
    - 引入了 ``prevrandao()`` 和 ``block.prevrandao``，并改变了现在已经废弃的 ``block.difficulty`` 的语义，不允许在内联汇编中使用 ``difficulty()`` （见 `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）。
 - ``shanghai`` （ **默认项** ）
    - 由于引入了 ``push0``，代码量更小，并且节省了燃料（参见 `EIP-3855 <https://eips.ethereum.org/EIPS/eip-3855>`_）。
-=======
-   - ``SLOAD``， ``*CALL``， ``BALANCE``， ``EXT*`` 和 ``SELFDESTRUCT`` 的以太燃料成本增加。
-     编译器假设这类操作的以太燃料成本是固定的。这与以太燃料估计和优化器有关。
-- ``london`` 
-   - 区块的基本费用（ `EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ 和 `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_ ）
-     可以通过全局的 ``block.basefee`` 或内联汇编中的 ``basefee()`` 访问。
-- ``paris``
-   - 引入了 ``prevrandao()`` 和 ``block.prevrandao``，并改变了现在已经废弃的 ``block.difficulty`` 的语义，不允许在内联汇编中使用 ``difficulty()`` （见 `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）。
-- ``shanghai`` （ **默认项** ）
-  - Smaller code size and gas savings due to the introduction of ``push0`` (see `EIP-3855 <https://eips.ethereum.org/EIPS/eip-3855>`_). 
-  - 由于引入了 ``push0`` （参见 `EIP-3855 <https://eips.ethereum.org/EIPS/eip-3855>`_），代码体积更小，以太燃料消耗更少。
->>>>>>> develop
 
 .. index:: ! standard JSON, ! --standard-json
 .. _compiler-api:
@@ -280,19 +263,11 @@ EVM版本选项
           "details": {
             // 如果没有给出details字段，窥视孔优化器总是打开的，使用details字段来关闭它。
             "peephole": true,
-<<<<<<< HEAD
             // 如果没有给出details字段，内联器总是关闭的，
-            // 使用 details来打开它。
+            // 使用details字段来打开它。
             "inliner": false,
-            // 如果没有给出details字段，未使用的jumpdest remover选项总是打开的，
+            // 如果没有给出details字段，未使用的jumpdestRemover选项总是打开的，
             // 使用details字段来关闭它。
-=======
-            // 如果没有提供 details，内联器总是关闭的，
-            // 使用details来打开它。
-            "inliner": false,
-            // 如果没有给出 details，未使用的jumpdestRemover总是打开的，
-            // 使用details来关闭它。
->>>>>>> develop
             "jumpdestRemover": true,
             // 在换元运算中，有时会对字词重新排序。
             "orderLiterals": false,
@@ -316,11 +291,7 @@ EVM版本选项
               "stackAllocation": true,
               // 选择要应用的优化步骤。
               // 也可以同时修改优化序列和清理序列。
-<<<<<<< HEAD
-              // 每个序列的指令用 “:” 分隔，该值以优化序列:清理序列的形式提供。
-=======
               // 每个序列的指令用“:”分隔，该值以 优化序列:清理序列 的形式提供。
->>>>>>> develop
               // 更多信息见 “优化器 > 选择优化”。
               // 这个字段是可选的，如果不提供，优化和清理的默认序列都会使用。
               // 如果只提供其中一个序列，另一个将不会被运行。
@@ -334,15 +305,9 @@ EVM版本选项
         },
         // 编译EVM的版本。
         // 影响到类型检查和代码生成。版本可以是 homestead,
-<<<<<<< HEAD
         // tangerineWhistle, spuriousDragon, byzantium, constantinople,
         // petersburg, istanbul, berlin, london， paris 或 shanghai（默认）。
         "evmVersion": "shanghai",
-=======
-        // tangerineWhistle，spuriousDragon，byzantium，constantinople，
-        // petersburg，istanbul，berlin，london，paris 或者 shanghai（默认）
-        "evmVersion": "byzantium",
->>>>>>> develop
         // 可选：改变编译管道以通过Yul的中间表示法。
         // 这在默认情况下是假的。
         "viaIR": true,
@@ -425,13 +390,8 @@ EVM版本选项
         //   evm.methodIdentifiers - 函数哈希值的列表
         //   evm.gasEstimates - 函数以太燃料估计
         //
-<<<<<<< HEAD
-        // 注意，使用 `evm`， `evm.bytecode`， `ewasm` 等将选择该输出的每个目标部分。
-        // 此外，`*` 可以作为通配符来请求所有东西。
-=======
         // 注意，使用 `evm`， `evm.bytecode` 等将选择该输出的每个目标部分。
         // 此外， `*` 可以作为通配符来请求所有东西。
->>>>>>> develop
         //
         "outputSelection": {
           "*": {
@@ -520,11 +480,7 @@ EVM版本选项
           // 必填：错误类型，如 “TypeError“， “InternalCompilerError“， “Exception” 等等。
           // 完整的类型清单见下文。
           "type": "TypeError",
-<<<<<<< HEAD
           // 必填：发生错误的组件，例如“general”等。
-=======
-          // 强制：发生错误的组件，例如“general” 等。
->>>>>>> develop
           "component": "general",
           // 必填：错误的严重级别（“error”，“warning” 或 “info”，但请注意，这可能在未来被扩展。）
           "severity": "error",
@@ -669,8 +625,4 @@ EVM版本选项
 12. ``FatalError``： 未正确处理致命错误 — 应将此报告为一个issue。
 13. ``YulException``： 在Yul代码生成过程中出现错误 - 这应该作为一个issue报告。
 14. ``Warning``： 警告，不会停止编译，但应尽可能处理。
-<<<<<<< HEAD
 15. ``Info``： 编译器认为用户可能会在其中发现有用的信息，但并不危险，且也不一定需要处理。
-=======
-15. ``Info``： 编译器认为用户可能会在其中发现有用的信息，并不危险，也不一定需要处理。
->>>>>>> develop
