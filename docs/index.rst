@@ -3,11 +3,17 @@ Solidity
 
 .. warning::
 
+<<<<<<< HEAD
   You are reading a community translation of the Solidity documentation. The Solidity team
   can give no guarantees on the quality and accuracy of the translations provided.
   The English reference version is and will remain the only officially supported version
   by the Solidity team and will always be the most accurate and most up-to-date one.
   When in doubt, please always refer to the `English (original) documentation <https://docs.soliditylang.org/en/latest/>`_.
+=======
+Solidity is a `curly-bracket language <https://en.wikipedia.org/wiki/List_of_programming_languages_by_type#Curly_bracket_languages>`_ designed to target the Ethereum Virtual Machine (EVM).
+It is influenced by C++, Python, and JavaScript.
+You can find more details about which languages Solidity has been inspired by in the :doc:`language influences <language-influences>` section.
+>>>>>>> english/develop
 
 Solidity是一门为实现智能合约而创建的面向对象的高级编程语言。
 智能合约是管理以太坊中账户行为的程序。
