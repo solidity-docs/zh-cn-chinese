@@ -7,6 +7,12 @@
 以下类型之所以被称为值类型，是因为它们的变量总是通过值传递，
 即在用作函数参数或赋值时总是被复制。
 
+Unlike :ref:`reference types <reference-types>`, value type declarations do not
+specify a data location since they are small enough to be stored on the stack.
+The only exception are :ref:`state variables <structure-state-variables>`.
+Those are by default located in storage, but can also be marked as
+:ref:`transient <transient-storage>`, :ref:`constant or immutable <constants>`.
+
 .. index:: ! bool, ! true, ! false
 
 布尔类型
@@ -333,6 +339,13 @@
 这可能是空的。使用 ``.codehash`` 获得该代码的Keccak-256哈希值（作为 ``bytes32``）。
 注意，使用 ``addr.codehash`` 比 ``keccak256(addr.code)`` 更便宜。
 
+.. warning::
+    The output of ``addr.codehash`` may be ``0`` if the account associated with ``addr`` is empty or non-existent
+    (i.e., it has no code, zero balance, and zero nonce as defined by `EIP-161 <https://eips.ethereum.org/EIPS/eip-161>`_).
+    If the account has no code but a non-zero balance or nonce, then ``addr.codehash`` will output the Keccak-256 hash of empty data
+    (i.e., ``keccak256("")`` which is equal to ``c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470``), as defined by
+    `EIP-1052 <https://eips.ethereum.org/EIPS/eip-1052>`_.
+
 .. note::
     所有的合约都可以转换为 ``address`` 类型，所以可以用 ``address(this).balance`` 查询当前合约的余额。
 
@@ -402,6 +415,7 @@
 .. note::
     在 0.8.0 版本之前， ``byte`` 曾经是 ``bytes1`` 的别名。
 
+<<<<<<< HEAD
 变长字节数组
 ------------
 
@@ -410,6 +424,8 @@
 ``string``:
     变长 UTF-8 编码字符串类型，参见 :ref:`arrays`。并不是值类型！
 
+=======
+>>>>>>> english/develop
 .. index:: address, ! literal;address
 
 .. _address_literals:
@@ -766,9 +782,21 @@ Unicode 字面量
     调用者不能直接将其calldata传递给外部函数，总是ABI将参数编码到内存中。
     将参数标记为 ``calldata`` 只影响到外部函数的实现，在调用者一方的函数指针中是没有意义的。
 
+<<<<<<< HEAD
 库合约被排除在外，因为它们需要 ``delegatecall``，
 并且 :ref:`对它们的选择器使用不同的 ABI 约定 <library-selectors>`。
 接口中声明的函数没有定义，所以指向它们也没有意义。
+=======
+.. warning::
+    Comparison of internal function pointers can have unexpected results in the legacy pipeline with the optimizer enabled,
+    as it can collapse identical functions into one, which will then lead to said function pointers comparing as equal instead of not.
+    Such comparisons are not advised, and will lead to the compiler issuing a warning, until the next breaking release (0.9.0),
+    when the warning will be upgraded to an error, thereby making such comparisons disallowed.
+
+Libraries are excluded because they require a ``delegatecall`` and use :ref:`a different ABI
+convention for their selectors <library-selectors>`.
+Functions declared in interfaces do not have definitions so pointing at them does not make sense either.
+>>>>>>> english/develop
 
 成员：
 外部（或公共）函数有以下成员：
