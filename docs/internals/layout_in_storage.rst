@@ -1,5 +1,6 @@
-.. index:: storage, state variable, mapping
+.. index:: storage, state variable, mapping, transient storage
 
+<<<<<<< HEAD
 ************************************
 存储中的状态变量储存结构
 ************************************
@@ -13,6 +14,28 @@
 它被存储在槽 ``0`` 中。对于每个变量，
 根据它的类型确定一个字节的大小。如果可能的话，需要少于32字节的多个连续项目被打包到一个存储槽中，
 根据以下规则：
+=======
+**********************************************************
+Layout of State Variables in Storage and Transient Storage
+**********************************************************
+
+.. _storage-inplace-encoding:
+
+.. note::
+    The rules described in this section apply for both storage and transient storage data locations.
+    The layouts are completely independent and don't interfere with each other's variable locations.
+    Thus storage and transient storage state variables can be safely interleaved without any side effects.
+    Only value types are supported for transient storage.
+
+State variables of contracts are stored in storage in a compact way such
+that multiple values sometimes use the same storage slot.
+Except for dynamically-sized arrays and mappings (see below), data is stored
+contiguously item after item starting with the first state variable,
+which is stored in slot ``0``. For each variable,
+a size in bytes is determined according to its type.
+Multiple, contiguous items that need less than 32 bytes are packed into a single
+storage slot if possible, according to the following rules:
+>>>>>>> english/develop
 
 - 存储插槽的第一项会以低位对齐（即右对齐）的方式储存。
 - 值类型只使用存储它们所需的字节数。
@@ -135,9 +158,16 @@ JSON输出
 
 .. _storage-layout-top-level:
 
+<<<<<<< HEAD
 合约的存储结构可以通过 :ref:`标准的JSON接口 <compiler-api>` 请求获得。
 输出的是一个JSON对象，包含两个键， ``storage`` 和 ``types``。
 ``storage`` 对象是一个数组，每个元素都有以下形式：
+=======
+The storage (or transient storage) layout of a contract can be requested via
+the :ref:`standard JSON interface <compiler-api>`.  The output is a JSON object containing two keys,
+``storage`` and ``types``.  The ``storage`` object is an array where each
+element has the following form:
+>>>>>>> english/develop
 
 
 .. code-block:: json
@@ -193,13 +223,18 @@ JSON输出
 .. note::
   合约的存储结构的JSON输出格式仍被认为是实验性的，并且在Solidity的非重大版本中会有变化。
 
+<<<<<<< HEAD
 下面的例子显示了一个合约及其存储结构，包含值类型和引用类型，被编码打包的类型，以及嵌套的类型。
+=======
+The following example shows a contract and both its storage and transient storage layout,
+containing value and reference types, types that are encoded packed, and nested types.
+>>>>>>> english/develop
 
 
 .. code-block:: solidity
 
     // SPDX-License-Identifier: GPL-3.0
-    pragma solidity >=0.4.0 <0.9.0;
+    pragma solidity ^0.8.28;
     contract A {
         struct S {
             uint128 a;
@@ -209,14 +244,21 @@ JSON输出
         }
 
         uint x;
-        uint y;
+        uint transient y;
+        uint w;
+        uint transient z;
+
         S s;
         address addr;
+        address transient taddr;
         mapping(uint => mapping(address => bool)) map;
         uint[] array;
         string s1;
         bytes b1;
     }
+
+Storage Layout
+--------------
 
 .. code-block:: json
 
@@ -231,15 +273,15 @@ JSON输出
           "type": "t_uint256"
         },
         {
-          "astId": 17,
+          "astId": 19,
           "contract": "fileA:A",
-          "label": "y",
+          "label": "w",
           "offset": 0,
           "slot": "1",
           "type": "t_uint256"
         },
         {
-          "astId": 20,
+          "astId": 24,
           "contract": "fileA:A",
           "label": "s",
           "offset": 0,
@@ -247,7 +289,7 @@ JSON输出
           "type": "t_struct(S)13_storage"
         },
         {
-          "astId": 22,
+          "astId": 26,
           "contract": "fileA:A",
           "label": "addr",
           "offset": 0,
@@ -255,7 +297,7 @@ JSON输出
           "type": "t_address"
         },
         {
-          "astId": 28,
+          "astId": 34,
           "contract": "fileA:A",
           "label": "map",
           "offset": 0,
@@ -263,7 +305,7 @@ JSON输出
           "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))"
         },
         {
-          "astId": 31,
+          "astId": 37,
           "contract": "fileA:A",
           "label": "array",
           "offset": 0,
@@ -271,7 +313,7 @@ JSON输出
           "type": "t_array(t_uint256)dyn_storage"
         },
         {
-          "astId": 33,
+          "astId": 39,
           "contract": "fileA:A",
           "label": "s1",
           "offset": 0,
@@ -279,7 +321,7 @@ JSON输出
           "type": "t_string_storage"
         },
         {
-          "astId": 35,
+          "astId": 41,
           "contract": "fileA:A",
           "label": "b1",
           "offset": 0,
@@ -377,6 +419,52 @@ JSON输出
           "encoding": "inplace",
           "label": "uint128",
           "numberOfBytes": "16"
+        },
+        "t_uint256": {
+          "encoding": "inplace",
+          "label": "uint256",
+          "numberOfBytes": "32"
+        }
+      }
+    }
+
+Transient Storage Layout
+------------------------
+
+.. code-block:: json
+
+    {
+      "storage": [
+        {
+          "astId": 17,
+          "contract": "fileA:A",
+          "label": "y",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_uint256"
+        },
+        {
+          "astId": 21,
+          "contract": "fileA:A",
+          "label": "z",
+          "offset": 0,
+          "slot": "1",
+          "type": "t_uint256"
+        },
+        {
+          "astId": 28,
+          "contract": "fileA:A",
+          "label": "taddr",
+          "offset": 0,
+          "slot": "2",
+          "type": "t_address"
+        }
+      ],
+      "types": {
+        "t_address": {
+          "encoding": "inplace",
+          "label": "address",
+          "numberOfBytes": "20"
         },
         "t_uint256": {
           "encoding": "inplace",
