@@ -25,9 +25,12 @@
     * `Dapp <https://dapp.tools/>`_
         用于从命令行构建，测试和部署智能合约的工具。
 
+<<<<<<< HEAD
     * `Embark <https://framework.embarklabs.io/>`_
         构建和部署去中心化应用程序的开发者平台。
 
+=======
+>>>>>>> english/develop
     * `Foundry <https://github.com/foundry-rs/foundry>`_
         用Rust编写的用于Ethereum应用开发的快速，可移植和模块化的工具包。
 
@@ -113,8 +116,13 @@ Solidity 工具
 * `leafleth <https://github.com/clemlak/leafleth>`_
     Solidity智能合约的文档生成器。
 
+<<<<<<< HEAD
 * `Scaffold-ETH <https://github.com/scaffold-eth/scaffold-eth>`_
     专注于产品快速迭代的可分叉的以太坊开发堆栈。
+=======
+* `Scaffold-ETH 2 <https://github.com/scaffold-eth/scaffold-eth-2>`_
+    Forkable Ethereum development stack focused on fast product iterations.
+>>>>>>> english/develop
 
 * `sol2uml <https://www.npmjs.com/package/sol2uml>`_
     Solidity合约的统一建模语言（UML）类图生成器。
