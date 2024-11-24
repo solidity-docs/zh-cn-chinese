@@ -75,7 +75,7 @@
 
             // 我们通过使用下面定义的 `TokenCreator` 合约的一个函数
             // 来询问创建者合约是否应该进行转移。
-            // 如果调用失败（例如由于气体值耗尽），
+            // 如果调用失败（例如由于燃料值耗尽），
             // 这里的执行也会失败。
             if (creator.isTokenTransferOK(owner, newOwner))
                 owner = newOwner;
