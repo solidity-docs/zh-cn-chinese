@@ -7,7 +7,7 @@ Solidity是一种 `花括号语言 <https://en.wikipedia.org/wiki/List_of_progra
 
 Solidity受C++的影响最深，但也借用了Python，JavaScript等语言的概念。
 
-从变量声明的语法，for循环，重载函数的概念，隐式和显式类型转换以及许多其他细节中可以看出C++的影响。
+从变量声明的语法，for循环，重写函数的概念，隐式和显式类型转换以及许多其他细节中可以看出C++的影响。
 
 这是由于变量的函数级范围和关键字 ``var`` 的使用。
 从0.4.0版本开始，JavaScript的影响已经减少。

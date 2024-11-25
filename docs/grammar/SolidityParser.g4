@@ -146,8 +146,8 @@ locals[boolean payableSet = false, boolean visibilitySet = false]
  */
 stateMutability: Pure | View | Payable;
 /**
- *一个用于函数，修改器或状态变量的重载指定符。
- * 如果在被重载的几个基础合约中存在不明确的声明，
+ *一个用于函数，修改器或状态变量的重写指定符。
+ * 如果在被重写的几个基础合约中存在不明确的声明，
  * 必须给出一个完整的基础合约清单。
  */
 overrideSpecifier: Override (LParen overrides+=identifierPath (Comma overrides+=identifierPath)* RParen)?;
