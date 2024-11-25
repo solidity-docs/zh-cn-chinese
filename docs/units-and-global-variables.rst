@@ -74,10 +74,10 @@
 - ``block.chainid`` （ ``uint``）： 当前链的ID
 - ``block.coinbase`` （ ``address payable``）： 挖出当前区块的矿工地址
 - ``block.difficulty`` （ ``uint``）： 当前块的难度（ ``EVM < Paris`` ）。对于其他EVM版本，它是为 ``block.prevrandao`` 的已废弃别名 （`EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）
-- ``block.gaslimit`` （ ``uint``）： 当前区块 gas 限额
+- ``block.gaslimit`` （ ``uint``）： 当前区块燃料限额
 - ``block.number`` （ ``uint``）： 当前区块号
 - ``block.timestamp`` （ ``uint``）： 自 unix epoch 起始到当前区块以秒计的时间戳
-- ``gasleft() returns (uint256)``： 剩余的 gas
+- ``gasleft() returns (uint256)``： 剩余的燃料
 - ``msg.data`` （ ``bytes calldata``）： 完整的  calldata
 - ``msg.sender`` （ ``address``）： 消息发送者（当前调用）
 - ``msg.sig`` （ ``bytes4``）： calldata 的前 4 字节（也就是函数标识符）
@@ -229,7 +229,7 @@ ABI编码和解码函数
 
 .. note::
 
-    当在 *私有区块链* 上运行 ``sha256``， ``ripemd160`` 或 ``ecrecover`` 时，您可能会遇到超出 gas（Out-of-Gas）的错误。这是因为这些功能是作为 “预编译合约” 实现的，只有在它们收到第一个消息后才真正存在（尽管它们的合约代码是硬编码的）。向不存在的合约发送消息的成本较高，因此执行时可能会遇到 Out-of-Gas 错误。这个问题的一个变通方法是，在您的实际合约中使用它们之前，先向每个合约发送 Wei（例如1）。这在主网和测试网上都没有问题。
+    当在 *私有区块链* 上运行 ``sha256``， ``ripemd160`` 或 ``ecrecover`` 时，您可能会遇到燃料耗尽（Out-of-Gas）的错误。这是因为这些功能是作为 “预编译合约” 实现的，只有在它们收到第一个消息后才真正存在（尽管它们的合约代码是硬编码的）。向不存在的合约发送消息的成本较高，因此执行时可能会遇到 Out-of-Gas 错误。这个问题的一个变通方法是，在您的实际合约中使用它们之前，先向每个合约发送 Wei（例如1）。这在主网和测试网上都没有问题。
 
 .. index:: balance, codehash, send, transfer, call, callcode, delegatecall, staticcall
 
@@ -248,19 +248,19 @@ ABI编码和解码函数
     :ref:`address` 的代码哈希值
 
 ``<address payable>.transfer(uint256 amount)``
-    向 :ref:`address` 发送数量为 amount 的 Wei，失败时抛出异常，发送 2300 gas 的矿工费，不可调节。
+    向 :ref:`address` 发送数量为 amount 的 Wei，失败时抛出异常，发送2300燃料的矿工费，不可调节。
 
 ``<address payable>.send(uint256 amount) returns (bool)``
-    向 :ref:`address` 发送数量为 amount 的 Wei，失败时返回 ``false`` 2300 gas 的矿工费用，不可调节。
+    向 :ref:`address` 发送数量为 amount 的 Wei，失败时返回 ``false`` 2300燃料的矿工费用，不可调节。
 
 ``<address>.call(bytes memory) returns (bool, bytes memory)``
-    用给定的数据发出低级别的 ``CALL``，返回是否成功的结果和数据，发送所有可用 gas，可调节。
+    用给定的数据发出低级别的 ``CALL``，返回是否成功的结果和数据，发送所有可用燃料，可调节。
 
 ``<address>.delegatecall(bytes memory) returns (bool, bytes memory)``
-    用给定的数据发出低级别的 ``DELEGATECALL``，返回是否成功的结果和数据，发送所有可用 gas，可调节。
+    用给定的数据发出低级别的 ``DELEGATECALL``，返回是否成功的结果和数据，发送所有可用燃料，可调节。
 
 ``<address>.staticcall(bytes memory) returns (bool, bytes memory)``
-    用给定的数据发出低级别的 ``STATICCALL``，返回是否成功的结果和数据，发送所有可用 gas，可调节。
+    用给定的数据发出低级别的 ``STATICCALL``，返回是否成功的结果和数据，发送所有可用燃料，可调节。
 
 更多信息，请参见 :ref:`address` 一节。
 
@@ -279,7 +279,7 @@ ABI编码和解码函数
 
     对地址而不是合约实例进行低级调用
     （即 ``.call()``, ``.delegatecall()``, ``.staticcall()``, ``.send()`` 和 ``.transfer()``）
-    **不包括** 这种检查，这使得它们在gas方面更便宜，但也更不安全。
+    **不包括** 这种检查，这使得它们在燃料方面更便宜，但也更不安全。
 
 .. note::
    在 0.5.0 版本之前，Solidity 允许地址成员被合约实例访问，例如 ``this.balance``。

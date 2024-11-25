@@ -58,16 +58,16 @@ ABI 编码和解码函数
 - ``block.chainid`` (``uint``)： 当前链的ID
 - ``block.coinbase`` (``address payable``)： 当前区块矿工的地址
 - ``block.difficulty`` (``uint``)： 当前区块的难度值（ ``EVM < Paris`` ）。对于其他EVM版本，它是 ``block.prevrandao`` 的一个废弃的别名，将在下一个重大改变版本中被删除。
-- ``block.gaslimit`` (``uint``)： 当前区块的 gas 上限
+- ``block.gaslimit`` (``uint``)： 当前区块的燃料上限
 - ``block.number`` (``uint``)： 当前区块的区块号
 - ``block.prevrandao`` (``uint``)： 由信标链提供的随机数（ ``EVM >= Paris`` ）（见 `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）。
 - ``block.timestamp`` (``uint``)： 当前区块的时间戳，自Unix epoch以来的秒数
-- ``gasleft() returns (uint256)``： 剩余gas
+- ``gasleft() returns (uint256)``： 剩余燃料
 - ``msg.data`` (``bytes``)： 完整的调用数据
 - ``msg.sender`` (``address``)： 消息发送方（当前调用）
 - ``msg.sig`` (``bytes4``)： Calldata的前四个字节（即函数标识符）。
 - ``msg.value`` (``uint``)： 随消息发送的 wei 的数量
-- ``tx.gasprice`` (``uint``)： 交易的 gas 价格
+- ``tx.gasprice`` (``uint``)： 交易的燃料价格
 - ``tx.origin`` (``address``)： 交易发送方（完整调用链上的原始发送方）
 
 .. index:: assert, require, revert

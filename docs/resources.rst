@@ -105,7 +105,7 @@ Solidity 工具
     EVM反汇编程序，对字节码进行静态分析，提供比原始EVM操作更高的抽象水平。
 
 * `EVM Lab <https://github.com/ethereum/evmlab/>`_
-    丰富的工具包，与EVM互动。包括一个虚拟机、以太链API，以及一个带有gas成本显示的跟踪查看器。
+    丰富的工具包，与EVM互动。包括一个虚拟机、以太链API，以及一个带有燃料成本显示的跟踪查看器。
 
 * `hevm <https://github.com/dapphub/dapptools/tree/master/src/hevm#readme>`_
     EVM调试器和符号执行引擎。
