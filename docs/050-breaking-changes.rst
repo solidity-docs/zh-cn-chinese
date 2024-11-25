@@ -1,8 +1,8 @@
 ********************************
-Solidity v0.5.0 突破性变化
+Solidity v0.5.0 重大变化
 ********************************
 
-本节强调了 Solidity 0.5.0 版本中引入的主要突破性变化，
+本节强调了 Solidity 0.5.0 版本中引入的主要重大变化，
 以及这些变化背后的原因和如何更新受影响的代码。
 对于完整的列表，请查看 `版本更新日志 <https://github.com/ethereum/solidity/releases/tag/v0.5.0>`_。
 
@@ -52,7 +52,7 @@ Solidity v0.5.0 突破性变化
   将每个 ``.call(signature, a,b, c)`` 改为 ``.call(abi.encodeWithSignature(signature, a, b, c))``
   （最后一项只对值类型有效）。
   将每个 ``keccak256(a, b, c)`` 改为 ``keccak256(abi.encodePacked(a, b, c))``。
-  尽管这不是一个突破性的改变，建议开发者将 ``x.call(bytes4(keccak256("f(uint256)")), a, b)``
+  尽管这不是一个重大的改变，建议开发者将 ``x.call(bytes4(keccak256("f(uint256)")), a, b)``
   改为 ``x.call(abi.encodeWithSignature("f(uint256)", a, b))``。
 
 * 函数 ``.call()``， ``.delegatecall()`` 和 ``.staticcall()``

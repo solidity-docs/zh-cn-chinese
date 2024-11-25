@@ -23,7 +23,7 @@ Solidity 是静态类型语言，支持继承，库和复杂的用户自定义�
 当开发智能合约时，您应该使用最新版本的Solidity。
 除某些特殊情况之外，只有最新版本才会收到
 `安全修复 <https://github.com/ethereum/solidity/security/policy#supported-versions>`_。
-此外，突破性的变化以及新功能会定期引入。
+此外，重大的变化以及新功能会定期引入。
 目前，我们使用 0.y.z 版本号 `来表明这种快速的变化 <https://semver.org/#spec-item-4>`_。
 
 .. warning::

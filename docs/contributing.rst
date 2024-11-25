@@ -527,7 +527,7 @@ Solidity论坛作为提出和讨论新的语言功能及其在早期构思阶段
 您可以在 `Solidity Github项目 <https://github.com/ethereum/solidity/projects/43>`_ 中关注实施状况。
 设计积压中的问题需要进一步规范，将在语言设计电话会议或常规团队电话会议中讨论。
 您可以通过从默认分支（ `develop` ）到 `breaking 分支 <https://github.com/ethereum/solidity/tree/breaking>`_
-来查看下一个突破性版本即将发生的变化。
+来查看下一个重大变化版本即将发生的变化。
 
 对于特殊情况和问题，您可以通过 `Solidity-dev Gitter 频道 <https://gitter.im/ethereum/solidity-dev>`_ 与我们联系，
 - 这是一个专门用于围绕 Solidity 编译器和语言开发的聊天室。
