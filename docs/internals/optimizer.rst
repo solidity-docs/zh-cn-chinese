@@ -27,7 +27,16 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
     `窥视孔（peephole）优化器 <https://en.wikipedia.org/wiki/Peephole_optimization>`_
     总是默认启用的，只能通过 :ref:`标准 JSON 文件配置 <compiler-api>` 关闭。
 
+<<<<<<< HEAD
 您可以在下面找到关于这两个优化器模块及其优化步骤的更多细节。
+=======
+.. note::
+    An empty optimizer sequence is accepted even without ``--optimize`` in order to fully disable
+    the user-supplied portion of the Yul :ref:`optimizer sequence <selecting-optimizations>`, as by default,
+    even when the optimizer is not turned on, the :ref:`unused pruner <unused-pruner>` step will be run.
+
+You can find more details on both optimizer modules and their optimization steps below.
+>>>>>>> v0.8.23
 
 优化Solidity代码的好处
 ====================================
@@ -301,6 +310,7 @@ Solidity编译器使用两种不同的优化器模块。在操作码水平上操
 一些步骤依赖于 ``块展平器``， ``函数分组器``， ``循环初始重写器`` 所保证的属性。
 由于这个原因，Yul 优化器总是在应用用户提供的任何步骤之前应用它们。
 
+.. _selecting-optimizations:
 
 选择优化方案
 -----------------------
