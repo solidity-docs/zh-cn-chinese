@@ -766,9 +766,21 @@ Unicode 字面量
     调用者不能直接将其calldata传递给外部函数，总是ABI将参数编码到内存中。
     将参数标记为 ``calldata`` 只影响到外部函数的实现，在调用者一方的函数指针中是没有意义的。
 
+<<<<<<< HEAD
 库合约被排除在外，因为它们需要 ``delegatecall``，
 并且 :ref:`对它们的选择器使用不同的 ABI 约定 <library-selectors>`。
 接口中声明的函数没有定义，所以指向它们也没有意义。
+=======
+.. warning::
+    Comparison of internal function pointers can have unexpected results in the legacy pipeline with the optimizer enabled,
+    as it can collapse identical functions into one, which will then lead to said function pointers comparing as equal instead of not.
+    Such comparisons are not advised, and will lead to the compiler issuing a warning, until the next breaking release (0.9.0),
+    when the warning will be upgraded to an error, thereby making such comparisons disallowed.
+
+Libraries are excluded because they require a ``delegatecall`` and use :ref:`a different ABI
+convention for their selectors <library-selectors>`.
+Functions declared in interfaces do not have definitions so pointing at them does not make sense either.
+>>>>>>> v0.8.24
 
 成员：
 外部（或公共）函数有以下成员：
