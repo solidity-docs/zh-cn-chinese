@@ -29,11 +29,7 @@
 
 - 每周三下午3点，中欧标准时间/中欧夏令时间。
 
-<<<<<<< HEAD
-会议在 `Jitsi <https://meet.soliditylang.org/>`_ 举行。
-=======
-The call takes place on `Jitsi <https://meet.ethereum.org/solidity>`_.
->>>>>>> v0.8.24
+会议在 `Jitsi <https://meet.ethereum.org/solidity>`_ 上举行。
 
 如何报告问题
 ====================
