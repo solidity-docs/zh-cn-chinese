@@ -69,44 +69,26 @@
 区块和交易属性
 ---------------
 
-<<<<<<< HEAD
-- ``blockhash(uint blockNumber) returns (bytes32)``: 当 ``blocknumber`` 是最近的256个区块之一时，给定区块的哈希值；否则返回0。
-- ``block.basefee`` （ ``uint``）： 当前区块的基本费用 （ `EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ 和 `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_）
-- ``block.chainid`` （ ``uint``）： 当前链的ID
-- ``block.coinbase`` （ ``address payable``）： 挖出当前区块的矿工地址
-- ``block.difficulty`` （ ``uint``）： 当前块的难度（ ``EVM < Paris`` ）。对于其他EVM版本，它是为 ``block.prevrandao`` 的已废弃别名 （`EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）
-- ``block.gaslimit`` （ ``uint``）： 当前区块燃料限额
-- ``block.number`` （ ``uint``）： 当前区块号
-- ``block.timestamp`` （ ``uint``）： 自 unix epoch 起始到当前区块以秒计的时间戳
-- ``gasleft() returns (uint256)``： 剩余的燃料
-- ``msg.data`` （ ``bytes calldata``）： 完整的  calldata
-- ``msg.sender`` （ ``address``）： 消息发送者（当前调用）
-- ``msg.sig`` （ ``bytes4``）： calldata 的前 4 字节（也就是函数标识符）
-- ``msg.value`` （ ``uint``）： 随消息发送的 wei 的数量
-- ``tx.gasprice`` （ ``uint``）： 随消息发送的 wei 的数量
-- ``tx.origin`` （ ``address``）： 交易发起者（完全的调用链）
-=======
-- ``blockhash(uint blockNumber) returns (bytes32)``: hash of the given block when ``blocknumber`` is one of the 256 most recent blocks; otherwise returns zero
-- ``blobhash(uint index) returns (bytes32)``: versioned hash of the ``index``-th blob associated with the current transaction.
-  A versioned hash consists of a single byte representing the version (currently ``0x01``), followed by the last 31 bytes
-  of the SHA256 hash of the KZG commitment (`EIP-4844 <https://eips.ethereum.org/EIPS/eip-4844>`_).
-- ``block.basefee`` (``uint``): current block's base fee (`EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ and `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_)
-- ``block.blobbasefee`` (``uint``): current block's blob base fee (`EIP-7516 <https://eips.ethereum.org/EIPS/eip-7516>`_ and `EIP-4844 <https://eips.ethereum.org/EIPS/eip-4844>`_)
-- ``block.chainid`` (``uint``): current chain id
-- ``block.coinbase`` (``address payable``): current block miner's address
-- ``block.difficulty`` (``uint``): current block difficulty (``EVM < Paris``). For other EVM versions it behaves as a deprecated alias for ``block.prevrandao`` (`EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ )
-- ``block.gaslimit`` (``uint``): current block gaslimit
-- ``block.number`` (``uint``): current block number
-- ``block.prevrandao`` (``uint``): random number provided by the beacon chain (``EVM >= Paris``)
-- ``block.timestamp`` (``uint``): current block timestamp as seconds since unix epoch
-- ``gasleft() returns (uint256)``: remaining gas
-- ``msg.data`` (``bytes calldata``): complete calldata
-- ``msg.sender`` (``address``): sender of the message (current call)
-- ``msg.sig`` (``bytes4``): first four bytes of the calldata (i.e. function identifier)
-- ``msg.value`` (``uint``): number of wei sent with the message
-- ``tx.gasprice`` (``uint``): gas price of the transaction
-- ``tx.origin`` (``address``): sender of the transaction (full call chain)
->>>>>>> v0.8.24
+- ``blockhash(uint blockNumber) returns (bytes32)``： 给定区块的哈希值 - 只对最近的256个区块有效
+- ``blobhash(uint index) returns (bytes32)``： 与当前交易相关联的第 ``index`` 个blob。
+  此带版本的哈希值是由一个表示版本的单字节（当前为 ``0x01`` ）和紧随其后的KZG证明的SHA256哈希的最后31个字节组成。
+  （ `EIP-4844 <https://eips.ethereum.org/EIPS/eip-4844>`_ ）。
+- ``block.basefee`` (``uint``)： 当前区块的基本费用 （ `EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ 和 `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_ ）
+- ``block.blobbasefee`` (``uint``): 当前区块的blob基础费用（ `EIP-7516 <https://eips.ethereum.org/EIPS/eip-7516>`_ 和 `EIP-4844 <https://eips.ethereum.org/EIPS/eip-4844>`_）
+- ``block.chainid`` (``uint``)： 当前链的ID
+- ``block.coinbase`` (``address payable``)： 当前区块矿工的地址
+- ``block.difficulty`` (``uint``)： 当前区块的难度值（ ``EVM < Paris`` ）。对于其他EVM版本，它是 ``block.prevrandao`` 的一个废弃的别名，将在下一个重大改变版本中被删除。
+- ``block.gaslimit`` (``uint``)： 当前区块的燃料上限
+- ``block.number`` (``uint``)： 当前区块的区块号
+- ``block.prevrandao`` (``uint``)： 由信标链提供的随机数（ ``EVM >= Paris`` ）（见 `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_ ）。
+- ``block.timestamp`` (``uint``)： 当前区块的时间戳，自Unix epoch以来的秒数
+- ``gasleft() returns (uint256)``： 剩余燃料
+- ``msg.data`` (``bytes``)： 完整的调用数据
+- ``msg.sender`` (``address``)： 消息发送方（当前调用）
+- ``msg.sig`` (``bytes4``)： 调用数据的前四个字节（即函数标识符）。
+- ``msg.value`` (``uint``)： 随消息发送的 wei 的数量
+- ``tx.gasprice`` (``uint``)： 交易的燃料价格
+- ``tx.origin`` (``address``)： 交易发送方（完整调用链上的原始发送方）
 
 .. note::
     对于每一个 **外部（external）** 函数调用，
@@ -141,7 +123,7 @@
     在 0.4.21 版本中被弃用，在 0.5.0 版本中被删除。
 
 .. note::
-    在 0.7.0 版本中，删除了别名 ``now``（用于 ``block.timestamp``）。
+    在 0.7.0 版本中，删除了别名 ``now`` （用于 ``block.timestamp``）。
 
 .. index:: abi, encoding, packed
 

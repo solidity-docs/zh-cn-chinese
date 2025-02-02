@@ -60,10 +60,11 @@ ABI 编码和解码函数
 ================================
 
 - ``blockhash(uint blockNumber) returns (bytes32)``： 给定区块的哈希值 - 只对最近的256个区块有效
-- ``blobhash(uint index) returns (bytes32)``: 与当前交易相关联的第 ``index`` 个blob。
+- ``blobhash(uint index) returns (bytes32)``： 与当前交易相关联的第 ``index`` 个blob。
   此带版本的哈希值是由一个表示版本的单字节（当前为 ``0x01`` ）和紧随其后的KZG证明的SHA256哈希的最后31个字节组成。
   （ `EIP-4844 <https://eips.ethereum.org/EIPS/eip-4844>`_ ）。
 - ``block.basefee`` (``uint``)： 当前区块的基本费用 （ `EIP-3198 <https://eips.ethereum.org/EIPS/eip-3198>`_ 和 `EIP-1559 <https://eips.ethereum.org/EIPS/eip-1559>`_ ）
+- ``block.blobbasefee`` (``uint``): 当前区块的blob基础费用（ `EIP-7516 <https://eips.ethereum.org/EIPS/eip-7516>`_ 和 `EIP-4844 <https://eips.ethereum.org/EIPS/eip-4844>`_）
 - ``block.chainid`` (``uint``)： 当前链的ID
 - ``block.coinbase`` (``address payable``)： 当前区块矿工的地址
 - ``block.difficulty`` (``uint``)： 当前区块的难度值（ ``EVM < Paris`` ）。对于其他EVM版本，它是 ``block.prevrandao`` 的一个废弃的别名，将在下一个重大改变版本中被删除。
